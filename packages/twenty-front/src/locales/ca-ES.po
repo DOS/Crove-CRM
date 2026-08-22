@@ -4776,6 +4776,11 @@ msgstr "Continua"
 msgid "Continue on iteration failure"
 msgstr "Continuar si falla la iteració"
 
+#. js-lingui-id: 0TGwBd
+#: src/modules/auth/sign-in-up/components/internal/SignInUpWithDosId.tsx
+msgid "Continue with DOS ID"
+msgstr ""
+
 #. js-lingui-id: RvVi9c
 #: src/modules/auth/sign-in-up/components/internal/SignInUpWithCredentials.tsx
 msgid "Continue with Email"
