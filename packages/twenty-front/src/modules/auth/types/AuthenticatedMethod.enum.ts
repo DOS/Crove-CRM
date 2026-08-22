@@ -3,4 +3,5 @@ export enum AuthenticatedMethod {
   GOOGLE = 'GOOGLE',
   MICROSOFT = 'MICROSOFT',
   SSO = 'SSO',
+  DOS_ID = 'DOS_ID',
 }

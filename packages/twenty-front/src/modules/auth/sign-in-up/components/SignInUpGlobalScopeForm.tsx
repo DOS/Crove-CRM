@@ -10,6 +10,7 @@ import { ClickToActionLink, UndecoratedLink } from 'twenty-ui/navigation';
 import { StyledOnboardingContentContainer } from '@/auth/components/StyledOnboardingContentContainer';
 import { OnboardingStepAnimatedItem } from '@/onboarding/components/OnboardingStepAnimatedItem';
 import { SignInUpWithCredentials } from '@/auth/sign-in-up/components/internal/SignInUpWithCredentials';
+import { SignInUpWithDosId } from '@/auth/sign-in-up/components/internal/SignInUpWithDosId';
 import { SignInUpWithGoogle } from '@/auth/sign-in-up/components/internal/SignInUpWithGoogle';
 import { SignInUpWithMicrosoft } from '@/auth/sign-in-up/components/internal/SignInUpWithMicrosoft';
 import { useHandleResetPassword } from '@/auth/sign-in-up/hooks/useHandleResetPassword';
@@ -233,6 +234,12 @@ export const SignInUpGlobalScopeForm = () => {
       )}
       {signInUpStep !== SignInUpStep.WorkspaceSelection && (
         <StyledOnboardingContentContainer>
+          {authProviders.dosId && (
+            <SignInUpWithDosId
+              action="list-available-workspaces"
+              isGlobalScope
+            />
+          )}
           {authProviders.google && (
             <SignInUpWithGoogle
               action="list-available-workspaces"
@@ -245,7 +252,9 @@ export const SignInUpGlobalScopeForm = () => {
               isGlobalScope
             />
           )}
-          {(authProviders.google || authProviders.microsoft) && (
+          {(authProviders.dosId ||
+            authProviders.google ||
+            authProviders.microsoft) && (
             <HorizontalSeparator
               color={themeCssVariables.background.transparent.light}
             />

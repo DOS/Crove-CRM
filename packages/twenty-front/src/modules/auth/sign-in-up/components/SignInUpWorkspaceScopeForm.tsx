@@ -1,5 +1,6 @@
 import { StyledOnboardingContentContainer } from '@/auth/components/StyledOnboardingContentContainer';
 import { SignInUpWithCredentials } from '@/auth/sign-in-up/components/internal/SignInUpWithCredentials';
+import { SignInUpWithDosId } from '@/auth/sign-in-up/components/internal/SignInUpWithDosId';
 import { SignInUpWithGoogle } from '@/auth/sign-in-up/components/internal/SignInUpWithGoogle';
 import { SignInUpWithMicrosoft } from '@/auth/sign-in-up/components/internal/SignInUpWithMicrosoft';
 import { SignInUpWithSSO } from '@/auth/sign-in-up/components/internal/SignInUpWithSSO';
@@ -44,6 +45,8 @@ export const SignInUpWorkspaceScopeForm = () => {
   return (
     <>
       <StyledOnboardingContentContainer>
+        {providers.dosId && <SignInUpWithDosId action="join-workspace" />}
+
         {providers.google && <SignInUpWithGoogle action="join-workspace" />}
 
         {providers.microsoft && (
@@ -52,7 +55,8 @@ export const SignInUpWorkspaceScopeForm = () => {
 
         {providers.sso.length > 0 && <SignInUpWithSSO />}
 
-        {(providers.google ||
+        {(providers.dosId ||
+          providers.google ||
           providers.microsoft ||
           providers.sso.length > 0) &&
         providers.password ? (

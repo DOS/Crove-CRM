@@ -449,6 +449,7 @@ export type AuthProviders = {
   magicLink: Scalars['Boolean']['output'];
   microsoft: Scalars['Boolean']['output'];
   password: Scalars['Boolean']['output'];
+  dosId?: Maybe<Scalars['Boolean']['output']>;
   sso: Array<SsoIdentityProvider>;
 };
 

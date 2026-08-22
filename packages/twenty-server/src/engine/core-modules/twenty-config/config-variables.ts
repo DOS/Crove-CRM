@@ -291,6 +291,52 @@ export class ConfigVariables {
   @ValidateIf((env) => env.AUTH_MICROSOFT_ENABLED)
   AUTH_MICROSOFT_APIS_CALLBACK_URL: string;
 
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.DOS_ID_AUTH,
+    description: 'Enable or disable DOS ID (OIDC / OAuth 2.1) authentication',
+    type: ConfigVariableType.BOOLEAN,
+  })
+  @IsOptional()
+  AUTH_DOS_ID_ENABLED = false;
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.DOS_ID_AUTH,
+    isSensitive: false,
+    description: 'Client ID for DOS ID authentication',
+    type: ConfigVariableType.STRING,
+  })
+  @ValidateIf((env) => env.AUTH_DOS_ID_ENABLED)
+  AUTH_DOS_ID_CLIENT_ID: string;
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.DOS_ID_AUTH,
+    isSensitive: true,
+    description: 'Client secret for DOS ID authentication',
+    type: ConfigVariableType.STRING,
+  })
+  @ValidateIf((env) => env.AUTH_DOS_ID_ENABLED)
+  AUTH_DOS_ID_CLIENT_SECRET: string;
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.DOS_ID_AUTH,
+    isSensitive: false,
+    description: 'OIDC Discovery / Issuer URL for DOS ID',
+    type: ConfigVariableType.STRING,
+  })
+  @IsUrl({ require_tld: false, require_protocol: true })
+  @ValidateIf((env) => env.AUTH_DOS_ID_ENABLED)
+  AUTH_DOS_ID_ISSUER_URL = 'https://gulptwduchsjcsbndmua.supabase.co/auth/v1';
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.DOS_ID_AUTH,
+    isSensitive: false,
+    description: 'Callback redirect URL for DOS ID authentication',
+    type: ConfigVariableType.STRING,
+  })
+  @IsUrl({ require_tld: false, require_protocol: true })
+  @ValidateIf((env) => env.AUTH_DOS_ID_ENABLED)
+  AUTH_DOS_ID_CALLBACK_URL: string;
+
   /**
    * @deprecated Use is now GA - record page layouts are always seeded
    */

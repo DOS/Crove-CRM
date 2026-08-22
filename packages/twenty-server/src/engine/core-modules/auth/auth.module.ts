@@ -10,6 +10,7 @@ import { ApplicationModule } from 'src/engine/core-modules/application/applicati
 import { ConnectionProviderOAuthController } from 'src/engine/core-modules/application/connection-provider/connection-provider-oauth.controller';
 import { ConnectionProviderModule } from 'src/engine/core-modules/application/connection-provider/connection-provider.module';
 import { ApplicationConnectionsModule } from 'src/engine/core-modules/application/connection-provider/connections/application-connections.module';
+import { DosIdAuthController } from 'src/engine/core-modules/auth/controllers/dos-id-auth.controller';
 import { GoogleAPIsAuthController } from 'src/engine/core-modules/auth/controllers/google-apis-auth.controller';
 import { GoogleAuthController } from 'src/engine/core-modules/auth/controllers/google-auth.controller';
 import { MicrosoftAPIsAuthController } from 'src/engine/core-modules/auth/controllers/microsoft-apis-auth.controller';
@@ -138,6 +139,7 @@ import { JwtAuthStrategy } from './strategies/jwt.auth.strategy';
     UserSessionModule,
   ],
   controllers: [
+    DosIdAuthController,
     GoogleAuthController,
     MicrosoftAuthController,
     GoogleAPIsAuthController,
