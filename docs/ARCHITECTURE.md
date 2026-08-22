@@ -88,15 +88,25 @@ Crove CRM delegates system-wide identity management to **DOS.ID** (Supabase Auth
 * **OAuth App**: `Crove`
 * **Client ID**: `18790ccb-4d71-48cd-ad24-aee5f3ced3da`
 * **Redirect Callback**: `https://crm.crove.com/auth/dos-id/redirect`
-* **Scopes**: `openid email profile`
+* **Scopes**: `openid email profile offline_access orgs`
 
-### Authentication Flow (Social SSO Strategy Pattern):
-1. **Initiate**: User clicks **"Continue with DOS ID"** on `https://crm.crove.com/welcome`.
-2. **Authorize**: Browser is redirected to `https://id.dos.me/login` with `client_id`, PKCE challenge, and CSRF `state`.
-3. **Authenticate**: User logs in using Web3 Wallet, Google, X, Discord, or Email OTP on DOS ID.
-4. **Callback**: DOS ID redirects to `https://crm.crove.com/auth/dos-id/redirect?code=...&state=...`.
-5. **Token & Profile Exchange**: `twenty-server` exchanges `code` with Supabase Token URL, retrieves User Info (`sub`, `email`, `name`, `picture`).
-6. **Workspace Resolution**: `AuthService.signInUpWithSocialSSO` auto-provisions or resolves the user's workspace and issues a session token.
+### 4.1. Hybrid Identity & Organization Sync (2-Phase Architecture)
+
+1. **Phase 1: JIT (Just-In-Time) Provisioning during OIDC Login**:
+   - `twenty-server` decodes `organizations` claim from UserInfo endpoint.
+   - For each organization, checks if corresponding Workspace exists in `core.workspace`.
+   - If Workspace exists, user is auto-added via `UserWorkspaceService.addUserToWorkspaceIfUserNotInWorkspace`.
+   - If Workspace does not exist and user has `OWNER`/`ADMIN` role in DOS.Me, auto-provisions new Workspace via `SignInUpService.signUpOnNewWorkspace`.
+
+2. **Phase 2: Real-time Event-Driven Webhooks (`POST /api/webhooks/dos-org-sync`)**:
+   - Signature validation via `X-DOS-Signature: sha256=<hmac_sha256(payload, CROVE_DOS_WEBHOOK_SECRET)>`.
+   - Supported events:
+     - `organization.created` / `org.created`: Auto-creates & initializes workspace for owner.
+     - `organization.updated` / `org.updated`: Syncs workspace display name.
+     - `organization.deleted` / `org.deleted`: Suspends workspace.
+     - `organization.member_added` / `org.member_added`: Syncs member into workspace.
+     - `organization.member_removed` / `org.member_removed`: Removes user membership.
+     - `user.updated`: Syncs profile names across `core.user`.
 
 ---
 

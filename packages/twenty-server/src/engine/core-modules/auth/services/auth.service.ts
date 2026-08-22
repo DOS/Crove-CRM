@@ -38,6 +38,7 @@ import { type UserCredentialsInput } from 'src/engine/core-modules/auth/dto/user
 import { type CheckUserExistDTO } from 'src/engine/core-modules/auth/dto/user-exists.dto';
 import { type WorkspaceInviteHashValidDTO } from 'src/engine/core-modules/auth/dto/workspace-invite-hash-valid.dto';
 import { AuthSsoService } from 'src/engine/core-modules/auth/services/auth-sso.service';
+import { type DosIdRequest } from 'src/engine/core-modules/auth/strategies/dos-id.auth.strategy';
 import { CreateSSOConnectedAccountService } from 'src/engine/core-modules/auth/services/create-sso-connected-account.service';
 import { SignInUpService } from 'src/engine/core-modules/auth/services/sign-in-up.service';
 import { type GoogleRequest } from 'src/engine/core-modules/auth/strategies/google.auth.strategy';
@@ -962,7 +963,8 @@ export class AuthService {
       billingCheckoutSessionState,
       locale,
       returnToPath,
-    }: MicrosoftRequest['user'] | GoogleRequest['user'],
+      organizations,
+    }: MicrosoftRequest['user'] | GoogleRequest['user'] | DosIdRequest['user'],
     authProvider:
       | AuthProviderEnum.Google
       | AuthProviderEnum.Microsoft
@@ -991,6 +993,38 @@ export class AuthService {
             provider: authProvider,
           },
         ));
+
+      // JIT Organization Provisioning & Member Linking for DOS ID
+      if (
+        authProvider === AuthProviderEnum.DosId &&
+        Array.isArray(organizations) &&
+        organizations.length > 0
+      ) {
+        for (const org of organizations) {
+          if (!org?.name) continue;
+
+          try {
+            const orgName = org.name.trim();
+            const workspace = await this.workspaceRepository.findOne({
+              where: [{ displayName: orgName }],
+            });
+
+            if (workspace) {
+              await this.userWorkspaceService.addUserToWorkspaceIfUserNotInWorkspace(
+                user,
+                workspace,
+              );
+            } else if (org.role === 'OWNER' || org.role === 'ADMIN') {
+              await this.signInUpService.signUpOnNewWorkspace(
+                { type: 'existingUser', existingUser: user },
+                { displayName: orgName },
+              );
+            }
+          } catch {
+            // Gracefully continue to avoid blocking user login
+          }
+        }
+      }
 
       const ssoExchangeToken =
         await this.ssoExchangeTokenService.generateSSOExchangeToken({
