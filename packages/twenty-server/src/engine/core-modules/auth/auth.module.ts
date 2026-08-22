@@ -11,6 +11,7 @@ import { ConnectionProviderOAuthController } from 'src/engine/core-modules/appli
 import { ConnectionProviderModule } from 'src/engine/core-modules/application/connection-provider/connection-provider.module';
 import { ApplicationConnectionsModule } from 'src/engine/core-modules/application/connection-provider/connections/application-connections.module';
 import { DosIdAuthController } from 'src/engine/core-modules/auth/controllers/dos-id-auth.controller';
+import { DosOrgSyncWebhookController } from 'src/engine/core-modules/auth/controllers/dos-org-sync-webhook.controller';
 import { GoogleAPIsAuthController } from 'src/engine/core-modules/auth/controllers/google-apis-auth.controller';
 import { GoogleAuthController } from 'src/engine/core-modules/auth/controllers/google-auth.controller';
 import { MicrosoftAPIsAuthController } from 'src/engine/core-modules/auth/controllers/microsoft-apis-auth.controller';
@@ -140,6 +141,7 @@ import { JwtAuthStrategy } from './strategies/jwt.auth.strategy';
   ],
   controllers: [
     DosIdAuthController,
+    DosOrgSyncWebhookController,
     GoogleAuthController,
     MicrosoftAuthController,
     GoogleAPIsAuthController,

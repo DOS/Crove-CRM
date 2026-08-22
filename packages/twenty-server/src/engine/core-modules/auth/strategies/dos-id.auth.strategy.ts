@@ -29,6 +29,11 @@ export type DosIdRequest = Omit<
     workspaceId?: string;
     billingCheckoutSessionState?: string;
     returnToPath?: string;
+    organizations?: Array<{
+      id: string;
+      name: string;
+      role: 'OWNER' | 'ADMIN' | 'MEMBER';
+    }>;
   };
 };
 
@@ -61,7 +66,7 @@ export class DosIdStrategy extends PassportStrategy(Strategy, 'dos-id') {
     super({
       client,
       params: {
-        scope: 'openid email profile offline_access',
+        scope: 'openid email profile offline_access orgs',
         code_challenge_method: 'S256',
       },
       usePKCE: true,
@@ -126,6 +131,7 @@ export class DosIdStrategy extends PassportStrategy(Strategy, 'dos-id') {
         action: state?.action ?? 'list-available-workspaces',
         locale: state?.locale,
         returnToPath: state?.returnToPath,
+        organizations: userinfo.organizations as DosIdRequest['user']['organizations'],
       };
 
       done(null, user);

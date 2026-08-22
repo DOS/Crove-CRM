@@ -337,6 +337,15 @@ export class ConfigVariables {
   @ValidateIf((env) => env.AUTH_DOS_ID_ENABLED)
   AUTH_DOS_ID_CALLBACK_URL: string;
 
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.DOS_ID_AUTH,
+    isSensitive: true,
+    description: 'HMAC secret key for DOS.Me Organization sync webhooks',
+    type: ConfigVariableType.STRING,
+  })
+  @IsOptional()
+  CROVE_DOS_WEBHOOK_SECRET?: string;
+
   /**
    * @deprecated Use is now GA - record page layouts are always seeded
    */
