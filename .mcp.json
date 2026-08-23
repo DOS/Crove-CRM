@@ -17,6 +17,12 @@
       "command": "npx",
       "args": ["-y", "@upstash/context7-mcp"],
       "env": {}
+    },
+    "frill": {
+      "url": "https://mcp.frill.co/mcp",
+      "headers": {
+        "Authorization": "Bearer f335cd55-bccc-43e5-947f-87a3123efac5"
+      }
     }
   }
 }

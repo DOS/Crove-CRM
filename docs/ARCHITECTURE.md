@@ -128,3 +128,13 @@ Crove CRM delegates system-wide identity management to **DOS.ID** (Supabase Auth
 * **State Management**: Jotai with custom family and component-instance scopes (`createAtomState`, `createAtomComponentState`).
 * **Metadata Hydration**: Caches minimal workspace metadata in IndexedDB to deliver instant page loads before querying GraphQL.
 * **UI Design System**: `twenty-ui` React components with tokenized theme variables.
+
+---
+
+## 7. Feedback, Ideas & Roadmap Portal (Frill.co)
+
+Crove OS uses a dedicated Frill Company Portal for feedback collection, public feature voting, roadmap tracking, and announcements:
+
+* **Public Portal Domain**: `feedback.crove.com`
+* **MCP Integration**: Configured per workspace in `.mcp.json` using the Crove Frill API key.
+* **In-App SSO**: Integrates via Frill JWT SSO using HMAC-SHA256 signature to allow seamless in-app feedback without separate user registration.
