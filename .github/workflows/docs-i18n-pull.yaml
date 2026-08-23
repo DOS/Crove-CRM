@@ -34,6 +34,7 @@ concurrency:
 jobs:
   pull_docs_translations:
     name: Pull docs translations
+    if: github.repository == 'twentyhq/twenty'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

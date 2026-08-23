@@ -21,6 +21,7 @@ concurrency:
 jobs:
   extract_website_translations:
     name: Extract and upload website translations
+    if: github.repository == 'twentyhq/twenty'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
