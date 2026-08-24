@@ -128,7 +128,7 @@ export const MultiWorkspaceDropdownDefaultComponents = () => {
                   {isMultiWorkspaceEnabled && (
                     <MenuItem
                       LeftIcon={IconPlus}
-                      text={t`Create Workspace`}
+                      text={t`Create Organization`}
                       onClick={createWorkspace}
                     />
                   )}

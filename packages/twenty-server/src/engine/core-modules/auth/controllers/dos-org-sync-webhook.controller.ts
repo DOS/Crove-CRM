@@ -150,7 +150,12 @@ export class DosOrgSyncWebhookController {
           try {
             await this.signInUpService.signUpOnNewWorkspace(
               { type: 'existingUser', existingUser: user },
-              { displayName: orgName.trim() },
+              {
+                displayName: orgName.trim(),
+                subdomain: isNonEmptyString(payload.data.slug)
+                  ? payload.data.slug
+                  : undefined,
+              },
             );
             this.logger.log(
               `Successfully provisioned workspace "${orgName}" for owner ${ownerEmail}`,

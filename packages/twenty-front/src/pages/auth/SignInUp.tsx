@@ -101,11 +101,11 @@ export const SignInUp = () => {
     }
 
     if (signInUpStep === SignInUpStep.WorkspaceSelection) {
-      return t`Choose a Workspace`;
+      return t`Choose an Organization`;
     }
 
     if (signInUpStep === SignInUpStep.WorkspaceCreation) {
-      return t`Create your workspace`;
+      return t`Create your organization`;
     }
 
     if (signInUpStep === SignInUpStep.TwoFactorAuthenticationProvision) {
@@ -117,13 +117,13 @@ export const SignInUp = () => {
     }
 
     if (isGlobalScope) {
-      return t`Welcome to Twenty`;
+      return t`Welcome to Crove`;
     }
 
     const workspaceName = workspacePublicData?.displayName;
 
     if (!workspaceName) {
-      return t`Welcome to your workspace`;
+      return t`Welcome to your organization`;
     }
 
     return t`Welcome, ${workspaceName}.`;

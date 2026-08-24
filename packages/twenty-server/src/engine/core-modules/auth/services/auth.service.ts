@@ -1001,12 +1001,20 @@ export class AuthService {
         organizations.length > 0
       ) {
         for (const org of organizations) {
-          if (!org?.name) continue;
+          if (!org?.name && !org?.id && !org?.slug) continue;
 
           try {
-            const orgName = org.name.trim();
+            const orgName = (org.name || org.slug || 'Organization').trim();
+            const roleUpper = org.role ? String(org.role).toUpperCase() : 'MEMBER';
+            const orgId = org.id;
+            const orgSlug = org.slug;
+
             const workspace = await this.workspaceRepository.findOne({
-              where: [{ displayName: orgName }],
+              where: [
+                ...(isNonEmptyString(orgId) ? [{ id: orgId }] : []),
+                ...(isNonEmptyString(orgSlug) ? [{ subdomain: orgSlug }] : []),
+                { displayName: orgName },
+              ],
             });
 
             if (workspace) {
@@ -1014,14 +1022,19 @@ export class AuthService {
                 user,
                 workspace,
               );
-            } else if (org.role === 'OWNER' || org.role === 'ADMIN') {
+            } else if (roleUpper === 'OWNER' || roleUpper === 'ADMIN') {
               await this.signInUpService.signUpOnNewWorkspace(
                 { type: 'existingUser', existingUser: user },
-                { displayName: orgName },
+                {
+                  displayName: orgName,
+                  subdomain: isNonEmptyString(orgSlug) ? orgSlug : undefined,
+                },
               );
             }
-          } catch {
-            // Gracefully continue to avoid blocking user login
+          } catch (error) {
+            this.logger.warn(
+              `Failed to JIT sync workspace for org ${org?.name ?? org?.id}: ${error}`,
+            );
           }
         }
       }

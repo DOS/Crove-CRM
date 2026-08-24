@@ -124,6 +124,7 @@ export class DosIdStrategy extends PassportStrategy(Strategy, 'dos-id') {
       // oxlint-disable-next-line typescript/no-explicit-any
       const claims: any = tokenset.claims ? tokenset.claims() : {};
       const userMetadata = claims?.user_metadata ?? userinfo?.user_metadata ?? {};
+      const appMetadata = claims?.app_metadata ?? userinfo?.app_metadata ?? {};
 
       const email =
         userinfo.email ??
@@ -165,6 +166,12 @@ export class DosIdStrategy extends PassportStrategy(Strategy, 'dos-id') {
         (userinfo.avatar_url as string) ??
         null;
 
+      const rawOrganizations =
+        userinfo.organizations ??
+        claims.organizations ??
+        appMetadata.organizations ??
+        userMetadata.organizations;
+
       const user: DosIdRequest['user'] = {
         email: email.toLowerCase(),
         firstName,
@@ -176,9 +183,9 @@ export class DosIdStrategy extends PassportStrategy(Strategy, 'dos-id') {
         action: state?.action ?? 'list-available-workspaces',
         locale: state?.locale,
         returnToPath: state?.returnToPath,
-        organizations:
-          (userinfo.organizations as DosIdRequest['user']['organizations']) ??
-          (claims.organizations as DosIdRequest['user']['organizations']),
+        organizations: Array.isArray(rawOrganizations)
+          ? rawOrganizations
+          : undefined,
       };
 
       done(null, user);
