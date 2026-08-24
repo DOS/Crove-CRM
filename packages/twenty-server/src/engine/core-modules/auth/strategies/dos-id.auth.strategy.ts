@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 
 import { type Request } from 'express';
@@ -13,6 +13,8 @@ import {
 import { type SocialSSOSignInUpActionType } from 'src/engine/core-modules/auth/types/signInUp.type';
 import { type SocialSSOState } from 'src/engine/core-modules/auth/types/social-sso-state.type';
 import { TwentyConfigService } from 'src/engine/core-modules/twenty-config/twenty-config.service';
+
+const logger = new Logger('DosIdStrategy');
 
 export type DosIdRequest = Omit<
   Request,
@@ -101,10 +103,28 @@ export class DosIdStrategy extends PassportStrategy(Strategy, 'dos-id') {
   ): Promise<void> {
     try {
       const state = parseJson<SocialSSOState>(request.query.state as string);
-      // oxlint-disable-next-line typescript/no-explicit-any
-      const userinfo = await (this as any)._client.userinfo(tokenset);
 
-      const email = userinfo.email ?? userinfo.upn;
+      let userinfo: any = {};
+      try {
+        // oxlint-disable-next-line typescript/no-explicit-any
+        userinfo = await (this as any)._client.userinfo(tokenset);
+      } catch (userinfoError) {
+        logger.warn(
+          `Failed to fetch userinfo from DOS ID, falling back to claims: ${userinfoError}`,
+        );
+        userinfo = {};
+      }
+
+      // oxlint-disable-next-line typescript/no-explicit-any
+      const claims: any = tokenset.claims ? tokenset.claims() : {};
+      const userMetadata = claims?.user_metadata ?? userinfo?.user_metadata ?? {};
+
+      const email =
+        userinfo.email ??
+        claims.email ??
+        userinfo.upn ??
+        claims.upn ??
+        userMetadata.email;
 
       if (!email || typeof email !== 'string') {
         throw new AuthException(
@@ -113,31 +133,51 @@ export class DosIdStrategy extends PassportStrategy(Strategy, 'dos-id') {
         );
       }
 
+      const firstName =
+        (userinfo.given_name as string) ??
+        (claims.given_name as string) ??
+        (userMetadata.first_name as string) ??
+        (userinfo.name as string)?.split(' ')?.[0] ??
+        (claims.name as string)?.split(' ')?.[0] ??
+        (userMetadata.full_name as string)?.split(' ')?.[0] ??
+        null;
+
+      const lastName =
+        (userinfo.family_name as string) ??
+        (claims.family_name as string) ??
+        (userMetadata.last_name as string) ??
+        (userinfo.name as string)?.split(' ')?.slice(1)?.join(' ') ??
+        (claims.name as string)?.split(' ')?.slice(1)?.join(' ') ??
+        (userMetadata.full_name as string)?.split(' ')?.slice(1)?.join(' ') ??
+        null;
+
+      const picture =
+        (userinfo.picture as string) ??
+        (claims.picture as string) ??
+        (userMetadata.avatar_url as string) ??
+        (userMetadata.picture as string) ??
+        (userinfo.avatar_url as string) ??
+        null;
+
       const user: DosIdRequest['user'] = {
         email: email.toLowerCase(),
-        firstName:
-          (userinfo.given_name as string) ??
-          (userinfo.name as string)?.split(' ')?.[0] ??
-          null,
-        lastName:
-          (userinfo.family_name as string) ??
-          (userinfo.name as string)?.split(' ')?.slice(1)?.join(' ') ??
-          null,
-        picture:
-          (userinfo.picture as string) ??
-          (userinfo.avatar_url as string) ??
-          null,
+        firstName,
+        lastName,
+        picture,
         workspaceInviteHash: state?.workspaceInviteHash,
         workspaceId: state?.workspaceId,
         billingCheckoutSessionState: state?.billingCheckoutSessionState,
         action: state?.action ?? 'list-available-workspaces',
         locale: state?.locale,
         returnToPath: state?.returnToPath,
-        organizations: userinfo.organizations as DosIdRequest['user']['organizations'],
+        organizations:
+          (userinfo.organizations as DosIdRequest['user']['organizations']) ??
+          (claims.organizations as DosIdRequest['user']['organizations']),
       };
 
       done(null, user);
     } catch (error) {
+      logger.error(`Validation error in DosIdStrategy: ${error}`, error);
       done(error);
     }
   }
