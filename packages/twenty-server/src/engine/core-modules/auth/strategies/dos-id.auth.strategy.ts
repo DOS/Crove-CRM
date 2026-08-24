@@ -53,11 +53,17 @@ export const createDosIdClient = async (
     twentyConfigService.get('AUTH_DOS_ID_CALLBACK_URL') ||
     new URL('/auth/dos-id/redirect', serverUrl).toString();
 
+  const idTokenSignedResponseAlg =
+    issuer.metadata.id_token_signing_alg_values_supported?.includes('ES256')
+      ? 'ES256'
+      : (issuer.metadata.id_token_signing_alg_values_supported?.[0] ?? 'RS256');
+
   return new issuer.Client({
     client_id: twentyConfigService.get('AUTH_DOS_ID_CLIENT_ID') ?? '',
     client_secret: twentyConfigService.get('AUTH_DOS_ID_CLIENT_SECRET') ?? '',
     redirect_uris: [callbackUrl],
     response_types: ['code'],
+    id_token_signed_response_alg: idTokenSignedResponseAlg,
   });
 };
 
