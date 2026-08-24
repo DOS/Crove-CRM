@@ -22,7 +22,8 @@ const isAuthEnabledOrThrow = (
     return true;
   if (provider === AuthProviderEnum.Password && workspace.isPasswordAuthEnabled)
     return true;
-  if (provider === AuthProviderEnum.SSO) return true;
+  if (provider === AuthProviderEnum.SSO || provider === AuthProviderEnum.DosId)
+    return true;
 
   throw exceptionToThrowCustom;
 };
@@ -39,6 +40,8 @@ const isAuthEnabled = (
   )
     return true;
   if (provider === AuthProviderEnum.Password && workspace.isPasswordAuthEnabled)
+    return true;
+  if (provider === AuthProviderEnum.SSO || provider === AuthProviderEnum.DosId)
     return true;
 
   return false;
