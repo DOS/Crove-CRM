@@ -43,6 +43,17 @@ jobs:
             type=ref,event=tag
             type=sha,format=short
 
+      - name: Determine App Version
+        id: version
+        run: |
+          if [[ "${{ github.ref }}" =~ ^refs/tags/v ]]; then
+            VER="${{ github.ref_name }}"
+          else
+            CODE_VER=$(grep -o "TWENTY_CURRENT_VERSION = '[^']*'" packages/twenty-server/src/engine/core-modules/upgrade/constants/twenty-current-version.constant.ts | cut -d"'" -f2)
+            VER="v${CODE_VER}"
+          fi
+          echo "app_version=${VER}" >> $GITHUB_OUTPUT
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
@@ -53,6 +64,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            APP_VERSION=v2.33.0
+            APP_VERSION=${{ steps.version.outputs.app_version }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
