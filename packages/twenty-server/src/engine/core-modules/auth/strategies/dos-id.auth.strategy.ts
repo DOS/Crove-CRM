@@ -76,17 +76,19 @@ export class DosIdStrategy extends PassportStrategy(Strategy, 'dos-id') {
 
   // oxlint-disable-next-line typescript/no-explicit-any
   authenticate(req: Request, options: any) {
-    options = {
-      ...options,
-      state: JSON.stringify({
-        workspaceInviteHash: req.query.workspaceInviteHash,
-        workspaceId: req.params.workspaceId,
-        billingCheckoutSessionState: req.query.billingCheckoutSessionState,
-        action: req.query.action,
-        locale: req.query.locale,
-        returnToPath: req.query.returnToPath,
-      }),
-    };
+    if (!req.query.code) {
+      options = {
+        ...options,
+        state: JSON.stringify({
+          workspaceInviteHash: req.query.workspaceInviteHash,
+          workspaceId: req.params.workspaceId,
+          billingCheckoutSessionState: req.query.billingCheckoutSessionState,
+          action: req.query.action,
+          locale: req.query.locale,
+          returnToPath: req.query.returnToPath,
+        }),
+      };
+    }
 
     return super.authenticate(req, options);
   }
