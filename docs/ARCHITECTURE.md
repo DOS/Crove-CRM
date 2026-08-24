@@ -138,3 +138,49 @@ Crove OS uses a dedicated Frill Company Portal for feedback collection, public f
 * **Public Portal Domain**: `feedback.crove.com`
 * **MCP Integration**: Configured per workspace in `.mcp.json` using the Crove Frill API key.
 * **In-App SSO**: Integrates via Frill JWT SSO using HMAC-SHA256 signature to allow seamless in-app feedback without separate user registration.
+
+---
+
+## 8. App Extension & Third-Party Integration Architecture
+
+Crove CRM utilizes the upstream **Twenty SDK App Extension System** (`packages/twenty-apps`) to add custom business entities, integrations, and logic functions without modifying core server/frontend codebase.
+
+```
+                     ┌─────────────────────────────────────────────────────────┐
+                     │          Third-Party Platforms / VN Channels            │
+                     │ (Zalo OA / ZNS, Facebook Page, eSMS, OMICall, Stripe)   │
+                     └───────────────┬─────────────────────────┬───────────────┘
+                                     │                         │
+            OAuth Flow & Auth Tokens │                         │ Webhook Events / Inbound Data
+                                     ▼                         ▼
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ Twenty App Extension Layer (`packages/twenty-apps/<app-name>`)                                         │
+│                                                                                                        │
+│  1. `connection-providers/`                                                                            │
+│     - Declares `defineConnectionProvider`: OAuth 2.0 PKCE / API Key connection                         │
+│     - Handles `onConnectLogicFunction` & `onDisconnectLogicFunction`                                  │
+│                                                                                                        │
+│  2. `logic-functions/` (Server Route & Trigger Handlers)                                               │
+│     - Inbound Webhook Routes (`serverRouteTriggerSettings`): Verify HMAC signatures, route workspace   │
+│     - Outbound Connectors / Handlers: Message sending (ZNS/SMS), conversions sync (CAPI)              │
+│     - DB Event Listeners (`ObjectRecordUpdateEvent`, `ObjectRecordCreateEvent`)                        │
+│                                                                                                        │
+│  3. `objects/`, `fields/`, `views/`, `page-layouts/`                                                   │
+│     - Declares custom syncable entities (`Product`, `Order`, `Appointment`) with stable UUIDs         │
+│                                                                                                        │
+│  4. `front-components/`                                                                                │
+│     - Embedded React widgets rendered in isolated Remote DOM (`twenty-ui` primitives)                  │
+└────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### 8.1. Guidelines for Adding New Integrations (e.g. Zalo OA / ZNS)
+1. **Never modify `twenty-server` or `twenty-front` directly**: Always scaffold a dedicated app in `packages/twenty-apps/<app-name>` or publish an isolated npm package.
+2. **Entity Registration (`twenty-sdk/define`)**:
+   - `defineApplication`: Defines app metadata, logo, and encrypted `serverVariables` (`ZALO_APP_ID`, `ZALO_SECRET_KEY`).
+   - `defineConnectionProvider`: Handles OAuth 2.0 PKCE authorization, token storage, and refresh lifecycle.
+   - `defineLogicFunction`: Declares webhook receiver (`serverRouteTriggerSettings`) or workflow actions.
+   - `defineFrontComponent`: Implements UI action buttons or chat widgets in CRM page layouts.
+3. **Execution & Lifecycle**:
+   - Apps are synced into workspace schema via `yarn twenty dev --once`.
+   - Workflows in Twenty UI can directly consume actions exported by the app (e.g., "Send ZNS message when Order status is Completed").
+
