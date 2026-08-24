@@ -66,7 +66,7 @@ export class DosIdStrategy extends PassportStrategy(Strategy, 'dos-id') {
     super({
       client,
       params: {
-        scope: 'openid email profile offline_access orgs',
+        scope: 'openid email profile offline_access',
         code_challenge_method: 'S256',
       },
       usePKCE: true,
