@@ -3852,7 +3852,7 @@ msgstr "Chọn gói tín dụng {intervalAdjective}"
 #. js-lingui-id: NFfUic
 #: src/pages/auth/SignInUp.tsx
 msgid "Choose a Workspace"
-msgstr "Chọn một không gian làm việc"
+msgstr "Chọn một tổ chức"
 
 #. js-lingui-id: Qz73jD
 #: src/modules/settings/security/components/SSO/SettingsSSOIdentitiesProvidersForm.tsx
@@ -5267,13 +5267,13 @@ msgstr "Tạo không gian làm việc"
 #: src/modules/ui/navigation/navigation-drawer/components/MultiWorkspaceDropdown/internal/MultiWorkspaceDropdownDefaultComponents.tsx
 #: src/utils/title-utils.ts
 msgid "Create Workspace"
-msgstr "Tạo không gian làm việc"
+msgstr "Tạo tổ chức"
 
 #. js-lingui-id: 9chYz/
 #: src/modules/auth/sign-in-up/components/internal/SignInUpWorkspaceCreationForm.tsx
 #: src/pages/auth/SignInUp.tsx
 msgid "Create your workspace"
-msgstr "Tạo không gian làm việc của bạn"
+msgstr "Tạo tổ chức của bạn"
 
 #. js-lingui-id: OHF273
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useActionRolePermissionFlagConfig.ts
@@ -21252,13 +21252,13 @@ msgstr "Trọng số"
 #. js-lingui-id: nTuObL
 #: src/pages/auth/SignInUp.tsx
 msgid "Welcome to Twenty"
-msgstr "Chào mừng đến với Twenty"
+msgstr "Chào mừng đến với Crove"
 
 #. js-lingui-id: t8ZvkC
 #: src/modules/onboarding/constants/WelcomeTitleMessage.ts
 #: src/pages/auth/SignInUp.tsx
 msgid "Welcome to your workspace"
-msgstr "Chào mừng đến với không gian làm việc của bạn"
+msgstr "Chào mừng đến với tổ chức của bạn"
 
 #. js-lingui-id: Vin3Dv
 #: src/pages/auth/SignInUp.tsx
@@ -21510,7 +21510,7 @@ msgstr "Quy Trình Làm Việc"
 #: src/pages/settings/security/SettingsSecurityApprovedAccessDomain.tsx
 #: src/pages/settings/security/SettingsSecuritySSOIdentifyProvider.tsx
 msgid "Workspace"
-msgstr "Workspace"
+msgstr "Tổ chức"
 
 #. js-lingui-id: fQ8teq
 #: src/modules/auth/sign-in-up/hooks/useSignUpInNewWorkspace.ts
@@ -21526,7 +21526,7 @@ msgstr "Xóa Workspace"
 #. js-lingui-id: Qx8HXb
 #: src/pages/settings/general/SettingsGeneral.tsx
 msgid "Workspace domain"
-msgstr "Tên miền không gian làm việc"
+msgstr "Tên miền tổ chức"
 
 #. js-lingui-id: J2q6WC
 #: src/modules/settings/event-logs/components/EventLogTableSelector.tsx
@@ -21564,7 +21564,7 @@ msgstr "Thành viên không gian làm việc"
 #: src/modules/settings/event-logs/components/EventLogFilters.tsx
 #: src/pages/settings/admin-panel/SettingsAdminWorkspaceDetail.tsx
 msgid "Workspace members"
-msgstr "Thành viên không gian làm việc"
+msgstr "Thành viên tổ chức"
 
 #. js-lingui-id: PHF7zj
 #: src/pages/settings/applications/components/SettingsApplicationConnectScopePickerModal.tsx
@@ -21587,7 +21587,7 @@ msgstr "Chế độ xem không gian làm việc yêu cầu quyền quản lý ch
 #. js-lingui-id: pmt7u4
 #: src/pages/settings/admin-panel/SettingsAdminUserDetail.tsx
 msgid "Workspaces"
-msgstr "Không gian làm việc"
+msgstr "Các tổ chức"
 
 #. js-lingui-id: 33fb3H
 #: src/modules/settings/admin-panel/health-status/components/SettingsAdminUpgradeStatusListCard.tsx
