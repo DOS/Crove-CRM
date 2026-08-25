@@ -54,7 +54,6 @@ import { isEmailVerificationRequiredState } from '@/client-config/states/isEmail
 import { isMultiWorkspaceEnabledState } from '@/client-config/states/isMultiWorkspaceEnabledState';
 import { useLastAuthenticatedWorkspaceDomain } from '@/domain-manager/hooks/useLastAuthenticatedWorkspaceDomain';
 import { useOrigin } from '@/domain-manager/hooks/useOrigin';
-import { useReadDefaultDomainFromConfiguration } from '@/domain-manager/hooks/useReadDefaultDomainFromConfiguration';
 import { useRedirect } from '@/domain-manager/hooks/useRedirect';
 import { useRedirectToWorkspaceDomain } from '@/domain-manager/hooks/useRedirectToWorkspaceDomain';
 import { useLoadCurrentUser } from '@/users/hooks/useLoadCurrentUser';
@@ -118,8 +117,6 @@ export const useAuth = () => {
 
   const navigate = useNavigate();
 
-  const { defaultDomain } = useReadDefaultDomainFromConfiguration();
-
   const clearSession = useCallback(() => {
     // The assign below is the only navigation: keep the redirect effect from
     // racing it to the sign-in page once the session is cleared.
@@ -133,24 +130,8 @@ export const useAuth = () => {
     store.set(currentUserWorkspaceState.atom, null);
     clearSessionLocalStorageKeys();
     setLastAuthenticateWorkspaceDomain(null);
-
-    if (
-      isMultiWorkspaceEnabled &&
-      isNonEmptyString(defaultDomain) &&
-      window.location.hostname !== defaultDomain
-    ) {
-      window.location.assign(
-        `${window.location.protocol}//${defaultDomain}${AppPath.SignInUp}`,
-      );
-    } else {
-      window.location.assign(AppPath.SignInUp);
-    }
-  }, [
-    store,
-    setLastAuthenticateWorkspaceDomain,
-    isMultiWorkspaceEnabled,
-    defaultDomain,
-  ]);
+    window.location.assign(AppPath.SignInUp);
+  }, [store, setLastAuthenticateWorkspaceDomain]);
 
   const handleSetAuthTokens = useCallback(
     (tokens: AuthTokenPair) => {
