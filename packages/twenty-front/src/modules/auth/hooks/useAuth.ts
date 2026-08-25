@@ -54,6 +54,7 @@ import { isEmailVerificationRequiredState } from '@/client-config/states/isEmail
 import { isMultiWorkspaceEnabledState } from '@/client-config/states/isMultiWorkspaceEnabledState';
 import { useLastAuthenticatedWorkspaceDomain } from '@/domain-manager/hooks/useLastAuthenticatedWorkspaceDomain';
 import { useOrigin } from '@/domain-manager/hooks/useOrigin';
+import { useReadDefaultDomainFromConfiguration } from '@/domain-manager/hooks/useReadDefaultDomainFromConfiguration';
 import { useRedirect } from '@/domain-manager/hooks/useRedirect';
 import { useRedirectToWorkspaceDomain } from '@/domain-manager/hooks/useRedirectToWorkspaceDomain';
 import { useLoadCurrentUser } from '@/users/hooks/useLoadCurrentUser';
@@ -116,6 +117,8 @@ export const useAuth = () => {
   const [, setSearchParams] = useSearchParams();
 
   const navigate = useNavigate();
+
+  const { defaultDomain } = useReadDefaultDomainFromConfiguration();
 
   const clearSession = useCallback(() => {
     // The assign below is the only navigation: keep the redirect effect from
@@ -559,7 +562,12 @@ export const useAuth = () => {
         action?: string;
       },
     ) => {
-      const url = new URL(`${REACT_APP_SERVER_BASE_URL}${path}`);
+      const baseUrl =
+        isMultiWorkspaceEnabled && isNonEmptyString(defaultDomain)
+          ? `${window.location.protocol}//${defaultDomain}`
+          : REACT_APP_SERVER_BASE_URL;
+
+      const url = new URL(`${baseUrl}${path}`);
       if (isDefined(params.workspaceInviteHash)) {
         url.searchParams.set('workspaceInviteHash', params.workspaceInviteHash);
       }
@@ -592,7 +600,7 @@ export const useAuth = () => {
 
       return url.toString();
     },
-    [workspacePublicData, store],
+    [workspacePublicData, store, isMultiWorkspaceEnabled, defaultDomain],
   );
 
   const handleGoogleLogin = useCallback(
