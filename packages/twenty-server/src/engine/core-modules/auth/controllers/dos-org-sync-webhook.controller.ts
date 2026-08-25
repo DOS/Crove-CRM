@@ -148,6 +148,7 @@ export class DosOrgSyncWebhookController {
           }
 
           try {
+            const orgId = payload.data.id || payload.data.org_id;
             await this.signInUpService.signUpOnNewWorkspace(
               { type: 'existingUser', existingUser: user },
               {
@@ -155,6 +156,7 @@ export class DosOrgSyncWebhookController {
                 subdomain: isNonEmptyString(payload.data.slug)
                   ? payload.data.slug
                   : undefined,
+                workspaceId: isNonEmptyString(orgId) ? orgId : undefined,
               },
             );
             this.logger.log(

@@ -1028,6 +1028,7 @@ export class AuthService {
                 {
                   displayName: orgName,
                   subdomain: isNonEmptyString(orgSlug) ? orgSlug : undefined,
+                  workspaceId: isNonEmptyString(orgId) ? orgId : undefined,
                 },
               );
             }
