@@ -40,6 +40,12 @@ const VI_REPLACEMENTS: Record<string, string> = {
   'Delete Workspace': 'Xóa tổ chức',
 };
 
+const CROVE_LOGO_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96">
+  <rect width="96" height="96" rx="20" fill="#E11D48"/>
+  <path d="M68 34.5C64.2 29.2 58 26 50.5 26C36.9 26 26 36.9 26 50.5C26 64.1 36.9 75 50.5 75C58.2 75 64.5 71.6 68.3 66.1C69.1 64.9 68.3 63.3 66.8 63.3H61.2C60.3 63.3 59.5 63.8 59 64.5C56.9 67.5 53.9 69.2 50.5 69.2C40.1 69.2 31.8 60.9 31.8 50.5C31.8 40.1 40.1 31.8 50.5 31.8C54 31.8 57.1 33.6 59.2 36.7C59.7 37.4 60.5 37.8 61.4 37.8H66.9C68.4 37.8 69.2 36.1 68 34.5Z" fill="#FFFFFF"/>
+</svg>
+`;
+
 function patchPoFile(filePath: string, replacements: Record<string, string>) {
   if (!fs.existsSync(filePath)) {
     return;
@@ -49,7 +55,6 @@ function patchPoFile(filePath: string, replacements: Record<string, string>) {
   let patchCount = 0;
 
   for (const [msgid, newMsgstr] of Object.entries(replacements)) {
-    // Match: msgid "<exact string>"\nmsgstr "..."
     const regex = new RegExp(`(msgid\\s+"${escapeRegex(msgid)}"\\s*\\n\\s*msgstr\\s+)"([^"]*)"`, 'g');
     content = content.replace(regex, (_, prefix, oldMsgstr) => {
       if (oldMsgstr !== newMsgstr) {
@@ -66,12 +71,46 @@ function patchPoFile(filePath: string, replacements: Record<string, string>) {
   }
 }
 
+function patchHtmlAndManifest() {
+  const indexHtmlPath = path.join(ROOT_DIR, 'packages/twenty-front/index.html');
+  if (fs.existsSync(indexHtmlPath)) {
+    let html = fs.readFileSync(indexHtmlPath, 'utf8');
+    html = html
+      .replace(/<title>.*?<\/title>/gi, '<title>Crove CRM</title>')
+      .replace(/<meta\s+property="og:title"\s+content=".*?"\s*\/>/gi, '<meta property="og:title" content="Crove CRM" />')
+      .replace(/<meta\s+name="twitter:title"\s+content=".*?"\s*\/>/gi, '<meta name="twitter:title" content="Crove CRM" />')
+      .replace(/<meta\s+name="description"\s+content=".*?"\s*\/>/gi, '<meta name="description" content="Crove CRM — AI-Native Business OS" />')
+      .replace(/<meta\s+property="og:description"\s+content=".*?"\s*\/>/gi, '<meta property="og:description" content="Crove CRM — AI-Native Business OS" />')
+      .replace(/<meta\s+name="twitter:description"\s+content=".*?"\s*\/>/gi, '<meta name="twitter:description" content="Crove CRM — AI-Native Business OS" />');
+
+    fs.writeFileSync(indexHtmlPath, html, 'utf8');
+    console.log('[Branding Patch] Updated packages/twenty-front/index.html metadata.');
+  }
+
+  const manifestPath = path.join(ROOT_DIR, 'packages/twenty-front/public/manifest.json');
+  if (fs.existsSync(manifestPath)) {
+    let manifest = fs.readFileSync(manifestPath, 'utf8');
+    manifest = manifest
+      .replace(/"name":\s*"Twenty"/g, '"name": "Crove CRM"')
+      .replace(/"short_name":\s*"Twenty"/g, '"short_name": "Crove"');
+
+    fs.writeFileSync(manifestPath, manifest, 'utf8');
+    console.log('[Branding Patch] Updated packages/twenty-front/public/manifest.json.');
+  }
+}
+
+function patchBrandAssets() {
+  const integrationLogoPath = path.join(ROOT_DIR, 'packages/twenty-front/public/images/integrations/twenty-logo.svg');
+  fs.writeFileSync(integrationLogoPath, CROVE_LOGO_SVG, 'utf8');
+  console.log('[Branding Patch] Updated Crove logo asset at packages/twenty-front/public/images/integrations/twenty-logo.svg.');
+}
+
 function escapeRegex(string: string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function main() {
-  console.log('[Branding Patch] Starting Crove branding and terminology patch...');
+  console.log('[Branding Patch] Starting Crove branding, logo, favicon, and terminology patch...');
 
   const poFiles = [
     { path: path.join(ROOT_DIR, 'packages/twenty-front/src/locales/en.po'), replacements: EN_REPLACEMENTS },
@@ -85,6 +124,9 @@ function main() {
   for (const item of poFiles) {
     patchPoFile(item.path, item.replacements);
   }
+
+  patchHtmlAndManifest();
+  patchBrandAssets();
 
   console.log('[Branding Patch] Compiling Lingui catalogs...');
   const compilePackages = [
