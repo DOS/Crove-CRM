@@ -10,6 +10,7 @@ export const useHasMultipleAuthMethods = () => {
 
   let enabledMethodsCount = 0;
 
+  if (workspaceAuthProviders.dosId) enabledMethodsCount++;
   if (workspaceAuthProviders.google) enabledMethodsCount++;
   if (workspaceAuthProviders.microsoft) enabledMethodsCount++;
   if (workspaceAuthProviders.password) enabledMethodsCount++;
