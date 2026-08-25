@@ -24,6 +24,29 @@ export const getSessionStorageOptions = (
     twentyConfigService,
   });
 
+  let cookieDomain: string | undefined = undefined;
+
+  if (SERVER_URL) {
+    try {
+      const serverHostname = new URL(SERVER_URL).hostname;
+
+      if (
+        serverHostname !== 'localhost' &&
+        !serverHostname.match(/^\d+\.\d+\.\d+\.\d+$/)
+      ) {
+        const defaultSubdomain = twentyConfigService.get('DEFAULT_SUBDOMAIN');
+        const cleanHostname =
+          defaultSubdomain && serverHostname.startsWith(`${defaultSubdomain}.`)
+            ? serverHostname.slice(defaultSubdomain.length + 1)
+            : serverHostname;
+
+        cookieDomain = `.${cleanHostname}`;
+      }
+    } catch {
+      // ignore invalid SERVER_URL
+    }
+  }
+
   const sessionStorage: session.SessionOptions = {
     secret: sessionSecrets,
     resave: false,
@@ -33,6 +56,7 @@ export const getSessionStorageOptions = (
       secure: !!(SERVER_URL && SERVER_URL.startsWith('https')),
       httpOnly: true,
       sameSite: 'lax',
+      domain: cookieDomain,
       maxAge: 1000 * 60 * 30, // 30 minutes
     },
   };
