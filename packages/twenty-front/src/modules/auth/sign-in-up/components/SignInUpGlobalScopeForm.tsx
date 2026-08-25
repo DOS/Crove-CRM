@@ -254,16 +254,19 @@ export const SignInUpGlobalScopeForm = () => {
           )}
           {(authProviders.dosId ||
             authProviders.google ||
-            authProviders.microsoft) && (
+            authProviders.microsoft) &&
+            authProviders.password && (
             <HorizontalSeparator
               color={themeCssVariables.background.transparent.light}
             />
           )}
-          {/* oxlint-disable-next-line react/jsx-props-no-spreading */}
-          <FormProvider {...form}>
-            <SignInUpWithCredentials isGlobalScope />
-          </FormProvider>
-          {signInUpStep === SignInUpStep.Password && (
+          {authProviders.password && (
+            // oxlint-disable-next-line react/jsx-props-no-spreading
+            <FormProvider {...form}>
+              <SignInUpWithCredentials isGlobalScope />
+            </FormProvider>
+          )}
+          {authProviders.password && signInUpStep === SignInUpStep.Password && (
             <StyledForgotPasswordLinkContainer>
               <ClickToActionLink
                 onClick={handleResetPassword(form.getValues('email'))}
