@@ -1,22 +1,5 @@
 msgid ""
-msgstr ""
-"POT-Creation-Date: 2025-01-29 18:14+0100\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: @lingui/cli\n"
-"Language: vi\n"
-"Project-Id-Version: cf448e737e0d6d7b78742f963d761c61\n"
-"Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-01-01 00:00\n"
-"Last-Translator: \n"
-"Language-Team: Vietnamese\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Crowdin-Project: cf448e737e0d6d7b78742f963d761c61\n"
-"X-Crowdin-Project-ID: 1\n"
-"X-Crowdin-Language: vi\n"
-"X-Crowdin-File: /packages/twenty-server/src/engine/core-modules/i18n/locales/en.po\n"
-"X-Crowdin-File-ID: 31\n"
+msgstr "\"\"\n\"POT-Creation-Date: 2025-01-29 18:14+0100\\n\"\n\"MIME-Version: 1.0\\n\"\n\"Content-Type: text/plain; charset=UTF-8\\n\"\n\"Content-Transfer-Encoding: 8bit\\n\"\n\"X-Generator: @lingui/cli\\n\"\n\"Language: vi\\n\"\n\"Project-Id-Version: cf448e737e0d6d7b78742f963d761c61\\n\"\n\"Report-Msgid-Bugs-To: \\n\"\n\"PO-Revision-Date: 2025-01-01 00:00\\n\"\n\"Last-Translator: \\n\"\n\"Language-Team: Vietnamese\\n\"\n\"Plural-Forms: nplurals=1; plural=0;\\n\"\n\"X-Crowdin-Project: cf448e737e0d6d7b78742f963d761c61\\n\"\n\"X-Crowdin-Project-ID: 1\\n\"\n\"X-Crowdin-Language: vi\\n\"\n\"X-Crowdin-File: /packages/crove-server/src/engine/core-modules/i18n/locales/en.po\\n\"\n\"X-Crowdin-File-ID: 31\\n\""
 
 #. js-lingui-id: ZM94I5
 #. placeholder {0}: flatField.label
@@ -45,7 +28,7 @@ msgstr "\"{fieldName}\" đã nhận một giá trị không hợp lệ."
 #. js-lingui-id: SsRDX3
 #: src/engine/core-modules/user/utils/assert-workspace-member-update-non-custom-fields.util.ts
 msgid "\"{payloadKey}\" is not a valid workspace member field."
-msgstr "\\\"{payloadKey}\\\" không phải là một trường hợp lệ của thành viên không gian làm việc."
+msgstr "\\\"{payloadKey}\\\" không phải là một trường hợp lệ của thành viên tổ chức."
 
 #. js-lingui-id: ddGPbK
 #. placeholder {0}: nestedField.label
@@ -192,7 +175,7 @@ msgstr "Một tập khách hàng được chọn thủ công"
 #. js-lingui-id: TF/ZV2
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "A heads up before your Twenty trial ends"
-msgstr "Thông báo trước khi bản dùng thử Twenty của bạn kết thúc"
+msgstr "Thông báo trước khi bản dùng thử Crove của bạn kết thúc"
 
 #. js-lingui-id: 6yZjO1
 #: src/engine/core-modules/application/application.exception.ts
@@ -449,7 +432,7 @@ msgstr "Một phiên bản quy trình làm việc"
 #: src/engine/workspace-manager/twenty-standard-application/utils/object-metadata/create-standard-flat-object-metadata.util.ts
 msgctxt "objectMetadata.description"
 msgid "A workspace member"
-msgstr "Một thành viên không gian làm việc"
+msgstr "Một thành viên tổ chức"
 
 #. js-lingui-id: spjW+Z
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-calendar-event-participant-standard-flat-field-metadata.util.ts
@@ -460,7 +443,7 @@ msgstr "Đã chấp nhận"
 #. js-lingui-id: qjrxU8
 #: src/engine/core-modules/file-storage/interfaces/file-storage-exception.ts
 msgid "Access denied."
-msgstr ""
+msgstr "Access denied."
 
 #. js-lingui-id: Bk+qoW
 #: src/engine/metadata-modules/connected-account/exceptions/connected-account-refresh-tokens.exception.ts
@@ -679,7 +662,7 @@ msgstr "Đã xảy ra lỗi trong quá trình nhập tin nhắn"
 #. js-lingui-id: dhcf1B
 #: src/engine/workspace-manager/workspace-migration.exception.ts
 msgid "An error occurred during workspace migration."
-msgstr "Đã xảy ra lỗi trong quá trình di chuyển không gian làm việc."
+msgstr "Đã xảy ra lỗi trong quá trình di chuyển tổ chức."
 
 #. js-lingui-id: X3mSup
 #: src/modules/messaging-webhooks/messaging-webhook.exception.ts
@@ -785,7 +768,7 @@ msgstr "Doanh thu hàng năm"
 #. js-lingui-id: 4XvK/4
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/utils/validate-flat-permission-flag-creation.util.ts
 msgid "Another application in this workspace has already registered a permission flag with this key."
-msgstr "Một ứng dụng khác trong workspace này đã đăng ký một cờ quyền với khóa này."
+msgstr "Một ứng dụng khác trong tổ chức này đã đăng ký một cờ quyền với khóa này."
 
 #. js-lingui-id: fRWsMD
 #: src/engine/metadata-modules/ai/ai.exception.ts
@@ -822,12 +805,12 @@ msgstr "ID ứng dụng"
 #. js-lingui-id: ue106l
 #: src/engine/core-modules/application/application.exception.ts
 msgid "Application is not installed in this workspace. Install it first."
-msgstr ""
+msgstr "Application is not installed in this tổ chức. Install it first."
 
 #. js-lingui-id: t77Ey9
 #: src/engine/core-modules/public-domain/public-domain.exception.ts
 msgid "Application not found in this workspace."
-msgstr "Không tìm thấy ứng dụng trong không gian làm việc này."
+msgstr "Không tìm thấy ứng dụng trong tổ chức này."
 
 #. js-lingui-id: ltvmAF
 #: src/engine/core-modules/application/application.exception.ts
@@ -1698,7 +1681,7 @@ msgstr "Không thể hoàn tất thao tác do các bản ghi liên quan."
 #. js-lingui-id: 6Sk/wo
 #: src/modules/blocklist/blocklist-validation-manager/services/blocklist-validation.service.ts
 msgid "Cannot create blocklist entry for another workspace member."
-msgstr "Không thể tạo mục trong danh sách chặn cho thành viên không gian làm việc khác."
+msgstr "Không thể tạo mục trong danh sách chặn cho thành viên tổ chức khác."
 
 #. js-lingui-id: LIPsWu
 #: src/modules/workflow/common/workspace-services/workflow-version-validation.workspace-service.ts
@@ -1713,7 +1696,7 @@ msgstr "Không thể tạo phiên bản quy trình làm việc với trạng th�
 #. js-lingui-id: VPXcr5
 #: src/engine/core-modules/user/services/user.service.ts
 msgid "Cannot delete account: you are the only admin. Assign another admin or delete the workspace(s) first."
-msgstr "Không thể xóa tài khoản: bạn là quản trị viên duy nhất. Vui lòng chỉ định quản trị viên khác hoặc xóa không gian làm việc trước."
+msgstr "Không thể xóa tài khoản: bạn là quản trị viên duy nhất. Vui lòng chỉ định quản trị viên khác hoặc xóa tổ chức trước."
 
 #. js-lingui-id: RYRFbW
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/services/flat-agent-validator.service.ts
@@ -1747,12 +1730,12 @@ msgstr "Không thể xóa chế độ xem duy nhất của đối tượng này"
 #. js-lingui-id: aqua7x
 #: src/engine/metadata-modules/role/role.service.ts
 msgid "Cannot delete this role: it is still assigned to one or more agents, and the workspace default role cannot be assigned to agents. Please reassign these agents to another role first."
-msgstr "Không thể xóa vai trò này: vai trò vẫn đang được gán cho một hoặc nhiều nhân viên, và vai trò mặc định của không gian làm việc không thể được gán cho các nhân viên. Vui lòng gán lại các nhân viên này cho một vai trò khác trước."
+msgstr "Không thể xóa vai trò này: vai trò vẫn đang được gán cho một hoặc nhiều nhân viên, và vai trò mặc định của tổ chức không thể được gán cho các nhân viên. Vui lòng gán lại các nhân viên này cho một vai trò khác trước."
 
 #. js-lingui-id: mGasIh
 #: src/engine/metadata-modules/role/role.service.ts
 msgid "Cannot delete this role: it is still assigned to one or more API keys, and the workspace default role cannot be assigned to API keys. Please reassign these API keys to another role first."
-msgstr "Không thể xóa vai trò này: vai trò vẫn đang được gán cho một hoặc nhiều khóa API, và vai trò mặc định của không gian làm việc không thể được gán cho các khóa API. Vui lòng gán lại các khóa API này cho một vai trò khác trước."
+msgstr "Không thể xóa vai trò này: vai trò vẫn đang được gán cho một hoặc nhiều khóa API, và vai trò mặc định của tổ chức không thể được gán cho các khóa API. Vui lòng gán lại các khóa API này cho một vai trò khác trước."
 
 #. js-lingui-id: AQyr9X
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/services/flat-field-metadata-validator.service.ts
@@ -1837,7 +1820,7 @@ msgstr "Không thể sửa đổi điều kiện để thay đổi vai trò củ
 #. js-lingui-id: Q0diyJ
 #: src/engine/metadata-modules/permissions/permissions.exception.ts
 msgid "Cannot remove the last admin from the workspace."
-msgstr "Không thể loại bỏ quản trị viên cuối cùng khỏi không gian làm việc."
+msgstr "Không thể loại bỏ quản trị viên cuối cùng khỏi tổ chức."
 
 #. js-lingui-id: wNJvot
 #: src/engine/core-modules/billing/billing.exception.ts
@@ -2592,7 +2575,7 @@ msgstr "Không tìm thấy tên miền tùy chỉnh."
 #. js-lingui-id: zsYQk/
 #: src/engine/core-modules/workspace/workspace.exception.ts
 msgid "Custom domains are disabled for this workspace."
-msgstr "Tên miền tùy chỉnh bị vô hiệu hoá cho không gian làm việc này."
+msgstr "Tên miền tùy chỉnh bị vô hiệu hoá cho tổ chức này."
 
 #. js-lingui-id: qHZppf
 #: src/engine/metadata-modules/object-metadata/object-metadata.exception.ts
@@ -3058,7 +3041,7 @@ msgstr "Tên hiển thị"
 #. js-lingui-id: IymH4t
 #: src/engine/core-modules/public-domain/public-domain.service.ts
 msgid "Domain already used for workspace custom domain"
-msgstr "Tên miền đã được sử dụng cho tên miền tùy chỉnh của không gian làm việc"
+msgstr "Tên miền đã được sử dụng cho tên miền tùy chỉnh của tổ chức"
 
 #. js-lingui-id: 2sIVDj
 #: src/engine/core-modules/dns-manager/services/dns-manager.service.ts
@@ -3187,7 +3170,7 @@ msgstr "Thư điện tử"
 #. js-lingui-id: AcnTuz
 #: src/engine/core-modules/user/services/user.service.ts
 msgid "Email already in use"
-msgstr ""
+msgstr "Email already in use"
 
 #. js-lingui-id: BBXuRb
 #: src/engine/core-modules/email-verification/email-verification-exception-filter.util.ts
@@ -3209,7 +3192,7 @@ msgstr "Vị trí bản ghi chiến dịch email"
 #. js-lingui-id: LT5dFi
 #: src/engine/core-modules/user/services/user.service.ts
 msgid "Email can only be updated when you belong to a single workspace."
-msgstr ""
+msgstr "Email can only be updated when you belong to a single tổ chức."
 
 #. js-lingui-id: MYgdAv
 #: src/engine/core-modules/emailing-domain/drivers/exceptions/emailing-domain-driver.exception.ts
@@ -3275,7 +3258,7 @@ msgstr "Dòng tiêu đề email"
 #. js-lingui-id: q87JH5
 #: src/engine/core-modules/user/user.exception.ts
 msgid "Email update is restricted to single workspace users."
-msgstr "Cập nhật email bị giới hạn cho người dùng một không gian làm việc duy nhất."
+msgstr "Cập nhật email bị giới hạn cho người dùng một tổ chức duy nhất."
 
 #. js-lingui-id: PeMFTI
 #: src/engine/core-modules/email-verification/email-verification.exception.ts
@@ -3319,7 +3302,7 @@ msgstr "Không cho phép quyền trường trống."
 #. js-lingui-id: ovnbNI
 #: src/engine/core-modules/admin-panel/services/admin-panel-server-admin.service.ts
 msgid "Enable two-factor authentication in your current workspace to manage server administrators."
-msgstr "Bật xác thực hai yếu tố trong không gian làm việc hiện tại của bạn để quản lý quản trị viên máy chủ."
+msgstr "Bật xác thực hai yếu tố trong tổ chức hiện tại của bạn để quản lý quản trị viên máy chủ."
 
 #. js-lingui-id: YPuX9P
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-calendar-event-standard-flat-field-metadata.util.ts
@@ -3463,7 +3446,7 @@ msgstr "Mục tiêu sự kiện"
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-timeline-activity-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "Event workspace member"
-msgstr "Thành viên trong không gian làm việc của sự kiện"
+msgstr "Thành viên trong tổ chức của sự kiện"
 
 #. js-lingui-id: XuTq0a
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-message-campaign-standard-flat-field-metadata.util.ts
@@ -3496,7 +3479,7 @@ msgstr "Các sự kiện liên kết với cá nhân"
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workspace-member-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "Events linked to the workspace member"
-msgstr "Các sự kiện liên kết với thành viên không gian làm việc"
+msgstr "Các sự kiện liên kết với thành viên tổ chức"
 
 #. js-lingui-id: b3ictS
 #: src/engine/metadata-modules/view-field-group/services/fields-widget-upsert.service.ts
@@ -3700,12 +3683,12 @@ msgstr "Trường không thể được lập chỉ mục vì thuộc về một
 #. js-lingui-id: e2V+x1
 #: src/engine/metadata-modules/flat-object-metadata/validators/utils/validate-flat-object-metadata-identifiers.util.ts
 msgid "Field cannot be used as label identifier due to its type"
-msgstr ""
+msgstr "Field cannot be used as label identifier due to its type"
 
 #. js-lingui-id: QMSXe6
 #: src/engine/metadata-modules/flat-object-metadata/validators/utils/validate-flat-object-metadata-identifiers.util.ts
 msgid "Field cannot be used as label identifier due to its type: should be of type UUID, text or full name"
-msgstr ""
+msgstr "Field cannot be used as label identifier due to its type: should be of type UUID, text or full name"
 
 #. js-lingui-id: F6OLoA
 #: src/engine/metadata-modules/flat-object-metadata/validators/utils/validate-flat-object-metadata-identifiers.util.ts
@@ -3854,7 +3837,7 @@ msgstr "Không tìm thấy trường để cập nhật siêu dữ liệu đối
 #. js-lingui-id: stY5BO
 #: src/engine/metadata-modules/flat-field-metadata/services/flat-field-metadata-type-validator.service.ts
 msgid "Field type NUMERIC is not supported. Use Number instead."
-msgstr ""
+msgstr "Field type NUMERIC is not supported. Use Number instead."
 
 #. js-lingui-id: p6JTHU
 #: src/engine/metadata-modules/flat-field-metadata/validators/utils/validate-position-flat-field-metadata.util.ts
@@ -3998,7 +3981,7 @@ msgstr "Tải lên tệp {fileId} chưa được hoàn tất. Vui lòng thử t�
 #. js-lingui-id: v+527c
 #: src/engine/twenty-orm/field-operations/files-field-sync/files-field-sync.ts
 msgid "File {fileId} was not uploaded for this field. Please re-upload the file."
-msgstr ""
+msgstr "File {fileId} was not uploaded for this field. Please re-upload the file."
 
 #. js-lingui-id: iPSuof
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-attachment-standard-flat-field-metadata.util.ts
@@ -5151,7 +5134,7 @@ msgstr "Tải trọng tạo quan hệ không hợp lệ"
 #: src/engine/metadata-modules/flat-field-metadata/validators/utils/validate-morph-or-relation-flat-field-metadata.util.ts
 #: src/engine/metadata-modules/flat-field-metadata/validators/utils/validate-morph-relation-flat-field-metadata.util.ts
 msgid "Invalid relation field target"
-msgstr ""
+msgstr "Invalid relation field target"
 
 #. js-lingui-id: lOyHVQ
 #: src/engine/core-modules/record-crud/exceptions/record-crud.exception.ts
@@ -5181,7 +5164,7 @@ msgstr "Dữ liệu nhóm mệnh đề phân quyền cấp hàng không hợp l�
 #. js-lingui-id: xzNMzS
 #: src/engine/metadata-modules/logic-function/logic-function.exception.ts
 msgid "Invalid seed project configuration."
-msgstr ""
+msgstr "Invalid seed project configuration."
 
 #. js-lingui-id: ApP70c
 #: src/modules/workflow/workflow-trigger/utils/assert-version-can-be-activated.util.ts
@@ -5434,7 +5417,7 @@ msgstr "Trạng thái quy trình làm việc không hợp lệ."
 #. js-lingui-id: v+ozTr
 #: src/modules/workflow/workflow-executor/exceptions/workflow-step-executor.exception.ts
 msgid "Invalid workflow step input."
-msgstr ""
+msgstr "Invalid workflow step input."
 
 #. js-lingui-id: GRz5NM
 #: src/modules/workflow/common/exceptions/workflow-version-step.exception.ts
@@ -5534,7 +5517,7 @@ msgstr "Bảng nối liên kết các liên kết tin nhắn của kênh với c
 #. js-lingui-id: PviVyk
 #: src/engine/core-modules/workspace-invitation/services/workspace-invitation.service.ts
 msgid "Join your team on Twenty"
-msgstr "Tham gia vào đội ngũ của bạn trên Twenty"
+msgstr "Tham gia vào đội ngũ của bạn trên Crove"
 
 #. js-lingui-id: +KEn4d
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-call-recording-standard-flat-field-metadata.util.ts
@@ -6466,7 +6449,7 @@ msgstr "Tên \"{name}\" không khả dụng vì đã được một trường kh
 #. js-lingui-id: dBDpp2
 #: src/engine/metadata-modules/flat-field-metadata/validators/utils/validate-flat-field-metadata-name-availability.util.ts
 msgid "Name \"{name}\" is not available as it is already used by join column name"
-msgstr ""
+msgstr "Name \"{name}\" is not available as it is already used by join column name"
 
 #. js-lingui-id: Aam+mb
 #: src/engine/metadata-modules/utils/exceptions/invalid-metadata.exception.ts
@@ -6591,7 +6574,7 @@ msgstr "Chiến dịch mới"
 #. js-lingui-id: TYhxR+
 #: src/engine/core-modules/user/services/user.service.ts
 msgid "New email must be different from current email"
-msgstr ""
+msgstr "New email must be different from current email"
 
 #. js-lingui-id: 1UzENP
 #: src/modules/dashboard/chart-data/utils/format-dimension-value.util.ts
@@ -6651,7 +6634,7 @@ msgstr "Chưa gán vai trò cho ứng dụng."
 #. js-lingui-id: 5ZMHXg
 #: src/engine/metadata-modules/permissions/permissions.exception.ts
 msgid "No role found for this user in the workspace."
-msgstr "Không tìm thấy vai trò cho người dùng này trong không gian làm việc."
+msgstr "Không tìm thấy vai trò cho người dùng này trong tổ chức."
 
 #. js-lingui-id: ISCcTE
 #: src/engine/twenty-orm/exceptions/twenty-orm.exception.ts
@@ -7159,7 +7142,7 @@ msgstr "Các cơ hội liên kết với công ty."
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workspace-member-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "Opportunities owned by the workspace member"
-msgstr "Các cơ hội do thành viên không gian làm việc sở hữu"
+msgstr "Các cơ hội do thành viên tổ chức sở hữu"
 
 #. js-lingui-id: JpA/cO
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-attachment-standard-flat-field-metadata.util.ts
@@ -7588,7 +7571,7 @@ msgstr "Không tìm thấy định nghĩa cờ quyền để cập nhật"
 #. placeholder {0}: flatPermissionFlagToValidate.key
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/utils/validate-flat-permission-flag-creation.util.ts
 msgid "Permission flag definition with key \"{0}\" is already registered in this workspace."
-msgstr "Định nghĩa cờ quyền với khóa \"{0}\" đã được đăng ký trong workspace này."
+msgstr "Định nghĩa cờ quyền với khóa \"{0}\" đã được đăng ký trong tổ chức này."
 
 #. js-lingui-id: wz0wTT
 #: src/engine/metadata-modules/flat-permission-flag/validators/utils/validate-permission-flag-not-in-use-cross-entity.util.ts
@@ -7712,7 +7695,7 @@ msgstr "Vui lòng chọn ngày và giờ kết thúc sau ngày và giờ bắt �
 #. js-lingui-id: mqzu5F
 #: src/engine/core-modules/email-verification/services/email-verification.service.ts
 msgid "Please confirm your updated email"
-msgstr ""
+msgstr "Please confirm your updated email"
 
 #. js-lingui-id: qgasuj
 #: src/engine/core-modules/imap-smtp-caldav-connection/services/imap-smtp-caldav-connection-validator.service.ts
@@ -7744,7 +7727,7 @@ msgstr "Vui lòng sử dụng tên miền email công ty."
 #: src/modules/workspace-member/query-hooks/workspace-member-delete-many.pre-query.hook.ts
 #: src/modules/workspace-member/query-hooks/workspace-member-delete-one.pre-query.hook.ts
 msgid "Please use Settings to remove a workspace member."
-msgstr "Vui lòng sử dụng Cài đặt để xóa một thành viên khỏi không gian làm việc."
+msgstr "Vui lòng sử dụng Cài đặt để xóa một thành viên khỏi tổ chức."
 
 #. js-lingui-id: f8ypJ4
 #: src/engine/core-modules/auth/auth.exception.ts
@@ -7890,7 +7873,7 @@ msgstr "Lời nhắc không thể để trống"
 #. js-lingui-id: OTJNm9
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/utils/validate-role-required-properties-are-defined.util.ts
 msgid "Property {property} is required for role"
-msgstr ""
+msgstr "Property {property} is required for role"
 
 #. js-lingui-id: IBJ/4j
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-opportunity-standard-flat-field-metadata.util.ts
@@ -8300,19 +8283,19 @@ msgstr "Vai trò"
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/utils/validate-flat-role-target-assignation-availability.util.ts
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/utils/validate-flat-role-target-assignation-availability.util.ts
 msgid "Role \"{roleLabel}\" cannot be assigned to agents"
-msgstr ""
+msgstr "Role \"{roleLabel}\" cannot be assigned to agents"
 
 #. js-lingui-id: u1Fm8i
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/utils/validate-flat-role-target-assignation-availability.util.ts
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/utils/validate-flat-role-target-assignation-availability.util.ts
 msgid "Role \"{roleLabel}\" cannot be assigned to API keys"
-msgstr ""
+msgstr "Role \"{roleLabel}\" cannot be assigned to API keys"
 
 #. js-lingui-id: 9ZQkou
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/utils/validate-flat-role-target-assignation-availability.util.ts
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/utils/validate-flat-role-target-assignation-availability.util.ts
 msgid "Role \"{roleLabel}\" cannot be assigned to users"
-msgstr ""
+msgstr "Role \"{roleLabel}\" cannot be assigned to users"
 
 #. js-lingui-id: ViBevc
 #: src/engine/metadata-modules/role/exceptions/role-target.exception.ts
@@ -8372,7 +8355,7 @@ msgstr "Tên vai trò không hợp lệ"
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/services/flat-row-level-permission-predicate-validator.service.ts
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/services/flat-row-level-permission-predicate-validator.service.ts
 msgid "Role not found"
-msgstr ""
+msgstr "Role not found"
 
 #. js-lingui-id: /BTyf+
 #: src/engine/metadata-modules/ai/ai.exception.ts
@@ -8416,7 +8399,7 @@ msgstr "Mục tiêu vai trò phải có đúng một trong các thuộc tính sa
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/services/flat-role-target-validator.service.ts
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/services/flat-role-target-validator.service.ts
 msgid "Role target not found"
-msgstr ""
+msgstr "Role target not found"
 
 #. js-lingui-id: gz6uii
 #: src/engine/metadata-modules/role/exceptions/role-target.exception.ts
@@ -8858,7 +8841,7 @@ msgstr "Quyền truy cập quản trị viên máy chủ đã được thay đ�
 #. js-lingui-id: uK5uBy
 #: src/engine/core-modules/application/application-key-value/services/application-key-value.service.ts
 msgid "Server keys require the application publisher workspace to have the application installed."
-msgstr "Các khóa máy chủ yêu cầu ứng dụng phải được cài đặt trong không gian làm việc của nhà phát hành ứng dụng."
+msgstr "Các khóa máy chủ yêu cầu ứng dụng phải được cài đặt trong tổ chức của nhà phát hành ứng dụng."
 
 #. js-lingui-id: Q8FQ55
 #: src/engine/core-modules/server-route-trigger/exceptions/server-route-trigger.exception.ts
@@ -8873,12 +8856,12 @@ msgstr "Hàm logic máy chủ yêu cầu xác thực."
 #. js-lingui-id: OUDI/C
 #: src/engine/core-modules/impersonation/constants/impersonation-denial-by-reason.constant.ts
 msgid "Server-level impersonation is not enabled for this user or workspace."
-msgstr "Mạo danh ở cấp máy chủ chưa được bật cho người dùng hoặc không gian làm việc này."
+msgstr "Mạo danh ở cấp máy chủ chưa được bật cho người dùng hoặc tổ chức này."
 
 #. js-lingui-id: U1u0hG
 #: src/engine/core-modules/impersonation/constants/impersonation-denial-by-reason.constant.ts
 msgid "Set up two-factor authentication before impersonating users in another workspace."
-msgstr "Thiết lập xác thực hai yếu tố trước khi mạo danh người dùng trong không gian làm việc khác."
+msgstr "Thiết lập xác thực hai yếu tố trước khi mạo danh người dùng trong tổ chức khác."
 
 #. js-lingui-id: vGWuPM
 #: src/engine/workspace-manager/twenty-standard-application/constants/standard-command-menu-item.constant.ts
@@ -8950,7 +8933,7 @@ msgstr "Một số quyền hạn bạn đã chọn không hợp lệ. Vui lòng 
 #. js-lingui-id: aPJopM
 #: src/engine/metadata-modules/user-role/user-role.service.ts
 msgid "Some workspace memberships could not be found. They may no longer have access to this workspace."
-msgstr "Không thể tìm thấy một số tư cách thành viên không gian làm việc. Có thể họ không còn quyền truy cập vào không gian làm việc này nữa."
+msgstr "Không thể tìm thấy một số tư cách thành viên tổ chức. Có thể họ không còn quyền truy cập vào tổ chức này nữa."
 
 #. js-lingui-id: eAMUPx
 #: src/engine/core-modules/onboarding/onboarding.exception.ts
@@ -8999,7 +8982,7 @@ msgstr "Đường dẫn trình xử lý nguồn không hợp lệ"
 #. js-lingui-id: OmgwCE
 #: src/engine/metadata-modules/flat-field-metadata/validators/utils/validate-morph-relation-flat-field-metadata.util.ts
 msgid "Source object cannot be the target object"
-msgstr ""
+msgstr "Source object cannot be the target object"
 
 #. js-lingui-id: Qc2uwm
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workspace-member-standard-flat-field-metadata.util.ts
@@ -9261,7 +9244,7 @@ msgstr "Các trường hệ thống không thể được cập nhật"
 #. js-lingui-id: aK2k19
 #: src/engine/metadata-modules/index-metadata/services/index-metadata.service.ts
 msgid "System indexes are required for Twenty to work and cannot be deleted."
-msgstr "Các chỉ mục hệ thống là bắt buộc để Twenty hoạt động và không thể bị xóa."
+msgstr "Các chỉ mục hệ thống là bắt buộc để Crove hoạt động và không thể bị xóa."
 
 #. js-lingui-id: /ojawH
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/services/flat-object-metadata-validator.service.ts
@@ -9424,7 +9407,7 @@ msgstr "Nhiệm vụ"
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workspace-member-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "Tasks assigned to the workspace member"
-msgstr "Nhiệm vụ được giao cho thành viên không gian làm việc"
+msgstr "Nhiệm vụ được giao cho thành viên tổ chức"
 
 #. js-lingui-id: cq5JGr
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-company-standard-flat-field-metadata.util.ts
@@ -9662,7 +9645,7 @@ msgstr "Ngày nhận tin nhắn"
 #. js-lingui-id: nCXfEw
 #: src/engine/metadata-modules/role/role.service.ts
 msgid "The default role cannot be deleted as it is required for the workspace to function properly."
-msgstr "Không thể xóa vai trò mặc định vì nó cần thiết để không gian làm việc hoạt động bình thường."
+msgstr "Không thể xóa vai trò mặc định vì nó cần thiết để tổ chức hoạt động bình thường."
 
 #. js-lingui-id: 0biWRI
 #: src/engine/metadata-modules/permissions/permissions.exception.ts
@@ -9672,7 +9655,7 @@ msgstr "Không thể xóa vai trò mặc định."
 #. js-lingui-id: 6BBrjb
 #: src/engine/metadata-modules/role/role.service.ts
 msgid "The default role for this workspace could not be found. Please contact support for assistance."
-msgstr "Không thể tìm thấy vai trò mặc định cho không gian làm việc này. Vui lòng liên hệ bộ phận hỗ trợ để được trợ giúp."
+msgstr "Không thể tìm thấy vai trò mặc định cho tổ chức này. Vui lòng liên hệ bộ phận hỗ trợ để được trợ giúp."
 
 #. js-lingui-id: hmg/aY
 #: src/engine/core-modules/enterprise/enterprise.exception.ts
@@ -9693,7 +9676,7 @@ msgstr "Người thực hiện quy trình làm việc"
 #. js-lingui-id: o6DGfJ
 #: src/engine/core-modules/workspace/services/workspace.service.ts
 msgid "The field \"{field}\" cannot be updated. Please contact your workspace administrator."
-msgstr "Trường \"{field}\" không thể được cập nhật. Vui lòng liên hệ quản trị viên không gian làm việc của bạn."
+msgstr "Trường \"{field}\" không thể được cập nhật. Vui lòng liên hệ quản trị viên tổ chức của bạn."
 
 #. js-lingui-id: xM30Ha
 #: src/engine/metadata-modules/page-layout-widget/utils/validate-field-configuration-nested-relation.util.ts
@@ -9992,7 +9975,7 @@ msgstr "Trạng thái phiên bản quy trình làm việc"
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workspace-member-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "The workspace member who last updated the record"
-msgstr "Thành viên trong không gian làm việc đã cập nhật bản ghi lần cuối"
+msgstr "Thành viên trong tổ chức đã cập nhật bản ghi lần cuối"
 
 #. js-lingui-id: mTxjri
 #: src/engine/core-modules/workspace-invitation/workspace-invitation.exception.ts
@@ -10017,12 +10000,12 @@ msgstr "Không có bước thiết lập ban đầu trước đó để quay l�
 #. js-lingui-id: Yi0Q/T
 #: src/engine/core-modules/workspace/services/workspace.service.ts
 msgid "These fields cannot be updated before the workspace is activated: {fieldsList}."
-msgstr "Các trường này không thể được cập nhật trước khi workspace được kích hoạt: {fieldsList}."
+msgstr "Các trường này không thể được cập nhật trước khi tổ chức được kích hoạt: {fieldsList}."
 
 #. js-lingui-id: Iy9pZw
 #: src/engine/api/graphql/workspace-query-runner/utils/handle-duplicate-key-error.util.ts
 msgid "This {fieldLabel} value is already in use. Please check your data and try again."
-msgstr ""
+msgstr "This {fieldLabel} value is already in use. Please check your data and try again."
 
 #. js-lingui-id: bypqPt
 #: src/engine/core-modules/server-route-trigger/exceptions/server-route-trigger.exception.ts
@@ -10069,17 +10052,17 @@ msgstr "Khóa API này chưa được gán vai trò."
 #: src/engine/core-modules/application/application-registration/application-registration.exception.ts
 #: src/engine/core-modules/application/application.exception.ts
 msgid "This app requires a newer version of the Twenty server. Please upgrade your server or use a compatible app version."
-msgstr "Ứng dụng này yêu cầu phiên bản máy chủ Twenty mới hơn. Vui lòng nâng cấp máy chủ của bạn hoặc dùng phiên bản ứng dụng tương thích."
+msgstr "Ứng dụng này yêu cầu phiên bản máy chủ Crove mới hơn. Vui lòng nâng cấp máy chủ của bạn hoặc dùng phiên bản ứng dụng tương thích."
 
 #. js-lingui-id: y2nks/
 #: src/engine/core-modules/application/application.exception.ts
 msgid "This app requires a newer version than this workspace has finished upgrading to. Please try again once the workspace upgrade completes."
-msgstr "Ứng dụng này yêu cầu phiên bản mới hơn so với phiên bản mà không gian làm việc này đã nâng cấp xong. Vui lòng thử lại sau khi quá trình nâng cấp không gian làm việc hoàn tất."
+msgstr "Ứng dụng này yêu cầu phiên bản mới hơn so với phiên bản mà tổ chức này đã nâng cấp xong. Vui lòng thử lại sau khi quá trình nâng cấp tổ chức hoàn tất."
 
 #. js-lingui-id: ecIX3O
 #: src/engine/core-modules/application/application-registration/application-registration.exception.ts
 msgid "This application is already owned by a workspace."
-msgstr "Ứng dụng này đã thuộc sở hữu của một không gian làm việc."
+msgstr "Ứng dụng này đã thuộc sở hữu của một tổ chức."
 
 #. js-lingui-id: SRnMG0
 #: src/engine/core-modules/emailing-domain/exceptions/emailing-domain.exception.ts
@@ -10374,7 +10357,7 @@ msgstr "Vai trò này không thể sửa đổi vì nó là vai trò hệ thốn
 #. js-lingui-id: DEJJoY
 #: src/engine/core-modules/application/application-key-value/services/application-key-value.service.ts
 msgid "This server key is already claimed by another workspace."
-msgstr "Khóa máy chủ này đã được một không gian làm việc khác đăng ký."
+msgstr "Khóa máy chủ này đã được một tổ chức khác đăng ký."
 
 #. js-lingui-id: nFIPim
 #: src/engine/core-modules/workspace/workspace.exception.ts
@@ -10399,7 +10382,7 @@ msgstr "Định danh toàn cục này đã được một đăng ký khác sử 
 #. js-lingui-id: GEN5Cv
 #: src/engine/core-modules/workspace-invitation/workspace-invitation.exception.ts
 msgid "This user is already a member of the workspace."
-msgstr "Người dùng này đã là thành viên của không gian làm việc."
+msgstr "Người dùng này đã là thành viên của tổ chức."
 
 #. js-lingui-id: LtsBYU
 #: src/engine/core-modules/twenty-config/twenty-config.exception.ts
@@ -10414,17 +10397,17 @@ msgstr "Phiên bản này không cao hơn phiên bản hiện đang được tri
 #. js-lingui-id: ZXnasf
 #: src/engine/core-modules/application/application.exception.ts
 msgid "This version of the application is already installed in this workspace."
-msgstr "Phiên bản này của ứng dụng đã được cài đặt trong không gian làm việc này."
+msgstr "Phiên bản này của ứng dụng đã được cài đặt trong tổ chức này."
 
 #. js-lingui-id: o/Kt/Y
 #: src/engine/core-modules/billing/billing.exception.ts
 msgid "This workspace already has a subscription."
-msgstr "Không gian làm việc này đã có đăng ký."
+msgstr "tổ chức này đã có đăng ký."
 
 #. js-lingui-id: IdEnkZ
 #: src/engine/core-modules/application/application.exception.ts
 msgid "This workspace's upgrade state could not be determined. Please try again once the workspace has finished upgrading."
-msgstr "Không thể xác định trạng thái nâng cấp của không gian làm việc này. Vui lòng thử lại sau khi không gian làm việc hoàn tất nâng cấp."
+msgstr "Không thể xác định trạng thái nâng cấp của tổ chức này. Vui lòng thử lại sau khi tổ chức hoàn tất nâng cấp."
 
 #. js-lingui-id: YBkEbP
 #: src/engine/metadata-modules/page-layout-widget/constants/standard-page-layout-widget-titles.ts
@@ -10614,7 +10597,7 @@ msgstr "Quá nhiều yêu cầu. Vui lòng thử lại sau."
 #. js-lingui-id: mfqtz7
 #: src/engine/core-modules/workspace-invitation/services/workspace-invitation.service.ts
 msgid "Too many workspace invitations sent. Please try again later."
-msgstr ""
+msgstr "Too many tổ chức invitations sent. Please try again later."
 
 #. js-lingui-id: 4nPpGt
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-call-recording-standard-flat-field-metadata.util.ts
@@ -10887,7 +10870,7 @@ msgstr "Người dùng đã được gán một vai trò."
 #: src/engine/core-modules/auth/strategies/jwt.auth.strategy.ts
 #: src/engine/core-modules/auth/strategies/jwt.auth.strategy.ts
 msgid "User does not have access to this workspace"
-msgstr "Người dùng không có quyền truy cập vào không gian làm việc này"
+msgstr "Người dùng không có quyền truy cập vào tổ chức này"
 
 #. js-lingui-id: Sl1ElS
 #: src/engine/metadata-modules/permissions/utils/permission-graphql-api-exception-handler.util.ts
@@ -10924,7 +10907,7 @@ msgstr "Id người dùng là bắt buộc."
 #: src/engine/core-modules/auth/strategies/jwt.auth.strategy.ts
 #: src/engine/core-modules/auth/token/services/access-token.service.ts
 msgid "User is not a member of the workspace."
-msgstr "Người dùng không phải là thành viên của không gian làm việc."
+msgstr "Người dùng không phải là thành viên của tổ chức."
 
 #. js-lingui-id: siJgSI
 #: src/engine/core-modules/auth/auth.exception.ts
@@ -10957,12 +10940,12 @@ msgstr "Người dùng chưa được tạo với email/mật khẩu"
 #: src/engine/metadata-modules/ai/ai.exception.ts
 #: src/engine/metadata-modules/permissions/permissions.exception.ts
 msgid "User workspace not found."
-msgstr "Không tìm thấy không gian làm việc của người dùng."
+msgstr "Không tìm thấy tổ chức của người dùng."
 
 #. js-lingui-id: 9mCrQp
 #: src/engine/twenty-orm/exceptions/twenty-orm.exception.ts
 msgid "User workspace role configuration not found."
-msgstr "Không tìm thấy cấu hình vai trò không gian làm việc của người dùng."
+msgstr "Không tìm thấy cấu hình vai trò tổ chức của người dùng."
 
 #. js-lingui-id: CUICZ7
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workspace-member-standard-flat-field-metadata.util.ts
@@ -11024,7 +11007,7 @@ msgstr "Giá trị phải ở dạng UPPER_CASE và theo snake_case \"{sanitized
 #. js-lingui-id: NzhR7p
 #: src/engine/core-modules/impersonation/constants/impersonation-denial-by-reason.constant.ts
 msgid "Verify your two-factor authentication before impersonating users in another workspace."
-msgstr "Hãy hoàn tất xác thực hai yếu tố trước khi mạo danh người dùng trong không gian làm việc khác."
+msgstr "Hãy hoàn tất xác thực hai yếu tố trước khi mạo danh người dùng trong tổ chức khác."
 
 #. js-lingui-id: q1On37
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workflow-version-standard-flat-field-metadata.util.ts
@@ -11445,22 +11428,22 @@ msgstr "Chúng tôi không thể kết nối với máy chủ email gửi đi c�
 #. js-lingui-id: jNr0+j
 #: src/engine/core-modules/imap-smtp-caldav-connection/services/imap-smtp-caldav-connection.service.ts
 msgid "We couldn't find any calendars on your CalDAV server. Please make sure your account has at least one calendar."
-msgstr ""
+msgstr "We couldn't find any calendars on your CalDAV server. Please make sure your account has at least one calendar."
 
 #. js-lingui-id: N/EFgn
 #: src/engine/core-modules/application/application-manifest/utils/enrich-application-manifest-sync-error.util.ts
 msgid "We couldn't install \"{applicationDisplayName}\" because some of its metadata could not be applied to your workspace."
-msgstr "Chúng tôi không thể cài đặt \"{applicationDisplayName}\" vì một số siêu dữ liệu của ứng dụng không thể được áp dụng cho không gian làm việc của bạn."
+msgstr "Chúng tôi không thể cài đặt \"{applicationDisplayName}\" vì một số siêu dữ liệu của ứng dụng không thể được áp dụng cho tổ chức của bạn."
 
 #. js-lingui-id: QJUYcw
 #: src/engine/core-modules/application/application-manifest/utils/enrich-application-manifest-sync-error.util.ts
 msgid "We couldn't install \"{applicationDisplayName}\". Its {humanEntity} could not be applied to your workspace."
-msgstr "Chúng tôi không thể cài đặt \"{applicationDisplayName}\". {humanEntity} của ứng dụng không thể được áp dụng cho không gian làm việc của bạn."
+msgstr "Chúng tôi không thể cài đặt \"{applicationDisplayName}\". {humanEntity} của ứng dụng không thể được áp dụng cho tổ chức của bạn."
 
 #. js-lingui-id: WFQSL0
 #: src/engine/core-modules/application/application.exception.ts
 msgid "We couldn't install this application because some of its metadata could not be applied to your workspace."
-msgstr "Chúng tôi không thể cài đặt ứng dụng này vì một số siêu dữ liệu của ứng dụng không thể được áp dụng cho không gian làm việc của bạn."
+msgstr "Chúng tôi không thể cài đặt ứng dụng này vì một số siêu dữ liệu của ứng dụng không thể được áp dụng cho tổ chức của bạn."
 
 #. js-lingui-id: v8UNEA
 #: src/engine/core-modules/imap-smtp-caldav-connection/services/imap-smtp-caldav-connection.service.ts
@@ -11493,7 +11476,7 @@ msgstr "Thứ Tư"
 #. js-lingui-id: TVkCrJ
 #: src/engine/core-modules/email-verification/services/email-verification.service.ts
 msgid "Welcome to Twenty: Please Confirm Your Email"
-msgstr "Chào mừng đến với Twenty: Vui lòng xác nhận email của bạn"
+msgstr "Chào mừng đến với Crove: Vui lòng xác nhận email của bạn"
 
 #. js-lingui-id: ofdfh5
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-message-campaign-standard-flat-field-metadata.util.ts
@@ -11867,55 +11850,55 @@ msgstr "Không được đặt workflowVersionId khi engineComponentKey là FRON
 #: src/engine/core-modules/billing-webhook/services/billing-webhook-subscription.service.ts
 #: src/engine/core-modules/billing-webhook/services/billing-webhook-subscription.service.ts
 msgid "Workspace {workspaceId} is not found."
-msgstr "Không tìm thấy không gian làm việc {workspaceId}."
+msgstr "Không tìm thấy tổ chức {workspaceId}."
 
 #. js-lingui-id: lNgTSN
 #: src/engine/core-modules/billing/billing.exception.ts
 msgid "Workspace cannot be deleted: subscription is not yet canceled."
-msgstr "Workspace không thể bị xóa: gói đăng ký chưa được hủy."
+msgstr "Tổ chức không thể bị xóa: gói đăng ký chưa được hủy."
 
 #. js-lingui-id: XsSVrR
 #: src/engine/core-modules/auth/services/sign-in-up.service.ts
 msgid "Workspace creation is restricted to admins"
-msgstr "Việc tạo không gian làm việc bị hạn chế cho quản trị viên"
+msgstr "Việc tạo tổ chức bị hạn chế cho quản trị viên"
 
 #. js-lingui-id: qSQPRS
 #: src/engine/core-modules/auth/services/auth.service.ts
 msgid "Workspace does not exist."
-msgstr "Không gian làm việc không tồn tại."
+msgstr "tổ chức không tồn tại."
 
 #. js-lingui-id: oLh4c+
 #: src/engine/metadata-modules/permissions/permissions.exception.ts
 msgid "Workspace ID and role mismatch."
-msgstr "ID không gian làm việc và vai trò không khớp."
+msgstr "ID tổ chức và vai trò không khớp."
 
 #. js-lingui-id: rklt6M
 #: src/engine/core-modules/auth/services/sign-in-up.service.ts
 #: src/engine/core-modules/auth/services/sign-in-up.service.ts
 msgid "Workspace is not ready to welcome new members"
-msgstr "Không gian làm việc chưa sẵn sàng để chào đón thành viên mới"
+msgstr "tổ chức chưa sẵn sàng để chào đón thành viên mới"
 
 #. js-lingui-id: 8RwcFg
 #: src/engine/core-modules/logic-function/logic-function-trigger/triggers/route/exceptions/route-trigger.exception.ts
 msgid "Workspace is suspended."
-msgstr "Không gian làm việc đang bị tạm ngưng."
+msgstr "tổ chức đang bị tạm ngưng."
 
 #. js-lingui-id: iN7doz
 #: src/engine/core-modules/auth/services/sign-in-up.service.ts
 msgid "Workspace limit reached. A valid enterprise key is required to create more workspaces."
-msgstr "Đã đạt giới hạn số lượng không gian làm việc. Cần có khóa doanh nghiệp hợp lệ để tạo thêm không gian làm việc."
+msgstr "Đã đạt giới hạn số lượng tổ chức. Cần có khóa doanh nghiệp hợp lệ để tạo thêm tổ chức."
 
 #. js-lingui-id: foYipq
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-message-participant-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "Workspace member"
-msgstr "Thành viên không gian làm việc"
+msgstr "Thành viên tổ chức"
 
 #. js-lingui-id: pwKAVz
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-calendar-event-participant-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "Workspace Member"
-msgstr "Thành viên không gian làm việc"
+msgstr "Thành viên tổ chức"
 
 #. js-lingui-id: tz4ASG
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-calendar-event-participant-standard-flat-field-metadata.util.ts
@@ -11923,74 +11906,74 @@ msgstr "Thành viên không gian làm việc"
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-timeline-activity-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.label"
 msgid "Workspace Member"
-msgstr "Thành viên không gian làm việc"
+msgstr "Thành viên tổ chức"
 
 #. js-lingui-id: j3uenD
 #: src/engine/workspace-manager/twenty-standard-application/utils/object-metadata/create-standard-flat-object-metadata.util.ts
 msgctxt "objectMetadata.labelSingular"
 msgid "Workspace Member"
-msgstr "Thành viên không gian làm việc"
+msgstr "Thành viên tổ chức"
 
 #. js-lingui-id: EVUobL
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workspace-member-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "Workspace member avatar"
-msgstr "Ảnh đại diện thành viên không gian làm việc"
+msgstr "Ảnh đại diện thành viên tổ chức"
 
 #. js-lingui-id: SWTQfb
 #: src/modules/blocklist/blocklist-validation-manager/services/blocklist-validation.service.ts
 msgid "Workspace member cannot be updated."
-msgstr "Không thể cập nhật thành viên không gian làm việc."
+msgstr "Không thể cập nhật thành viên tổ chức."
 
 #. js-lingui-id: YvE7G6
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workspace-member-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "Workspace member job title"
-msgstr "Chức danh công việc của thành viên không gian làm việc"
+msgstr "Chức danh công việc của thành viên tổ chức"
 
 #. js-lingui-id: xTE+26
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workspace-member-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "Workspace member name"
-msgstr "Tên thành viên không gian làm việc"
+msgstr "Tên thành viên tổ chức"
 
 #. js-lingui-id: rnnLQA
 #: src/engine/metadata-modules/ai/ai.exception.ts
 #: src/engine/metadata-modules/permissions/permissions.exception.ts
 msgid "Workspace member not found."
-msgstr "Không tìm thấy thành viên không gian làm việc."
+msgstr "Không tìm thấy thành viên tổ chức."
 
 #. js-lingui-id: tw1ElT
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workspace-member-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "Workspace member position"
-msgstr "Vị trí thành viên không gian làm việc"
+msgstr "Vị trí thành viên tổ chức"
 
 #. js-lingui-id: scar7N
 #: src/engine/workspace-manager/twenty-standard-application/utils/object-metadata/create-standard-flat-object-metadata.util.ts
 msgctxt "objectMetadata.labelPlural"
 msgid "Workspace Members"
-msgstr "Thành viên không gian làm việc"
+msgstr "Thành viên tổ chức"
 
 #. js-lingui-id: bcIybO
 #: src/engine/core-modules/auth/services/sign-in-up.service.ts
 msgid "Workspace name is required"
-msgstr "Tên không gian làm việc là bắt buộc"
+msgstr "Tên tổ chức là bắt buộc"
 
 #. js-lingui-id: JYc1v3
 #: src/engine/core-modules/user-workspace/guards/upload-profile-picture-permission.guard.ts
 msgid "Workspace not found"
-msgstr "Không tìm thấy không gian làm việc"
+msgstr "Không tìm thấy tổ chức"
 
 #. js-lingui-id: eQwIyW
 #: src/engine/core-modules/billing/billing.exception.ts
 msgid "Workspace not found for customer event."
-msgstr "Không tìm thấy không gian làm việc cho sự kiện khách hàng."
+msgstr "Không tìm thấy tổ chức cho sự kiện khách hàng."
 
 #. js-lingui-id: 5Io9Sh
 #: src/engine/core-modules/billing/billing.exception.ts
 msgid "Workspace not found for subscription event."
-msgstr "Không tìm thấy không gian làm việc cho sự kiện đăng ký."
+msgstr "Không tìm thấy tổ chức cho sự kiện đăng ký."
 
 #. js-lingui-id: EhVOPs
 #: src/engine/core-modules/auth/auth.exception.ts
@@ -12002,28 +11985,28 @@ msgstr "Không tìm thấy không gian làm việc cho sự kiện đăng ký."
 #: src/engine/twenty-orm/exceptions/twenty-orm.exception.ts
 #: src/modules/workflow/workflow-executor/exceptions/workflow-step-executor.exception.ts
 msgid "Workspace not found."
-msgstr "Không tìm thấy không gian làm việc."
+msgstr "Không tìm thấy tổ chức."
 
 #. js-lingui-id: mMbNCo
 #: src/engine/core-modules/admin-panel/services/admin-panel-user-lookup.service.ts
 msgid "Workspace not found. Please check the ID."
-msgstr "Không tìm thấy không gian làm việc. Vui lòng kiểm tra ID."
+msgstr "Không tìm thấy tổ chức. Vui lòng kiểm tra ID."
 
 #. js-lingui-id: osscRx
 #: src/engine/workspace-datasource/exceptions/workspace-datasource.exception.ts
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-runner/exceptions/workspace-migration-runner.exception.ts
 msgid "Workspace schema changes are temporarily locked."
-msgstr "Các thay đổi đối với lược đồ không gian làm việc tạm thời bị khóa."
+msgstr "Các thay đổi đối với lược đồ tổ chức tạm thời bị khóa."
 
 #. js-lingui-id: 7wxAZI
 #: src/engine/twenty-orm/exceptions/twenty-orm.exception.ts
 msgid "Workspace schema not found."
-msgstr "Không tìm thấy lược đồ không gian làm việc."
+msgstr "Không tìm thấy lược đồ tổ chức."
 
 #. js-lingui-id: 2gzz0t
 #: src/engine/metadata-modules/ai/ai-chat/services/workspace-setup-chat.service.ts
 msgid "Workspace setup"
-msgstr "Thiết lập không gian làm việc"
+msgstr "Thiết lập tổ chức"
 
 #. js-lingui-id: kjLpTn
 #: src/engine/metadata-modules/view-field/exceptions/view-field.exception.ts
@@ -12059,13 +12042,13 @@ msgstr "WorkspaceId là cần thiết để tạo một xem."
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-blocklist-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "WorkspaceMember"
-msgstr "Thành Viên Không Gian Làm Việc"
+msgstr "Thành Viên tổ chức"
 
 #. js-lingui-id: 1dgupQ
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-blocklist-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.label"
 msgid "WorkspaceMember"
-msgstr "Thành Viên Không Gian Làm Việc"
+msgstr "Thành Viên tổ chức"
 
 #. js-lingui-id: 9RXJsb
 #: src/engine/workspace-manager/workspace-migration/interceptors/utils/__tests__/build-metadata-validation-error-payload.util.spec.ts
@@ -12123,7 +12106,7 @@ msgstr "Bạn chỉ có thể cập nhật một bản ghi có trường tệp t
 #: src/engine/twenty-orm-v2/repository/workspace-repository-v2.ts
 #: src/engine/twenty-orm/repository/workspace-update-query-builder.ts
 msgid "You can only update up to {QUERY_MAX_RECORDS} records at once."
-msgstr ""
+msgstr "You can only update up to {QUERY_MAX_RECORDS} records at once."
 
 #. js-lingui-id: 1SQnFB
 #: src/engine/metadata-modules/user-role/user-role.service.ts
@@ -12189,7 +12172,7 @@ msgstr "Bạn không có quyền truy cập vào thư mục tin nhắn này."
 #. js-lingui-id: EFQeXU
 #: src/engine/guards/settings-permission.guard.ts
 msgid "You do not have permission to access this feature. Please contact your workspace administrator for access."
-msgstr "Bạn không có quyền truy cập vào tính năng này. Vui lòng liên hệ quản trị viên không gian làm việc của bạn để được truy cập."
+msgstr "Bạn không có quyền truy cập vào tính năng này. Vui lòng liên hệ quản trị viên tổ chức của bạn để được truy cập."
 
 #. js-lingui-id: nPwrik
 #: src/modules/workflow/workflow-trigger/exceptions/workflow-trigger.exception.ts
@@ -12199,27 +12182,27 @@ msgstr "Bạn không có quyền truy cập quy trình làm việc này."
 #. js-lingui-id: sjYS9x
 #: src/engine/metadata-modules/navigation-menu-item/services/navigation-menu-item-access.service.ts
 msgid "You do not have permission to create workspace-level navigation menu items. Please contact your workspace administrator for access."
-msgstr "Bạn không có quyền tạo các mục menu điều hướng ở cấp không gian làm việc. Vui lòng liên hệ quản trị viên không gian làm việc của bạn để được cấp quyền truy cập."
+msgstr "Bạn không có quyền tạo các mục menu điều hướng ở cấp tổ chức. Vui lòng liên hệ quản trị viên tổ chức của bạn để được cấp quyền truy cập."
 
 #. js-lingui-id: P69VwK
 #: src/engine/core-modules/user/user.resolver.ts
 msgid "You do not have permission to delete this user from the workspace. Please contact your workspace administrator for access."
-msgstr "Bạn không có quyền xóa người dùng này khỏi không gian làm việc. Vui lòng liên hệ quản trị viên không gian làm việc của bạn để được truy cập."
+msgstr "Bạn không có quyền xóa người dùng này khỏi tổ chức. Vui lòng liên hệ quản trị viên tổ chức của bạn để được truy cập."
 
 #. js-lingui-id: NuG0g3
 #: src/engine/metadata-modules/navigation-menu-item/services/navigation-menu-item-access.service.ts
 msgid "You do not have permission to delete workspace-level navigation menu items. Please contact your workspace administrator for access."
-msgstr "Bạn không có quyền xóa các mục menu điều hướng ở cấp không gian làm việc. Vui lòng liên hệ quản trị viên không gian làm việc của bạn để được cấp quyền truy cập."
+msgstr "Bạn không có quyền xóa các mục menu điều hướng ở cấp tổ chức. Vui lòng liên hệ quản trị viên tổ chức của bạn để được cấp quyền truy cập."
 
 #. js-lingui-id: +wZ6RO
 #: src/engine/core-modules/impersonation/constants/impersonation-denial-by-reason.constant.ts
 msgid "You do not have permission to impersonate users in this workspace."
-msgstr "Bạn không có quyền mạo danh người dùng trong không gian làm việc này."
+msgstr "Bạn không có quyền mạo danh người dùng trong tổ chức này."
 
 #. js-lingui-id: +2vVRB
 #: src/engine/guards/impersonate-permission.guard.ts
 msgid "You do not have permission to impersonate users. Please contact your workspace administrator for access."
-msgstr "Bạn không có quyền giả lập người dùng. Vui lòng liên hệ quản trị viên không gian làm việc của bạn để được truy cập."
+msgstr "Bạn không có quyền giả lập người dùng. Vui lòng liên hệ quản trị viên tổ chức của bạn để được truy cập."
 
 #. js-lingui-id: q5OVn+
 #: src/engine/core-modules/application/application.exception.ts
@@ -12237,22 +12220,22 @@ msgstr "Bạn không có quyền thực hiện hành động quy trình làm vi�
 #. js-lingui-id: 1dsy9v
 #: src/engine/core-modules/workspace/services/workspace.service.ts
 msgid "You do not have permission to update these fields: {fieldsList}. Please contact your workspace administrator."
-msgstr "Bạn không có quyền cập nhật các trường này: {fieldsList}. Vui lòng liên hệ quản trị viên không gian làm việc của bạn."
+msgstr "Bạn không có quyền cập nhật các trường này: {fieldsList}. Vui lòng liên hệ quản trị viên tổ chức của bạn."
 
 #. js-lingui-id: ZCNAGE
 #: src/engine/core-modules/user/user.resolver.ts
 msgid "You do not have permission to update this workspace member."
-msgstr "Bạn không có quyền cập nhật thành viên không gian làm việc này."
+msgstr "Bạn không có quyền cập nhật thành viên tổ chức này."
 
 #. js-lingui-id: RZzKii
 #: src/engine/metadata-modules/navigation-menu-item/services/navigation-menu-item-access.service.ts
 msgid "You do not have permission to update workspace-level navigation menu items. Please contact your workspace administrator for access."
-msgstr "Bạn không có quyền cập nhật các mục menu điều hướng ở cấp không gian làm việc. Vui lòng liên hệ quản trị viên không gian làm việc của bạn để được cấp quyền truy cập."
+msgstr "Bạn không có quyền cập nhật các mục menu điều hướng ở cấp tổ chức. Vui lòng liên hệ quản trị viên tổ chức của bạn để được cấp quyền truy cập."
 
 #. js-lingui-id: ZPo5fR
 #: src/engine/core-modules/user-workspace/guards/upload-profile-picture-permission.guard.ts
 msgid "You do not have permission to upload profile pictures. Please contact your workspace administrator for access."
-msgstr "Bạn không có quyền tải lên ảnh hồ sơ. Vui lòng liên hệ quản trị viên không gian làm việc của bạn để được cấp quyền truy cập."
+msgstr "Bạn không có quyền tải lên ảnh hồ sơ. Vui lòng liên hệ quản trị viên tổ chức của bạn để được cấp quyền truy cập."
 
 #. js-lingui-id: PzaPrw
 #: src/modules/dashboard/chart-data/exceptions/chart-data.exception.ts
@@ -12262,7 +12245,7 @@ msgstr "Bạn không có quyền xem dữ liệu này."
 #. js-lingui-id: M1he8p
 #: src/engine/metadata-modules/view/exceptions/view.exception.ts
 msgid "You don't have permission to create workspace-level views."
-msgstr "Bạn không có quyền tạo các chế độ xem cấp không gian làm việc."
+msgstr "Bạn không có quyền tạo các chế độ xem cấp tổ chức."
 
 #. js-lingui-id: QmL9y9
 #: src/engine/metadata-modules/view/exceptions/view.exception.ts
@@ -12336,7 +12319,7 @@ msgstr "Phương thức thanh toán của bạn đã bị từ chối. Vui lòng
 #: src/engine/metadata-modules/permissions/permissions.service.ts
 #: src/engine/metadata-modules/user-role/user-role.service.ts
 msgid "Your role in this workspace could not be found. Please contact your workspace administrator."
-msgstr "Không thể tìm thấy vai trò của bạn trong không gian làm việc này. Vui lòng liên hệ quản trị viên không gian làm việc của bạn."
+msgstr "Không thể tìm thấy vai trò của bạn trong tổ chức này. Vui lòng liên hệ quản trị viên tổ chức của bạn."
 
 #. js-lingui-id: 9T+AIN
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-company-standard-flat-field-metadata.util.ts
@@ -12347,19 +12330,19 @@ msgstr "Thành viên trong nhóm của bạn phụ trách quản lý tài khoả
 #. js-lingui-id: sOfbGC
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "Your Twenty plan renews soon"
-msgstr "Gói Twenty của bạn sẽ gia hạn sớm"
+msgstr "Gói Crove của bạn sẽ gia hạn sớm"
 
 #. js-lingui-id: qW+K5e
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "Your Twenty trial is ending soon"
-msgstr "Bản dùng thử Twenty của bạn sắp kết thúc"
+msgstr "Bản dùng thử Crove của bạn sắp kết thúc"
 
 #. js-lingui-id: ej/tZF
 #: src/engine/core-modules/graphql/hooks/use-graphql-error-handler.hook.ts
 msgid "Your workspace has been updated with a new data model. Please refresh the page."
-msgstr "Không gian làm việc của bạn đã được cập nhật với mô hình dữ liệu mới. Vui lòng làm mới trang."
+msgstr "tổ chức của bạn đã được cập nhật với mô hình dữ liệu mới. Vui lòng làm mới trang."
 
 #. js-lingui-id: DmYwVp
 #: src/engine/workspace-manager/workspace-cleaner/services/cleaner.workspace-service.ts
 msgid "Your workspace is paused — reactivate to keep your data"
-msgstr "Không gian làm việc của bạn đang bị tạm dừng — hãy kích hoạt lại để giữ dữ liệu của bạn"
+msgstr "tổ chức của bạn đang bị tạm dừng — hãy kích hoạt lại để giữ dữ liệu của bạn"

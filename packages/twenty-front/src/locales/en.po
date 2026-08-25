@@ -192,7 +192,7 @@ msgstr "{0, plural, one {# Object} other {# Objects}}"
 #. placeholder {0}: failedCount + behindCount
 #: src/modules/settings/admin-panel/utils/getWorkspacesUpgradeHealthText.ts
 msgid "{0, plural, one {# workspace failed or behind} other {# workspaces failed or behind}}"
-msgstr "{0, plural, one {# workspace failed or behind} other {# workspaces failed or behind}}"
+msgstr "{0, plural, one {# organization failed or behind} other {# organizations failed or behind}}"
 
 #. js-lingui-id: WTc9VY
 #. placeholder {0}: restriction.fieldNames.length
@@ -326,7 +326,7 @@ msgstr "{0} without email"
 #. placeholder {0}: selectedItemNames.length
 #: src/modules/object-record/record-field/ui/form-types/components/FormWorkspaceMemberFilterValueInput.tsx
 msgid "{0} workspace members"
-msgstr "{0} workspace members"
+msgstr "{0} organization members"
 
 #. js-lingui-id: qdQhzv
 #: src/modules/views/advanced-filter-chip/components/AdvancedFilterChip.tsx
@@ -372,7 +372,7 @@ msgstr "{appName} would like to:"
 #: src/modules/settings/admin-panel/utils/getWorkspacesUpgradeHealthText.ts
 #: src/pages/settings/admin-panel/SettingsAdminWorkspacesStatus.tsx
 msgid "{behindCount, plural, one {# workspace behind} other {# workspaces behind}}"
-msgstr "{behindCount, plural, one {# workspace behind} other {# workspaces behind}}"
+msgstr "{behindCount, plural, one {# organization behind} other {# organizations behind}}"
 
 #. js-lingui-id: SWRSbi
 #: src/modules/settings/profile/devices/components/SettingsProfileDevicesSection.tsx
@@ -425,7 +425,7 @@ msgstr "{eventAction} a related {eventObject}"
 #: src/modules/settings/admin-panel/utils/getWorkspacesUpgradeHealthText.ts
 #: src/pages/settings/admin-panel/SettingsAdminWorkspacesStatus.tsx
 msgid "{failedCount, plural, one {# workspace failed} other {# workspaces failed}}"
-msgstr "{failedCount, plural, one {# workspace failed} other {# workspaces failed}}"
+msgstr "{failedCount, plural, one {# organization failed} other {# organizations failed}}"
 
 #. js-lingui-id: POhzPf
 #: src/modules/ai/hooks/useAiChatFileUpload.ts
@@ -536,7 +536,7 @@ msgstr "{num, selectordinal, one {{num}st} two {{num}nd} few {{num}rd} other {{n
 #. js-lingui-id: fTSz8d
 #: src/modules/object-record/object-filter-dropdown/components/ObjectFilterDropdownActorSelect.tsx
 msgid "{numberOfSelectedItems} workspace members"
-msgstr "{numberOfSelectedItems} workspace members"
+msgstr "{numberOfSelectedItems} organization members"
 
 #. js-lingui-id: FaQB54
 #: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/hooks/useWorkflowAiAgentPermissionActions.ts
@@ -965,7 +965,7 @@ msgstr "About this user"
 #. js-lingui-id: PtK3Kn
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceContent.tsx
 msgid "About this workspace"
-msgstr "About this workspace"
+msgstr "About this organization"
 
 #. js-lingui-id: HfdWGA
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationGeneralInfo.tsx
@@ -975,7 +975,7 @@ msgstr "About your app"
 #. js-lingui-id: nJJAYH
 #: src/pages/settings/legal/SettingsLegalDpa.tsx
 msgid "Accepted and signed DPAs for this workspace, with their template version and date."
-msgstr "Accepted and signed DPAs for this workspace, with their template version and date."
+msgstr "Accepted and signed DPAs for this organization, with their template version and date."
 
 #. js-lingui-id: pNW+Rt
 #: src/pages/settings/admin-panel/SettingsAdminNewAiProvider.tsx
@@ -985,12 +985,12 @@ msgstr "Access Key ID"
 #. js-lingui-id: CrjDqe
 #: src/pages/auth/Authorize.tsx
 msgid "Access your workspace data"
-msgstr "Access your workspace data"
+msgstr "Access your organization data"
 
 #. js-lingui-id: IF4QNM
 #: src/modules/settings/mcp-and-apis/components/SettingsMcpSetup.tsx
 msgid "Access your workspace data from your favorite MCP client like Claude, Codex or Cursor."
-msgstr "Access your workspace data from your favorite MCP client like Claude, Codex or Cursor."
+msgstr "Access your organization data from your favorite MCP client like Claude, Codex or Cursor."
 
 #. js-lingui-id: AeXO77
 #: src/modules/settings/accounts/components/SettingsConnectedAccountsTableHeader.tsx
@@ -1466,32 +1466,32 @@ msgstr "Add test input for evaluation (e.g., \"Find all customers in NY\")"
 #. js-lingui-id: FKGcEL
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty MCP server as a remote context server in Zed."
-msgstr "Add the Twenty MCP server as a remote context server in Zed."
+msgstr "Add the Crove MCP server as a remote context server in Zed."
 
 #. js-lingui-id: iA2nHX
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty MCP server from Augment Code settings."
-msgstr "Add the Twenty MCP server from Augment Code settings."
+msgstr "Add the Crove MCP server from Augment Code settings."
 
 #. js-lingui-id: l+NzAk
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty MCP server from Raycast's MCP commands or settings."
-msgstr "Add the Twenty MCP server from Raycast's MCP commands or settings."
+msgstr "Add the Crove MCP server from Raycast's MCP commands or settings."
 
 #. js-lingui-id: j6G/yI
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty MCP server in Gemini CLI settings."
-msgstr "Add the Twenty MCP server in Gemini CLI settings."
+msgstr "Add the Crove MCP server in Gemini CLI settings."
 
 #. js-lingui-id: /OyhlM
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty MCP server to your LibreChat configuration file."
-msgstr "Add the Twenty MCP server to your LibreChat configuration file."
+msgstr "Add the Crove MCP server to your LibreChat configuration file."
 
 #. js-lingui-id: K0DXoj
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty remote server with LM Studio's install link."
-msgstr "Add the Twenty remote server with LM Studio's install link."
+msgstr "Add the Crove remote server with LM Studio's install link."
 
 #. js-lingui-id: 5+ttxv
 #: src/modules/settings/accounts/components/SettingsAccountsBlocklistInput.tsx
@@ -1511,7 +1511,7 @@ msgstr "Add topic"
 #. js-lingui-id: 4D/zWv
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add Twenty as a Streamable HTTP extension in Goose."
-msgstr "Add Twenty as a Streamable HTTP extension in Goose."
+msgstr "Add Crove as a Streamable HTTP extension in Goose."
 
 #. js-lingui-id: XnwceV
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationRedirectURIsInput.tsx
@@ -1592,7 +1592,7 @@ msgstr "Address 2"
 #. js-lingui-id: 7wCciB
 #: src/modules/settings/workspace/components/SettingsWorkspaceEmailGroupSection.tsx
 msgid "Addresses your workspace uses to send and receive email from shared inboxes"
-msgstr "Addresses your workspace uses to send and receive email from shared inboxes"
+msgstr "Addresses your organization uses to send and receive email from shared inboxes"
 
 #. js-lingui-id: U3pytU
 #: src/modules/settings/members/components/MemberInfosTab.tsx
@@ -1798,12 +1798,12 @@ msgstr "AI Chat"
 #. js-lingui-id: qiD/6r
 #: src/pages/settings/admin-panel/SettingsAdminWorkspaceDetail.tsx
 msgid "AI chat threads for this workspace"
-msgstr "AI chat threads for this workspace"
+msgstr "AI chat threads for this organization"
 
 #. js-lingui-id: E/lGXl
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
 msgid "AI consumption across all workspaces."
-msgstr "AI consumption across all workspaces."
+msgstr "AI consumption across all organizations."
 
 #. js-lingui-id: kkfXGh
 #: src/pages/settings/ai/components/SettingsAiUsageTab.tsx
@@ -1845,7 +1845,7 @@ msgstr "AI Usage"
 #. js-lingui-id: Ad11E9
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
 msgid "AI usage analytics across workspaces is available with an Enterprise key."
-msgstr "AI usage analytics across workspaces is available with an Enterprise key."
+msgstr "AI usage analytics across organizations is available with an Enterprise key."
 
 #. js-lingui-id: zkptxb
 #: src/pages/settings/ai/components/SettingsAiUsageTab.tsx
@@ -1882,7 +1882,7 @@ msgstr "AI Usage by User"
 #. js-lingui-id: jyqPfh
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
 msgid "AI Usage by Workspace"
-msgstr "AI Usage by Workspace"
+msgstr "AI Usage by Organization"
 
 #. js-lingui-id: KLyZ6L
 #: src/pages/settings/ai/SettingsAiUsageUserDetail.tsx
@@ -2037,12 +2037,12 @@ msgstr "All tasks addressed. Maintain the momentum."
 #. js-lingui-id: 45Gm/K
 #: src/pages/settings/applications/components/SettingsApplicationsTable.tsx
 msgid "All the applications currently installed on this workspace"
-msgstr "All the applications currently installed on this workspace"
+msgstr "All the applications currently installed on this organization"
 
 #. js-lingui-id: xP6s/m
 #: src/pages/settings/layout/SettingsLayout.tsx
 msgid "All the layout items declared on your workspace"
-msgstr "All the layout items declared on your workspace"
+msgstr "All the layout items declared on your organization"
 
 #. js-lingui-id: XuuWVF
 #: src/modules/settings/roles/role-permissions/object-level-permissions/components/SettingsRolePermissionsObjectLevelObjectPicker.tsx
@@ -2057,12 +2057,12 @@ msgstr "All topics"
 #. js-lingui-id: XLzFVD
 #: src/modules/settings/roles/role-assignment/constants/RoleTargetConfig.ts
 msgid "All workspace members already have this role"
-msgstr "All workspace members already have this role"
+msgstr "All organization members already have this role"
 
 #. js-lingui-id: MLmnB2
 #: src/pages/settings/admin-panel/SettingsAdminUserDetail.tsx
 msgid "All workspaces this user is a member of"
-msgstr "All workspaces this user is a member of"
+msgstr "All organizations this user is a member of"
 
 #. js-lingui-id: pPTmfc
 #: src/modules/settings/roles/role-permissions/object-level-permissions/components/SettingsRolePermissionsObjectLevelObjectPicker.tsx
@@ -2293,7 +2293,7 @@ msgstr "Any field"
 #. js-lingui-id: SI4CMD
 #: src/pages/settings/applications/components/SettingsApplicationConnectScopePickerModal.tsx
 msgid "Anyone in this workspace can use this credential."
-msgstr "Anyone in this workspace can use this credential."
+msgstr "Anyone in this organization can use this credential."
 
 #. js-lingui-id: mA+AZz
 #: src/modules/settings/security/components/SettingsSecurityAuthProvidersOptionsList.tsx
@@ -2303,7 +2303,7 @@ msgstr "Anyone with an approved email domain can find and join."
 #. js-lingui-id: xJR+Wq
 #: src/pages/settings/members/tabs/SettingsWorkspaceMembersInviteTab.tsx
 msgid "Anyone with an email address at these domains is allowed to sign up for this workspace."
-msgstr "Anyone with an email address at these domains is allowed to sign up for this workspace."
+msgstr "Anyone with an email address at these domains is allowed to sign up for this organization."
 
 #. js-lingui-id: OZtEcz
 #: src/modules/settings/mcp-and-apis/components/PlaygroundSetupForm.tsx
@@ -2630,7 +2630,7 @@ msgstr "Are you sure? Your current information will not be saved."
 #. js-lingui-id: cybVUo
 #: src/modules/settings/members/components/MemberInfosTab.tsx
 msgid "As it will be displayed in the workspace"
-msgstr "As it will be displayed in the workspace"
+msgstr "As it will be displayed in the organization"
 
 #. js-lingui-id: 54PdN4
 #: src/modules/side-panel/pages/page-layout/utils/getSortLabelSuffixForFieldType.ts
@@ -2706,7 +2706,7 @@ msgstr "Assignable to API Keys"
 #. js-lingui-id: OUbMUU
 #: src/modules/settings/roles/role-settings/components/SettingsRoleApplicability.tsx
 msgid "Assignable to Workspace Members"
-msgstr "Assignable to Workspace Members"
+msgstr "Assignable to Organization Members"
 
 #. js-lingui-id: 7qh2Hx
 #: src/modules/settings/roles/role-assignment/components/SettingsRoleAssignmentTable.tsx
@@ -2939,7 +2939,7 @@ msgstr "Automatically create People records when receiving or sending emails"
 #. js-lingui-id: rHeTee
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationGeneralToggles.tsx
 msgid "Automatically install this app on every newly created workspace"
-msgstr "Automatically install this app on every newly created workspace"
+msgstr "Automatically install this app on every newly created organization"
 
 #. js-lingui-id: XFGV21
 #: src/pages/settings/applications/tabs/SettingsApplicationGeneralSection.tsx
@@ -3152,7 +3152,7 @@ msgstr "Billing period"
 #. js-lingui-id: xF/NXI
 #: src/modules/settings/billing/hooks/useBillingPortalSession.ts
 msgid "Billing portal session error. Please retry or contact Twenty team"
-msgstr "Billing portal session error. Please retry or contact Twenty team"
+msgstr "Billing portal session error. Please retry or contact Crove team"
 
 #. js-lingui-id: 8kIU+G
 #: src/modules/advanced-text-editor/constants/AdvancedTextEditorBlockCatalog.ts
@@ -3194,7 +3194,7 @@ msgstr "Body Input"
 #. js-lingui-id: SkYx9p
 #: src/pages/onboarding/BookCall.tsx
 msgid "Book a 30-minute call and we'll help you get your workspace production-ready."
-msgstr "Book a 30-minute call and we'll help you get your workspace production-ready."
+msgstr "Book a 30-minute call and we'll help you get your organization production-ready."
 
 #. js-lingui-id: 2yl5lQ
 #: src/pages/onboarding/UpgradeFreeTrial.tsx
@@ -3262,12 +3262,12 @@ msgstr "Browse"
 #. js-lingui-id: 041SWy
 #: src/pages/settings/admin-panel/SettingsAdminChats.tsx
 msgid "Browse AI chat threads across all workspaces ({totalCount} matching)"
-msgstr "Browse AI chat threads across all workspaces ({totalCount} matching)"
+msgstr "Browse AI chat threads across all organizations ({totalCount} matching)"
 
 #. js-lingui-id: IXoy1p
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
 msgid "Browse AI chat threads across all workspaces, including onboarding chats"
-msgstr "Browse AI chat threads across all workspaces, including onboarding chats"
+msgstr "Browse AI chat threads across all organizations, including onboarding chats"
 
 #. js-lingui-id: hKAV/O
 #: src/pages/settings/community/SettingsCommunity.tsx
@@ -3348,7 +3348,7 @@ msgstr "by {author}"
 #. js-lingui-id: 8Pfllj
 #: src/modules/auth/sign-in-up/components/FooterNote.tsx
 msgid "By using Twenty, you agree to the"
-msgstr "By using Twenty, you agree to the"
+msgstr "By using Crove, you agree to the"
 
 #. js-lingui-id: Yx41df
 #: src/modules/auth/sign-in-up/components/FooterNote.tsx
@@ -3476,7 +3476,7 @@ msgstr "Call recorder"
 #. js-lingui-id: ahn0Ti
 #: src/modules/page-layout/widgets/calendar-event-call-recording/components/CallRecordingWidgetUnavailableDisplay.tsx
 msgid "Call recording is not available in this workspace."
-msgstr "Call recording is not available in this workspace."
+msgstr "Call recording is not available in this organization."
 
 #. js-lingui-id: z9jSP/
 #: src/modules/page-layout/widgets/calendar-event-call-recording/components/CallRecordingWidgetUnavailableDisplay.tsx
@@ -3658,7 +3658,7 @@ msgstr "Card"
 #: src/modules/settings/billing/components/AddPaymentMethodForm.tsx
 #: src/pages/onboarding/UpgradeFreeTrial.tsx
 msgid "Card payment is currently unavailable. Please verify your Stripe configuration or contact your workspace admin."
-msgstr "Card payment is currently unavailable. Please verify your Stripe configuration or contact your workspace admin."
+msgstr "Card payment is currently unavailable. Please verify your Stripe configuration or contact your organization admin."
 
 #. js-lingui-id: M1RLfx
 #: src/localization/hooks/useLocaleOptions.ts
@@ -3827,7 +3827,7 @@ msgstr "Check your inbox to verify your new email address."
 #: src/modules/settings/billing/hooks/useHandleCheckoutSession.ts
 #: src/modules/settings/billing/hooks/useHandleCheckoutSession.ts
 msgid "Checkout session error. Please retry or contact Twenty team"
-msgstr "Checkout session error. Please retry or contact Twenty team"
+msgstr "Checkout session error. Please retry or contact Crove team"
 
 #. js-lingui-id: SviKkE
 #: src/localization/hooks/useLocaleOptions.ts
@@ -3897,7 +3897,7 @@ msgstr "Choose what happens when you click an email"
 #. js-lingui-id: kTDEu6
 #: src/pages/settings/profile/appearance/components/SettingsExperience.tsx
 msgid "Choose where records open by default. Some objects may use a workspace setting"
-msgstr "Choose where records open by default. Some objects may use a workspace setting"
+msgstr "Choose where records open by default. Some objects may use a organization setting"
 
 #. js-lingui-id: 02EFne
 #: src/modules/settings/security/components/SettingsSecuritySettings.tsx
@@ -3937,7 +3937,7 @@ msgstr "Claim with GitHub"
 #. js-lingui-id: ke+vxJ
 #: src/pages/settings/applications/tabs/SettingsApplicationRegistrationDistributionTab.tsx
 msgid "Claimed by this workspace"
-msgstr "Claimed by this workspace"
+msgstr "Claimed by this organization"
 
 #. js-lingui-id: KqRGF3
 #: src/pages/settings/applications/utils/getClaimErrorContent.ts
@@ -4472,7 +4472,7 @@ msgstr "Configure SMTP settings to send emails from your account."
 #. js-lingui-id: TiCmQz
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
 msgid "Configure the default AI models for all workspaces"
-msgstr "Configure the default AI models for all workspaces"
+msgstr "Configure the default AI models for all organizations"
 
 #. js-lingui-id: CcCy4C
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
@@ -4487,12 +4487,12 @@ msgstr "Configure the remote server in Amazon Q Developer's MCP settings."
 #. js-lingui-id: g1/8jH
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Configure the Twenty MCP server manually in Cascade."
-msgstr "Configure the Twenty MCP server manually in Cascade."
+msgstr "Configure the Crove MCP server manually in Cascade."
 
 #. js-lingui-id: XiyvRh
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Configure the Twenty MCP server manually in Cline."
-msgstr "Configure the Twenty MCP server manually in Cline."
+msgstr "Configure the Crove MCP server manually in Cline."
 
 #. js-lingui-id: qA9AGQ
 #: src/modules/settings/domains/components/SettingsDomainRecords.tsx
@@ -4592,7 +4592,7 @@ msgstr "Connect {providerDisplayName}"
 #. js-lingui-id: D8ATlr
 #: src/modules/settings/accounts/components/SettingsNewAccountSection.tsx
 msgid "Connect a new account to your workspace"
-msgstr "Connect a new account to your workspace"
+msgstr "Connect a new account to your organization"
 
 #. js-lingui-id: CMrq4R
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
@@ -4602,7 +4602,7 @@ msgstr "Connect additional MCP clients using install links or client docs."
 #. js-lingui-id: vPCRNy
 #: src/pages/settings/ai/components/SettingsAiOverviewTab.tsx
 msgid "Connect AI assistants like Claude or Cursor to your workspace via the Model Context Protocol"
-msgstr "Connect AI assistants like Claude or Cursor to your workspace via the Model Context Protocol"
+msgstr "Connect AI assistants like Claude or Cursor to your organization via the Model Context Protocol"
 
 #. js-lingui-id: YLx3sC
 #: src/modules/settings/accounts/components/SettingsAccountsListEmptyStateCard.tsx
@@ -5152,7 +5152,7 @@ msgstr "Create a workflow and return here to view its versions"
 #. js-lingui-id: Hn5erC
 #: src/modules/auth/sign-in-up/components/SignInUpGlobalScopeForm.tsx
 msgid "Create a workspace"
-msgstr "Create a workspace"
+msgstr "Create a organization"
 
 #. js-lingui-id: /WlFSf
 #: src/pages/settings/applications/tabs/SettingsApplicationsDeveloperTab.tsx
@@ -5256,7 +5256,7 @@ msgstr "Create Webhook"
 #. js-lingui-id: FdtSNC
 #: src/modules/auth/sign-in-up/components/internal/SignInUpWorkspaceCreationForm.tsx
 msgid "Create workspace"
-msgstr "Create workspace"
+msgstr "Create organization"
 
 #. js-lingui-id: kdLGki
 #: src/modules/ui/navigation/navigation-drawer/components/MultiWorkspaceDropdown/internal/MultiWorkspaceDropdownDefaultComponents.tsx
@@ -5273,7 +5273,7 @@ msgstr "Create your organization"
 #. js-lingui-id: OHF273
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useActionRolePermissionFlagConfig.ts
 msgid "Create, edit, and delete workspace views"
-msgstr "Create, edit, and delete workspace views"
+msgstr "Create, edit, and delete organization views"
 
 #. js-lingui-id: d+F6q9
 #: src/modules/settings/admin-panel/chats/components/SettingsAdminChatsTable.tsx
@@ -5323,7 +5323,7 @@ msgstr "Creating your <0>data model</0>..."
 #. js-lingui-id: m4ZE6a
 #: src/modules/auth/sign-in-up/constants/WorkspaceActivationMessages.tsx
 msgid "Creating your <0>workspace</0>..."
-msgstr "Creating your <0>workspace</0>..."
+msgstr "Creating your <0>organization</0>..."
 
 #. js-lingui-id: HAzhV7
 #: src/pages/settings/admin-panel/SettingsAdminAiProviderDetail.tsx
@@ -5375,7 +5375,7 @@ msgstr "Credit plan upgraded."
 #: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
 #: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
 msgid "Credit usage breakdown for your workspace."
-msgstr "Credit usage breakdown for your workspace."
+msgstr "Credit usage breakdown for your organization."
 
 #. js-lingui-id: UQ4Hjl
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceBillingContent.tsx
@@ -5539,7 +5539,7 @@ msgstr "Current version"
 #. js-lingui-id: 0b3reS
 #: src/modules/settings/profile/components/DeleteAccount.tsx
 msgid "Current workspace member not found."
-msgstr "Current workspace member not found."
+msgstr "Current organization member not found."
 
 #. js-lingui-id: mO0Peh
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
@@ -5689,7 +5689,7 @@ msgstr "Customize how your record page looks."
 #. js-lingui-id: 0lvH/K
 #: src/pages/settings/layout/SettingsLayout.tsx
 msgid "Customize how your workspace looks."
-msgstr "Customize how your workspace looks."
+msgstr "Customize how your organization looks."
 
 #. js-lingui-id: zZksLX
 #: src/pages/settings/layout/SettingsLayout.tsx
@@ -5709,7 +5709,7 @@ msgstr "Customize record page"
 #. js-lingui-id: JcqvfA
 #: src/modules/settings/data-model/object-details/components/tabs/ObjectLayout.tsx
 msgid "Customize the workspace record page"
-msgstr "Customize the workspace record page"
+msgstr "Customize the organization record page"
 
 #. js-lingui-id: ZBgSzH
 #: src/modules/settings/members/components/MemberPermissionsTab.tsx
@@ -5719,7 +5719,7 @@ msgstr "Customize what this user can view and perform"
 #. js-lingui-id: bCJa9l
 #: src/modules/settings/security/components/SettingsSecuritySettings.tsx
 msgid "Customize your workspace security"
-msgstr "Customize your workspace security"
+msgstr "Customize your organization security"
 
 #. js-lingui-id: fFwMZv
 #: src/modules/settings/data-model/fields/forms/select/components/SettingsDataModelFieldSelectFormOptionRow.tsx
@@ -6128,7 +6128,7 @@ msgstr "Define what this tool does"
 #: src/modules/settings/accounts/components/SettingsAccountsCalendarChannelDetails.tsx
 #: src/modules/settings/accounts/components/SettingsAccountsMessageChannelDetails.tsx
 msgid "Define what will be visible to other users in your workspace"
-msgstr "Define what will be visible to other users in your workspace"
+msgstr "Define what will be visible to other users in your organization"
 
 #. js-lingui-id: EcAkBs
 #: src/modules/workflow/workflow-steps/workflow-actions/delay-actions/components/WorkflowEditActionDelay.tsx
@@ -6230,7 +6230,7 @@ msgstr "Delete account and all the associated data"
 #. js-lingui-id: kvHBHg
 #: src/modules/settings/profile/components/DeleteAccount.tsx
 msgid "Delete account and all the associated data or leave workspace"
-msgstr "Delete account and all the associated data or leave workspace"
+msgstr "Delete account and all the associated data or leave organization"
 
 #. js-lingui-id: YMNj8z
 #: src/pages/settings/ai/components/SettingsAgentDeleteConfirmationModal.tsx
@@ -6381,12 +6381,12 @@ msgstr "Delete widget"
 #: src/modules/settings/profile/components/DeleteWorkspace.tsx
 #: src/modules/settings/profile/components/DeleteWorkspace.tsx
 msgid "Delete workspace"
-msgstr "Delete workspace"
+msgstr "Delete organization"
 
 #. js-lingui-id: mk2Ygs
 #: src/modules/settings/profile/components/DeleteWorkspace.tsx
 msgid "Delete your whole workspace"
-msgstr "Delete your whole workspace"
+msgstr "Delete your whole organization"
 
 #. js-lingui-id: vGjmyl
 #: src/modules/object-record/record-group/components/RecordGroupRelationChip.tsx
@@ -6507,7 +6507,7 @@ msgstr "Detach"
 #. js-lingui-id: crxufE
 #: src/pages/settings/admin-panel/SettingsAdminWorkspacesStatus.tsx
 msgid "Detail per workspace"
-msgstr "Detail per workspace"
+msgstr "Detail per organization"
 
 #. js-lingui-id: URmyfc
 #: src/modules/ai/components/RoutingDebugDisplay.tsx
@@ -6934,12 +6934,12 @@ msgstr "e.g. My OpenAI Proxy"
 #. js-lingui-id: SwLZ5l
 #: src/pages/settings/applications/components/SettingsClaimApplicationSection.tsx
 msgid "e.g. my-twenty-app"
-msgstr "e.g. my-twenty-app"
+msgstr "e.g. my-crove-app"
 
 #. js-lingui-id: 88vQqv
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationDangerZone.tsx
 msgid "e.g. my-workspace"
-msgstr "e.g. my-workspace"
+msgstr "e.g. my-organization"
 
 #. js-lingui-id: XnR4kd
 #: src/pages/settings/admin-panel/SettingsAdminNewAiProvider.tsx
@@ -7667,7 +7667,7 @@ msgstr "Enter the system prompt that defines this agent's behavior and capabilit
 #. js-lingui-id: tEWpbi
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationDangerZone.tsx
 msgid "Enter the workspace subdomain to transfer this app to. You will lose access to manage it."
-msgstr "Enter the workspace subdomain to transfer this app to. You will lose access to manage it."
+msgstr "Enter the organization subdomain to transfer this app to. You will lose access to manage it."
 
 #. js-lingui-id: pubQie
 #: src/modules/object-record/advanced-filter/components/AdvancedFilterDropdownNumberInput.tsx
@@ -7917,7 +7917,7 @@ msgstr "Error while cancelling plan switching."
 #. js-lingui-id: QmR+2U
 #: src/modules/settings/billing/hooks/useEndSubscriptionTrialPeriod.ts
 msgid "Error while ending trial period. Please contact Twenty team."
-msgstr "Error while ending trial period. Please contact Twenty team."
+msgstr "Error while ending trial period. Please contact Crove team."
 
 #. js-lingui-id: 5g78zo
 #: src/pages/settings/members/SettingsWorkspaceMember.tsx
@@ -8490,7 +8490,7 @@ msgstr "Failed to save the campaign"
 #. js-lingui-id: 9ryUyP
 #: src/pages/settings/ai/components/SettingsAiOverviewTab.tsx
 msgid "Failed to save workspace instructions"
-msgstr "Failed to save workspace instructions"
+msgstr "Failed to save organization instructions"
 
 #. js-lingui-id: GpNLad
 #: src/modules/activities/emails/hooks/useSendMessageCampaign.ts
@@ -9305,7 +9305,7 @@ msgstr "Get the most out of your CRM by installing some apps"
 #. js-lingui-id: NXEW3h
 #: src/pages/onboarding/InviteTeam.tsx
 msgid "Get the most out of your workspace by inviting your team."
-msgstr "Get the most out of your workspace by inviting your team."
+msgstr "Get the most out of your organization by inviting your team."
 
 #. js-lingui-id: XXtAx5
 #: src/modules/settings/data-model/indexes/forms/components/SettingsObjectIndexOptionsForm.tsx
@@ -9390,7 +9390,7 @@ msgstr "Grant access"
 #. js-lingui-id: 6eo66Q
 #: src/modules/settings/workspace/components/ToggleImpersonate.tsx
 msgid "Grant access to your workspace so we can troubleshoot problems."
-msgstr "Grant access to your workspace so we can troubleshoot problems."
+msgstr "Grant access to your organization so we can troubleshoot problems."
 
 #. js-lingui-id: 3xMv4O
 #: src/modules/settings/admin-panel/components/SettingsAdminServerAdminAccess.tsx
@@ -9411,7 +9411,7 @@ msgstr "Grant full access"
 #. js-lingui-id: Tbxf45
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceCreditGrantModal.tsx
 msgid "Granted {parsedAmount} credits to this workspace."
-msgstr "Granted {parsedAmount} credits to this workspace."
+msgstr "Granted {parsedAmount} credits to this organization."
 
 #. js-lingui-id: fqtGOd
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceBillingContent.tsx
@@ -9700,7 +9700,7 @@ msgstr "Hide system indexes"
 #. js-lingui-id: 1ETc0T
 #: src/pages/settings/community/SettingsCommunity.tsx
 msgid "Hire a partner to help you implement and customize Twenty."
-msgstr "Hire a partner to help you implement and customize Twenty."
+msgstr "Hire a partner to help you implement and customize Crove."
 
 #. js-lingui-id: i0qMbr
 #: src/modules/navigation/components/MainNavigationDrawerTabsRow.tsx
@@ -9745,30 +9745,7 @@ msgid ""
 "```\n"
 "\n"
 "See the [Getting Started guide](https://twenty.com/developers/extend/apps/getting-started) for the full walkthrough, and [Building Apps](https://twenty.com/developers/extend/apps/building) for the `defineApplication` / `defineEntity` APIs."
-msgstr ""
-"Host your workspace's customizations and overrides.\n"
-"\n"
-"#### What it includes\n"
-"Every extension you create on top of the standard app is grouped under Custom. It keeps your schema changes, interface changes, and workspace-specific logic in one place.\n"
-"\n"
-"- Custom objects and fields for your own data model\n"
-"- Views, navigation items, and record layouts that shape how your team works\n"
-"- Logic functions, front components, and agents that automate or extend the workspace\n"
-"\n"
-"#### Why it exists\n"
-"Use this app for workspace-specific customization that should stay local to this workspace.\n"
-"\n"
-"If you are shaping one workspace for one business, keep it here. If you are building a reusable business app with its own data model, UI, and automation that should be versioned, shared, or installed across workspaces, create a dedicated app instead.\n"
-"\n"
-"#### Build your own app\n"
-"\n"
-"Scaffold a new app in one command:\n"
-"\n"
-"```bash\n"
-"npx create-twenty-app@latest my-twenty-app\n"
-"```\n"
-"\n"
-"See the [Getting Started guide](https://twenty.com/developers/extend/apps/getting-started) for the full walkthrough, and [Building Apps](https://twenty.com/developers/extend/apps/building) for the `defineApplication` / `defineEntity` APIs."
+msgstr "\"\"\n\"Host your organization's customizations and overrides.\\n\"\n\"\\n\"\n\"#### What it includes\\n\"\n\"Every extension you create on top of the standard app is grouped under Custom. It keeps your schema changes, interface changes, and organization-specific logic in one place.\\n\"\n\"\\n\"\n\"- Custom objects and fields for your own data model\\n\"\n\"- Views, navigation items, and record layouts that shape how your team works\\n\"\n\"- Logic functions, front components, and agents that automate or extend the organization\\n\"\n\"\\n\"\n\"#### Why it exists\\n\"\n\"Use this app for organization-specific customization that should stay local to this organization.\\n\"\n\"\\n\"\n\"If you are shaping one organization for one business, keep it here. If you are building a reusable business app with its own data model, UI, and automation that should be versioned, shared, or installed across organizations, create a dedicated app instead.\\n\"\n\"\\n\"\n\"#### Build your own app\\n\"\n\"\\n\"\n\"Scaffold a new app in one command:\\n\"\n\"\\n\"\n\"```bash\\n\"\n\"npx create-crove-app@latest my-crove-app\\n\"\n\"```\\n\"\n\"\\n\"\n\"See the [Getting Started guide](https://crove.com/developers/extend/apps/getting-started) for the full walkthrough, and [Building Apps](https://crove.com/developers/extend/apps/building) for the `defineApplication` / `defineEntity` APIs.\""
 
 #. js-lingui-id: yY8wAv
 #: src/modules/workflow/workflow-steps/workflow-actions/delay-actions/components/WorkflowEditActionDelay.tsx
@@ -10052,7 +10029,7 @@ msgstr "Impersonate users"
 #. js-lingui-id: n3ohBy
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useSettingsRolePermissionFlagConfig.ts
 msgid "Impersonate workspace users"
-msgstr "Impersonate workspace users"
+msgstr "Impersonate organization users"
 
 #. js-lingui-id: 1ZMDWV
 #: src/modules/settings/admin-panel/components/SettingsAdminServerAdminAccess.tsx
@@ -10069,7 +10046,7 @@ msgstr "Impersonation"
 #. js-lingui-id: yImXof
 #: src/pages/settings/admin-panel/SettingsAdminUserDetail.tsx
 msgid "Impersonation is disabled for this workspace"
-msgstr "Impersonation is disabled for this workspace"
+msgstr "Impersonation is disabled for this organization"
 
 #. js-lingui-id: yHueLx
 #: src/modules/settings/billing/constants/SettingsBillingPlanComparisonRows.ts
@@ -10310,7 +10287,7 @@ msgstr "Install"
 #. js-lingui-id: XOHdRf
 #: src/modules/marketplace/components/SettingsApplicationInstallPermissionValidationModal.tsx
 msgid "Install {appDisplayName} on your workspace"
-msgstr "Install {appDisplayName} on your workspace"
+msgstr "Install {appDisplayName} on your organization"
 
 #. js-lingui-id: 4ZM8/a
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useSettingsRolePermissionFlagConfig.ts
@@ -11218,7 +11195,7 @@ msgstr "Leave blank if you don't need to send emails."
 #: src/modules/settings/profile/components/DeleteAccount.tsx
 #: src/modules/settings/profile/components/DeleteAccount.tsx
 msgid "Leave workspace"
-msgstr "Leave workspace"
+msgstr "Leave organization"
 
 #. js-lingui-id: Sn1jT8
 #: src/modules/settings/admin-panel/signing-keys/components/SettingsAdminSigningKeysTable.tsx
@@ -11716,7 +11693,7 @@ msgstr "Manage connections used by this app to call {0}."
 #. js-lingui-id: Dt05oz
 #: src/pages/settings/admin-panel/SettingsAdminWorkspaceDetail.tsx
 msgid "Manage feature flags for this workspace"
-msgstr "Manage feature flags for this workspace"
+msgstr "Manage feature flags for this organization"
 
 #. js-lingui-id: PxMD2N
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useSettingsRolePermissionFlagConfig.ts
@@ -11751,7 +11728,7 @@ msgstr "Manage the marketplace application catalog"
 #. js-lingui-id: N7fMy9
 #: src/pages/settings/members/tabs/SettingsWorkspaceMembersTeamTab.tsx
 msgid "Manage the members of your workspace here"
-msgstr "Manage the members of your workspace here"
+msgstr "Manage the members of your organization here"
 
 #. js-lingui-id: 5UjiOC
 #: src/pages/settings/applications/SettingsApplicationConnectionDetail.tsx
@@ -11960,7 +11937,7 @@ msgstr "Member preference"
 #. js-lingui-id: cNIHA/
 #: src/pages/settings/members/SettingsWorkspaceMember.tsx
 msgid "Member removed from workspace"
-msgstr "Member removed from workspace"
+msgstr "Member removed from organization"
 
 #. js-lingui-id: wlQNTg
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceContent.tsx
@@ -12453,7 +12430,7 @@ msgstr "Name of your API key"
 #. js-lingui-id: J7w8lI
 #: src/pages/settings/general/SettingsGeneral.tsx
 msgid "Name of your workspace"
-msgstr "Name of your workspace"
+msgstr "Name of your organization"
 
 #. js-lingui-id: JxC/pi
 #: src/modules/workflow/workflow-trigger/components/WorkflowEditTriggerManual.tsx
@@ -12520,7 +12497,7 @@ msgstr "Never expires"
 #. js-lingui-id: ErO8dj
 #: src/modules/settings/security/components/SettingsSecurityAuthProvidersOptionsList.tsx
 msgid "Never shown at sign-in. Members use the workspace URL."
-msgstr "Never shown at sign-in. Members use the workspace URL."
+msgstr "Never shown at sign-in. Members use the organization URL."
 
 #. js-lingui-id: isRobC
 #: src/modules/object-record/record-board/record-board-column/components/RecordBoardColumnNewRecordButton.tsx
@@ -12861,7 +12838,7 @@ msgstr "No AI consumption recorded for this user."
 #: src/modules/ai/components/AiChatEditorSection.tsx
 #: src/modules/ai/hooks/useAgentChat.ts
 msgid "No AI models are enabled in this workspace."
-msgstr "No AI models are enabled in this workspace."
+msgstr "No AI models are enabled in this organization."
 
 #. js-lingui-id: 42kV9p
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
@@ -12886,7 +12863,7 @@ msgstr "No API keys match your search"
 #. js-lingui-id: OaNsaF
 #: src/pages/settings/applications/components/SettingsClaimApplicationSection.tsx
 msgid "No application found. If you just published it to npm with the \"twenty-app\" keyword, sync the catalog and try again."
-msgstr "No application found. If you just published it to npm with the \"twenty-app\" keyword, sync the catalog and try again."
+msgstr "No application found. If you just published it to npm with the \"crove-app\" keyword, sync the catalog and try again."
 
 #. js-lingui-id: rxBnh8
 #: src/pages/settings/applications/tabs/SettingsApplicationsAvailableTab.tsx
@@ -12916,7 +12893,7 @@ msgstr "No available tabs"
 #. js-lingui-id: 8whThc
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceBillingContent.tsx
 msgid "No billing data is available for this workspace."
-msgstr "No billing data is available for this workspace."
+msgstr "No billing data is available for this organization."
 
 #. js-lingui-id: V/RzSE
 #: src/modules/workflow/workflow-steps/workflow-actions/components/WorkflowRunStepLogsEmailDetail.tsx
@@ -13244,7 +13221,7 @@ msgstr "No metrics data available"
 #: src/pages/settings/ai/components/SettingsAgentSettingsTab.tsx
 #: src/pages/settings/ai/forms/components/SettingsAiAgentForm.tsx
 msgid "No models available. Please configure AI models in your workspace settings."
-msgstr "No models available. Please configure AI models in your workspace settings."
+msgstr "No models available. Please configure AI models in your organization settings."
 
 #. js-lingui-id: 9VrTfZ
 #: src/modules/activities/notes/components/NotesCardContent.tsx
@@ -13498,7 +13475,7 @@ msgstr "No usage data"
 #. js-lingui-id: YrBAQE
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceBillingContent.tsx
 msgid "No usage data is available for this workspace."
-msgstr "No usage data is available for this workspace."
+msgstr "No usage data is available for this organization."
 
 #. js-lingui-id: TayaS7
 #: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
@@ -13568,27 +13545,27 @@ msgstr "No workflow versions yet"
 #. js-lingui-id: Q4dFjT
 #: src/pages/settings/admin-panel/SettingsAdminWorkspacesStatus.tsx
 msgid "No workspace behind"
-msgstr "No workspace behind"
+msgstr "No organization behind"
 
 #. js-lingui-id: apOMfI
 #: src/pages/settings/admin-panel/SettingsAdminWorkspacesStatus.tsx
 msgid "No workspace failed"
-msgstr "No workspace failed"
+msgstr "No organization failed"
 
 #. js-lingui-id: rPAZRd
 #: src/modules/settings/lab/hooks/useLabPublicFeatureFlags.ts
 msgid "No workspace selected"
-msgstr "No workspace selected"
+msgstr "No organization selected"
 
 #. js-lingui-id: /XvL19
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationInstalledWorkspaces.tsx
 msgid "No workspaces found"
-msgstr "No workspaces found"
+msgstr "No organizations found"
 
 #. js-lingui-id: TiRphK
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
 msgid "No workspaces found matching your search criteria."
-msgstr "No workspaces found matching your search criteria."
+msgstr "No organizations found matching your search criteria."
 
 #. js-lingui-id: Ah7JCB
 #: src/modules/side-panel/pages/workflow/step/view-run/components/SidePanelWorkflowRunViewStepContent.tsx
@@ -14034,7 +14011,7 @@ msgstr "One or more filters reference deactivated or deleted fields and will be 
 #. js-lingui-id: 2l4SGU
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx
 msgid "One subscription provides one enterprise key that powers one production instance and one potential staging or test instance. To run a staging or test environment, install Twenty on a second server, activate it with this same enterprise key, then register that server as a development instance. Development instances unlock enterprise features without extra billing and do not count toward your production seats."
-msgstr "One subscription provides one enterprise key that powers one production instance and one potential staging or test instance. To run a staging or test environment, install Twenty on a second server, activate it with this same enterprise key, then register that server as a development instance. Development instances unlock enterprise features without extra billing and do not count toward your production seats."
+msgstr "One subscription provides one enterprise key that powers one production instance and one potential staging or test instance. To run a staging or test environment, install Crove on a second server, activate it with this same enterprise key, then register that server as a development instance. Development instances unlock enterprise features without extra billing and do not count toward your production seats."
 
 #. js-lingui-id: oFTo3P
 #: src/modules/settings/event-logs/components/SettingsLogs.tsx
@@ -14130,12 +14107,12 @@ msgstr "Open as link"
 #. js-lingui-id: n0vVgf
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Open Claude with the Twenty connector name and MCP URL prefilled."
-msgstr "Open Claude with the Twenty connector name and MCP URL prefilled."
+msgstr "Open Claude with the Crove connector name and MCP URL prefilled."
 
 #. js-lingui-id: +n2jpB
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Open Cursor's MCP installer with the Twenty remote server config."
-msgstr "Open Cursor's MCP installer with the Twenty remote server config."
+msgstr "Open Cursor's MCP installer with the Crove remote server config."
 
 #. js-lingui-id: pZZH4Q
 #: src/modules/auth/sign-in-up/components/EmailVerificationSent.tsx
@@ -14177,12 +14154,12 @@ msgstr "Open records on a dedicated page"
 #. js-lingui-id: q170S2
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Open Replit with the Twenty remote server config."
-msgstr "Open Replit with the Twenty remote server config."
+msgstr "Open Replit with the Crove remote server config."
 
 #. js-lingui-id: sBd/cl
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Open Twenty's official ChatGPT integration for your workspace."
-msgstr "Open Twenty's official ChatGPT integration for your workspace."
+msgstr "Open Crove's official ChatGPT integration for your organization."
 
 #. js-lingui-id: OV5wZZ
 #: src/modules/navigation-menu-item/display/sections/components/NavigationDrawerOpenedSection.tsx
@@ -14330,7 +14307,7 @@ msgstr "Other security settings"
 #: src/modules/ui/navigation/navigation-drawer/components/MultiWorkspaceDropdown/internal/MultiWorkspaceDropdownDefaultComponents.tsx
 #: src/modules/ui/navigation/navigation-drawer/components/MultiWorkspaceDropdown/internal/MultiWorkspaceDropdownWorkspacesListComponents.tsx
 msgid "Other workspaces"
-msgstr "Other workspaces"
+msgstr "Other organizations"
 
 #. js-lingui-id: NuKR0h
 #: src/modules/side-panel/pages/workflow/trigger-type/components/SidePanelWorkflowSelectTriggerTypeContent.tsx
@@ -14485,7 +14462,7 @@ msgstr "Page name"
 #. js-lingui-id: NRvxzv
 #: src/pages/not-found/NotFound.tsx
 msgid "Page Not Found | Twenty"
-msgstr "Page Not Found | Twenty"
+msgstr "Page Not Found | Crove"
 
 #. js-lingui-id: oIhFvf
 #: src/modules/side-panel/pages/email-block-settings/components/EmailPageStyleSection.tsx
@@ -14727,7 +14704,7 @@ msgstr "Pick a {objectLabel} record"
 #. js-lingui-id: 1Mj027
 #: src/modules/workflow/workflow-steps/workflow-actions/components/WorkflowEditActionEmailBase.tsx
 msgid "Pick a connected account or set a workspace member as variable"
-msgstr "Pick a connected account or set a workspace member as variable"
+msgstr "Pick a connected account or set a organization member as variable"
 
 #. js-lingui-id: JqqNlC
 #: src/modules/side-panel/utils/getSidePanelSubPageTitle.ts
@@ -14864,7 +14841,7 @@ msgstr "Please type \"{confirmationValue}\" to confirm you want to delete this A
 #. js-lingui-id: osUElx
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationDangerZone.tsx
 msgid "Please type \"{confirmationValue}\" to confirm you want to delete this app. All workspace installations linked to it will lose their OAuth credentials."
-msgstr "Please type \"{confirmationValue}\" to confirm you want to delete this app. All workspace installations linked to it will lose their OAuth credentials."
+msgstr "Please type \"{confirmationValue}\" to confirm you want to delete this app. All organization installations linked to it will lose their OAuth credentials."
 
 #. js-lingui-id: L0SEpC
 #: src/pages/settings/applications/tabs/SettingsApplicationDetailAboutTab.tsx
@@ -14943,7 +14920,7 @@ msgstr "Pre-install"
 #. js-lingui-id: iVFTRM
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationGeneralToggles.tsx
 msgid "Pre-install on new workspaces"
-msgstr "Pre-install on new workspaces"
+msgstr "Pre-install on new organizations"
 
 #. js-lingui-id: q+Xhwx
 #: src/modules/settings/admin-panel/apps/components/SettingsAdminApps.tsx
@@ -14953,7 +14930,7 @@ msgstr "Pre-installed only"
 #. js-lingui-id: 0Lqxjs
 #: src/modules/auth/sign-in-up/constants/WorkspaceActivationMessages.tsx
 msgid "Prefilling your <0>workspace data</0>..."
-msgstr "Prefilling your <0>workspace data</0>..."
+msgstr "Prefilling your <0>organization data</0>..."
 
 #. js-lingui-id: rNqTKZ
 #: src/modules/side-panel/pages/page-layout/constants/settings/ChartConfigurationSettingLabels.ts
@@ -15770,7 +15747,7 @@ msgstr "Remove member"
 #. js-lingui-id: FzY1pn
 #: src/pages/settings/members/SettingsWorkspaceMember.tsx
 msgid "Remove member from workspace"
-msgstr "Remove member from workspace"
+msgstr "Remove member from organization"
 
 #. js-lingui-id: FeQ/sf
 #. placeholder {0}: modelToRemove?.label ?? ''
@@ -16408,7 +16385,7 @@ msgstr "Schema name"
 #. js-lingui-id: IYEdtc
 #: src/pages/settings/applications/tabs/SettingsApplicationDetailContentTab.tsx
 msgid "Schema this app contributes to your workspace"
-msgstr "Schema this app contributes to your workspace"
+msgstr "Schema this app contributes to your organization"
 
 #. js-lingui-id: aBgwis
 #: src/modules/settings/unsubscribers/components/SettingsUnsubscribersList.tsx
@@ -16586,17 +16563,17 @@ msgstr "Search by name, email, or user ID..."
 #. js-lingui-id: 6NCseM
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationInstalledWorkspaces.tsx
 msgid "Search by workspace name or version..."
-msgstr "Search by workspace name or version..."
+msgstr "Search by organization name or version..."
 
 #. js-lingui-id: KI1xjO
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
 msgid "Search by workspace name, subdomain, or ID..."
-msgstr "Search by workspace name, subdomain, or ID..."
+msgstr "Search by organization name, subdomain, or ID..."
 
 #. js-lingui-id: MS72xQ
 #: src/pages/settings/admin-panel/SettingsAdminChats.tsx
 msgid "Search by workspace, user email or thread id..."
-msgstr "Search by workspace, user email or thread id..."
+msgstr "Search by organization, user email or thread id..."
 
 #. js-lingui-id: yI4D/V
 #: src/modules/side-panel/pages/page-layout/components/dropdown-content/ChartColorSelectionDropdownContent.tsx
@@ -17119,7 +17096,7 @@ msgstr "Select value"
 #. js-lingui-id: RKE3bT
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
 msgid "Select which models appear as recommended in the workspace model picker"
-msgstr "Select which models appear as recommended in the workspace model picker"
+msgstr "Select which models appear as recommended in the organization model picker"
 
 #. js-lingui-id: 7c7atJ
 #: src/pages/settings/profile/appearance/components/SettingsExperience.tsx
@@ -17239,7 +17216,7 @@ msgstr "Server Variables"
 #. js-lingui-id: exgCw+
 #: src/pages/settings/applications/tabs/SettingsApplicationRegistrationConfigTab.tsx
 msgid "Server variables are applied to all workspace installations."
-msgstr "Server variables are applied to all workspace installations."
+msgstr "Server variables are applied to all organization installations."
 
 #. js-lingui-id: LUc0oL
 #: src/modules/settings/security/components/SSO/SettingsSSOSAMLForm.tsx
@@ -17254,7 +17231,7 @@ msgstr "Set {placeholderForEmptyCell}"
 #. js-lingui-id: QEVmIH
 #: src/modules/settings/roles/components/SettingsRolesDefaultRole.tsx
 msgid "Set a default for this workspace"
-msgstr "Set a default for this workspace"
+msgstr "Set a default for this organization"
 
 #. js-lingui-id: PPcets
 #: src/modules/settings/data-model/fields/forms/select/components/SettingsDataModelFieldSelectFormOptionRow.tsx
@@ -17284,7 +17261,7 @@ msgstr "Set fields created in the future as \"visible\""
 #. js-lingui-id: 6KA8xy
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useSettingsRolePermissionFlagConfig.ts
 msgid "Set global workspace preferences"
-msgstr "Set global workspace preferences"
+msgstr "Set global organization preferences"
 
 #. js-lingui-id: 2gHjVM
 #: src/modules/settings/profile/components/SetOrChangePassword.tsx
@@ -17400,17 +17377,17 @@ msgstr "Share"
 #. js-lingui-id: Vy9kmk
 #: src/pages/settings/members/tabs/SettingsWorkspaceMembersInviteTab.tsx
 msgid "Share this link to invite users to join your workspace"
-msgstr "Share this link to invite users to join your workspace"
+msgstr "Share this link to invite users to join your organization"
 
 #. js-lingui-id: bM7Rp3
 #: src/pages/settings/applications/SettingsApplicationConnectionDetail.tsx
 msgid "Share with workspace"
-msgstr "Share with workspace"
+msgstr "Share with organization"
 
 #. js-lingui-id: gaJRur
 #: src/pages/settings/applications/tabs/SettingsApplicationRegistrationDistributionTab.tsx
 msgid "Share your app to other workspaces without pushing it on the marketplace"
-msgstr "Share your app to other workspaces without pushing it on the marketplace"
+msgstr "Share your app to other organizations without pushing it on the marketplace"
 
 #. js-lingui-id: JTP6zD
 #: src/pages/settings/communications/SettingsWorkspaceCommunicationGroupChannelDetail.tsx
@@ -17767,7 +17744,7 @@ msgstr "Something went wrong while contacting our billing service. Please try ag
 #. js-lingui-id: i34/fH
 #: src/pages/onboarding/WorkspaceActivation.tsx
 msgid "Something went wrong while creating your workspace. Please try again."
-msgstr "Something went wrong while creating your workspace. Please try again."
+msgstr "Something went wrong while creating your organization. Please try again."
 
 #. js-lingui-id: teokEm
 #: src/modules/settings/event-logs/components/SettingsLogs.tsx
@@ -18041,7 +18018,7 @@ msgstr "Stripe customer"
 #. js-lingui-id: Zk8585
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceBillingContent.tsx
 msgid "Stripe customer linked to this workspace"
-msgstr "Stripe customer linked to this workspace"
+msgstr "Stripe customer linked to this organization"
 
 #. js-lingui-id: Yiplcx
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceBillingContent.tsx
@@ -18075,7 +18052,7 @@ msgstr "Subdomain"
 #. js-lingui-id: Sv4BSp
 #: src/modules/settings/billing/constants/SettingsBillingPlanComparisonRows.ts
 msgid "Subdomain (yourco.twenty.com)"
-msgstr "Subdomain (yourco.twenty.com)"
+msgstr "Subdomain (yourco.crove.com)"
 
 #. js-lingui-id: mGO3xy
 #: src/modules/auth/sign-in-up/components/internal/SignInUpWorkspaceCreationForm.tsx
@@ -18173,7 +18150,7 @@ msgstr "Subscription activated."
 #: src/modules/settings/billing/hooks/useSubmitSubscriptionPayment.ts
 #: src/modules/settings/billing/hooks/useSubmitSubscriptionPayment.ts
 msgid "Subscription error. Please retry or contact Twenty team"
-msgstr "Subscription error. Please retry or contact Twenty team"
+msgstr "Subscription error. Please retry or contact Crove team"
 
 #. js-lingui-id: FooJUj
 #. placeholder {0}: getTargetPlanLabel(targetPlanKey)
@@ -18463,7 +18440,7 @@ msgstr "Target relation on Junction Object"
 #. js-lingui-id: qmwHSv
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationDangerZone.tsx
 msgid "Target workspace subdomain"
-msgstr "Target workspace subdomain"
+msgstr "Target organization subdomain"
 
 #. js-lingui-id: R+s8S+
 #: src/modules/activities/tasks/components/TaskRow.tsx
@@ -18565,7 +18542,7 @@ msgstr "Text Editor"
 #. js-lingui-id: Z4WP0F
 #: src/modules/settings/accounts/components/SettingsAccountsNewEmailGroupChannel.tsx
 msgid "The address your workspace will send and receive email from (e.g. support@mycompany.com). Outbound sending requires the domain to be verified in Outbound Domains."
-msgstr "The address your workspace will send and receive email from (e.g. support@mycompany.com). Outbound sending requires the domain to be verified in Outbound Domains."
+msgstr "The address your organization will send and receive email from (e.g. support@mycompany.com). Outbound sending requires the domain to be verified in Outbound Domains."
 
 #. js-lingui-id: oVH0Mt
 #: src/pages/settings/admin-panel/SettingsAdminNewAiProvider.tsx
@@ -18610,37 +18587,7 @@ msgid ""
 "```\n"
 "\n"
 "See the [Getting Started guide](https://twenty.com/developers/extend/apps/getting-started) for the full walkthrough, and [Building Apps](https://twenty.com/developers/extend/apps/building) for the `defineApplication` / `defineEntity` APIs."
-msgstr ""
-"The base data model every Twenty workspace runs on.\n"
-"\n"
-"#### What \"foundation\" means\n"
-"\n"
-"Every Twenty workspace starts with this set of objects. They define the shape of your CRM, including relationships, activity, and reporting. Everything else, including marketplace apps, AI agents, and custom objects, plugs into them.\n"
-"\n"
-"#### Included objects\n"
-"- **People & Companies**: contact and account records\n"
-"- **Opportunities**: your sales pipeline\n"
-"- **Notes & Tasks**: activity and follow-ups\n"
-"- **Workflows & Dashboards**: automation and reporting\n"
-"\n"
-"Remove this app and the rest of Twenty has nothing to hang off.\n"
-"\n"
-"#### Build your own app\n"
-"\n"
-"Extend Twenty with your own objects, fields, logic functions, or AI skills. Scaffold a new app in one command:\n"
-"\n"
-"```bash\n"
-"npx create-twenty-app@latest my-twenty-app\n"
-"```\n"
-"\n"
-"Then inside the folder:\n"
-"\n"
-"```bash\n"
-"cd my-twenty-app\n"
-"yarn twenty dev\n"
-"```\n"
-"\n"
-"See the [Getting Started guide](https://twenty.com/developers/extend/apps/getting-started) for the full walkthrough, and [Building Apps](https://twenty.com/developers/extend/apps/building) for the `defineApplication` / `defineEntity` APIs."
+msgstr "\"\"\n\"The base data model every Crove organization runs on.\\n\"\n\"\\n\"\n\"#### What \\\"foundation\\\" means\\n\"\n\"\\n\"\n\"Every Crove organization starts with this set of objects. They define the shape of your CRM, including relationships, activity, and reporting. Everything else, including marketplace apps, AI agents, and custom objects, plugs into them.\\n\"\n\"\\n\"\n\"#### Included objects\\n\"\n\"- **People & Companies**: contact and account records\\n\"\n\"- **Opportunities**: your sales pipeline\\n\"\n\"- **Notes & Tasks**: activity and follow-ups\\n\"\n\"- **Workflows & Dashboards**: automation and reporting\\n\"\n\"\\n\"\n\"Remove this app and the rest of Crove has nothing to hang off.\\n\"\n\"\\n\"\n\"#### Build your own app\\n\"\n\"\\n\"\n\"Extend Crove with your own objects, fields, logic functions, or AI skills. Scaffold a new app in one command:\\n\"\n\"\\n\"\n\"```bash\\n\"\n\"npx create-crove-app@latest my-crove-app\\n\"\n\"```\\n\"\n\"\\n\"\n\"Then inside the folder:\\n\"\n\"\\n\"\n\"```bash\\n\"\n\"cd my-crove-app\\n\"\n\"yarn crove dev\\n\"\n\"```\\n\"\n\"\\n\"\n\"See the [Getting Started guide](https://crove.com/developers/extend/apps/getting-started) for the full walkthrough, and [Building Apps](https://crove.com/developers/extend/apps/building) for the `defineApplication` / `defineEntity` APIs.\""
 
 #. js-lingui-id: VsxjzF
 #: src/modules/page-layout/widgets/call-recording-summary/components/CallRecordingSummaryBody.tsx
@@ -18742,7 +18689,7 @@ msgstr "The page you're seeking is either gone or never was. Let's get you back 
 #. js-lingui-id: Ya1wb4
 #: src/pages/settings/legal/SettingsLegalDpaNew.tsx
 msgid "The PDF is pre-signed by Twenty and executed with your legal entity and authorized signatory."
-msgstr "The PDF is pre-signed by Twenty and executed with your legal entity and authorized signatory."
+msgstr "The PDF is pre-signed by Crove and executed with your legal entity and authorized signatory."
 
 #. js-lingui-id: wxyrqd
 #: src/modules/workflow/workflow-steps/workflow-actions/pick-record-action/components/WorkflowEditActionPickRecord.tsx
@@ -18792,7 +18739,7 @@ msgstr "The whole event details will be shared with your team."
 #. js-lingui-id: bEXHAZ
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationClaims.tsx
 msgid "The workspace that claimed this app registration"
-msgstr "The workspace that claimed this app registration"
+msgstr "The organization that claimed this app registration"
 
 #. js-lingui-id: FEr96N
 #: src/modules/ui/navigation/navigation-drawer/components/MultiWorkspaceDropdown/internal/MultiWorkspaceDropdownThemesComponents.tsx
@@ -18907,7 +18854,7 @@ msgstr "This action cannot be undone. This will permanently delete your agent.<0
 #. js-lingui-id: gWGuHC
 #: src/modules/settings/profile/components/DeleteWorkspace.tsx
 msgid "This action cannot be undone. This will permanently delete your entire workspace. <0/> Please type in your email to confirm."
-msgstr "This action cannot be undone. This will permanently delete your entire workspace. <0/> Please type in your email to confirm."
+msgstr "This action cannot be undone. This will permanently delete your entire organization. <0/> Please type in your email to confirm."
 
 #. js-lingui-id: o5vUsG
 #: src/modules/settings/two-factor-authentication/components/DeleteTwoFactorAuthenticationMethod.tsx
@@ -18917,7 +18864,7 @@ msgstr "This action cannot be undone. This will permanently reset your two facto
 #. js-lingui-id: kVRKMS
 #: src/modules/settings/profile/components/DeleteAccount.tsx
 msgid "This action cannot be undone. Your membership will be removed; synced emails and calendars stay with the workspace."
-msgstr "This action cannot be undone. Your membership will be removed; synced emails and calendars stay with the workspace."
+msgstr "This action cannot be undone. Your membership will be removed; synced emails and calendars stay with the organization."
 
 #. js-lingui-id: muD0kr
 #. placeholder {0}: favoritesEdit.navigationMenuItemCount
@@ -18938,12 +18885,12 @@ msgstr "This address is already taken"
 #. js-lingui-id: 9rY+8P
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationDangerZone.tsx
 msgid "This app has no owner workspace. Claiming it will assign ownership to your current workspace, and you will be able to manage it."
-msgstr "This app has no owner workspace. Claiming it will assign ownership to your current workspace, and you will be able to manage it."
+msgstr "This app has no owner organization. Claiming it will assign ownership to your current organization, and you will be able to manage it."
 
 #. js-lingui-id: fVo75D
 #: src/pages/settings/applications/tabs/SettingsApplicationRegistrationGeneralTab.tsx
 msgid "This app is not fully configured. Users won't be able to install it until all required server variables are set, and — for apps exposing a server route — until the app is claimed and installed on its owner workspace."
-msgstr "This app is not fully configured. Users won't be able to install it until all required server variables are set, and — for apps exposing a server route — until the app is claimed and installed on its owner workspace."
+msgstr "This app is not fully configured. Users won't be able to install it until all required server variables are set, and — for apps exposing a server route — until the app is claimed and installed on its owner organization."
 
 #. js-lingui-id: 6R2R80
 #: src/pages/settings/applications/tabs/SettingsApplicationFunctionDomainSection.tsx
@@ -18958,7 +18905,7 @@ msgstr "This application could not be found. It may have been removed from the m
 #. js-lingui-id: dT2Ibb
 #: src/pages/settings/applications/utils/getClaimErrorContent.ts
 msgid "This application has already been claimed by a workspace."
-msgstr "This application has already been claimed by a workspace."
+msgstr "This application has already been claimed by a organization."
 
 #. js-lingui-id: vZhnyV
 #: src/pages/settings/applications/components/SettingsClaimApplicationSection.tsx
@@ -18968,7 +18915,7 @@ msgstr "This application has already been claimed."
 #. js-lingui-id: X7w5n6
 #: src/pages/settings/applications/tabs/SettingsApplicationRegistrationDistributionTab.tsx
 msgid "This application's registration is claimed by your workspace"
-msgstr "This application's registration is claimed by your workspace"
+msgstr "This application's registration is claimed by your organization"
 
 #. js-lingui-id: WCa/7U
 #: src/pages/settings/applications/tabs/SettingsApplicationFrontComponentPreviewTab.tsx
@@ -19114,7 +19061,7 @@ msgstr "This subdomain is reserved"
 #. placeholder {0}: formatCredits(grantPendingRevocation.amount)
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceCreditGrantsTable.tsx
 msgid "This takes {0} credits back off this workspace straight away. Revoking cannot be undone."
-msgstr "This takes {0} credits back off this workspace straight away. Revoking cannot be undone."
+msgstr "This takes {0} credits back off this organization straight away. Revoking cannot be undone."
 
 #. js-lingui-id: MMGDfe
 #: src/modules/settings/admin-panel/config-variables/components/ConfigVariableHelpText.tsx
@@ -19194,7 +19141,7 @@ msgstr "This will permanently delete the object and all its records. Type \"yes\
 #. js-lingui-id: qEODFi
 #: src/modules/settings/two-factor-authentication/components/DeleteTwoFactorAuthenticationMethod.tsx
 msgid "This will permanently delete your two factor authentication method.<0/>Since 2FA is mandatory in your workspace, you will be logged out after deletion and will be asked to configure it again upon login. <1/>Please type in your email to confirm."
-msgstr "This will permanently delete your two factor authentication method.<0/>Since 2FA is mandatory in your workspace, you will be logged out after deletion and will be asked to configure it again upon login. <1/>Please type in your email to confirm."
+msgstr "This will permanently delete your two factor authentication method.<0/>Since 2FA is mandatory in your organization, you will be logged out after deletion and will be asked to configure it again upon login. <1/>Please type in your email to confirm."
 
 #. js-lingui-id: Dg+3bR
 #. placeholder {0}: pendingChange?.description ?? ''
@@ -19417,12 +19364,12 @@ msgstr "Tools"
 #. js-lingui-id: nCq25C
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
 msgid "Top 10 workspaces by number of users"
-msgstr "Top 10 workspaces by number of users"
+msgstr "Top 10 organizations by number of users"
 
 #. js-lingui-id: A4dnvW
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
 msgid "Top Workspaces"
-msgstr "Top Workspaces"
+msgstr "Top Organizations"
 
 #. js-lingui-id: qJLttu
 #: src/modules/settings/unsubscribe-topics/components/SettingsWorkspaceUnsubscribeTopicSection.tsx
@@ -19463,7 +19410,7 @@ msgstr "Total time"
 #: src/pages/settings/ai/components/SettingsAiUsageTab.tsx
 #: src/pages/settings/ai/components/SettingsAiUsageTab.tsx
 msgid "Track AI consumption across your workspace."
-msgstr "Track AI consumption across your workspace."
+msgstr "Track AI consumption across your organization."
 
 #. js-lingui-id: U2CSqa
 #: src/modules/page-layout/widgets/call-recording-transcript/components/CallRecordingTranscriptBody.tsx
@@ -19673,7 +19620,7 @@ msgstr "Turquoise"
 #. js-lingui-id: JnaRPe
 #: src/modules/spreadsheet-import/steps/components/MatchColumnsStep/components/ColumnGrid.tsx
 msgid "Twenty fields"
-msgstr "Twenty fields"
+msgstr "Crove fields"
 
 #. js-lingui-id: YIjS4q
 #: src/modules/ai/components/SettingsAgentModelCapabilities.tsx
@@ -19858,7 +19805,7 @@ msgstr "Uninstall Application?"
 #. js-lingui-id: 7S4EZE
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationDangerZone.tsx
 msgid "Uninstall this app from all workspaces before deleting it"
-msgstr "Uninstall this app from all workspaces before deleting it"
+msgstr "Uninstall this app from all organizations before deleting it"
 
 #. js-lingui-id: ItfvBz
 #: src/pages/settings/applications/tabs/SettingsApplicationDetailAboutTab.tsx
@@ -19954,7 +19901,7 @@ msgstr "Unknown topic"
 #. js-lingui-id: m/o1+r
 #: src/modules/settings/admin-panel/health-status/components/SettingsAdminWorkspacesByHealthAccordion.tsx
 msgid "Unknown workspace"
-msgstr "Unknown workspace"
+msgstr "Unknown organization"
 
 #. js-lingui-id: NIuIk1
 #: src/modules/settings/billing/constants/SettingsBillingPlanComparisonRows.ts
@@ -20273,12 +20220,12 @@ msgstr "Upgrade health"
 #. js-lingui-id: 88ZkNH
 #: src/pages/settings/admin-panel/SettingsAdminWorkspacesStatus.tsx
 msgid "Upgrade health across all workspaces"
-msgstr "Upgrade health across all workspaces"
+msgstr "Upgrade health across all organizations"
 
 #. js-lingui-id: +awaFr
 #: src/modules/settings/admin-panel/health-status/components/SettingsAdminHealthStatus.tsx
 msgid "Upgrade health across instance and workspaces"
-msgstr "Upgrade health across instance and workspaces"
+msgstr "Upgrade health across instance and organizations"
 
 #. js-lingui-id: 5UfQvA
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceContent.tsx
@@ -20464,7 +20411,7 @@ msgstr "Usage"
 #. js-lingui-id: 8Jr4QC
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationGeneralStats.tsx
 msgid "Usage across all workspaces on this server"
-msgstr "Usage across all workspaces on this server"
+msgstr "Usage across all organizations on this server"
 
 #. js-lingui-id: 21hsGI
 #: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
@@ -21286,7 +21233,7 @@ msgstr "What this API can do: Select a user role to define its permissions."
 #. js-lingui-id: drC+Tq
 #: src/pages/settings/ai/components/SettingsAiOverviewTab.tsx
 msgid "What's installed and being used in your workspace"
-msgstr "What's installed and being used in your workspace"
+msgstr "What's installed and being used in your organization"
 
 #. js-lingui-id: RlSr4h
 #: src/pages/settings/communications/SettingsWorkspaceCommunications.tsx
@@ -21513,12 +21460,12 @@ msgstr "Organization"
 #: src/modules/auth/sign-in-up/hooks/useSignUpInNewWorkspace.ts
 #: src/pages/onboarding/WorkspaceActivation.tsx
 msgid "Workspace creation failed"
-msgstr "Workspace creation failed"
+msgstr "Organization creation failed"
 
 #. js-lingui-id: VicISP
 #: src/modules/settings/profile/components/DeleteWorkspace.tsx
 msgid "Workspace Deletion"
-msgstr "Workspace Deletion"
+msgstr "Organization Deletion"
 
 #. js-lingui-id: Qx8HXb
 #: src/pages/settings/general/SettingsGeneral.tsx
@@ -21528,34 +21475,34 @@ msgstr "Organization domain"
 #. js-lingui-id: J2q6WC
 #: src/modules/settings/event-logs/components/EventLogTableSelector.tsx
 msgid "Workspace Events"
-msgstr "Workspace Events"
+msgstr "Organization Events"
 
 #. js-lingui-id: J22jAC
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceContent.tsx
 msgid "Workspace Info"
-msgstr "Workspace Info"
+msgstr "Organization Info"
 
 #. js-lingui-id: BYrMT0
 #: src/pages/settings/ai/components/SettingsAiOverviewTab.tsx
 #: src/pages/settings/ai/components/SettingsAiOverviewTab.tsx
 msgid "Workspace Instructions"
-msgstr "Workspace Instructions"
+msgstr "Organization Instructions"
 
 #. js-lingui-id: Ce7yfm
 #: src/pages/settings/admin-panel/SettingsAdminWorkspacesStatus.tsx
 msgid "Workspace lists by upgrade status"
-msgstr "Workspace lists by upgrade status"
+msgstr "Organization lists by upgrade status"
 
 #. js-lingui-id: yz2+6L
 #: src/modules/auth/sign-in-up/hooks/useSignUpInNewWorkspace.ts
 msgid "Workspace logo upload failed"
-msgstr "Workspace logo upload failed"
+msgstr "Organization logo upload failed"
 
 #. js-lingui-id: CbGxon
 #: src/modules/settings/billing/components/SettingsBillingSubscriptionInfo.tsx
 #: src/modules/settings/roles/components/SettingsRolesTableRow.tsx
 msgid "Workspace member"
-msgstr "Workspace member"
+msgstr "Organization member"
 
 #. js-lingui-id: wtxjAY
 #: src/modules/settings/event-logs/components/EventLogFilters.tsx
@@ -21569,17 +21516,17 @@ msgstr "Organization members"
 #: src/pages/settings/applications/tabs/SettingsApplicationConnectionsSection.tsx
 #: src/pages/settings/applications/tabs/SettingsApplicationConnectionsSection.tsx
 msgid "Workspace shared"
-msgstr "Workspace shared"
+msgstr "Organization shared"
 
 #. js-lingui-id: Smg70n
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceContent.tsx
 msgid "Workspace upgrade health"
-msgstr "Workspace upgrade health"
+msgstr "Organization upgrade health"
 
 #. js-lingui-id: QZi0YX
 #: src/modules/object-record/object-options-dropdown/components/ObjectOptionsDropdownVisibilityContent.tsx
 msgid "Workspace views require manage views permission"
-msgstr "Workspace views require manage views permission"
+msgstr "Organization views require manage views permission"
 
 #. js-lingui-id: pmt7u4
 #: src/pages/settings/admin-panel/SettingsAdminUserDetail.tsx
@@ -21591,7 +21538,7 @@ msgstr "Organizations"
 #: src/pages/settings/admin-panel/SettingsAdminWorkspacesStatus.tsx
 #: src/pages/settings/admin-panel/SettingsAdminWorkspacesStatus.tsx
 msgid "Workspaces status"
-msgstr "Workspaces status"
+msgstr "Organizations status"
 
 #. js-lingui-id: QPsQMb
 #: src/modules/object-record/record-group/components/RecordGroupReorderConfirmationModal.tsx
@@ -21714,12 +21661,12 @@ msgstr "Yesterday"
 #. js-lingui-id: lWUeEt
 #: src/modules/auth/sign-in-up/hooks/useWorkspaceFromInviteHash.ts
 msgid "You already belong to the workspace {workspaceDisplayName}"
-msgstr "You already belong to the workspace {workspaceDisplayName}"
+msgstr "You already belong to the organization {workspaceDisplayName}"
 
 #. js-lingui-id: Q1CQiy
 #: src/modules/auth/sign-in-up/hooks/useWorkspaceFromInviteHash.ts
 msgid "You already belong to this workspace"
-msgstr "You already belong to this workspace"
+msgstr "You already belong to this organization"
 
 #. js-lingui-id: MuS9Gh
 #: src/modules/settings/data-model/object-details/components/SettingsUpdateDataModelObjectAboutForm.tsx
@@ -21754,7 +21701,7 @@ msgstr "You can set up any combination of IMAP (receiving emails), SMTP (sending
 #. js-lingui-id: kv8vw3
 #: src/modules/settings/profile/components/EmailField.tsx
 msgid "You can't change your email because you belong to 2 or more workspaces."
-msgstr "You can't change your email because you belong to 2 or more workspaces."
+msgstr "You can't change your email because you belong to 2 or more organizations."
 
 #. js-lingui-id: hiLxmN
 #: src/modules/settings/admin-panel/hooks/useHandleImpersonate.ts
@@ -21825,7 +21772,7 @@ msgstr "You will stop receiving these emails."
 #. js-lingui-id: Cl+hUj
 #: src/modules/settings/domains/components/SettingsSubdomain.tsx
 msgid "You're about to change your workspace subdomain. This action will log out all users."
-msgstr "You're about to change your workspace subdomain. This action will log out all users."
+msgstr "You're about to change your organization subdomain. This action will log out all users."
 
 #. js-lingui-id: Z5uTAF
 #: src/modules/ai/components/AIChatNoMoreBillingCreditsBanner.tsx
@@ -21977,22 +21924,22 @@ msgstr "Your subscription status is: {statusLabel}"
 #. js-lingui-id: oC6WBs
 #: src/modules/information-banner/components/billing/InformationBannerNoBillingSubscription.tsx
 msgid "Your workspace doesn't have an active subscription."
-msgstr "Your workspace doesn't have an active subscription."
+msgstr "Your organization doesn't have an active subscription."
 
 #. js-lingui-id: QBTEtW
 #: src/modules/information-banner/components/billing/InformationBannerNoBillingSubscription.tsx
 msgid "Your workspace doesn't have an active subscription. Please contact your admin."
-msgstr "Your workspace doesn't have an active subscription. Please contact your admin."
+msgstr "Your organization doesn't have an active subscription. Please contact your admin."
 
 #. js-lingui-id: fAVJ0D
 #: src/modules/ai/components/AIChatNoMoreBillingCreditsBanner.tsx
 msgid "Your workspace hit its AI usage limit. Ask an admin to upgrade the plan."
-msgstr "Your workspace hit its AI usage limit. Ask an admin to upgrade the plan."
+msgstr "Your organization hit its AI usage limit. Ask an admin to upgrade the plan."
 
 #. js-lingui-id: RhNbPE
 #: src/modules/settings/billing/components/SettingsBillingContent.tsx
 msgid "Your workspace will be disabled"
-msgstr "Your workspace will be disabled"
+msgstr "Your organization will be disabled"
 
 #. js-lingui-id: ZGbFnN
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx

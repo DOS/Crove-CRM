@@ -40,7 +40,7 @@ msgstr "\"{fieldName}\" received an invalid value."
 #. js-lingui-id: SsRDX3
 #: src/engine/core-modules/user/utils/assert-workspace-member-update-non-custom-fields.util.ts
 msgid "\"{payloadKey}\" is not a valid workspace member field."
-msgstr "\"{payloadKey}\" is not a valid workspace member field."
+msgstr "\"{payloadKey}\" is not a valid organization member field."
 
 #. js-lingui-id: ddGPbK
 #. placeholder {0}: nestedField.label
@@ -187,7 +187,7 @@ msgstr "A hand-picked audience of people"
 #. js-lingui-id: TF/ZV2
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "A heads up before your Twenty trial ends"
-msgstr "A heads up before your Twenty trial ends"
+msgstr "A heads up before your Crove trial ends"
 
 #. js-lingui-id: 6yZjO1
 #: src/engine/core-modules/application/application.exception.ts
@@ -444,7 +444,7 @@ msgstr "A workflow version"
 #: src/engine/workspace-manager/twenty-standard-application/utils/object-metadata/create-standard-flat-object-metadata.util.ts
 msgctxt "objectMetadata.description"
 msgid "A workspace member"
-msgstr "A workspace member"
+msgstr "A organization member"
 
 #. js-lingui-id: spjW+Z
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-calendar-event-participant-standard-flat-field-metadata.util.ts
@@ -674,7 +674,7 @@ msgstr "An error occurred during messages import"
 #. js-lingui-id: dhcf1B
 #: src/engine/workspace-manager/workspace-migration.exception.ts
 msgid "An error occurred during workspace migration."
-msgstr "An error occurred during workspace migration."
+msgstr "An error occurred during organization migration."
 
 #. js-lingui-id: X3mSup
 #: src/modules/messaging-webhooks/messaging-webhook.exception.ts
@@ -780,7 +780,7 @@ msgstr "Annual Revenue"
 #. js-lingui-id: 4XvK/4
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/utils/validate-flat-permission-flag-creation.util.ts
 msgid "Another application in this workspace has already registered a permission flag with this key."
-msgstr "Another application in this workspace has already registered a permission flag with this key."
+msgstr "Another application in this organization has already registered a permission flag with this key."
 
 #. js-lingui-id: fRWsMD
 #: src/engine/metadata-modules/ai/ai.exception.ts
@@ -817,12 +817,12 @@ msgstr "Application ID"
 #. js-lingui-id: ue106l
 #: src/engine/core-modules/application/application.exception.ts
 msgid "Application is not installed in this workspace. Install it first."
-msgstr "Application is not installed in this workspace. Install it first."
+msgstr "Application is not installed in this organization. Install it first."
 
 #. js-lingui-id: t77Ey9
 #: src/engine/core-modules/public-domain/public-domain.exception.ts
 msgid "Application not found in this workspace."
-msgstr "Application not found in this workspace."
+msgstr "Application not found in this organization."
 
 #. js-lingui-id: ltvmAF
 #: src/engine/core-modules/application/application.exception.ts
@@ -1693,7 +1693,7 @@ msgstr "Cannot complete operation due to related records."
 #. js-lingui-id: 6Sk/wo
 #: src/modules/blocklist/blocklist-validation-manager/services/blocklist-validation.service.ts
 msgid "Cannot create blocklist entry for another workspace member."
-msgstr "Cannot create blocklist entry for another workspace member."
+msgstr "Cannot create blocklist entry for another organization member."
 
 #. js-lingui-id: LIPsWu
 #: src/modules/workflow/common/workspace-services/workflow-version-validation.workspace-service.ts
@@ -1708,7 +1708,7 @@ msgstr "Cannot create workflow version with status other than draft"
 #. js-lingui-id: VPXcr5
 #: src/engine/core-modules/user/services/user.service.ts
 msgid "Cannot delete account: you are the only admin. Assign another admin or delete the workspace(s) first."
-msgstr "Cannot delete account: you are the only admin. Assign another admin or delete the workspace(s) first."
+msgstr "Cannot delete account: you are the only admin. Assign another admin or delete the organization(s) first."
 
 #. js-lingui-id: RYRFbW
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/services/flat-agent-validator.service.ts
@@ -1742,12 +1742,12 @@ msgstr "Cannot delete the only view for this object"
 #. js-lingui-id: aqua7x
 #: src/engine/metadata-modules/role/role.service.ts
 msgid "Cannot delete this role: it is still assigned to one or more agents, and the workspace default role cannot be assigned to agents. Please reassign these agents to another role first."
-msgstr "Cannot delete this role: it is still assigned to one or more agents, and the workspace default role cannot be assigned to agents. Please reassign these agents to another role first."
+msgstr "Cannot delete this role: it is still assigned to one or more agents, and the organization default role cannot be assigned to agents. Please reassign these agents to another role first."
 
 #. js-lingui-id: mGasIh
 #: src/engine/metadata-modules/role/role.service.ts
 msgid "Cannot delete this role: it is still assigned to one or more API keys, and the workspace default role cannot be assigned to API keys. Please reassign these API keys to another role first."
-msgstr "Cannot delete this role: it is still assigned to one or more API keys, and the workspace default role cannot be assigned to API keys. Please reassign these API keys to another role first."
+msgstr "Cannot delete this role: it is still assigned to one or more API keys, and the organization default role cannot be assigned to API keys. Please reassign these API keys to another role first."
 
 #. js-lingui-id: AQyr9X
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/services/flat-field-metadata-validator.service.ts
@@ -1832,7 +1832,7 @@ msgstr "Cannot modify predicate to change its role from {existingRoleIdentifier}
 #. js-lingui-id: Q0diyJ
 #: src/engine/metadata-modules/permissions/permissions.exception.ts
 msgid "Cannot remove the last admin from the workspace."
-msgstr "Cannot remove the last admin from the workspace."
+msgstr "Cannot remove the last admin from the organization."
 
 #. js-lingui-id: wNJvot
 #: src/engine/core-modules/billing/billing.exception.ts
@@ -2587,7 +2587,7 @@ msgstr "Custom domain not found."
 #. js-lingui-id: zsYQk/
 #: src/engine/core-modules/workspace/workspace.exception.ts
 msgid "Custom domains are disabled for this workspace."
-msgstr "Custom domains are disabled for this workspace."
+msgstr "Custom domains are disabled for this organization."
 
 #. js-lingui-id: qHZppf
 #: src/engine/metadata-modules/object-metadata/object-metadata.exception.ts
@@ -3053,7 +3053,7 @@ msgstr "Display Name"
 #. js-lingui-id: IymH4t
 #: src/engine/core-modules/public-domain/public-domain.service.ts
 msgid "Domain already used for workspace custom domain"
-msgstr "Domain already used for workspace custom domain"
+msgstr "Domain already used for organization custom domain"
 
 #. js-lingui-id: 2sIVDj
 #: src/engine/core-modules/dns-manager/services/dns-manager.service.ts
@@ -3204,7 +3204,7 @@ msgstr "Email campaign record position"
 #. js-lingui-id: LT5dFi
 #: src/engine/core-modules/user/services/user.service.ts
 msgid "Email can only be updated when you belong to a single workspace."
-msgstr "Email can only be updated when you belong to a single workspace."
+msgstr "Email can only be updated when you belong to a single organization."
 
 #. js-lingui-id: MYgdAv
 #: src/engine/core-modules/emailing-domain/drivers/exceptions/emailing-domain-driver.exception.ts
@@ -3270,7 +3270,7 @@ msgstr "Email subject line"
 #. js-lingui-id: q87JH5
 #: src/engine/core-modules/user/user.exception.ts
 msgid "Email update is restricted to single workspace users."
-msgstr "Email update is restricted to single workspace users."
+msgstr "Email update is restricted to single organization users."
 
 #. js-lingui-id: PeMFTI
 #: src/engine/core-modules/email-verification/email-verification.exception.ts
@@ -3314,7 +3314,7 @@ msgstr "Empty field permissions are not allowed."
 #. js-lingui-id: ovnbNI
 #: src/engine/core-modules/admin-panel/services/admin-panel-server-admin.service.ts
 msgid "Enable two-factor authentication in your current workspace to manage server administrators."
-msgstr "Enable two-factor authentication in your current workspace to manage server administrators."
+msgstr "Enable two-factor authentication in your current organization to manage server administrators."
 
 #. js-lingui-id: YPuX9P
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-calendar-event-standard-flat-field-metadata.util.ts
@@ -3458,7 +3458,7 @@ msgstr "Event target"
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-timeline-activity-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "Event workspace member"
-msgstr "Event workspace member"
+msgstr "Event organization member"
 
 #. js-lingui-id: XuTq0a
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-message-campaign-standard-flat-field-metadata.util.ts
@@ -3491,7 +3491,7 @@ msgstr "Events linked to the person"
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workspace-member-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "Events linked to the workspace member"
-msgstr "Events linked to the workspace member"
+msgstr "Events linked to the organization member"
 
 #. js-lingui-id: b3ictS
 #: src/engine/metadata-modules/view-field-group/services/fields-widget-upsert.service.ts
@@ -5529,7 +5529,7 @@ msgstr "Join table linking message channel message associations to message folde
 #. js-lingui-id: PviVyk
 #: src/engine/core-modules/workspace-invitation/services/workspace-invitation.service.ts
 msgid "Join your team on Twenty"
-msgstr "Join your team on Twenty"
+msgstr "Join your team on Crove"
 
 #. js-lingui-id: +KEn4d
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-call-recording-standard-flat-field-metadata.util.ts
@@ -6646,7 +6646,7 @@ msgstr "No role assigned to the application."
 #. js-lingui-id: 5ZMHXg
 #: src/engine/metadata-modules/permissions/permissions.exception.ts
 msgid "No role found for this user in the workspace."
-msgstr "No role found for this user in the workspace."
+msgstr "No role found for this user in the organization."
 
 #. js-lingui-id: ISCcTE
 #: src/engine/twenty-orm/exceptions/twenty-orm.exception.ts
@@ -7154,7 +7154,7 @@ msgstr "Opportunities linked to the company."
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workspace-member-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "Opportunities owned by the workspace member"
-msgstr "Opportunities owned by the workspace member"
+msgstr "Opportunities owned by the organization member"
 
 #. js-lingui-id: JpA/cO
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-attachment-standard-flat-field-metadata.util.ts
@@ -7583,7 +7583,7 @@ msgstr "Permission flag definition to update not found"
 #. placeholder {0}: flatPermissionFlagToValidate.key
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/utils/validate-flat-permission-flag-creation.util.ts
 msgid "Permission flag definition with key \"{0}\" is already registered in this workspace."
-msgstr "Permission flag definition with key \"{0}\" is already registered in this workspace."
+msgstr "Permission flag definition with key \"{0}\" is already registered in this organization."
 
 #. js-lingui-id: wz0wTT
 #: src/engine/metadata-modules/flat-permission-flag/validators/utils/validate-permission-flag-not-in-use-cross-entity.util.ts
@@ -7739,7 +7739,7 @@ msgstr "Please use a company email domain."
 #: src/modules/workspace-member/query-hooks/workspace-member-delete-many.pre-query.hook.ts
 #: src/modules/workspace-member/query-hooks/workspace-member-delete-one.pre-query.hook.ts
 msgid "Please use Settings to remove a workspace member."
-msgstr "Please use Settings to remove a workspace member."
+msgstr "Please use Settings to remove a organization member."
 
 #. js-lingui-id: f8ypJ4
 #: src/engine/core-modules/auth/auth.exception.ts
@@ -8853,7 +8853,7 @@ msgstr "Server administrator access changed"
 #. js-lingui-id: uK5uBy
 #: src/engine/core-modules/application/application-key-value/services/application-key-value.service.ts
 msgid "Server keys require the application publisher workspace to have the application installed."
-msgstr "Server keys require the application publisher workspace to have the application installed."
+msgstr "Server keys require the application publisher organization to have the application installed."
 
 #. js-lingui-id: Q8FQ55
 #: src/engine/core-modules/server-route-trigger/exceptions/server-route-trigger.exception.ts
@@ -8868,12 +8868,12 @@ msgstr "Server logic function requires authentication."
 #. js-lingui-id: OUDI/C
 #: src/engine/core-modules/impersonation/constants/impersonation-denial-by-reason.constant.ts
 msgid "Server-level impersonation is not enabled for this user or workspace."
-msgstr "Server-level impersonation is not enabled for this user or workspace."
+msgstr "Server-level impersonation is not enabled for this user or organization."
 
 #. js-lingui-id: U1u0hG
 #: src/engine/core-modules/impersonation/constants/impersonation-denial-by-reason.constant.ts
 msgid "Set up two-factor authentication before impersonating users in another workspace."
-msgstr "Set up two-factor authentication before impersonating users in another workspace."
+msgstr "Set up two-factor authentication before impersonating users in another organization."
 
 #. js-lingui-id: vGWuPM
 #: src/engine/workspace-manager/twenty-standard-application/constants/standard-command-menu-item.constant.ts
@@ -8945,7 +8945,7 @@ msgstr "Some of the permissions you selected are not valid. Please try again wit
 #. js-lingui-id: aPJopM
 #: src/engine/metadata-modules/user-role/user-role.service.ts
 msgid "Some workspace memberships could not be found. They may no longer have access to this workspace."
-msgstr "Some workspace memberships could not be found. They may no longer have access to this workspace."
+msgstr "Some organization memberships could not be found. They may no longer have access to this organization."
 
 #. js-lingui-id: eAMUPx
 #: src/engine/core-modules/onboarding/onboarding.exception.ts
@@ -9256,7 +9256,7 @@ msgstr "System fields cannot be updated"
 #. js-lingui-id: aK2k19
 #: src/engine/metadata-modules/index-metadata/services/index-metadata.service.ts
 msgid "System indexes are required for Twenty to work and cannot be deleted."
-msgstr "System indexes are required for Twenty to work and cannot be deleted."
+msgstr "System indexes are required for Crove to work and cannot be deleted."
 
 #. js-lingui-id: /ojawH
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-builder/validators/services/flat-object-metadata-validator.service.ts
@@ -9419,7 +9419,7 @@ msgstr "Tasks"
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workspace-member-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "Tasks assigned to the workspace member"
-msgstr "Tasks assigned to the workspace member"
+msgstr "Tasks assigned to the organization member"
 
 #. js-lingui-id: cq5JGr
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-company-standard-flat-field-metadata.util.ts
@@ -9657,7 +9657,7 @@ msgstr "The date the message was received"
 #. js-lingui-id: nCXfEw
 #: src/engine/metadata-modules/role/role.service.ts
 msgid "The default role cannot be deleted as it is required for the workspace to function properly."
-msgstr "The default role cannot be deleted as it is required for the workspace to function properly."
+msgstr "The default role cannot be deleted as it is required for the organization to function properly."
 
 #. js-lingui-id: 0biWRI
 #: src/engine/metadata-modules/permissions/permissions.exception.ts
@@ -9667,7 +9667,7 @@ msgstr "The default role cannot be deleted."
 #. js-lingui-id: 6BBrjb
 #: src/engine/metadata-modules/role/role.service.ts
 msgid "The default role for this workspace could not be found. Please contact support for assistance."
-msgstr "The default role for this workspace could not be found. Please contact support for assistance."
+msgstr "The default role for this organization could not be found. Please contact support for assistance."
 
 #. js-lingui-id: hmg/aY
 #: src/engine/core-modules/enterprise/enterprise.exception.ts
@@ -9688,7 +9688,7 @@ msgstr "The executor of the workflow"
 #. js-lingui-id: o6DGfJ
 #: src/engine/core-modules/workspace/services/workspace.service.ts
 msgid "The field \"{field}\" cannot be updated. Please contact your workspace administrator."
-msgstr "The field \"{field}\" cannot be updated. Please contact your workspace administrator."
+msgstr "The field \"{field}\" cannot be updated. Please contact your organization administrator."
 
 #. js-lingui-id: xM30Ha
 #: src/engine/metadata-modules/page-layout-widget/utils/validate-field-configuration-nested-relation.util.ts
@@ -9987,7 +9987,7 @@ msgstr "The workflow version status"
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workspace-member-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "The workspace member who last updated the record"
-msgstr "The workspace member who last updated the record"
+msgstr "The organization member who last updated the record"
 
 #. js-lingui-id: mTxjri
 #: src/engine/core-modules/workspace-invitation/workspace-invitation.exception.ts
@@ -10012,7 +10012,7 @@ msgstr "There is no previous onboarding step to go back to."
 #. js-lingui-id: Yi0Q/T
 #: src/engine/core-modules/workspace/services/workspace.service.ts
 msgid "These fields cannot be updated before the workspace is activated: {fieldsList}."
-msgstr "These fields cannot be updated before the workspace is activated: {fieldsList}."
+msgstr "These fields cannot be updated before the organization is activated: {fieldsList}."
 
 #. js-lingui-id: Iy9pZw
 #: src/engine/api/graphql/workspace-query-runner/utils/handle-duplicate-key-error.util.ts
@@ -10064,17 +10064,17 @@ msgstr "This API key has no role assigned."
 #: src/engine/core-modules/application/application-registration/application-registration.exception.ts
 #: src/engine/core-modules/application/application.exception.ts
 msgid "This app requires a newer version of the Twenty server. Please upgrade your server or use a compatible app version."
-msgstr "This app requires a newer version of the Twenty server. Please upgrade your server or use a compatible app version."
+msgstr "This app requires a newer version of the Crove server. Please upgrade your server or use a compatible app version."
 
 #. js-lingui-id: y2nks/
 #: src/engine/core-modules/application/application.exception.ts
 msgid "This app requires a newer version than this workspace has finished upgrading to. Please try again once the workspace upgrade completes."
-msgstr "This app requires a newer version than this workspace has finished upgrading to. Please try again once the workspace upgrade completes."
+msgstr "This app requires a newer version than this organization has finished upgrading to. Please try again once the organization upgrade completes."
 
 #. js-lingui-id: ecIX3O
 #: src/engine/core-modules/application/application-registration/application-registration.exception.ts
 msgid "This application is already owned by a workspace."
-msgstr "This application is already owned by a workspace."
+msgstr "This application is already owned by a organization."
 
 #. js-lingui-id: SRnMG0
 #: src/engine/core-modules/emailing-domain/exceptions/emailing-domain.exception.ts
@@ -10369,7 +10369,7 @@ msgstr "This role cannot be modified because it is a system role. Only custom ro
 #. js-lingui-id: DEJJoY
 #: src/engine/core-modules/application/application-key-value/services/application-key-value.service.ts
 msgid "This server key is already claimed by another workspace."
-msgstr "This server key is already claimed by another workspace."
+msgstr "This server key is already claimed by another organization."
 
 #. js-lingui-id: nFIPim
 #: src/engine/core-modules/workspace/workspace.exception.ts
@@ -10394,7 +10394,7 @@ msgstr "This universal identifier is already claimed by another registration."
 #. js-lingui-id: GEN5Cv
 #: src/engine/core-modules/workspace-invitation/workspace-invitation.exception.ts
 msgid "This user is already a member of the workspace."
-msgstr "This user is already a member of the workspace."
+msgstr "This user is already a member of the organization."
 
 #. js-lingui-id: LtsBYU
 #: src/engine/core-modules/twenty-config/twenty-config.exception.ts
@@ -10409,17 +10409,17 @@ msgstr "This version is not higher than the currently deployed version. Please b
 #. js-lingui-id: ZXnasf
 #: src/engine/core-modules/application/application.exception.ts
 msgid "This version of the application is already installed in this workspace."
-msgstr "This version of the application is already installed in this workspace."
+msgstr "This version of the application is already installed in this organization."
 
 #. js-lingui-id: o/Kt/Y
 #: src/engine/core-modules/billing/billing.exception.ts
 msgid "This workspace already has a subscription."
-msgstr "This workspace already has a subscription."
+msgstr "This organization already has a subscription."
 
 #. js-lingui-id: IdEnkZ
 #: src/engine/core-modules/application/application.exception.ts
 msgid "This workspace's upgrade state could not be determined. Please try again once the workspace has finished upgrading."
-msgstr "This workspace's upgrade state could not be determined. Please try again once the workspace has finished upgrading."
+msgstr "This organization's upgrade state could not be determined. Please try again once the organization has finished upgrading."
 
 #. js-lingui-id: YBkEbP
 #: src/engine/metadata-modules/page-layout-widget/constants/standard-page-layout-widget-titles.ts
@@ -10609,7 +10609,7 @@ msgstr "Too many requests. Please try again later."
 #. js-lingui-id: mfqtz7
 #: src/engine/core-modules/workspace-invitation/services/workspace-invitation.service.ts
 msgid "Too many workspace invitations sent. Please try again later."
-msgstr "Too many workspace invitations sent. Please try again later."
+msgstr "Too many organization invitations sent. Please try again later."
 
 #. js-lingui-id: 4nPpGt
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-call-recording-standard-flat-field-metadata.util.ts
@@ -10882,7 +10882,7 @@ msgstr "User already has a role assigned."
 #: src/engine/core-modules/auth/strategies/jwt.auth.strategy.ts
 #: src/engine/core-modules/auth/strategies/jwt.auth.strategy.ts
 msgid "User does not have access to this workspace"
-msgstr "User does not have access to this workspace"
+msgstr "User does not have access to this organization"
 
 #. js-lingui-id: Sl1ElS
 #: src/engine/metadata-modules/permissions/utils/permission-graphql-api-exception-handler.util.ts
@@ -10919,7 +10919,7 @@ msgstr "User id is required."
 #: src/engine/core-modules/auth/strategies/jwt.auth.strategy.ts
 #: src/engine/core-modules/auth/token/services/access-token.service.ts
 msgid "User is not a member of the workspace."
-msgstr "User is not a member of the workspace."
+msgstr "User is not a member of the organization."
 
 #. js-lingui-id: siJgSI
 #: src/engine/core-modules/auth/auth.exception.ts
@@ -10952,12 +10952,12 @@ msgstr "User was not created with email/password"
 #: src/engine/metadata-modules/ai/ai.exception.ts
 #: src/engine/metadata-modules/permissions/permissions.exception.ts
 msgid "User workspace not found."
-msgstr "User workspace not found."
+msgstr "User organization not found."
 
 #. js-lingui-id: 9mCrQp
 #: src/engine/twenty-orm/exceptions/twenty-orm.exception.ts
 msgid "User workspace role configuration not found."
-msgstr "User workspace role configuration not found."
+msgstr "User organization role configuration not found."
 
 #. js-lingui-id: CUICZ7
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workspace-member-standard-flat-field-metadata.util.ts
@@ -11019,7 +11019,7 @@ msgstr "Value must be in UPPER_CASE and follow snake_case \"{sanitizedValue}\""
 #. js-lingui-id: NzhR7p
 #: src/engine/core-modules/impersonation/constants/impersonation-denial-by-reason.constant.ts
 msgid "Verify your two-factor authentication before impersonating users in another workspace."
-msgstr "Verify your two-factor authentication before impersonating users in another workspace."
+msgstr "Verify your two-factor authentication before impersonating users in another organization."
 
 #. js-lingui-id: q1On37
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workflow-version-standard-flat-field-metadata.util.ts
@@ -11445,17 +11445,17 @@ msgstr "We couldn't find any calendars on your CalDAV server. Please make sure y
 #. js-lingui-id: N/EFgn
 #: src/engine/core-modules/application/application-manifest/utils/enrich-application-manifest-sync-error.util.ts
 msgid "We couldn't install \"{applicationDisplayName}\" because some of its metadata could not be applied to your workspace."
-msgstr "We couldn't install \"{applicationDisplayName}\" because some of its metadata could not be applied to your workspace."
+msgstr "We couldn't install \"{applicationDisplayName}\" because some of its metadata could not be applied to your organization."
 
 #. js-lingui-id: QJUYcw
 #: src/engine/core-modules/application/application-manifest/utils/enrich-application-manifest-sync-error.util.ts
 msgid "We couldn't install \"{applicationDisplayName}\". Its {humanEntity} could not be applied to your workspace."
-msgstr "We couldn't install \"{applicationDisplayName}\". Its {humanEntity} could not be applied to your workspace."
+msgstr "We couldn't install \"{applicationDisplayName}\". Its {humanEntity} could not be applied to your organization."
 
 #. js-lingui-id: WFQSL0
 #: src/engine/core-modules/application/application.exception.ts
 msgid "We couldn't install this application because some of its metadata could not be applied to your workspace."
-msgstr "We couldn't install this application because some of its metadata could not be applied to your workspace."
+msgstr "We couldn't install this application because some of its metadata could not be applied to your organization."
 
 #. js-lingui-id: v8UNEA
 #: src/engine/core-modules/imap-smtp-caldav-connection/services/imap-smtp-caldav-connection.service.ts
@@ -11488,7 +11488,7 @@ msgstr "Wednesday"
 #. js-lingui-id: TVkCrJ
 #: src/engine/core-modules/email-verification/services/email-verification.service.ts
 msgid "Welcome to Twenty: Please Confirm Your Email"
-msgstr "Welcome to Twenty: Please Confirm Your Email"
+msgstr "Welcome to Crove: Please Confirm Your Email"
 
 #. js-lingui-id: ofdfh5
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-message-campaign-standard-flat-field-metadata.util.ts
@@ -11862,55 +11862,55 @@ msgstr "workflowVersionId must not be set when engineComponentKey is FRONT_COMPO
 #: src/engine/core-modules/billing-webhook/services/billing-webhook-subscription.service.ts
 #: src/engine/core-modules/billing-webhook/services/billing-webhook-subscription.service.ts
 msgid "Workspace {workspaceId} is not found."
-msgstr "Workspace {workspaceId} is not found."
+msgstr "Organization {workspaceId} is not found."
 
 #. js-lingui-id: lNgTSN
 #: src/engine/core-modules/billing/billing.exception.ts
 msgid "Workspace cannot be deleted: subscription is not yet canceled."
-msgstr "Workspace cannot be deleted: subscription is not yet canceled."
+msgstr "Organization cannot be deleted: subscription is not yet canceled."
 
 #. js-lingui-id: XsSVrR
 #: src/engine/core-modules/auth/services/sign-in-up.service.ts
 msgid "Workspace creation is restricted to admins"
-msgstr "Workspace creation is restricted to admins"
+msgstr "Organization creation is restricted to admins"
 
 #. js-lingui-id: qSQPRS
 #: src/engine/core-modules/auth/services/auth.service.ts
 msgid "Workspace does not exist."
-msgstr "Workspace does not exist."
+msgstr "Organization does not exist."
 
 #. js-lingui-id: oLh4c+
 #: src/engine/metadata-modules/permissions/permissions.exception.ts
 msgid "Workspace ID and role mismatch."
-msgstr "Workspace ID and role mismatch."
+msgstr "Organization ID and role mismatch."
 
 #. js-lingui-id: rklt6M
 #: src/engine/core-modules/auth/services/sign-in-up.service.ts
 #: src/engine/core-modules/auth/services/sign-in-up.service.ts
 msgid "Workspace is not ready to welcome new members"
-msgstr "Workspace is not ready to welcome new members"
+msgstr "Organization is not ready to welcome new members"
 
 #. js-lingui-id: 8RwcFg
 #: src/engine/core-modules/logic-function/logic-function-trigger/triggers/route/exceptions/route-trigger.exception.ts
 msgid "Workspace is suspended."
-msgstr "Workspace is suspended."
+msgstr "Organization is suspended."
 
 #. js-lingui-id: iN7doz
 #: src/engine/core-modules/auth/services/sign-in-up.service.ts
 msgid "Workspace limit reached. A valid enterprise key is required to create more workspaces."
-msgstr "Workspace limit reached. A valid enterprise key is required to create more workspaces."
+msgstr "Organization limit reached. A valid enterprise key is required to create more organizations."
 
 #. js-lingui-id: foYipq
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-message-participant-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "Workspace member"
-msgstr "Workspace member"
+msgstr "Organization member"
 
 #. js-lingui-id: pwKAVz
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-calendar-event-participant-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "Workspace Member"
-msgstr "Workspace Member"
+msgstr "Organization Member"
 
 #. js-lingui-id: tz4ASG
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-calendar-event-participant-standard-flat-field-metadata.util.ts
@@ -11918,74 +11918,74 @@ msgstr "Workspace Member"
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-timeline-activity-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.label"
 msgid "Workspace Member"
-msgstr "Workspace Member"
+msgstr "Organization Member"
 
 #. js-lingui-id: j3uenD
 #: src/engine/workspace-manager/twenty-standard-application/utils/object-metadata/create-standard-flat-object-metadata.util.ts
 msgctxt "objectMetadata.labelSingular"
 msgid "Workspace Member"
-msgstr "Workspace Member"
+msgstr "Organization Member"
 
 #. js-lingui-id: EVUobL
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workspace-member-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "Workspace member avatar"
-msgstr "Workspace member avatar"
+msgstr "Organization member avatar"
 
 #. js-lingui-id: SWTQfb
 #: src/modules/blocklist/blocklist-validation-manager/services/blocklist-validation.service.ts
 msgid "Workspace member cannot be updated."
-msgstr "Workspace member cannot be updated."
+msgstr "Organization member cannot be updated."
 
 #. js-lingui-id: YvE7G6
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workspace-member-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "Workspace member job title"
-msgstr "Workspace member job title"
+msgstr "Organization member job title"
 
 #. js-lingui-id: xTE+26
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workspace-member-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "Workspace member name"
-msgstr "Workspace member name"
+msgstr "Organization member name"
 
 #. js-lingui-id: rnnLQA
 #: src/engine/metadata-modules/ai/ai.exception.ts
 #: src/engine/metadata-modules/permissions/permissions.exception.ts
 msgid "Workspace member not found."
-msgstr "Workspace member not found."
+msgstr "Organization member not found."
 
 #. js-lingui-id: tw1ElT
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-workspace-member-standard-flat-field-metadata.util.ts
 msgctxt "fieldMetadata.description"
 msgid "Workspace member position"
-msgstr "Workspace member position"
+msgstr "Organization member position"
 
 #. js-lingui-id: scar7N
 #: src/engine/workspace-manager/twenty-standard-application/utils/object-metadata/create-standard-flat-object-metadata.util.ts
 msgctxt "objectMetadata.labelPlural"
 msgid "Workspace Members"
-msgstr "Workspace Members"
+msgstr "Organization Members"
 
 #. js-lingui-id: bcIybO
 #: src/engine/core-modules/auth/services/sign-in-up.service.ts
 msgid "Workspace name is required"
-msgstr "Workspace name is required"
+msgstr "Organization name is required"
 
 #. js-lingui-id: JYc1v3
 #: src/engine/core-modules/user-workspace/guards/upload-profile-picture-permission.guard.ts
 msgid "Workspace not found"
-msgstr "Workspace not found"
+msgstr "Organization not found"
 
 #. js-lingui-id: eQwIyW
 #: src/engine/core-modules/billing/billing.exception.ts
 msgid "Workspace not found for customer event."
-msgstr "Workspace not found for customer event."
+msgstr "Organization not found for customer event."
 
 #. js-lingui-id: 5Io9Sh
 #: src/engine/core-modules/billing/billing.exception.ts
 msgid "Workspace not found for subscription event."
-msgstr "Workspace not found for subscription event."
+msgstr "Organization not found for subscription event."
 
 #. js-lingui-id: EhVOPs
 #: src/engine/core-modules/auth/auth.exception.ts
@@ -11997,28 +11997,28 @@ msgstr "Workspace not found for subscription event."
 #: src/engine/twenty-orm/exceptions/twenty-orm.exception.ts
 #: src/modules/workflow/workflow-executor/exceptions/workflow-step-executor.exception.ts
 msgid "Workspace not found."
-msgstr "Workspace not found."
+msgstr "Organization not found."
 
 #. js-lingui-id: mMbNCo
 #: src/engine/core-modules/admin-panel/services/admin-panel-user-lookup.service.ts
 msgid "Workspace not found. Please check the ID."
-msgstr "Workspace not found. Please check the ID."
+msgstr "Organization not found. Please check the ID."
 
 #. js-lingui-id: osscRx
 #: src/engine/workspace-datasource/exceptions/workspace-datasource.exception.ts
 #: src/engine/workspace-manager/workspace-migration/workspace-migration-runner/exceptions/workspace-migration-runner.exception.ts
 msgid "Workspace schema changes are temporarily locked."
-msgstr "Workspace schema changes are temporarily locked."
+msgstr "Organization schema changes are temporarily locked."
 
 #. js-lingui-id: 7wxAZI
 #: src/engine/twenty-orm/exceptions/twenty-orm.exception.ts
 msgid "Workspace schema not found."
-msgstr "Workspace schema not found."
+msgstr "Organization schema not found."
 
 #. js-lingui-id: 2gzz0t
 #: src/engine/metadata-modules/ai/ai-chat/services/workspace-setup-chat.service.ts
 msgid "Workspace setup"
-msgstr "Workspace setup"
+msgstr "Organization setup"
 
 #. js-lingui-id: kjLpTn
 #: src/engine/metadata-modules/view-field/exceptions/view-field.exception.ts
@@ -12184,7 +12184,7 @@ msgstr "You do not have access to this message folder."
 #. js-lingui-id: EFQeXU
 #: src/engine/guards/settings-permission.guard.ts
 msgid "You do not have permission to access this feature. Please contact your workspace administrator for access."
-msgstr "You do not have permission to access this feature. Please contact your workspace administrator for access."
+msgstr "You do not have permission to access this feature. Please contact your organization administrator for access."
 
 #. js-lingui-id: nPwrik
 #: src/modules/workflow/workflow-trigger/exceptions/workflow-trigger.exception.ts
@@ -12194,27 +12194,27 @@ msgstr "You do not have permission to access this workflow."
 #. js-lingui-id: sjYS9x
 #: src/engine/metadata-modules/navigation-menu-item/services/navigation-menu-item-access.service.ts
 msgid "You do not have permission to create workspace-level navigation menu items. Please contact your workspace administrator for access."
-msgstr "You do not have permission to create workspace-level navigation menu items. Please contact your workspace administrator for access."
+msgstr "You do not have permission to create organization-level navigation menu items. Please contact your organization administrator for access."
 
 #. js-lingui-id: P69VwK
 #: src/engine/core-modules/user/user.resolver.ts
 msgid "You do not have permission to delete this user from the workspace. Please contact your workspace administrator for access."
-msgstr "You do not have permission to delete this user from the workspace. Please contact your workspace administrator for access."
+msgstr "You do not have permission to delete this user from the organization. Please contact your organization administrator for access."
 
 #. js-lingui-id: NuG0g3
 #: src/engine/metadata-modules/navigation-menu-item/services/navigation-menu-item-access.service.ts
 msgid "You do not have permission to delete workspace-level navigation menu items. Please contact your workspace administrator for access."
-msgstr "You do not have permission to delete workspace-level navigation menu items. Please contact your workspace administrator for access."
+msgstr "You do not have permission to delete organization-level navigation menu items. Please contact your organization administrator for access."
 
 #. js-lingui-id: +wZ6RO
 #: src/engine/core-modules/impersonation/constants/impersonation-denial-by-reason.constant.ts
 msgid "You do not have permission to impersonate users in this workspace."
-msgstr "You do not have permission to impersonate users in this workspace."
+msgstr "You do not have permission to impersonate users in this organization."
 
 #. js-lingui-id: +2vVRB
 #: src/engine/guards/impersonate-permission.guard.ts
 msgid "You do not have permission to impersonate users. Please contact your workspace administrator for access."
-msgstr "You do not have permission to impersonate users. Please contact your workspace administrator for access."
+msgstr "You do not have permission to impersonate users. Please contact your organization administrator for access."
 
 #. js-lingui-id: q5OVn+
 #: src/engine/core-modules/application/application.exception.ts
@@ -12232,22 +12232,22 @@ msgstr "You do not have permission to perform this workflow action."
 #. js-lingui-id: 1dsy9v
 #: src/engine/core-modules/workspace/services/workspace.service.ts
 msgid "You do not have permission to update these fields: {fieldsList}. Please contact your workspace administrator."
-msgstr "You do not have permission to update these fields: {fieldsList}. Please contact your workspace administrator."
+msgstr "You do not have permission to update these fields: {fieldsList}. Please contact your organization administrator."
 
 #. js-lingui-id: ZCNAGE
 #: src/engine/core-modules/user/user.resolver.ts
 msgid "You do not have permission to update this workspace member."
-msgstr "You do not have permission to update this workspace member."
+msgstr "You do not have permission to update this organization member."
 
 #. js-lingui-id: RZzKii
 #: src/engine/metadata-modules/navigation-menu-item/services/navigation-menu-item-access.service.ts
 msgid "You do not have permission to update workspace-level navigation menu items. Please contact your workspace administrator for access."
-msgstr "You do not have permission to update workspace-level navigation menu items. Please contact your workspace administrator for access."
+msgstr "You do not have permission to update organization-level navigation menu items. Please contact your organization administrator for access."
 
 #. js-lingui-id: ZPo5fR
 #: src/engine/core-modules/user-workspace/guards/upload-profile-picture-permission.guard.ts
 msgid "You do not have permission to upload profile pictures. Please contact your workspace administrator for access."
-msgstr "You do not have permission to upload profile pictures. Please contact your workspace administrator for access."
+msgstr "You do not have permission to upload profile pictures. Please contact your organization administrator for access."
 
 #. js-lingui-id: PzaPrw
 #: src/modules/dashboard/chart-data/exceptions/chart-data.exception.ts
@@ -12257,7 +12257,7 @@ msgstr "You do not have permission to view this data."
 #. js-lingui-id: M1he8p
 #: src/engine/metadata-modules/view/exceptions/view.exception.ts
 msgid "You don't have permission to create workspace-level views."
-msgstr "You don't have permission to create workspace-level views."
+msgstr "You don't have permission to create organization-level views."
 
 #. js-lingui-id: QmL9y9
 #: src/engine/metadata-modules/view/exceptions/view.exception.ts
@@ -12331,7 +12331,7 @@ msgstr "Your payment method was declined. Please update it and try again."
 #: src/engine/metadata-modules/permissions/permissions.service.ts
 #: src/engine/metadata-modules/user-role/user-role.service.ts
 msgid "Your role in this workspace could not be found. Please contact your workspace administrator."
-msgstr "Your role in this workspace could not be found. Please contact your workspace administrator."
+msgstr "Your role in this organization could not be found. Please contact your organization administrator."
 
 #. js-lingui-id: 9T+AIN
 #: src/engine/workspace-manager/twenty-standard-application/utils/field-metadata/compute-company-standard-flat-field-metadata.util.ts
@@ -12342,19 +12342,19 @@ msgstr "Your team member responsible for managing the company account"
 #. js-lingui-id: sOfbGC
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "Your Twenty plan renews soon"
-msgstr "Your Twenty plan renews soon"
+msgstr "Your Crove plan renews soon"
 
 #. js-lingui-id: qW+K5e
 #: src/engine/core-modules/billing/reminders/services/billing-reminder.service.ts
 msgid "Your Twenty trial is ending soon"
-msgstr "Your Twenty trial is ending soon"
+msgstr "Your Crove trial is ending soon"
 
 #. js-lingui-id: ej/tZF
 #: src/engine/core-modules/graphql/hooks/use-graphql-error-handler.hook.ts
 msgid "Your workspace has been updated with a new data model. Please refresh the page."
-msgstr "Your workspace has been updated with a new data model. Please refresh the page."
+msgstr "Your organization has been updated with a new data model. Please refresh the page."
 
 #. js-lingui-id: DmYwVp
 #: src/engine/workspace-manager/workspace-cleaner/services/cleaner.workspace-service.ts
 msgid "Your workspace is paused — reactivate to keep your data"
-msgstr "Your workspace is paused — reactivate to keep your data"
+msgstr "Your organization is paused — reactivate to keep your data"
