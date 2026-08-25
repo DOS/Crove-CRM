@@ -9,7 +9,7 @@ import { AuthenticatedMethod } from '@/auth/types/AuthenticatedMethod.enum';
 import { type SocialSSOSignInUpActionType } from '@/auth/types/socialSSOSignInUp.type';
 import { useLingui } from '@lingui/react/macro';
 import { memo, useContext } from 'react';
-import { IconShield } from 'twenty-ui/icon';
+import { IconDos } from 'twenty-ui/icon';
 import { HorizontalSeparator } from 'twenty-ui/layout';
 import { MainButton } from 'twenty-ui/input';
 import { useAtomState } from '@/ui/utilities/state/jotai/hooks/useAtomState';
@@ -20,7 +20,7 @@ import { ThemeContext } from 'twenty-ui/theme-constants';
 
 const DosIdIcon = memo(() => {
   const { theme } = useContext(ThemeContext);
-  return <IconShield size={theme.icon.size.md} />;
+  return <IconDos size={theme.icon.size.md} />;
 });
 
 export const SignInUpWithDosId = ({
