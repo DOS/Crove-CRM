@@ -81,6 +81,7 @@ import { MessagingFolderSyncManagerModule } from 'src/modules/messaging/message-
 
 import { AuthResolver } from './auth.resolver';
 
+import { EcosystemOutboundEventListener } from './listeners/ecosystem-outbound-event.listener';
 import { AuthService } from './services/auth.service';
 import { JwtAuthStrategy } from './strategies/jwt.auth.strategy';
 
@@ -175,6 +176,7 @@ import { JwtAuthStrategy } from './strategies/jwt.auth.strategy';
     UpdateConnectedAccountOnReconnectService,
     TransientTokenService,
     AuthSsoService,
+    EcosystemOutboundEventListener,
   ],
   exports: [
     AccessTokenService,
