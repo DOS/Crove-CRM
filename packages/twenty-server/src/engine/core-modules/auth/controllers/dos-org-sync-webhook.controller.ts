@@ -375,6 +375,7 @@ export class DosOrgSyncWebhookController {
                     await this.globalWorkspaceOrmManager.getRepository(
                       workspace.id,
                       'company',
+                      { shouldBypassPermissionChecks: true },
                     );
 
                   const existing = isNonEmptyString(companyId)
@@ -457,6 +458,7 @@ export class DosOrgSyncWebhookController {
                     await this.globalWorkspaceOrmManager.getRepository(
                       workspace.id,
                       'person',
+                      { shouldBypassPermissionChecks: true },
                     );
 
                   const nameParts = customerName?.split(' ') || [];
