@@ -21945,3 +21945,13 @@ msgstr "Your organization will be disabled"
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Zed"
 msgstr "Zed"
+
+msgid "You must be authenticated to perform this action."
+msgstr "You must be authenticated to perform this action."
+
+msgid "Token has expired."
+msgstr "Token has expired."
+
+msgid "Token invalid."
+msgstr "Token invalid."
+

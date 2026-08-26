@@ -21931,3 +21931,13 @@ msgstr "tổ chức của bạn sẽ bị vô hiệu hóa"
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Zed"
 msgstr "Zed"
+
+msgid "You must be authenticated to perform this action."
+msgstr "Bạn phải đăng nhập để thực hiện hành động này."
+
+msgid "Token has expired."
+msgstr "Phiên đăng nhập đã hết hạn."
+
+msgid "Token invalid."
+msgstr "Token không hợp lệ."
+

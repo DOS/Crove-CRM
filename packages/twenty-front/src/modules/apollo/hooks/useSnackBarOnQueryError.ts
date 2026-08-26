@@ -1,3 +1,4 @@
+import { isUnauthenticatedGraphQLError } from '@/apollo/utils/isUnauthenticatedGraphQLError';
 import { CombinedGraphQLErrors } from '@apollo/client/errors';
 import { useSnackBar } from '@/ui/feedback/snack-bar-manager/hooks/useSnackBar';
 import { useEffect } from 'react';
@@ -18,6 +19,13 @@ export const useSnackBarOnQueryError = (
 
   useEffect(() => {
     if (!error) return;
+
+    if (
+      CombinedGraphQLErrors.is(error) &&
+      error.errors.some(isUnauthenticatedGraphQLError)
+    ) {
+      return;
+    }
 
     enqueueErrorSnackBar(
       message
