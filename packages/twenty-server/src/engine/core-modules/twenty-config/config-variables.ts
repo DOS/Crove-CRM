@@ -339,6 +339,15 @@ export class ConfigVariables {
 
   @ConfigVariablesMetadata({
     group: ConfigVariablesGroup.DOS_ID_AUTH,
+    isSensitive: false,
+    description: 'DOS.Me Platform API URL for Organization SSOT sync',
+    type: ConfigVariableType.STRING,
+  })
+  @IsOptional()
+  AUTH_DOS_API_URL = 'https://api.dos.me';
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.DOS_ID_AUTH,
     isSensitive: true,
     description: 'HMAC secret key for DOS.Me Organization sync webhooks',
     type: ConfigVariableType.STRING,

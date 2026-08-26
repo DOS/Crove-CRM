@@ -39,8 +39,10 @@ type DosOrgSyncPayload = {
     | 'org.updated'
     | 'organization.deleted'
     | 'org.deleted'
+    | 'organization.member.added'
     | 'organization.member_added'
     | 'org.member_added'
+    | 'organization.member.removed'
     | 'organization.member_removed'
     | 'org.member_removed'
     | 'user.updated';
@@ -215,6 +217,7 @@ export class DosOrgSyncWebhookController {
         break;
       }
 
+      case 'organization.member.added':
       case 'organization.member_added':
       case 'org.member_added': {
         const userEmail = payload.data.user_email?.toLowerCase();
@@ -258,6 +261,7 @@ export class DosOrgSyncWebhookController {
         break;
       }
 
+      case 'organization.member.removed':
       case 'organization.member_removed':
       case 'org.member_removed': {
         const userEmail = payload.data.user_email?.toLowerCase();
