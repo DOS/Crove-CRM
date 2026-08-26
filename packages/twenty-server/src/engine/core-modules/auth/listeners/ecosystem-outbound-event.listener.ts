@@ -35,9 +35,12 @@ export class EcosystemOutboundEventListener {
         company.domainName?.primaryLinkUrl?.replace(/^https?:\/\//, '');
 
       await sendEcosystemEvent(this.twentyConfigService, 'company.created', {
+        id: event.recordId,
         crm_company_id: event.recordId,
         org_id: payload.workspaceId,
+        global_org_id: payload.workspaceId,
         name: company.name,
+        domain: domain,
         domain_name: domain,
         address: company.address?.addressCity
           ? `${company.address.addressStreet1 ?? ''}, ${company.address.addressCity ?? ''}`.trim()
@@ -62,9 +65,12 @@ export class EcosystemOutboundEventListener {
         company.domainName?.primaryLinkUrl?.replace(/^https?:\/\//, '');
 
       await sendEcosystemEvent(this.twentyConfigService, 'company.updated', {
+        id: event.recordId,
         crm_company_id: event.recordId,
         org_id: payload.workspaceId,
+        global_org_id: payload.workspaceId,
         name: company.name,
+        domain: domain,
         domain_name: domain,
         address: company.address?.addressCity
           ? `${company.address.addressStreet1 ?? ''}, ${company.address.addressCity ?? ''}`.trim()
@@ -91,8 +97,10 @@ export class EcosystemOutboundEventListener {
 
       if (isDefined(email)) {
         await sendEcosystemEvent(this.twentyConfigService, 'customer.created', {
+          id: event.recordId,
           crm_person_id: event.recordId,
           org_id: payload.workspaceId,
+          global_org_id: payload.workspaceId,
           email,
           name: fullName || email,
           phone: person.phones?.primaryPhoneNumber,
@@ -121,8 +129,10 @@ export class EcosystemOutboundEventListener {
 
       if (isDefined(email)) {
         await sendEcosystemEvent(this.twentyConfigService, 'customer.updated', {
+          id: event.recordId,
           crm_person_id: event.recordId,
           org_id: payload.workspaceId,
+          global_org_id: payload.workspaceId,
           email,
           name: fullName || email,
           phone: person.phones?.primaryPhoneNumber,
