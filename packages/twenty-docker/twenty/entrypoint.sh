@@ -16,10 +16,6 @@ setup_and_migrate_db() {
         yarn database:init:prod
     fi
 
-    if ! yarn command:prod cache:flush; then
-        echo "Warning: Failed to flush cache before upgrade, but continuing startup..."
-    fi
-
     if ! yarn command:prod upgrade; then
         echo "Warning: Upgrade completed with errors. Some workspaces may not be fully migrated. Check logs for details."
     fi

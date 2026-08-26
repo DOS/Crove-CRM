@@ -15,6 +15,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { type Request } from 'express';
 import { isNonEmptyString } from '@sniptt/guards';
+import axios from 'axios';
 import { ApiPath } from 'twenty-shared/types';
 import { isDefined } from 'twenty-shared/utils';
 import { WorkspaceActivationStatus } from 'twenty-shared/workspace';
@@ -31,8 +32,37 @@ import { AuthProviderEnum } from 'src/engine/core-modules/workspace/types/worksp
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
 import { NoPermissionGuard } from 'src/engine/guards/no-permission.guard';
 import { PublicEndpointGuard } from 'src/engine/guards/public-endpoint.guard';
+import { GlobalWorkspaceOrmManager } from 'src/engine/twenty-orm/global-workspace-datasource/global-workspace-orm.manager';
+import { buildSystemAuthContext } from 'src/engine/twenty-orm/utils/build-system-auth-context.util';
 
-type DosOrgSyncPayload = {
+export function verifyEcosystemWebhook(
+  rawBody: string | Buffer,
+  signatureHeader: string,
+  secret: string,
+): boolean {
+  if (!signatureHeader || !secret) return false;
+  const cleanSignature = signatureHeader.replace(/^sha256=/, '').trim();
+  const expected = crypto
+    .createHmac('sha256', secret)
+    .update(rawBody)
+    .digest('hex');
+
+  if (cleanSignature.length !== expected.length) {
+    return false;
+  }
+
+  try {
+    return crypto.timingSafeEqual(
+      Buffer.from(cleanSignature, 'hex'),
+      Buffer.from(expected, 'hex'),
+    );
+  } catch {
+    return false;
+  }
+}
+
+export type EcosystemWebhookPayload = {
+  id?: string;
   event:
     | 'organization.created'
     | 'org.created'
@@ -46,9 +76,14 @@ type DosOrgSyncPayload = {
     | 'organization.member.removed'
     | 'organization.member_removed'
     | 'org.member_removed'
+    | 'company.created'
+    | 'company.updated'
+    | 'customer.created'
+    | 'customer.updated'
     | 'user.updated';
   timestamp: string;
   data: {
+    // Org data
     org_id?: string;
     org_name?: string;
     name?: string;
@@ -61,6 +96,23 @@ type DosOrgSyncPayload = {
     display_name?: string;
     avatar_url?: string;
     role?: 'OWNER' | 'ADMIN' | 'MEMBER';
+
+    // Company data
+    crm_company_id?: string;
+    desk_company_id?: string;
+    domain_name?: string;
+    address?: string;
+    tier?: string;
+    account_owner_email?: string;
+
+    // Customer data
+    crm_person_id?: string;
+    desk_customer_id?: string;
+    email?: string;
+    phone?: string;
+    job_title?: string;
+    company_id?: string;
+    company_name?: string;
   };
 };
 
@@ -74,6 +126,7 @@ export class DosOrgSyncWebhookController {
     private readonly userWorkspaceService: UserWorkspaceService,
     private readonly signInUpService: SignInUpService,
     private readonly userService: UserService,
+    private readonly globalWorkspaceOrmManager: GlobalWorkspaceOrmManager,
     @InjectRepository(WorkspaceEntity)
     private readonly workspaceRepository: Repository<WorkspaceEntity>,
     @InjectRepository(UserEntity)
@@ -97,23 +150,20 @@ export class DosOrgSyncWebhookController {
       }
 
       const bodyBuffer = rawBody ?? Buffer.from(JSON.stringify(req.body));
-      const expectedSignature = `sha256=${crypto
-        .createHmac('sha256', secret)
-        .update(bodyBuffer)
-        .digest('hex')}`;
+      const isValid = verifyEcosystemWebhook(bodyBuffer, signature, secret);
 
-      if (signature !== expectedSignature) {
+      if (!isValid) {
         throw new UnauthorizedException('Invalid X-DOS-Signature');
       }
     }
 
-    const payload = req.body as DosOrgSyncPayload;
+    const payload = req.body as EcosystemWebhookPayload;
 
     if (!payload?.event) {
       throw new BadRequestException('Invalid payload: event is required');
     }
 
-    this.logger.log(`Received DOS sync webhook event: ${payload.event}`);
+    this.logger.log(`Received DOS ecosystem webhook event: ${payload.event}`);
 
     switch (payload.event) {
       case 'organization.created':
@@ -304,6 +354,191 @@ export class DosOrgSyncWebhookController {
         break;
       }
 
+      case 'company.created':
+      case 'company.updated': {
+        const orgId = payload.data.org_id;
+        const companyName = payload.data.name || payload.data.company_name;
+        const companyId = payload.data.crm_company_id || payload.data.id;
+        const domainName = payload.data.domain_name;
+
+        if (isNonEmptyString(orgId) && isNonEmptyString(companyName)) {
+          const workspace = await this.workspaceRepository.findOne({
+            where: { id: orgId },
+          });
+
+          if (isDefined(workspace)) {
+            try {
+              const authContext = buildSystemAuthContext(workspace.id);
+              await this.globalWorkspaceOrmManager.executeInWorkspaceContext(
+                async () => {
+                  const companyRepo =
+                    await this.globalWorkspaceOrmManager.getRepository(
+                      workspace.id,
+                      'company',
+                    );
+
+                  const existing = isNonEmptyString(companyId)
+                    ? await companyRepo.findOne({ where: { id: companyId } })
+                    : await companyRepo.findOne({
+                        where: { name: companyName.trim() },
+                      });
+
+                  if (existing) {
+                    await companyRepo.update(
+                      { id: existing.id },
+                      {
+                        name: companyName.trim(),
+                        ...(isNonEmptyString(domainName)
+                          ? {
+                              domainName: {
+                                primaryLinkUrl: `https://${domainName}`,
+                                primaryLinkLabel: domainName,
+                                secondaryLinks: [],
+                              },
+                            }
+                          : {}),
+                      },
+                    );
+                    this.logger.log(
+                      `Updated company "${companyName}" in workspace ${workspace.id}`,
+                    );
+                  } else {
+                    await companyRepo.save({
+                      ...(isNonEmptyString(companyId) ? { id: companyId } : {}),
+                      name: companyName.trim(),
+                      ...(isNonEmptyString(domainName)
+                        ? {
+                            domainName: {
+                              primaryLinkUrl: `https://${domainName}`,
+                              primaryLinkLabel: domainName,
+                              secondaryLinks: [],
+                            },
+                          }
+                        : {}),
+                    });
+                    this.logger.log(
+                      `Created company "${companyName}" in workspace ${workspace.id}`,
+                    );
+                  }
+                },
+                authContext,
+              );
+            } catch (error) {
+              this.logger.error(
+                `Failed to sync company "${companyName}" in workspace ${workspace.id}: ${error}`,
+              );
+            }
+          }
+        }
+        break;
+      }
+
+      case 'customer.created':
+      case 'customer.updated': {
+        const orgId = payload.data.org_id;
+        const customerEmail = payload.data.email || payload.data.user_email;
+        const customerName = payload.data.name || payload.data.user_name;
+        const personId = payload.data.crm_person_id || payload.data.id;
+        const phone = payload.data.phone;
+        const jobTitle = payload.data.job_title;
+        const companyId = payload.data.crm_company_id || payload.data.company_id;
+
+        if (isNonEmptyString(orgId) && isNonEmptyString(customerEmail)) {
+          const workspace = await this.workspaceRepository.findOne({
+            where: { id: orgId },
+          });
+
+          if (isDefined(workspace)) {
+            try {
+              const authContext = buildSystemAuthContext(workspace.id);
+              await this.globalWorkspaceOrmManager.executeInWorkspaceContext(
+                async () => {
+                  const personRepo =
+                    await this.globalWorkspaceOrmManager.getRepository(
+                      workspace.id,
+                      'person',
+                    );
+
+                  const nameParts = customerName?.split(' ') || [];
+                  const firstName = nameParts[0] || '';
+                  const lastName = nameParts.slice(1).join(' ') || '';
+
+                  const existing = isNonEmptyString(personId)
+                    ? await personRepo.findOne({ where: { id: personId } })
+                    : await personRepo.findOne({
+                        where: {
+                          emails: {
+                            primaryEmail: customerEmail.toLowerCase(),
+                          },
+                        },
+                      });
+
+                  if (existing) {
+                    await personRepo.update(
+                      { id: existing.id },
+                      {
+                        name: {
+                          firstName: firstName || existing.name?.firstName || '',
+                          lastName: lastName || existing.name?.lastName || '',
+                        },
+                        ...(isNonEmptyString(jobTitle) ? { jobTitle } : {}),
+                        ...(isNonEmptyString(phone)
+                          ? {
+                              phones: {
+                                primaryPhoneNumber: phone,
+                                primaryPhoneCallingCode: '+84',
+                                primaryPhoneCountryCode: 'VN',
+                                additionalPhones: null,
+                              },
+                            }
+                          : {}),
+                        ...(isNonEmptyString(companyId) ? { companyId } : {}),
+                      },
+                    );
+                    this.logger.log(
+                      `Updated person "${customerEmail}" in workspace ${workspace.id}`,
+                    );
+                  } else {
+                    await personRepo.save({
+                      ...(isNonEmptyString(personId) ? { id: personId } : {}),
+                      name: {
+                        firstName,
+                        lastName,
+                      },
+                      emails: {
+                        primaryEmail: customerEmail.toLowerCase(),
+                        additionalEmails: null,
+                      },
+                      ...(isNonEmptyString(jobTitle) ? { jobTitle } : {}),
+                      ...(isNonEmptyString(phone)
+                        ? {
+                            phones: {
+                              primaryPhoneNumber: phone,
+                              primaryPhoneCallingCode: '+84',
+                              primaryPhoneCountryCode: 'VN',
+                              additionalPhones: null,
+                            },
+                          }
+                        : {}),
+                      ...(isNonEmptyString(companyId) ? { companyId } : {}),
+                    });
+                    this.logger.log(
+                      `Created person "${customerEmail}" in workspace ${workspace.id}`,
+                    );
+                  }
+                },
+                authContext,
+              );
+            } catch (error) {
+              this.logger.error(
+                `Failed to sync person "${customerEmail}" in workspace ${workspace.id}: ${error}`,
+              );
+            }
+          }
+        }
+        break;
+      }
+
       case 'user.updated': {
         const userEmail =
           payload.data.email?.toLowerCase() ||
@@ -334,5 +569,38 @@ export class DosOrgSyncWebhookController {
     }
 
     return { received: true, status: 'processed' };
+  }
+}
+
+export async function sendEcosystemEvent(
+  twentyConfigService: TwentyConfigService,
+  event: string,
+  data: Record<string, unknown>,
+): Promise<boolean> {
+  const logger = new Logger('EcosystemEventSender');
+  const dosApiUrl =
+    twentyConfigService.get('AUTH_DOS_API_URL') || 'https://api.dos.me';
+  const apiKey = twentyConfigService.get('CROVE_DOS_WEBHOOK_SECRET');
+
+  try {
+    const response = await axios.post(
+      `${dosApiUrl}/internal/events/publish`,
+      {
+        event,
+        data,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          ...(apiKey ? { 'X-API-Key': apiKey } : {}),
+        },
+        timeout: 5000,
+      },
+    );
+
+    return response.status >= 200 && response.status < 300;
+  } catch (error) {
+    logger.warn(`Failed to dispatch ecosystem event "${event}": ${error}`);
+    return false;
   }
 }

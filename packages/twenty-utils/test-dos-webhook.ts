@@ -121,6 +121,39 @@ function generatePayload(opts: WebhookTestData) {
         },
       };
 
+    case 'company.created':
+    case 'company.updated':
+      return {
+        event: opts.event,
+        timestamp,
+        data: {
+          crm_company_id: opts.orgId,
+          desk_company_id: 'comp_123456',
+          org_id: opts.orgId,
+          name: opts.orgName,
+          domain_name: `${opts.orgSlug}.com`,
+          address: 'Ho Chi Minh City, Vietnam',
+          tier: 'enterprise',
+          account_owner_email: opts.ownerEmail,
+        },
+      };
+
+    case 'customer.created':
+    case 'customer.updated':
+      return {
+        event: opts.event,
+        timestamp,
+        data: {
+          crm_person_id: 'aa9f5c5c-6880-40cf-86ee-c6c377938914',
+          desk_customer_id: 'cust_987654321',
+          org_id: opts.orgId,
+          email: opts.userEmail,
+          name: opts.userName,
+          phone: '+84900000000',
+          job_title: 'Product Owner',
+        },
+      };
+
     case 'user.updated':
       return {
         event: opts.event,
