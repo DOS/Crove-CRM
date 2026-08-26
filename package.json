@@ -75,6 +75,7 @@
   "version": "0.2.1",
   "nx": {},
   "scripts": {
+    "test:dos-webhook": "tsx packages/twenty-utils/test-dos-webhook.ts",
     "patch:branding": "tsx packages/twenty-utils/patch-crove-branding.ts",
     "docs:generate": "tsx packages/twenty-docs/scripts/generate-docs-json.ts",
     "docs:generate-navigation-template": "tsx packages/twenty-docs/scripts/generate-navigation-template.ts",

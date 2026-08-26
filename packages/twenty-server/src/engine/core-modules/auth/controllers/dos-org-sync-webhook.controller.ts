@@ -14,8 +14,9 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { type Request } from 'express';
+import { isNonEmptyString } from '@sniptt/guards';
 import { ApiPath } from 'twenty-shared/types';
-import { isDefined, isNonEmptyString } from 'twenty-shared/utils';
+import { isDefined } from 'twenty-shared/utils';
 import { WorkspaceActivationStatus } from 'twenty-shared/workspace';
 import { Repository } from 'typeorm';
 
