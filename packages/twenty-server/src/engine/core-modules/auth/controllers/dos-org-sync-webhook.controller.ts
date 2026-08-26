@@ -119,18 +119,17 @@ export class DosOrgSyncWebhookController {
       case 'org.created': {
         const orgName = payload.data.name || payload.data.org_name;
         const ownerEmail = payload.data.owner_email?.toLowerCase();
+        const orgId = payload.data.id || payload.data.org_id;
+        const orgSlug = payload.data.slug;
 
         if (isNonEmptyString(orgName) && isNonEmptyString(ownerEmail)) {
           const existingWorkspace = await this.workspaceRepository.findOne({
-            where: [{ displayName: orgName.trim() }],
+            where: [
+              ...(isNonEmptyString(orgId) ? [{ id: orgId }] : []),
+              ...(isNonEmptyString(orgSlug) ? [{ subdomain: orgSlug }] : []),
+              { displayName: orgName.trim() },
+            ],
           });
-
-          if (isDefined(existingWorkspace)) {
-            this.logger.log(
-              `Workspace with name "${orgName}" already exists, skipping creation`,
-            );
-            break;
-          }
 
           let user = await this.userService.findUserByEmail(ownerEmail);
 
@@ -149,20 +148,28 @@ export class DosOrgSyncWebhookController {
             );
           }
 
+          if (isDefined(existingWorkspace)) {
+            await this.userWorkspaceService.addUserToWorkspaceIfUserNotInWorkspace(
+              user,
+              existingWorkspace,
+            );
+            this.logger.log(
+              `Workspace "${orgName}" already exists, ensured owner ${ownerEmail} is linked`,
+            );
+            break;
+          }
+
           try {
-            const orgId = payload.data.id || payload.data.org_id;
             await this.signInUpService.signUpOnNewWorkspace(
               { type: 'existingUser', existingUser: user },
               {
                 displayName: orgName.trim(),
-                subdomain: isNonEmptyString(payload.data.slug)
-                  ? payload.data.slug
-                  : undefined,
+                subdomain: isNonEmptyString(orgSlug) ? orgSlug : undefined,
                 workspaceId: isNonEmptyString(orgId) ? orgId : undefined,
               },
             );
             this.logger.log(
-              `Successfully provisioned workspace "${orgName}" for owner ${ownerEmail}`,
+              `Successfully provisioned workspace "${orgName}" with ID ${orgId ?? 'generated'} for owner ${ownerEmail}`,
             );
           } catch (error) {
             this.logger.error(

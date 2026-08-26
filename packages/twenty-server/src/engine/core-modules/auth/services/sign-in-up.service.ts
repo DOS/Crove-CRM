@@ -555,6 +555,7 @@ export class SignInUpService {
       displayName?: string;
       subdomain?: string;
       workspaceId?: string;
+      userAccessToken?: string;
     },
   ) {
     const email =
@@ -606,6 +607,14 @@ export class SignInUpService {
         'https://api.dos.me';
 
       try {
+        const headers: Record<string, string> = {
+          'Content-Type': 'application/json',
+        };
+
+        if (isNonEmptyString(options?.userAccessToken)) {
+          headers['Authorization'] = `Bearer ${options.userAccessToken}`;
+        }
+
         const response = await axios.post<{
           id: string;
           name: string;
@@ -618,9 +627,7 @@ export class SignInUpService {
             billingEmail: email,
           },
           {
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers,
             timeout: 5000,
           },
         );

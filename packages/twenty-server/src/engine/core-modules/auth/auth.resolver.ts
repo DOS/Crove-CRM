@@ -600,13 +600,22 @@ export class AuthResolver {
   async signUpInNewWorkspace(
     @AuthUser() currentUser: AuthContextUser,
     @AuthProvider() authProvider: AuthProviderEnum,
+    @Context() context: { req: Request },
     @Args('input', { nullable: true }) input?: SignUpInNewWorkspaceInput,
   ): Promise<SignUpDTO> {
     const fullUser = await this.userService.findUserByIdOrThrow(currentUser.id);
+    const userAccessToken = context?.req?.headers?.authorization?.replace(
+      /^Bearer\s+/i,
+      '',
+    );
 
     const { user, workspace } = await this.signInUpService.signUpOnNewWorkspace(
       { type: 'existingUser', existingUser: fullUser },
-      { displayName: input?.displayName, subdomain: input?.subdomain },
+      {
+        displayName: input?.displayName,
+        subdomain: input?.subdomain,
+        userAccessToken,
+      },
     );
 
     const loginToken = await this.loginTokenService.generateLoginToken(
