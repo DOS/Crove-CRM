@@ -31,6 +31,5 @@ async function bootstrap() {
   await CommandFactory.runApplication(app);
 
   await app.close();
-  process.exit(process.exitCode ?? 0);
 }
 void bootstrap();
