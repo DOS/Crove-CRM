@@ -25,6 +25,7 @@ export class DomainServerConfigService {
 
     if (
       this.twentyConfigService.get('IS_MULTIWORKSPACE_ENABLED') &&
+      this.twentyConfigService.get('IS_MULTIWORKSPACE_SUBDOMAIN_ENABLED') &&
       this.twentyConfigService.get('DEFAULT_SUBDOMAIN')
     ) {
       baseUrl.hostname = `${this.twentyConfigService.get('DEFAULT_SUBDOMAIN')}.${baseUrl.hostname}`;

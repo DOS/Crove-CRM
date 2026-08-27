@@ -975,6 +975,7 @@ export type ClientConfig = {
   isMicrosoftCalendarEnabled: Scalars['Boolean']['output'];
   isMicrosoftMessagingEnabled: Scalars['Boolean']['output'];
   isMultiWorkspaceEnabled: Scalars['Boolean']['output'];
+  isMultiWorkspaceSubdomainEnabled?: Maybe<Scalars['Boolean']['output']>;
   isOnboardingAiChatEnabled: Scalars['Boolean']['output'];
   isWorkspaceSchemaDDLLocked: Scalars['Boolean']['output'];
   maintenance?: Maybe<ClientConfigMaintenanceMode>;
