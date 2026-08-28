@@ -66,6 +66,14 @@ export class DomainServerConfigService {
 
     const frontDomain = this.getFrontUrl().hostname;
 
+    if (originHostname === frontDomain) {
+      return {
+        subdomain: undefined,
+        domain: null,
+        isPublicDomainOrigin: false,
+      };
+    }
+
     const isFrontdomain = originHostname.endsWith(`.${frontDomain}`);
 
     if (isFrontdomain) {
