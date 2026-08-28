@@ -71,17 +71,31 @@ export class DosIdOauthGuard extends AuthGuard('dos-id') {
   // oxlint-disable-next-line typescript/no-explicit-any
   handleRequest(err: any, user: any, info: any) {
     if (err || !user) {
+      const responseBody = err?.response?.body
+        ? typeof err.response.body === 'string'
+          ? err.response.body
+          : JSON.stringify(err.response.body)
+        : null;
+
+      const errorMessage =
+        err?.response?.body?.msg ||
+        err?.response?.body?.error_description ||
+        err?.response?.body?.error ||
+        err?.message ??
+        info?.message ??
+        'DOS ID authentication failed';
+
       this.logger.error(
-        `DOS ID OAuth handleRequest failed: ${err?.message ?? info?.message ?? 'No user returned from strategy'}`,
+        `DOS ID OAuth handleRequest failed: ${errorMessage}${responseBody ? ` | Response: ${responseBody}` : ''}`,
         err?.stack ?? info,
       );
-      throw (
-        err ||
-        new AuthException(
-          info?.message ?? 'DOS ID authentication failed',
-          AuthExceptionCode.UNAUTHENTICATED,
-        )
+
+      const exception = new AuthException(
+        errorMessage,
+        AuthExceptionCode.UNAUTHENTICATED,
       );
+
+      throw exception;
     }
 
     return user;
