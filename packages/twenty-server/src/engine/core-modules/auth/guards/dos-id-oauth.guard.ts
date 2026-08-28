@@ -81,8 +81,8 @@ export class DosIdOauthGuard extends AuthGuard('dos-id') {
         err?.response?.body?.msg ||
         err?.response?.body?.error_description ||
         err?.response?.body?.error ||
-        err?.message ??
-        info?.message ??
+        err?.message ||
+        info?.message ||
         'DOS ID authentication failed';
 
       this.logger.error(
