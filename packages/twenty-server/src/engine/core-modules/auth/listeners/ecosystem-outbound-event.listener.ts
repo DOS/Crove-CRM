@@ -2,6 +2,8 @@ import { Injectable, Logger } from '@nestjs/common';
 
 import {
   type ObjectRecordCreateEvent,
+  type ObjectRecordDeleteEvent,
+  type ObjectRecordDestroyEvent,
   type ObjectRecordUpdateEvent,
 } from 'twenty-shared/database-events';
 import { isDefined } from 'twenty-shared/utils';
@@ -45,7 +47,7 @@ export class EcosystemOutboundEventListener {
         address: company.address?.addressCity
           ? `${company.address.addressStreet1 ?? ''}, ${company.address.addressCity ?? ''}`.trim()
           : undefined,
-        source: 'twenty_crm',
+        source: 'crove_crm',
       });
     }
   }
@@ -75,7 +77,28 @@ export class EcosystemOutboundEventListener {
         address: company.address?.addressCity
           ? `${company.address.addressStreet1 ?? ''}, ${company.address.addressCity ?? ''}`.trim()
           : undefined,
-        source: 'twenty_crm',
+        source: 'crove_crm',
+      });
+    }
+  }
+
+  @OnDatabaseBatchEvent('company', DatabaseEventAction.DELETED)
+  @OnDatabaseBatchEvent('company', DatabaseEventAction.DESTROYED)
+  async handleCompanyDeleted(
+    payload: WorkspaceEventBatch<
+      | ObjectRecordDeleteEvent<CompanyWorkspaceEntity>
+      | ObjectRecordDestroyEvent<CompanyWorkspaceEntity>
+    >,
+  ) {
+    if (!this.twentyConfigService.get('AUTH_DOS_ID_ENABLED')) return;
+
+    for (const event of payload.events) {
+      await sendEcosystemEvent(this.twentyConfigService, 'company.deleted', {
+        id: event.recordId,
+        crm_company_id: event.recordId,
+        org_id: payload.workspaceId,
+        global_org_id: payload.workspaceId,
+        source: 'crove_crm',
       });
     }
   }
@@ -101,12 +124,13 @@ export class EcosystemOutboundEventListener {
           crm_person_id: event.recordId,
           org_id: payload.workspaceId,
           global_org_id: payload.workspaceId,
+          crm_company_id: person.companyId,
+          company_id: person.companyId,
           email,
           name: fullName || email,
           phone: person.phones?.primaryPhoneNumber,
           job_title: person.jobTitle,
-          company_id: person.companyId,
-          source: 'twenty_crm',
+          source: 'crove_crm',
         });
       }
     }
@@ -133,14 +157,36 @@ export class EcosystemOutboundEventListener {
           crm_person_id: event.recordId,
           org_id: payload.workspaceId,
           global_org_id: payload.workspaceId,
+          crm_company_id: person.companyId,
+          company_id: person.companyId,
           email,
           name: fullName || email,
           phone: person.phones?.primaryPhoneNumber,
           job_title: person.jobTitle,
-          company_id: person.companyId,
-          source: 'twenty_crm',
+          source: 'crove_crm',
         });
       }
+    }
+  }
+
+  @OnDatabaseBatchEvent('person', DatabaseEventAction.DELETED)
+  @OnDatabaseBatchEvent('person', DatabaseEventAction.DESTROYED)
+  async handlePersonDeleted(
+    payload: WorkspaceEventBatch<
+      | ObjectRecordDeleteEvent<PersonWorkspaceEntity>
+      | ObjectRecordDestroyEvent<PersonWorkspaceEntity>
+    >,
+  ) {
+    if (!this.twentyConfigService.get('AUTH_DOS_ID_ENABLED')) return;
+
+    for (const event of payload.events) {
+      await sendEcosystemEvent(this.twentyConfigService, 'customer.deleted', {
+        id: event.recordId,
+        crm_person_id: event.recordId,
+        org_id: payload.workspaceId,
+        global_org_id: payload.workspaceId,
+        source: 'crove_crm',
+      });
     }
   }
 }
