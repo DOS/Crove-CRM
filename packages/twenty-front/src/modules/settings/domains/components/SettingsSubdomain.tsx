@@ -17,6 +17,7 @@ import { SettingsPath } from 'twenty-shared/types';
 import { getSettingsPath, isDefined } from 'twenty-shared/utils';
 import { H2Title } from 'twenty-ui/typography';
 import { Section } from 'twenty-ui/layout';
+import { useEffect } from 'react';
 import { useNavigateSettings } from '~/hooks/useNavigateSettings';
 
 const StyledDomainFormWrapper = styled.div`
@@ -43,8 +44,13 @@ export const SettingsSubdomain = () => {
     handleConfirm,
   } = useSettingsSubdomain();
 
+  useEffect(() => {
+    if (!isMultiWorkspaceSubdomainEnabled) {
+      navigate(SettingsPath.General);
+    }
+  }, [isMultiWorkspaceSubdomainEnabled, navigate]);
+
   if (!isMultiWorkspaceSubdomainEnabled) {
-    navigate(getSettingsPath(SettingsPath.General));
     return null;
   }
 
