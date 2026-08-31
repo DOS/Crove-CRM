@@ -138,6 +138,16 @@ function generatePayload(opts: WebhookTestData) {
         },
       };
 
+    case 'company.deleted':
+      return {
+        event: opts.event,
+        timestamp,
+        data: {
+          crm_company_id: opts.orgId,
+          org_id: opts.orgId,
+        },
+      };
+
     case 'customer.created':
     case 'customer.updated':
       return {
@@ -151,6 +161,16 @@ function generatePayload(opts: WebhookTestData) {
           name: opts.userName,
           phone: '+84900000000',
           job_title: 'Product Owner',
+        },
+      };
+
+    case 'customer.deleted':
+      return {
+        event: opts.event,
+        timestamp,
+        data: {
+          crm_person_id: 'aa9f5c5c-6880-40cf-86ee-c6c377938914',
+          org_id: opts.orgId,
         },
       };
 
