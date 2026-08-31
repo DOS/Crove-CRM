@@ -117,8 +117,10 @@ export type EcosystemWebhookPayload = {
     | 'org.member_removed'
     | 'company.created'
     | 'company.updated'
+    | 'company.deleted'
     | 'customer.created'
     | 'customer.updated'
+    | 'customer.deleted'
     | 'ticket.created'
     | 'ticket.updated'
     | 'user.updated';
@@ -507,6 +509,50 @@ export class DosOrgSyncWebhookController {
         break;
       }
 
+      case 'company.deleted': {
+        const orgId =
+          payload.data.global_org_id ||
+          payload.data.org_id ||
+          payload.data.id;
+        const companyId =
+          payload.data.crm_company_id ||
+          payload.data.id ||
+          payload.data.desk_company_id;
+
+        if (isNonEmptyString(orgId) && isNonEmptyString(companyId)) {
+          const workspace = await this.workspaceRepository.findOne({
+            where: { id: orgId },
+          });
+
+          if (isDefined(workspace)) {
+            try {
+              const authContext = buildSystemAuthContext(workspace.id);
+              await this.globalWorkspaceOrmManager.executeInWorkspaceContext(
+                async () => {
+                  const companyRepo =
+                    await this.globalWorkspaceOrmManager.getRepository(
+                      workspace.id,
+                      'company',
+                      { shouldBypassPermissionChecks: true },
+                    );
+
+                  await companyRepo.delete({ id: companyId });
+                  this.logger.log(
+                    `Deleted company "${companyId}" in workspace ${workspace.id}`,
+                  );
+                },
+                authContext,
+              );
+            } catch (error) {
+              this.logger.error(
+                `Failed to delete company "${companyId}" in workspace ${workspace.id}: ${error}`,
+              );
+            }
+          }
+        }
+        break;
+      }
+
       case 'customer.created':
       case 'customer.updated': {
         const orgId =
@@ -614,6 +660,62 @@ export class DosOrgSyncWebhookController {
             } catch (error) {
               this.logger.error(
                 `Failed to sync person "${customerEmail}" in workspace ${workspace.id}: ${error}`,
+              );
+            }
+          }
+        }
+        break;
+      }
+
+      case 'customer.deleted': {
+        const orgId =
+          payload.data.global_org_id ||
+          payload.data.org_id ||
+          payload.data.id;
+        const personId =
+          payload.data.crm_person_id ||
+          payload.data.id ||
+          payload.data.desk_customer_id;
+        const customerEmail = payload.data.email || payload.data.user_email;
+
+        if (
+          isNonEmptyString(orgId) &&
+          (isNonEmptyString(personId) || isNonEmptyString(customerEmail))
+        ) {
+          const workspace = await this.workspaceRepository.findOne({
+            where: { id: orgId },
+          });
+
+          if (isDefined(workspace)) {
+            try {
+              const authContext = buildSystemAuthContext(workspace.id);
+              await this.globalWorkspaceOrmManager.executeInWorkspaceContext(
+                async () => {
+                  const personRepo =
+                    await this.globalWorkspaceOrmManager.getRepository(
+                      workspace.id,
+                      'person',
+                      { shouldBypassPermissionChecks: true },
+                    );
+
+                  if (isNonEmptyString(personId)) {
+                    await personRepo.delete({ id: personId });
+                  } else if (isNonEmptyString(customerEmail)) {
+                    await personRepo.delete({
+                      emails: {
+                        primaryEmail: customerEmail.toLowerCase(),
+                      },
+                    });
+                  }
+                  this.logger.log(
+                    `Deleted customer "${personId || customerEmail}" in workspace ${workspace.id}`,
+                  );
+                },
+                authContext,
+              );
+            } catch (error) {
+              this.logger.error(
+                `Failed to delete customer in workspace ${workspace.id}: ${error}`,
               );
             }
           }
