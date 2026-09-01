@@ -1,8 +1,11 @@
 {
-  "name": "@twentyhq/commerce",
+  "name": "@crove/commerce",
   "version": "0.1.0",
-  "description": "Commerce, Products and Order Management suite for Twenty CRM",
+  "description": "Commerce, Products and Order Management suite for Twenty & Crove CRM",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": {
     "node": "^24.5.0",
     "npm": "please-use-yarn",

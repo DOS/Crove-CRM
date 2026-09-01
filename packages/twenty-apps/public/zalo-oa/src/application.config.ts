@@ -6,14 +6,14 @@ export default defineApplication({
   universalIdentifier: APPLICATION_UNIVERSAL_IDENTIFIER,
   displayName: 'Zalo OA',
   description:
-    'Connect Zalo Official Account to Twenty. Receive webhook events to automatically capture leads (new followers, messages), send customer care messages and Zalo ZNS notifications from workflows.',
+    'Connect Zalo Official Account to Twenty & Crove CRM. Receive webhook events to automatically capture leads (new followers, messages), send customer care messages and Zalo ZNS notifications from workflows.',
   logoUrl: 'public/zalo.svg',
-  author: 'Twenty',
+  author: 'Crove',
   category: 'Communication',
-  websiteUrl: 'https://docs.twenty.com/developers/extend/apps/getting-started',
-  termsUrl: 'https://www.twenty.com/terms',
-  emailSupport: 'contact@twenty.com',
-  issueReportUrl: 'https://github.com/twentyhq/twenty/issues',
+  websiteUrl: 'https://crove.io',
+  termsUrl: 'https://crove.io/terms',
+  emailSupport: 'support@crove.com',
+  issueReportUrl: 'https://github.com/DOS/Crove-CRM/issues',
   serverVariables: {
     ZALO_APP_ID: {
       description:

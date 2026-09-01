@@ -20,7 +20,7 @@ permissions:
 
 jobs:
   resolve-context:
-    if: github.event.workflow_run.conclusion == 'success'
+    if: github.repository == 'twentyhq/twenty' && github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     outputs:

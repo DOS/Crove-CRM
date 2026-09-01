@@ -8,10 +8,10 @@ export default defineApplication({
   description:
     'Manage Products, Services, Packages, and Orders. Track sales pipelines, inventory, multi-item checkouts, customer purchasing history and automated order total recalculation.',
   logoUrl: 'public/commerce.svg',
-  author: 'Twenty',
+  author: 'Crove',
   category: 'Sales',
-  websiteUrl: 'https://docs.twenty.com/developers/extend/apps/getting-started',
-  termsUrl: 'https://www.twenty.com/terms',
-  emailSupport: 'contact@twenty.com',
-  issueReportUrl: 'https://github.com/twentyhq/twenty/issues',
+  websiteUrl: 'https://crove.io',
+  termsUrl: 'https://crove.io/terms',
+  emailSupport: 'support@crove.com',
+  issueReportUrl: 'https://github.com/DOS/Crove-CRM/issues',
 });

@@ -1,8 +1,11 @@
 {
-  "name": "@twentyhq/zalo-oa",
+  "name": "@crove/zalo-oa",
   "version": "0.1.0",
-  "description": "Zalo Official Account connector for Twenty CRM",
+  "description": "Zalo Official Account connector for Twenty & Crove CRM",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": {
     "node": "^24.5.0",
     "npm": "please-use-yarn",
