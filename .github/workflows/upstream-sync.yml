@@ -1,0 +1,151 @@
+name: Upstream Release Auto-Sync
+
+on:
+  schedule:
+    # Runs every 6 hours to check for new upstream releases
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      upstream_tag:
+        description: 'Specific upstream tag to sync (e.g., twenty/v2.35.0). Leave empty to sync latest release.'
+        required: false
+        default: ''
+      target_branch:
+        description: 'Target branch to merge into'
+        required: true
+        default: 'dev'
+
+jobs:
+  sync-upstream:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+
+    steps:
+      - name: Checkout target branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.target_branch || 'dev' }}
+          fetch-depth: 0
+
+      - name: Determine Upstream Release Tag
+        id: get_tag
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SPECIFIC_TAG: ${{ github.event.inputs.upstream_tag }}
+        run: |
+          if [ -n "$SPECIFIC_TAG" ]; then
+            TAG="$SPECIFIC_TAG"
+          else
+            # Fetch the latest release tag from twentyhq/twenty that starts with twenty/v
+            TAG=$(gh api repos/twentyhq/twenty/releases --jq '[.[] | select(.tag_name | startswith("twenty/v"))] | .[0].tag_name')
+          fi
+
+          if [ -z "$TAG" ] || [ "$TAG" = "null" ]; then
+            echo "No valid upstream release tag found."
+            exit 1
+          fi
+
+          echo "Selected upstream release tag: $TAG"
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          CLEAN_VER=$(echo "$TAG" | sed 's|^twenty/||')
+          echo "clean_version=$CLEAN_VER" >> $GITHUB_OUTPUT
+
+      - name: Check if Tag Already Merged
+        id: check_merged
+        run: |
+          git remote add upstream https://github.com/twentyhq/twenty.git || true
+          git fetch upstream --tags
+
+          TAG="${{ steps.get_tag.outputs.tag }}"
+
+          # Check if the tag commit is an ancestor of the current branch
+          if git merge-base --is-ancestor "$TAG" HEAD 2>/dev/null; then
+            echo "Upstream tag $TAG is already merged into HEAD."
+            echo "already_merged=true" >> $GITHUB_OUTPUT
+          else
+            echo "Upstream tag $TAG is NOT merged yet."
+            echo "already_merged=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Configure Git Author
+        if: steps.check_merged.outputs.already_merged == 'false'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Attempt Automatic Merge
+        if: steps.check_merged.outputs.already_merged == 'false'
+        id: merge
+        env:
+          TAG: ${{ steps.get_tag.outputs.tag }}
+          TARGET_BRANCH: ${{ github.event.inputs.target_branch || 'dev' }}
+        run: |
+          echo "Attempting to merge $TAG into $TARGET_BRANCH..."
+
+          # Attempt merge without commit first
+          if git merge --no-commit "$TAG"; then
+            echo "Clean merge succeeded."
+            
+            # Apply branding patch if necessary
+            if [ -f "packages/twenty-utils/patch-crove-branding.ts" ]; then
+              yarn tsx packages/twenty-utils/patch-crove-branding.ts || true
+            fi
+            
+            git commit -m "chore(sync): auto-merge upstream release $TAG into $TARGET_BRANCH"
+            git push origin "$TARGET_BRANCH"
+            
+            echo "has_conflict=false" >> $GITHUB_OUTPUT
+          else
+            echo "Merge conflict encountered. Creating sync branch and opening a Pull Request."
+            git merge --abort || true
+            
+            SYNC_BRANCH="sync/${TAG/\//-}"
+            git checkout -b "$SYNC_BRANCH"
+            
+            # Create a merge commit recording conflicts or prepare branch
+            git merge -X ours --no-commit "$TAG" || true
+            git commit -m "chore(sync): automated sync branch for upstream release $TAG (requires review)"
+            git push -f origin "$SYNC_BRANCH"
+            
+            echo "has_conflict=true" >> $GITHUB_OUTPUT
+            echo "sync_branch=$SYNC_BRANCH" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request on Conflict
+        if: steps.check_merged.outputs.already_merged == 'false' && steps.merge.outputs.has_conflict == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.get_tag.outputs.tag }}
+          SYNC_BRANCH: ${{ steps.merge.outputs.sync_branch }}
+          TARGET_BRANCH: ${{ github.event.inputs.target_branch || 'dev' }}
+        run: |
+          gh pr create \
+            --base "$TARGET_BRANCH" \
+            --head "$SYNC_BRANCH" \
+            --title "[Upstream Sync] Merge $TAG into $TARGET_BRANCH" \
+            --body "Automated sync from upstream repository **twentyhq/twenty** for release **$TAG**.
+
+### ⚠️ Conflict Resolution Required
+An automatic merge into \`$TARGET_BRANCH\` had conflicts that require manual resolution.
+
+**Steps to resolve:**
+\`\`\`bash
+git checkout $SYNC_BRANCH
+git fetch upstream --tags
+git merge $TAG
+# Resolve conflicts in your editor
+git commit -m \"fix: resolve upstream sync conflicts for $TAG\"
+git push origin $SYNC_BRANCH
+\`\`\`" \
+            --label "upstream-sync" || echo "PR might already exist."
+
+      - name: Trigger Beta Build & Deploy Workflow
+        if: steps.check_merged.outputs.already_merged == 'false' && steps.merge.outputs.has_conflict == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Triggering Docker build and publish for dev branch..."
+          gh workflow run docker-publish.yml --ref dev || echo "Workflow trigger completed."

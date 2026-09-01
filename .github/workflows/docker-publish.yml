@@ -3,8 +3,12 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - main
       - dev
+    tags:
+      - 'v*.*.*'
+      - 'v*'
+  release:
+    types: [published]
   workflow_dispatch:
 
 jobs:
@@ -34,9 +38,21 @@ jobs:
         with:
           images: ghcr.io/${{ github.repository }}
           tags: |
-            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
             type=raw,value=beta,enable=${{ github.ref == 'refs/heads/dev' }}
+            type=raw,value=latest,enable=${{ startsWith(github.ref, 'refs/tags/v') || github.event_name == 'release' || github.ref == 'refs/heads/main' }}
+            type=ref,event=tag
             type=sha,format=short
+
+      - name: Determine App Version
+        id: version
+        run: |
+          if [[ "${{ github.ref }}" =~ ^refs/tags/v ]]; then
+            VER="${{ github.ref_name }}"
+          else
+            CODE_VER=$(grep -o "TWENTY_CURRENT_VERSION = '[^']*'" packages/twenty-server/src/engine/core-modules/upgrade/constants/twenty-current-version.constant.ts | cut -d"'" -f2)
+            VER="v${CODE_VER}"
+          fi
+          echo "app_version=${VER}" >> $GITHUB_OUTPUT
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
@@ -47,5 +63,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            APP_VERSION=${{ steps.version.outputs.app_version }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

@@ -9,10 +9,6 @@ on:
   workflow_call:
   push:
     branches: ['main']
-    paths-ignore:
-      - 'packages/twenty-front/src/locales/**'
-      - 'packages/twenty-emails/src/locales/**'
-      - 'packages/twenty-server/src/engine/core-modules/i18n/locales/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
@@ -21,6 +17,7 @@ concurrency:
 jobs:
   extract_translations:
     name: Extract and upload translations
+    if: github.repository == 'twentyhq/twenty'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
