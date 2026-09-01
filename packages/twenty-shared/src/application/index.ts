@@ -31,10 +31,12 @@ export { APPLICATION_VARIABLE_FIELD_METADATA_TYPES } from './applicationVariable
 export type { AssetManifest } from './assetManifestType';
 export type { ConnectionProviderManifest } from './connectionProviderManifestType';
 export type { ConnectionProviderType } from './connectionProviderType';
+export { APPLICATION_FILE_UPLOAD_BATCH_SIZE } from './constants/ApplicationFileUploadBatchSize';
 export { ASSETS_DIR } from './constants/AssetDirectory';
 export { DEFAULT_API_KEY_NAME } from './constants/DefaultApiKeyName';
 export { DEFAULT_API_URL_NAME } from './constants/DefaultApiUrlName';
 export { DEFAULT_APP_ACCESS_TOKEN_NAME } from './constants/DefaultAppAccessTokenName';
+export { DEFAULT_APP_APPLICATION_ACCESS_TOKEN_NAME } from './constants/DefaultAppApplicationAccessTokenName';
 export { DEFAULT_FUNCTIONS_URL_NAME } from './constants/DefaultFunctionsUrlName';
 export { FRONT_COMPONENT_SHARED_DEPENDENCIES_BUILT_PATH } from './constants/FrontComponentSharedDependenciesBuiltPath';
 export { FRONT_COMPONENT_SHARED_DEPENDENCIES_IMPORT_SPECIFIER } from './constants/FrontComponentSharedDependenciesImportSpecifier';
@@ -47,12 +49,6 @@ export { computeDeterministicUuid } from './deterministic-identifier/compute-det
 export type { DeterministicEntityNamespace } from './deterministic-identifier/deterministic-entity-namespace.type';
 export { getAgentUniversalIdentifier } from './deterministic-identifier/get-agent-universal-identifier.util';
 export { getApplicationVariableUniversalIdentifier } from './deterministic-identifier/get-application-variable-universal-identifier.util';
-export {
-  getGlobalCommandMenuItemUniversalIdentifier,
-  getGlobalObjectContextCommandMenuItemUniversalIdentifier,
-  getRecordSelectionCommandMenuItemUniversalIdentifier,
-  getNavigationCommandUniversalIdentifier,
-} from './deterministic-identifier/get-command-menu-item-universal-identifier.util';
 export { getConnectionProviderUniversalIdentifier } from './deterministic-identifier/get-connection-provider-universal-identifier.util';
 export { getFieldPermissionUniversalIdentifier } from './deterministic-identifier/get-field-permission-universal-identifier.util';
 export { getFieldUniversalIdentifier } from './deterministic-identifier/get-field-universal-identifier.util';
@@ -75,6 +71,7 @@ export { getRoleUniversalIdentifier } from './deterministic-identifier/get-role-
 export { getSearchFieldUniversalIdentifier } from './deterministic-identifier/get-search-field-universal-identifier.util';
 export { getSelectOptionUniversalIdentifier } from './deterministic-identifier/get-select-option-universal-identifier.util';
 export { getSkillUniversalIdentifier } from './deterministic-identifier/get-skill-universal-identifier.util';
+export { getSystemNavigationCommandMenuItemUniversalIdentifier } from './deterministic-identifier/get-system-navigation-command-menu-item-universal-identifier.util';
 export { getSystemPageLayoutTabUniversalIdentifier } from './deterministic-identifier/get-system-page-layout-tab-universal-identifier.util';
 export { getSystemPageLayoutWidgetUniversalIdentifier } from './deterministic-identifier/get-system-page-layout-widget-universal-identifier.util';
 export { getSystemRecordPageLayoutUniversalIdentifier } from './deterministic-identifier/get-system-record-page-layout-universal-identifier.util';
@@ -95,6 +92,8 @@ export type {
   EnqueueJobOptions,
   EnqueueJobInput,
   EnqueueJobResult,
+  EnqueueJobsInput,
+  EnqueueJobsResult,
 } from './enqueueJobType';
 export { SyncableEntity } from './enums/syncable-entities.enum';
 export type {
@@ -152,6 +151,11 @@ export type { SettingsFrontComponentApplicationManifest } from './settingsFrontC
 export type { SkillManifest } from './skillManifestType';
 export type { StoredOAuthConnectionProviderConfig } from './storedOAuthConnectionProviderConfigType';
 export type { SyncableEntityOptions } from './syncableEntityOptionsType';
+export type {
+  TimelineActivityTypeEmitThroughManifest,
+  TimelineActivityTypeEmitManifest,
+  TimelineActivityTypeManifest,
+} from './timelineActivityTypeManifestType';
 export type { ToolTriggerSettings } from './toolTriggerSettingsType';
 export type { UninstallLogicFunctionApplicationManifest } from './uninstallLogicFunctionApplicationType';
 export {
