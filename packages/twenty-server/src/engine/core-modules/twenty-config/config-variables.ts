@@ -558,6 +558,7 @@ export class ConfigVariables {
     options: Object.values(EmailDriver),
   })
   @CastToUpperSnakeCase()
+  @IsEnum(EmailDriver)
   EMAIL_DRIVER: EmailDriver = EmailDriver.LOGGER;
 
   @ConfigVariablesMetadata({
@@ -565,6 +566,7 @@ export class ConfigVariables {
     description: 'SMTP host for sending emails',
     type: ConfigVariableType.STRING,
   })
+  @ValidateIf((env) => env.EMAIL_DRIVER === EmailDriver.SMTP)
   EMAIL_SMTP_HOST: string;
 
   @ConfigVariablesMetadata({
@@ -589,6 +591,7 @@ export class ConfigVariables {
     type: ConfigVariableType.STRING,
     isSensitive: true,
   })
+  @ValidateIf((env) => env.EMAIL_DRIVER === EmailDriver.SMTP)
   EMAIL_SMTP_USER: string;
 
   @ConfigVariablesMetadata({
@@ -597,6 +600,7 @@ export class ConfigVariables {
     description: 'SMTP password for authentication',
     type: ConfigVariableType.STRING,
   })
+  @ValidateIf((env) => env.EMAIL_DRIVER === EmailDriver.SMTP)
   EMAIL_SMTP_PASSWORD: string;
 
   @ConfigVariablesMetadata({
@@ -605,7 +609,7 @@ export class ConfigVariables {
     description: 'Brevo API key for transactional email delivery',
     type: ConfigVariableType.STRING,
   })
-  @IsOptional()
+  @ValidateIf((env) => env.EMAIL_DRIVER === EmailDriver.BREVO)
   BREVO_API_KEY?: string;
 
   @ConfigVariablesMetadata({
