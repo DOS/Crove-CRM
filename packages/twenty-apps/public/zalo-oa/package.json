@@ -1,7 +1,12 @@
 {
+<<<<<<<< HEAD:packages/twenty-apps/public/zalo-oa/package.json
   "name": "@crove/zalo-oa",
   "version": "0.1.0",
   "description": "Zalo Official Account connector for Twenty & Crove CRM",
+========
+  "name": "@twentyhq/fathom",
+  "version": "0.1.0",
+>>>>>>>> origin/main:packages/twenty-apps/public/fathom/package.json
   "license": "MIT",
   "publishConfig": {
     "access": "public"
@@ -11,11 +16,15 @@
     "npm": "please-use-yarn",
     "yarn": ">=4.0.2"
   },
+<<<<<<<< HEAD:packages/twenty-apps/public/zalo-oa/package.json
   "keywords": [
     "twenty-app",
     "crove-crm-app",
     "crove-app"
   ],
+========
+  "keywords": [],
+>>>>>>>> origin/main:packages/twenty-apps/public/fathom/package.json
   "packageManager": "yarn@4.13.0",
   "scripts": {
     "twenty": "twenty",
@@ -28,13 +37,17 @@
   },
   "devDependencies": {
     "@types/node": "^24.7.2",
-    "@types/react": "^18.2.0",
     "@typescript/native-preview": "^7.0.0-dev.20260116.1",
     "oxlint": "^0.16.0",
+<<<<<<<< HEAD:packages/twenty-apps/public/zalo-oa/package.json
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "twenty-client-sdk": "^2.16.0",
     "twenty-sdk": "^2.16.0",
+========
+    "twenty-client-sdk": "2.35.0",
+    "twenty-sdk": "2.35.0",
+>>>>>>>> origin/main:packages/twenty-apps/public/fathom/package.json
     "typescript": "^5.9.3",
     "vite-tsconfig-paths": "^4.2.1",
     "vitest": "^4.0.0"
