@@ -194,6 +194,9 @@ async function main() {
   ];
 
   for (const pkg of compilePackages) {
+    if (!fs.existsSync(pkg.cwd)) {
+      continue;
+    }
     try {
       execSync('npx lingui compile --typescript', { cwd: pkg.cwd, stdio: 'inherit' });
       console.log(`[Branding Patch] ${pkg.name} catalogs compiled successfully.`);

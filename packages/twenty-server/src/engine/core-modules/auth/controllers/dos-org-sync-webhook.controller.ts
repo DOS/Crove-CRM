@@ -32,7 +32,7 @@ import { AuthProviderEnum } from 'src/engine/core-modules/workspace/types/worksp
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
 import { NoPermissionGuard } from 'src/engine/guards/no-permission.guard';
 import { PublicEndpointGuard } from 'src/engine/guards/public-endpoint.guard';
-import { GlobalWorkspaceOrmManager } from 'src/engine/twenty-orm/global-workspace-datasource/global-workspace-orm.manager';
+import { WorkspaceOrmManager } from 'src/engine/twenty-orm/workspace-orm.manager';
 import { buildSystemAuthContext } from 'src/engine/twenty-orm/utils/build-system-auth-context.util';
 
 export function verifyEcosystemWebhook(
@@ -180,7 +180,7 @@ export class DosOrgSyncWebhookController {
     private readonly userWorkspaceService: UserWorkspaceService,
     private readonly signInUpService: SignInUpService,
     private readonly userService: UserService,
-    private readonly globalWorkspaceOrmManager: GlobalWorkspaceOrmManager,
+    private readonly workspaceOrmManager: WorkspaceOrmManager,
     @InjectRepository(WorkspaceEntity)
     private readonly workspaceRepository: Repository<WorkspaceEntity>,
     @InjectRepository(UserEntity)
@@ -444,10 +444,10 @@ export class DosOrgSyncWebhookController {
           if (isDefined(workspace)) {
             try {
               const authContext = buildSystemAuthContext(workspace.id);
-              await this.globalWorkspaceOrmManager.executeInWorkspaceContext(
+              await this.workspaceOrmManager.executeInWorkspaceContext(
                 async () => {
                   const companyRepo =
-                    await this.globalWorkspaceOrmManager.getRepository(
+                    await this.workspaceOrmManager.getRepository(
                       workspace.id,
                       'company',
                       { shouldBypassPermissionChecks: true },
@@ -527,10 +527,10 @@ export class DosOrgSyncWebhookController {
           if (isDefined(workspace)) {
             try {
               const authContext = buildSystemAuthContext(workspace.id);
-              await this.globalWorkspaceOrmManager.executeInWorkspaceContext(
+              await this.workspaceOrmManager.executeInWorkspaceContext(
                 async () => {
                   const companyRepo =
-                    await this.globalWorkspaceOrmManager.getRepository(
+                    await this.workspaceOrmManager.getRepository(
                       workspace.id,
                       'company',
                       { shouldBypassPermissionChecks: true },
@@ -578,10 +578,10 @@ export class DosOrgSyncWebhookController {
           if (isDefined(workspace)) {
             try {
               const authContext = buildSystemAuthContext(workspace.id);
-              await this.globalWorkspaceOrmManager.executeInWorkspaceContext(
+              await this.workspaceOrmManager.executeInWorkspaceContext(
                 async () => {
                   const personRepo =
-                    await this.globalWorkspaceOrmManager.getRepository(
+                    await this.workspaceOrmManager.getRepository(
                       workspace.id,
                       'person',
                       { shouldBypassPermissionChecks: true },
@@ -689,10 +689,10 @@ export class DosOrgSyncWebhookController {
           if (isDefined(workspace)) {
             try {
               const authContext = buildSystemAuthContext(workspace.id);
-              await this.globalWorkspaceOrmManager.executeInWorkspaceContext(
+              await this.workspaceOrmManager.executeInWorkspaceContext(
                 async () => {
                   const personRepo =
-                    await this.globalWorkspaceOrmManager.getRepository(
+                    await this.workspaceOrmManager.getRepository(
                       workspace.id,
                       'person',
                       { shouldBypassPermissionChecks: true },
@@ -741,10 +741,10 @@ export class DosOrgSyncWebhookController {
           if (isDefined(workspace)) {
             try {
               const authContext = buildSystemAuthContext(workspace.id);
-              await this.globalWorkspaceOrmManager.executeInWorkspaceContext(
+              await this.workspaceOrmManager.executeInWorkspaceContext(
                 async () => {
                   const noteRepo =
-                    await this.globalWorkspaceOrmManager.getRepository(
+                    await this.workspaceOrmManager.getRepository(
                       workspace.id,
                       'note',
                       { shouldBypassPermissionChecks: true },
