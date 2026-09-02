@@ -4,6 +4,7 @@ import { type EmailDriverInterface } from 'src/engine/core-modules/email/drivers
 
 import { LoggerDriver } from 'src/engine/core-modules/email/drivers/logger.driver';
 import { SmtpDriver } from 'src/engine/core-modules/email/drivers/smtp.driver';
+import { BrevoDriver } from 'src/engine/core-modules/email/drivers/brevo.driver';
 import { EmailDriver } from 'src/engine/core-modules/email/enums/email-driver.enum';
 import { DriverFactoryBase } from 'src/engine/core-modules/twenty-config/dynamic-factory.base';
 import { ConfigVariablesGroup } from 'src/engine/core-modules/twenty-config/enums/config-variables-group.enum';
@@ -34,6 +35,14 @@ export class EmailDriverFactory extends DriverFactoryBase<EmailDriverInterface> 
       return `smtp|${emailConfigHash}`;
     }
 
+    if (driver === EmailDriver.BREVO) {
+      const emailConfigHash = this.configGroupHashService.computeHash(
+        ConfigVariablesGroup.EMAIL_SETTINGS,
+      );
+
+      return `brevo|${emailConfigHash}`;
+    }
+
     throw new Error(`Unsupported email driver: ${driver}`);
   }
 
@@ -43,6 +52,23 @@ export class EmailDriverFactory extends DriverFactoryBase<EmailDriverInterface> 
     switch (driver) {
       case EmailDriver.LOGGER:
         return new LoggerDriver();
+
+      case EmailDriver.BREVO: {
+        const apiKey =
+          this.twentyConfigService.get('BREVO_API_KEY') ||
+          this.twentyConfigService.get('EMAIL_SMTP_PASSWORD');
+
+        if (!apiKey) {
+          throw new Error(
+            'Brevo driver requires BREVO_API_KEY or EMAIL_SMTP_PASSWORD to be defined',
+          );
+        }
+
+        const fromAddress = this.twentyConfigService.get('EMAIL_FROM_ADDRESS');
+        const fromName = this.twentyConfigService.get('EMAIL_FROM_NAME');
+
+        return new BrevoDriver(apiKey, fromAddress, fromName);
+      }
 
       case EmailDriver.SMTP: {
         const host = this.twentyConfigService.get('EMAIL_SMTP_HOST');

@@ -600,6 +600,15 @@ export class ConfigVariables {
   EMAIL_SMTP_PASSWORD: string;
 
   @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.EMAIL_SETTINGS,
+    isSensitive: true,
+    description: 'Brevo API key for transactional email delivery',
+    type: ConfigVariableType.STRING,
+  })
+  @IsOptional()
+  BREVO_API_KEY?: string;
+
+  @ConfigVariablesMetadata({
     group: ConfigVariablesGroup.ADVANCED_SETTINGS,
     description:
       'When enabled, only server admins can create new workspaces. Ignored during initial setup when no workspace exists.',
