@@ -109,6 +109,7 @@ export {
   IconBrandLinkedin,
   IconBrandNpm,
   IconBrandOpenai,
+  IconBrandTypescript,
   IconBrandWhatsapp,
   IconBrandX,
   IconBriefcase,
@@ -158,6 +159,7 @@ export {
   IconColumnInsertRight,
   IconColumns,
   IconCommand,
+  IconCompass,
   IconMessageCircle,
   IconComment,
   IconCopy,
@@ -240,6 +242,7 @@ export {
   IconFileImport,
   IconFileInfo,
   IconFilePencil,
+  IconFiles,
   IconFileText,
   IconFileUpload,
   IconFileZip,
@@ -305,9 +308,11 @@ export {
   IconLayout,
   IconLayoutDashboard,
   IconLayoutGrid,
+  IconLayoutGridAdd,
   IconLayoutKanban,
   IconLayoutList,
   IconLayoutNavbar,
+  IconLayoutSidebar,
   IconLayoutSidebarLeftCollapse,
   IconLayoutSidebarLeftExpand,
   IconLayoutSidebarRight,
@@ -340,6 +345,7 @@ export {
   IconMaximize,
   IconMessage,
   IconMessageCirclePlus,
+  IconMicrophone,
   IconMinus,
   IconMoneybag,
   IconMoodSmile,
@@ -359,6 +365,7 @@ export {
   IconPencil,
   IconPencilOff,
   IconPercentage,
+  IconPerspective,
   IconPhone,
   IconPhoto,
   IconPhotoUp,
@@ -412,6 +419,7 @@ export {
   IconSettingsBolt,
   IconShare,
   IconShield,
+  IconShoppingBag,
   IconSitemap,
   IconSlash,
   IconSortAscending,
@@ -493,6 +501,15 @@ export {
   IconX,
 } from './components/TablerIcons';
 export { ThinkingOrbitLoaderIcon } from './components/ThinkingOrbitLoaderIcon';
+export type {
+  TwentyIconDictionaryCategory,
+  TwentyIconDictionaryEntry,
+} from './constants/TwentyIconDictionary';
+export {
+  TWENTY_ICON_DICTIONARY_FIGMA_URL,
+  TWENTY_ICON_DICTIONARY_CATEGORIES,
+  TWENTY_ICON_DICTIONARY,
+} from './constants/TwentyIconDictionary';
 export { useIcons } from './hooks/useIcons';
 export { IconsProvider } from './providers/IconsProvider';
 export type { IconComponentProps, IconComponent } from './types/IconComponent';

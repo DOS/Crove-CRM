@@ -1,0 +1,5 @@
+# Local only: host port 3000 is already used by crove-cal.
+services:
+  server:
+    ports: !override
+      - "3020:3000"

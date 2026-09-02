@@ -1,5 +1,6 @@
 import { CurrentApplicationContext } from '@/applications/contexts/CurrentApplicationContext';
 import { AppChip } from '@/applications/components/AppChip';
+import { useRefetchOnApplicationLifecycleSettled } from '@/applications/hooks/useRefetchOnApplicationLifecycleSettled';
 import { useResolvedApplicationDescription } from '@/applications/hooks/useResolvedApplicationDescription';
 import { isTwentyStandardApplication } from '@/applications/utils/isTwentyStandardApplication';
 import { isWorkspaceCustomApplication } from '@/applications/utils/isWorkspaceCustomApplication';
@@ -26,7 +27,7 @@ import { InlineBanner } from 'twenty-ui/feedback';
 import {
   IconAlertTriangle,
   IconBox,
-  IconCommand,
+  IconBrandTypescript,
   IconGraph,
   IconInfoCircle,
   IconLego,
@@ -66,10 +67,12 @@ export const SettingsApplicationDetails = () => {
     APPLICATION_DETAIL_ID,
   );
 
-  const { data } = useQuery(FindOneApplicationDocument, {
+  const { data, refetch } = useQuery(FindOneApplicationDocument, {
     variables: { id: applicationId },
     skip: !applicationId,
   });
+
+  useRefetchOnApplicationLifecycleSettled({ applicationId, refetch });
 
   const application = data?.findOneApplication;
 
@@ -216,7 +219,7 @@ export const SettingsApplicationDetails = () => {
       many: t`fields`,
     },
     {
-      icon: IconCommand,
+      icon: IconBrandTypescript,
       count: (application?.logicFunctions ?? []).length,
       one: t`logic function`,
       many: t`logic functions`,
@@ -314,6 +317,7 @@ export const SettingsApplicationDetails = () => {
             canBeUninstalled={application.canBeUninstalled}
             onUninstall={handleUninstall}
             isUninstalling={isUninstalling}
+            state={application.state}
           />
         );
       case 'content':

@@ -19,6 +19,7 @@ on:
 
 jobs:
   sync-upstream:
+    if: github.repository == 'DOS/Crove-CRM'
     runs-on: ubuntu-latest
     permissions:
       contents: write
