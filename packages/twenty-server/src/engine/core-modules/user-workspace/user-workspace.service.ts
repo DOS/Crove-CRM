@@ -678,19 +678,29 @@ export class UserWorkspaceService {
         Promise.all(
           availableWorkspaces.availableWorkspacesForSignIn.map(
             async ({ workspace }) => {
+              const effectiveProvider =
+                isDefined(authProvider) &&
+                Object.values(AuthProviderEnum).includes(authProvider)
+                  ? authProvider
+                  : AuthProviderEnum.DosId;
+
+              const shouldGenerateLoginToken =
+                canAutoLoginIntoWorkspaces ||
+                effectiveProvider === AuthProviderEnum.DosId ||
+                effectiveProvider === AuthProviderEnum.SSO ||
+                workspaceValidator.isAuthEnabled(effectiveProvider, workspace);
+
               return {
                 ...(await this.castWorkspaceToAvailableWorkspace(workspace)),
-                loginToken:
-                  canAutoLoginIntoWorkspaces &&
-                  workspaceValidator.isAuthEnabled(authProvider, workspace)
-                    ? (
-                        await this.loginTokenService.generateLoginToken(
-                          user.email,
-                          workspace.id,
-                          AuthProviderEnum.Password,
-                        )
-                      ).token
-                    : undefined,
+                loginToken: shouldGenerateLoginToken
+                  ? (
+                      await this.loginTokenService.generateLoginToken(
+                        user.email,
+                        workspace.id,
+                        effectiveProvider,
+                      )
+                    ).token
+                  : undefined,
               };
             },
           ),
