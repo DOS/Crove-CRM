@@ -226,3 +226,42 @@ Crove CRM utilizes the **Twenty SDK App Extension System** (`packages/twenty-app
 ```
 
 * Apps are synchronized into workspace schemas using one-shot synchronization: `yarn twenty dev --once`.
+
+---
+
+## 8. Ecosystem Slack Multi-Tenant Event Router (via `api.dos.me`)
+
+To allow a **single Slack App** across the entire Crove OS ecosystem (CRM, Desk, AI Assistant), `api.dos.me` acts as the central **Event Router & Inbound Dispatcher**:
+
+```
+                    ┌──────────────────────────────────────────────┐
+                    │               Slack Platform                 │
+                    │   (Event Subscriptions & Interactivity)      │
+                    └──────────────────────┬───────────────────────┘
+                                           │ POST https://api.dos.me/webhooks/slack
+                                           ▼
+                    ┌──────────────────────────────────────────────┐
+                    │            api.dos.me (SSOT & Router)        │
+                    │  1. Check signature (SLACK_SIGNING_SECRET)   │
+                    │  2. Answer url_verification { challenge }    │
+                    │  3. Lookup organization by team_id           │
+                    └──────────────┬────────────────┬──────────────┘
+                                   │                │
+            Forward Slack Events   │                │ Forward Ticket / Support Events
+                                   ▼                ▼
+┌────────────────────────────────────────┐    ┌────────────────────────────────────────┐
+│               Crove CRM                │    │               Crove Desk               │
+│ POST /webhooks/server/:logicFunctionId │    │ POST /api/v1/integrations/slack/events │
+│ (slack-events-resolver Logic Function) │    │ (Ticket creation, Agent auto-reply)    │
+└────────────────────────────────────────┘    └────────────────────────────────────────┘
+```
+
+### 8.1. Routing & Dispatch Protocol
+1. **Request URL**: Configured in Slack App Dashboard as `https://api.dos.me/webhooks/slack`.
+2. **Signature Verification & Handshake**:
+   - For `type: "url_verification"`, `api.dos.me` immediately replies with `{ challenge: payload.challenge }`.
+   - For other events, `api.dos.me` validates `x-slack-signature` and `x-slack-request-timestamp`.
+3. **Crove CRM Inbound Target**:
+   - Endpoint: `https://crm.crove.com/webhooks/server/9ad6fa20-dff5-4d3f-ad5f-084f3c8b0b09` (Slack Events Resolver Logic Function).
+   - Forwarded Headers: `x-slack-signature`, `x-slack-request-timestamp`, `content-type: application/json`.
+
