@@ -29,12 +29,21 @@ export type DosIdRequest = Omit<
     workspaceInviteHash?: string;
     action: SocialSSOSignInUpActionType;
     workspaceId?: string;
+    activeOrgId?: string | null;
     billingCheckoutSessionState?: string;
     returnToPath?: string;
     organizations?: Array<{
       id: string;
       name: string;
-      role: 'OWNER' | 'ADMIN' | 'MEMBER';
+      slug?: string;
+      role: 'OWNER' | 'ADMIN' | 'MEMBER' | string;
+    }>;
+    teams?: Array<{
+      id: string;
+      org_id: string;
+      name: string;
+      slug: string;
+      role: 'LEAD' | 'MEMBER' | string;
     }>;
   };
 };
@@ -172,6 +181,19 @@ export class DosIdStrategy extends PassportStrategy(Strategy, 'dos-id') {
         appMetadata.organizations ??
         userMetadata.organizations;
 
+      const rawTeams =
+        userinfo.teams ??
+        claims.teams ??
+        appMetadata.teams ??
+        userMetadata.teams;
+
+      const rawActiveOrgId =
+        userinfo.active_org_id ??
+        claims.active_org_id ??
+        appMetadata.active_org_id ??
+        userMetadata.active_org_id ??
+        null;
+
       const user: DosIdRequest['user'] = {
         email: email.toLowerCase(),
         firstName,
@@ -179,6 +201,7 @@ export class DosIdStrategy extends PassportStrategy(Strategy, 'dos-id') {
         picture,
         workspaceInviteHash: state?.workspaceInviteHash,
         workspaceId: state?.workspaceId,
+        activeOrgId: rawActiveOrgId,
         billingCheckoutSessionState: state?.billingCheckoutSessionState,
         action: state?.action ?? 'list-available-workspaces',
         locale: state?.locale,
@@ -186,6 +209,7 @@ export class DosIdStrategy extends PassportStrategy(Strategy, 'dos-id') {
         organizations: Array.isArray(rawOrganizations)
           ? rawOrganizations
           : undefined,
+        teams: Array.isArray(rawTeams) ? rawTeams : undefined,
       };
 
       done(null, user);

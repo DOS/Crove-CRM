@@ -984,6 +984,8 @@ export class AuthService {
       locale,
       returnToPath,
       organizations,
+      teams,
+      activeOrgId,
     }: MicrosoftRequest['user'] | GoogleRequest['user'] | DosIdRequest['user'],
     authProvider:
       | AuthProviderEnum.Google
@@ -1058,6 +1060,16 @@ export class AuthService {
             );
           }
         }
+      }
+
+      if (
+        authProvider === AuthProviderEnum.DosId &&
+        Array.isArray(teams) &&
+        teams.length > 0
+      ) {
+        this.logger.log(
+          `User ${user.id} (${email}) has ${teams.length} teams in DOS ID token claims: ${teams.map((t) => t.slug ?? t.id).join(', ')}`,
+        );
       }
 
       const ssoExchangeToken =
