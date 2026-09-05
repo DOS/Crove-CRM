@@ -643,12 +643,12 @@ export class UserResolver {
     workspace: WorkspaceEntity | undefined,
     @AuthAuthenticatedAt() authenticatedAt: Date | undefined,
   ): Promise<AvailableWorkspaces> {
-    return this.userWorkspaceService.setLoginTokenToAvailableWorkspacesWhenAuthProviderMatch(
-      await this.userWorkspaceService.findAvailableWorkspacesByEmail(
-        user.email,
-      ),
-      user,
-      authProvider,
+    const isMultiWorkspaceSubdomainEnabled = this.twentyConfigService.get(
+      'IS_MULTIWORKSPACE_SUBDOMAIN_ENABLED',
+    );
+
+    const canAutoLogin =
+      !isMultiWorkspaceSubdomainEnabled ||
       canCredentialAutoLoginIntoWorkspaces({
         isWorkspaceScopedCredential: isDefined(workspace),
         authenticatedAt,
@@ -656,7 +656,15 @@ export class UserResolver {
           'WORKSPACE_AUTO_LOGIN_WINDOW',
         ),
         now: new Date(),
-      }),
+      });
+
+    return this.userWorkspaceService.setLoginTokenToAvailableWorkspacesWhenAuthProviderMatch(
+      await this.userWorkspaceService.findAvailableWorkspacesByEmail(
+        user.email,
+      ),
+      user,
+      authProvider,
+      canAutoLogin,
     );
   }
 

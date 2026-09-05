@@ -1,12 +1,7 @@
 {
-<<<<<<<< HEAD:packages/twenty-apps/public/zalo-oa/package.json
   "name": "@crove/zalo-oa",
   "version": "0.1.0",
   "description": "Zalo Official Account connector for Twenty & Crove CRM",
-========
-  "name": "@twentyhq/fathom",
-  "version": "0.1.0",
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/package.json
   "license": "MIT",
   "publishConfig": {
     "access": "public"
@@ -16,15 +11,11 @@
     "npm": "please-use-yarn",
     "yarn": ">=4.0.2"
   },
-<<<<<<<< HEAD:packages/twenty-apps/public/zalo-oa/package.json
   "keywords": [
     "twenty-app",
     "crove-crm-app",
     "crove-app"
   ],
-========
-  "keywords": [],
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/package.json
   "packageManager": "yarn@4.13.0",
   "scripts": {
     "twenty": "twenty",
