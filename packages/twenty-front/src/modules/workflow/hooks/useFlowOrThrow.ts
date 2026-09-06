@@ -5,9 +5,11 @@ import { isDefined } from 'twenty-shared/utils';
 export const useFlowOrThrow = () => {
   const flow = useAtomComponentStateValue(flowComponentState);
 
-  if (!isDefined(flow)) {
-    throw new Error('Expected the flow to be defined');
-  }
-
-  return flow;
+  return (
+    flow ?? {
+      workflowVersionId: '',
+      trigger: null,
+      steps: [],
+    }
+  );
 };

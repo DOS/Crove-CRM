@@ -5,7 +5,7 @@ import {
 } from '@/side-panel/pages/workflow/action/components/SidePanelWorkflowSelectAction';
 import { sidePanelNavigationStackState } from '@/side-panel/states/sidePanelNavigationStackState';
 import { useAtomComponentStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateValue';
-import { useFlowOrThrow } from '@/workflow/hooks/useFlowOrThrow';
+import { flowComponentState } from '@/workflow/states/flowComponentState';
 import { workflowVisualizerWorkflowIdComponentState } from '@/workflow/states/workflowVisualizerWorkflowIdComponentState';
 import {
   type WorkflowAction,
@@ -27,7 +27,7 @@ export const SidePanelWorkflowEditStepTypeContent = () => {
   const workflowVisualizerWorkflowId = useAtomComponentStateValue(
     workflowVisualizerWorkflowIdComponentState,
   );
-  const flow = useFlowOrThrow();
+  const flow = useAtomComponentStateValue(flowComponentState);
 
   const { updateStep } = useUpdateStep();
 
@@ -44,7 +44,7 @@ export const SidePanelWorkflowEditStepTypeContent = () => {
       );
     }
 
-    const existingStep = flow.steps?.find(
+    const existingStep = flow?.steps?.find(
       (step) => step.id === workflowSelectedNode,
     );
 

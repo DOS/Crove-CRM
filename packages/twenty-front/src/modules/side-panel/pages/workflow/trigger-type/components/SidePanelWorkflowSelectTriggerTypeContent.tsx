@@ -1,8 +1,9 @@
 import { useSidePanelWorkflowNavigation } from '@/side-panel/pages/workflow/hooks/useSidePanelWorkflowNavigation';
 import { useSidePanelWorkflowIdOrThrow } from '@/side-panel/pages/workflow/hooks/useSidePanelWorkflowIdOrThrow';
 import { useFilteredObjectMetadataItems } from '@/object-metadata/hooks/useFilteredObjectMetadataItems';
+import { useAtomComponentStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateValue';
 import { useSetAtomComponentState } from '@/ui/utilities/state/jotai/hooks/useSetAtomComponentState';
-import { useFlowOrThrow } from '@/workflow/hooks/useFlowOrThrow';
+import { flowComponentState } from '@/workflow/states/flowComponentState';
 import {
   type WorkflowTrigger,
   type WorkflowTriggerType,
@@ -35,7 +36,7 @@ export const SidePanelWorkflowSelectTriggerTypeContent = () => {
     workflowSelectedNodeComponentState,
   );
   const { openWorkflowEditStepInSidePanel } = useSidePanelWorkflowNavigation();
-  const flow = useFlowOrThrow();
+  const flow = useAtomComponentStateValue(flowComponentState);
 
   const handleTriggerTypeClick = ({
     type,
@@ -53,7 +54,7 @@ export const SidePanelWorkflowSelectTriggerTypeContent = () => {
         activeNonSystemObjectMetadataItems,
       });
 
-      if (isDefined(flow.trigger)) {
+      if (isDefined(flow?.trigger)) {
         updatedTrigger = {
           ...updatedTrigger,
           position: flow.trigger.position,
