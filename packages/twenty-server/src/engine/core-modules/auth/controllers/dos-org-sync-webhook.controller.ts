@@ -448,7 +448,6 @@ export class DosOrgSyncWebhookController {
                 async () => {
                   const companyRepo =
                     await this.workspaceOrmManager.getRepository(
-                      workspace.id,
                       'company',
                       { shouldBypassPermissionChecks: true },
                     );
@@ -531,7 +530,6 @@ export class DosOrgSyncWebhookController {
                 async () => {
                   const companyRepo =
                     await this.workspaceOrmManager.getRepository(
-                      workspace.id,
                       'company',
                       { shouldBypassPermissionChecks: true },
                     );
@@ -582,7 +580,6 @@ export class DosOrgSyncWebhookController {
                 async () => {
                   const personRepo =
                     await this.workspaceOrmManager.getRepository(
-                      workspace.id,
                       'person',
                       { shouldBypassPermissionChecks: true },
                     );
@@ -693,7 +690,6 @@ export class DosOrgSyncWebhookController {
                 async () => {
                   const personRepo =
                     await this.workspaceOrmManager.getRepository(
-                      workspace.id,
                       'person',
                       { shouldBypassPermissionChecks: true },
                     );
@@ -745,7 +741,6 @@ export class DosOrgSyncWebhookController {
                 async () => {
                   const noteRepo =
                     await this.workspaceOrmManager.getRepository(
-                      workspace.id,
                       'note',
                       { shouldBypassPermissionChecks: true },
                     );
