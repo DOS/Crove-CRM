@@ -1,5 +1,5 @@
 import { useAtomComponentStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateValue';
-import { useFlowOrThrow } from '@/workflow/hooks/useFlowOrThrow';
+import { flowComponentState } from '@/workflow/states/flowComponentState';
 import { workflowSelectedNodeComponentState } from '@/workflow/workflow-diagram/states/workflowSelectedNodeComponentState';
 import { WorkflowStepDetail } from '@/workflow/workflow-steps/components/WorkflowStepDetail';
 import { styled } from '@linaria/react';
@@ -12,12 +12,12 @@ const StyledContainer = styled.div`
 `;
 
 export const SidePanelWorkflowViewStepContent = () => {
-  const flow = useFlowOrThrow();
+  const flow = useAtomComponentStateValue(flowComponentState);
   const workflowSelectedNode = useAtomComponentStateValue(
     workflowSelectedNodeComponentState,
   );
 
-  if (!isDefined(workflowSelectedNode)) {
+  if (!isDefined(workflowSelectedNode) || !isDefined(flow)) {
     return null;
   }
 

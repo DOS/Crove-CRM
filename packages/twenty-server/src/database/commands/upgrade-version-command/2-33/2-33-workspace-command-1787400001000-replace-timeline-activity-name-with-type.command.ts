@@ -210,13 +210,27 @@ export class ReplaceTimelineActivityNameWithTypeCommand extends ProvisionedWorks
     workspaceId: string;
     dataSource: NonNullable<RunOnWorkspaceArgs['dataSource']>;
   }): Promise<void> {
+    const schemaName = getWorkspaceSchemaName(workspaceId);
+
+    const hasNameColumn = await dataSource.query(
+      `SELECT 1 FROM information_schema.columns WHERE table_schema = $1 AND table_name = 'timelineActivity' AND column_name = 'name'`,
+      [schemaName],
+    );
+
+    if (!isDefined(hasNameColumn) || hasNameColumn.length === 0) {
+      this.logger.log(
+        `timelineActivity.name column does not exist for workspace ${workspaceId}, skipping backfill`,
+      );
+      return;
+    }
+
     const { flatTimelineActivityTypeMaps } =
       await this.workspaceCacheService.getOrRecompute(workspaceId, [
         'flatTimelineActivityTypeMaps',
       ]);
 
     const backfillQuery = buildTimelineActivityTypeBackfillQuery({
-      schemaName: getWorkspaceSchemaName(workspaceId),
+      schemaName,
       flatTimelineActivityTypeMaps,
       batchSize: BACKFILL_BATCH_SIZE,
     });

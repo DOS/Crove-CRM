@@ -1,0 +1,19 @@
+---
+description: Always use structured interactive multiple-choice popups (AskQuestion) when presenting choices or next dev tasks to the user
+globs: []
+alwaysApply: true
+---
+
+# Structured Selection Choices & Interaction Guidelines
+
+## Core Rule
+Khi cần đưa ra các lựa chọn (options), quyết định (decisions), hướng xử lý kỹ thuật hoặc danh sách các task phát triển tiếp theo (Next Dev Tasks):
+
+1. **BẮT BUỘC dùng popup / multiple-choice UI (`AskQuestion`)**:
+   - Luôn sử dụng tool `AskQuestion` với `allow_multiple: true` (hoặc `false` nếu chỉ chọn 1) để hiển thị danh sách dạng form/popup cho người dùng tích chọn trực tiếp.
+   - Tuyệt đối KHÔNG chỉ liệt kê danh sách số 1, 2, 3... dưới dạng text thuần rồi yêu cầu người dùng gõ số phản hồi trong chat (tránh tình trạng nhầm lẫn ngữ cảnh hoặc lệch thứ tự câu hỏi trước đó).
+
+2. **Cấu trúc mỗi lựa chọn trong popup**:
+   - `id`: Tên định danh ngắn gọn, rõ ràng (ví dụ: `task-1-verify-slack`, `opt-deploy-vm`).
+   - `label`: Mô tả chi tiết mục tiêu, hành động kỹ thuật cụ thể.
+   - Thêm `(Recommended)` ở lựa chọn đầu tiên nếu là phương án được khuyến nghị.

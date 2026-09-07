@@ -341,6 +341,15 @@ export class ConfigVariables {
 
   @ConfigVariablesMetadata({
     group: ConfigVariablesGroup.DOS_ID_AUTH,
+    isSensitive: false,
+    description: 'DOS.Me Platform API URL for Organization SSOT sync',
+    type: ConfigVariableType.STRING,
+  })
+  @IsOptional()
+  AUTH_DOS_API_URL = 'https://api.dos.me';
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.DOS_ID_AUTH,
     isSensitive: true,
     description: 'HMAC secret key for DOS.Me Organization sync webhooks',
     type: ConfigVariableType.STRING,
@@ -551,6 +560,7 @@ export class ConfigVariables {
     options: Object.values(EmailDriver),
   })
   @CastToUpperSnakeCase()
+  @IsEnum(EmailDriver)
   EMAIL_DRIVER: EmailDriver = EmailDriver.LOGGER;
 
   @ConfigVariablesMetadata({
@@ -558,6 +568,7 @@ export class ConfigVariables {
     description: 'SMTP host for sending emails',
     type: ConfigVariableType.STRING,
   })
+  @ValidateIf((env) => env.EMAIL_DRIVER === EmailDriver.SMTP)
   EMAIL_SMTP_HOST: string;
 
   @ConfigVariablesMetadata({
@@ -582,6 +593,7 @@ export class ConfigVariables {
     type: ConfigVariableType.STRING,
     isSensitive: true,
   })
+  @ValidateIf((env) => env.EMAIL_DRIVER === EmailDriver.SMTP)
   EMAIL_SMTP_USER: string;
 
   @ConfigVariablesMetadata({
@@ -590,7 +602,17 @@ export class ConfigVariables {
     description: 'SMTP password for authentication',
     type: ConfigVariableType.STRING,
   })
+  @ValidateIf((env) => env.EMAIL_DRIVER === EmailDriver.SMTP)
   EMAIL_SMTP_PASSWORD: string;
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.EMAIL_SETTINGS,
+    isSensitive: true,
+    description: 'Brevo API key for transactional email delivery',
+    type: ConfigVariableType.STRING,
+  })
+  @ValidateIf((env) => env.EMAIL_DRIVER === EmailDriver.BREVO)
+  BREVO_API_KEY?: string;
 
   @ConfigVariablesMetadata({
     group: ConfigVariablesGroup.ADVANCED_SETTINGS,
@@ -1995,6 +2017,15 @@ export class ConfigVariables {
   })
   @IsOptional()
   IS_MULTIWORKSPACE_ENABLED = false;
+
+  @ConfigVariablesMetadata({
+    group: ConfigVariablesGroup.SERVER_CONFIG,
+    description:
+      'Enable or disable subdomain routing per workspace in multi-workspace mode. When disabled, all workspaces operate under the main front domain.',
+    type: ConfigVariableType.BOOLEAN,
+  })
+  @IsOptional()
+  IS_MULTIWORKSPACE_SUBDOMAIN_ENABLED = true;
 
   @ConfigVariablesMetadata({
     group: ConfigVariablesGroup.ADVANCED_SETTINGS,

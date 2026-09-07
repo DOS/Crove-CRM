@@ -709,6 +709,10 @@ const createSettingsRouteElements = ({
   isAdminPageEnabled,
 }: CreateSettingsRouteObjectsArgs) => (
   <>
+    <Route
+      index
+      element={<Navigate to={getSettingsPath(SettingsPath.ProfilePage)} replace />}
+    />
     <Route path={SettingsPath.ProfilePage} element={<SettingsProfile />} />
     <Route
       path={SettingsPath.TwoFactorAuthenticationStrategyConfig}

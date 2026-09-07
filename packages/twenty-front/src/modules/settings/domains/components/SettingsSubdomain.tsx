@@ -1,4 +1,5 @@
 import { currentWorkspaceState } from '@/auth/states/currentWorkspaceState';
+import { isMultiWorkspaceSubdomainEnabledState } from '@/client-config/states/isMultiWorkspaceSubdomainEnabledState';
 import { domainConfigurationState } from '@/domain-manager/states/domainConfigurationState';
 import { SaveAndCancelButtons } from '@/settings/components/SaveAndCancelButtons/SaveAndCancelButtons';
 import { SettingsPageContainer } from '@/settings/components/SettingsPageContainer';
@@ -16,6 +17,7 @@ import { SettingsPath } from 'twenty-shared/types';
 import { getSettingsPath, isDefined } from 'twenty-shared/utils';
 import { H2Title } from 'twenty-ui/typography';
 import { Section } from 'twenty-ui/layout';
+import { useEffect } from 'react';
 import { useNavigateSettings } from '~/hooks/useNavigateSettings';
 
 const StyledDomainFormWrapper = styled.div`
@@ -28,6 +30,9 @@ export const SettingsSubdomain = () => {
   const { t } = useLingui();
   const domainConfiguration = useAtomStateValue(domainConfigurationState);
   const currentWorkspace = useAtomStateValue(currentWorkspaceState);
+  const isMultiWorkspaceSubdomainEnabled = useAtomStateValue(
+    isMultiWorkspaceSubdomainEnabledState,
+  );
 
   const {
     subdomain,
@@ -38,6 +43,16 @@ export const SettingsSubdomain = () => {
     handleSave,
     handleConfirm,
   } = useSettingsSubdomain();
+
+  useEffect(() => {
+    if (!isMultiWorkspaceSubdomainEnabled) {
+      navigate(SettingsPath.General);
+    }
+  }, [isMultiWorkspaceSubdomainEnabled, navigate]);
+
+  if (!isMultiWorkspaceSubdomainEnabled) {
+    return null;
+  }
 
   return (
     <>

@@ -1,3 +1,5 @@
+import { isUnauthenticatedGraphQLError } from '@/apollo/utils/isUnauthenticatedGraphQLError';
+import { CombinedGraphQLErrors } from '@apollo/client/errors';
 import { useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -134,7 +136,11 @@ export const useSnackBar = () => {
     ) & {
       options?: Omit<SnackBarOptions, 'message' | 'id'>;
     }) => {
-      if (apolloError?.name === 'AbortError') {
+      if (
+        apolloError?.name === 'AbortError' ||
+        (CombinedGraphQLErrors.is(apolloError) &&
+          apolloError.errors.some(isUnauthenticatedGraphQLError))
+      ) {
         return;
       }
 

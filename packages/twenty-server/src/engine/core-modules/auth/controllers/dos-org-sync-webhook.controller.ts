@@ -14,8 +14,10 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { type Request } from 'express';
+import { isNonEmptyString } from '@sniptt/guards';
+import axios from 'axios';
 import { ApiPath } from 'twenty-shared/types';
-import { isDefined, isNonEmptyString } from 'twenty-shared/utils';
+import { isDefined } from 'twenty-shared/utils';
 import { WorkspaceActivationStatus } from 'twenty-shared/workspace';
 import { Repository } from 'typeorm';
 
@@ -30,8 +32,76 @@ import { AuthProviderEnum } from 'src/engine/core-modules/workspace/types/worksp
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
 import { NoPermissionGuard } from 'src/engine/guards/no-permission.guard';
 import { PublicEndpointGuard } from 'src/engine/guards/public-endpoint.guard';
+import { WorkspaceOrmManager } from 'src/engine/twenty-orm/workspace-orm.manager';
+import { buildSystemAuthContext } from 'src/engine/twenty-orm/utils/build-system-auth-context.util';
 
-type DosOrgSyncPayload = {
+export function verifyEcosystemWebhook(
+  rawBody: string | Buffer,
+  signatureHeader: string,
+  secret: string,
+): boolean {
+  if (!signatureHeader || !secret) return false;
+
+  const rawBodyStr =
+    typeof rawBody === 'string' ? rawBody : rawBody.toString('utf8');
+
+  // Format 1: t=<timestamp>,v1=<signature> (DOS.Me Webhook Standard)
+  if (signatureHeader.includes('t=') && signatureHeader.includes('v1=')) {
+    const parts = signatureHeader.split(',');
+    const timestampPart = parts.find((p) => p.startsWith('t='));
+    const signaturePart = parts.find((p) => p.startsWith('v1='));
+
+    if (!timestampPart || !signaturePart) return false;
+
+    const timestamp = timestampPart.split('=')[1];
+    const signature = signaturePart.split('=')[1];
+
+    // Replay attack prevention (5 minutes)
+    const fiveMinutes = 5 * 60 * 1000;
+    if (Math.abs(Date.now() - Number(timestamp)) > fiveMinutes) {
+      return false;
+    }
+
+    const expectedSignature = crypto
+      .createHmac('sha256', secret)
+      .update(`${timestamp}.${rawBodyStr}`)
+      .digest('hex');
+
+    if (signature.length !== expectedSignature.length) return false;
+
+    try {
+      return crypto.timingSafeEqual(
+        Buffer.from(signature, 'hex'),
+        Buffer.from(expectedSignature, 'hex'),
+      );
+    } catch {
+      return false;
+    }
+  }
+
+  // Format 2: sha256=<hex> or raw hex
+  const cleanSignature = signatureHeader.replace(/^sha256=/, '').trim();
+  const expected = crypto
+    .createHmac('sha256', secret)
+    .update(rawBody)
+    .digest('hex');
+
+  if (cleanSignature.length !== expected.length) {
+    return false;
+  }
+
+  try {
+    return crypto.timingSafeEqual(
+      Buffer.from(cleanSignature, 'hex'),
+      Buffer.from(expected, 'hex'),
+    );
+  } catch {
+    return false;
+  }
+}
+
+export type EcosystemWebhookPayload = {
+  id?: string;
   event:
     | 'organization.created'
     | 'org.created'
@@ -39,14 +109,27 @@ type DosOrgSyncPayload = {
     | 'org.updated'
     | 'organization.deleted'
     | 'org.deleted'
+    | 'organization.member.added'
     | 'organization.member_added'
     | 'org.member_added'
+    | 'organization.member.removed'
     | 'organization.member_removed'
     | 'org.member_removed'
+    | 'company.created'
+    | 'company.updated'
+    | 'company.deleted'
+    | 'customer.created'
+    | 'customer.updated'
+    | 'customer.deleted'
+    | 'ticket.created'
+    | 'ticket.updated'
     | 'user.updated';
   timestamp: string;
   data: {
+    // Org data
+    id?: string;
     org_id?: string;
+    global_org_id?: string;
     org_name?: string;
     name?: string;
     slug?: string;
@@ -58,6 +141,32 @@ type DosOrgSyncPayload = {
     display_name?: string;
     avatar_url?: string;
     role?: 'OWNER' | 'ADMIN' | 'MEMBER';
+
+    // Company data
+    crm_company_id?: string;
+    desk_company_id?: string;
+    domain?: string;
+    domain_name?: string;
+    address?: string;
+    tier?: string;
+    tax_code?: string;
+    account_owner_email?: string;
+
+    // Customer data
+    crm_person_id?: string;
+    desk_customer_id?: string;
+    email?: string;
+    phone?: string;
+    job_title?: string;
+    company_id?: string;
+    company_name?: string;
+
+    // Ticket data
+    ticket_id?: string;
+    subject?: string;
+    status?: string;
+    customer_id?: string;
+    priority?: string;
   };
 };
 
@@ -71,6 +180,7 @@ export class DosOrgSyncWebhookController {
     private readonly userWorkspaceService: UserWorkspaceService,
     private readonly signInUpService: SignInUpService,
     private readonly userService: UserService,
+    private readonly workspaceOrmManager: WorkspaceOrmManager,
     @InjectRepository(WorkspaceEntity)
     private readonly workspaceRepository: Repository<WorkspaceEntity>,
     @InjectRepository(UserEntity)
@@ -94,41 +204,40 @@ export class DosOrgSyncWebhookController {
       }
 
       const bodyBuffer = rawBody ?? Buffer.from(JSON.stringify(req.body));
-      const expectedSignature = `sha256=${crypto
-        .createHmac('sha256', secret)
-        .update(bodyBuffer)
-        .digest('hex')}`;
+      const isValid = verifyEcosystemWebhook(bodyBuffer, signature, secret);
 
-      if (signature !== expectedSignature) {
+      if (!isValid) {
         throw new UnauthorizedException('Invalid X-DOS-Signature');
       }
     }
 
-    const payload = req.body as DosOrgSyncPayload;
+    const payload = req.body as EcosystemWebhookPayload;
 
     if (!payload?.event) {
       throw new BadRequestException('Invalid payload: event is required');
     }
 
-    this.logger.log(`Received DOS sync webhook event: ${payload.event}`);
+    this.logger.log(`Received DOS ecosystem webhook event: ${payload.event}`);
 
     switch (payload.event) {
       case 'organization.created':
       case 'org.created': {
         const orgName = payload.data.name || payload.data.org_name;
         const ownerEmail = payload.data.owner_email?.toLowerCase();
+        const orgId =
+          payload.data.id ||
+          payload.data.org_id ||
+          payload.data.global_org_id;
+        const orgSlug = payload.data.slug;
 
         if (isNonEmptyString(orgName) && isNonEmptyString(ownerEmail)) {
           const existingWorkspace = await this.workspaceRepository.findOne({
-            where: [{ displayName: orgName.trim() }],
+            where: [
+              ...(isNonEmptyString(orgId) ? [{ id: orgId }] : []),
+              ...(isNonEmptyString(orgSlug) ? [{ subdomain: orgSlug }] : []),
+              { displayName: orgName.trim() },
+            ],
           });
-
-          if (isDefined(existingWorkspace)) {
-            this.logger.log(
-              `Workspace with name "${orgName}" already exists, skipping creation`,
-            );
-            break;
-          }
 
           let user = await this.userService.findUserByEmail(ownerEmail);
 
@@ -147,13 +256,28 @@ export class DosOrgSyncWebhookController {
             );
           }
 
+          if (isDefined(existingWorkspace)) {
+            await this.userWorkspaceService.addUserToWorkspaceIfUserNotInWorkspace(
+              user,
+              existingWorkspace,
+            );
+            this.logger.log(
+              `Workspace "${orgName}" already exists, ensured owner ${ownerEmail} is linked`,
+            );
+            break;
+          }
+
           try {
             await this.signInUpService.signUpOnNewWorkspace(
               { type: 'existingUser', existingUser: user },
-              { displayName: orgName.trim() },
+              {
+                displayName: orgName.trim(),
+                subdomain: isNonEmptyString(orgSlug) ? orgSlug : undefined,
+                workspaceId: isNonEmptyString(orgId) ? orgId : undefined,
+              },
             );
             this.logger.log(
-              `Successfully provisioned workspace "${orgName}" for owner ${ownerEmail}`,
+              `Successfully provisioned workspace "${orgName}" with ID ${orgId ?? 'generated'} for owner ${ownerEmail}`,
             );
           } catch (error) {
             this.logger.error(
@@ -169,7 +293,10 @@ export class DosOrgSyncWebhookController {
       case 'organization.updated':
       case 'org.updated': {
         const orgName = payload.data.name || payload.data.org_name;
-        const orgId = payload.data.org_id;
+        const orgId =
+          payload.data.id ||
+          payload.data.org_id ||
+          payload.data.global_org_id;
 
         if (isNonEmptyString(orgId) && isNonEmptyString(orgName)) {
           const workspace = await this.workspaceRepository.findOne({
@@ -190,7 +317,10 @@ export class DosOrgSyncWebhookController {
 
       case 'organization.deleted':
       case 'org.deleted': {
-        const orgId = payload.data.org_id;
+        const orgId =
+          payload.data.id ||
+          payload.data.org_id ||
+          payload.data.global_org_id;
         const orgName = payload.data.name || payload.data.org_name;
 
         const workspace = isNonEmptyString(orgId)
@@ -208,10 +338,14 @@ export class DosOrgSyncWebhookController {
         break;
       }
 
+      case 'organization.member.added':
       case 'organization.member_added':
       case 'org.member_added': {
         const userEmail = payload.data.user_email?.toLowerCase();
-        const orgId = payload.data.org_id;
+        const orgId =
+          payload.data.id ||
+          payload.data.org_id ||
+          payload.data.global_org_id;
         const orgName = payload.data.org_name || payload.data.name;
 
         if (isNonEmptyString(userEmail)) {
@@ -251,10 +385,14 @@ export class DosOrgSyncWebhookController {
         break;
       }
 
+      case 'organization.member.removed':
       case 'organization.member_removed':
       case 'org.member_removed': {
         const userEmail = payload.data.user_email?.toLowerCase();
-        const orgId = payload.data.org_id;
+        const orgId =
+          payload.data.id ||
+          payload.data.org_id ||
+          payload.data.global_org_id;
         const orgName = payload.data.org_name || payload.data.name;
 
         if (isNonEmptyString(userEmail)) {
@@ -278,6 +416,348 @@ export class DosOrgSyncWebhookController {
               });
               this.logger.log(
                 `Removed user ${userEmail} from workspace ${workspace.id}`,
+              );
+            }
+          }
+        }
+        break;
+      }
+
+      case 'company.created':
+      case 'company.updated': {
+        const orgId =
+          payload.data.global_org_id ||
+          payload.data.org_id ||
+          payload.data.id;
+        const companyName = payload.data.name || payload.data.company_name;
+        const companyId =
+          payload.data.crm_company_id ||
+          payload.data.id ||
+          payload.data.desk_company_id;
+        const domainName = payload.data.domain || payload.data.domain_name;
+
+        if (isNonEmptyString(orgId) && isNonEmptyString(companyName)) {
+          const workspace = await this.workspaceRepository.findOne({
+            where: { id: orgId },
+          });
+
+          if (isDefined(workspace)) {
+            try {
+              const authContext = buildSystemAuthContext(workspace.id);
+              await this.workspaceOrmManager.executeInWorkspaceContext(
+                async () => {
+                  const companyRepo =
+                    await this.workspaceOrmManager.getRepository(
+                      'company',
+                      { shouldBypassPermissionChecks: true },
+                    );
+
+                  const existing = isNonEmptyString(companyId)
+                    ? await companyRepo.findOne({ where: { id: companyId } })
+                    : await companyRepo.findOne({
+                        where: { name: companyName.trim() },
+                      });
+
+                  if (existing) {
+                    await companyRepo.update(
+                      { id: existing.id },
+                      {
+                        name: companyName.trim(),
+                        ...(isNonEmptyString(domainName)
+                          ? {
+                              domainName: {
+                                primaryLinkUrl: `https://${domainName}`,
+                                primaryLinkLabel: domainName,
+                                secondaryLinks: [],
+                              },
+                            }
+                          : {}),
+                      },
+                    );
+                    this.logger.log(
+                      `Updated company "${companyName}" in workspace ${workspace.id}`,
+                    );
+                  } else {
+                    await companyRepo.save({
+                      ...(isNonEmptyString(companyId) ? { id: companyId } : {}),
+                      name: companyName.trim(),
+                      ...(isNonEmptyString(domainName)
+                        ? {
+                            domainName: {
+                              primaryLinkUrl: `https://${domainName}`,
+                              primaryLinkLabel: domainName,
+                              secondaryLinks: [],
+                            },
+                          }
+                        : {}),
+                    });
+                    this.logger.log(
+                      `Created company "${companyName}" in workspace ${workspace.id}`,
+                    );
+                  }
+                },
+                authContext,
+              );
+            } catch (error) {
+              this.logger.error(
+                `Failed to sync company "${companyName}" in workspace ${workspace.id}: ${error}`,
+              );
+            }
+          }
+        }
+        break;
+      }
+
+      case 'company.deleted': {
+        const orgId =
+          payload.data.global_org_id ||
+          payload.data.org_id ||
+          payload.data.id;
+        const companyId =
+          payload.data.crm_company_id ||
+          payload.data.id ||
+          payload.data.desk_company_id;
+
+        if (isNonEmptyString(orgId) && isNonEmptyString(companyId)) {
+          const workspace = await this.workspaceRepository.findOne({
+            where: { id: orgId },
+          });
+
+          if (isDefined(workspace)) {
+            try {
+              const authContext = buildSystemAuthContext(workspace.id);
+              await this.workspaceOrmManager.executeInWorkspaceContext(
+                async () => {
+                  const companyRepo =
+                    await this.workspaceOrmManager.getRepository(
+                      'company',
+                      { shouldBypassPermissionChecks: true },
+                    );
+
+                  await companyRepo.delete({ id: companyId });
+                  this.logger.log(
+                    `Deleted company "${companyId}" in workspace ${workspace.id}`,
+                  );
+                },
+                authContext,
+              );
+            } catch (error) {
+              this.logger.error(
+                `Failed to delete company "${companyId}" in workspace ${workspace.id}: ${error}`,
+              );
+            }
+          }
+        }
+        break;
+      }
+
+      case 'customer.created':
+      case 'customer.updated': {
+        const orgId =
+          payload.data.global_org_id ||
+          payload.data.org_id ||
+          payload.data.id;
+        const customerEmail = payload.data.email || payload.data.user_email;
+        const customerName = payload.data.name || payload.data.user_name;
+        const personId =
+          payload.data.crm_person_id ||
+          payload.data.id ||
+          payload.data.desk_customer_id;
+        const phone = payload.data.phone;
+        const jobTitle = payload.data.job_title;
+        const companyId =
+          payload.data.crm_company_id || payload.data.company_id;
+
+        if (isNonEmptyString(orgId) && isNonEmptyString(customerEmail)) {
+          const workspace = await this.workspaceRepository.findOne({
+            where: { id: orgId },
+          });
+
+          if (isDefined(workspace)) {
+            try {
+              const authContext = buildSystemAuthContext(workspace.id);
+              await this.workspaceOrmManager.executeInWorkspaceContext(
+                async () => {
+                  const personRepo =
+                    await this.workspaceOrmManager.getRepository(
+                      'person',
+                      { shouldBypassPermissionChecks: true },
+                    );
+
+                  const nameParts = customerName?.split(' ') || [];
+                  const firstName = nameParts[0] || '';
+                  const lastName = nameParts.slice(1).join(' ') || '';
+
+                  const existing = isNonEmptyString(personId)
+                    ? await personRepo.findOne({ where: { id: personId } })
+                    : await personRepo.findOne({
+                        where: {
+                          emails: {
+                            primaryEmail: customerEmail.toLowerCase(),
+                          },
+                        },
+                      });
+
+                  if (existing) {
+                    await personRepo.update(
+                      { id: existing.id },
+                      {
+                        name: {
+                          firstName: firstName || existing.name?.firstName || '',
+                          lastName: lastName || existing.name?.lastName || '',
+                        },
+                        ...(isNonEmptyString(jobTitle) ? { jobTitle } : {}),
+                        ...(isNonEmptyString(phone)
+                          ? {
+                              phones: {
+                                primaryPhoneNumber: phone,
+                                primaryPhoneCallingCode: '+84',
+                                primaryPhoneCountryCode: 'VN',
+                                additionalPhones: null,
+                              },
+                            }
+                          : {}),
+                        ...(isNonEmptyString(companyId) ? { companyId } : {}),
+                      },
+                    );
+                    this.logger.log(
+                      `Updated person "${customerEmail}" in workspace ${workspace.id}`,
+                    );
+                  } else {
+                    await personRepo.save({
+                      ...(isNonEmptyString(personId) ? { id: personId } : {}),
+                      name: {
+                        firstName,
+                        lastName,
+                      },
+                      emails: {
+                        primaryEmail: customerEmail.toLowerCase(),
+                        additionalEmails: null,
+                      },
+                      ...(isNonEmptyString(jobTitle) ? { jobTitle } : {}),
+                      ...(isNonEmptyString(phone)
+                        ? {
+                            phones: {
+                              primaryPhoneNumber: phone,
+                              primaryPhoneCallingCode: '+84',
+                              primaryPhoneCountryCode: 'VN',
+                              additionalPhones: null,
+                            },
+                          }
+                        : {}),
+                      ...(isNonEmptyString(companyId) ? { companyId } : {}),
+                    });
+                    this.logger.log(
+                      `Created person "${customerEmail}" in workspace ${workspace.id}`,
+                    );
+                  }
+                },
+                authContext,
+              );
+            } catch (error) {
+              this.logger.error(
+                `Failed to sync person "${customerEmail}" in workspace ${workspace.id}: ${error}`,
+              );
+            }
+          }
+        }
+        break;
+      }
+
+      case 'customer.deleted': {
+        const orgId =
+          payload.data.global_org_id ||
+          payload.data.org_id ||
+          payload.data.id;
+        const personId =
+          payload.data.crm_person_id ||
+          payload.data.id ||
+          payload.data.desk_customer_id;
+        const customerEmail = payload.data.email || payload.data.user_email;
+
+        if (
+          isNonEmptyString(orgId) &&
+          (isNonEmptyString(personId) || isNonEmptyString(customerEmail))
+        ) {
+          const workspace = await this.workspaceRepository.findOne({
+            where: { id: orgId },
+          });
+
+          if (isDefined(workspace)) {
+            try {
+              const authContext = buildSystemAuthContext(workspace.id);
+              await this.workspaceOrmManager.executeInWorkspaceContext(
+                async () => {
+                  const personRepo =
+                    await this.workspaceOrmManager.getRepository(
+                      'person',
+                      { shouldBypassPermissionChecks: true },
+                    );
+
+                  if (isNonEmptyString(personId)) {
+                    await personRepo.delete({ id: personId });
+                  } else if (isNonEmptyString(customerEmail)) {
+                    await personRepo.delete({
+                      emails: {
+                        primaryEmail: customerEmail.toLowerCase(),
+                      },
+                    });
+                  }
+                  this.logger.log(
+                    `Deleted customer "${personId || customerEmail}" in workspace ${workspace.id}`,
+                  );
+                },
+                authContext,
+              );
+            } catch (error) {
+              this.logger.error(
+                `Failed to delete customer in workspace ${workspace.id}: ${error}`,
+              );
+            }
+          }
+        }
+        break;
+      }
+
+      case 'ticket.created':
+      case 'ticket.updated': {
+        const orgId =
+          payload.data.global_org_id ||
+          payload.data.org_id ||
+          payload.data.id;
+        const ticketId = payload.data.ticket_id || payload.data.id;
+        const subject = payload.data.subject || 'Desk Support Ticket';
+        const status = payload.data.status || 'OPEN';
+
+        if (isNonEmptyString(orgId) && isNonEmptyString(ticketId)) {
+          const workspace = await this.workspaceRepository.findOne({
+            where: { id: orgId },
+          });
+
+          if (isDefined(workspace)) {
+            try {
+              const authContext = buildSystemAuthContext(workspace.id);
+              await this.workspaceOrmManager.executeInWorkspaceContext(
+                async () => {
+                  const noteRepo =
+                    await this.workspaceOrmManager.getRepository(
+                      'note',
+                      { shouldBypassPermissionChecks: true },
+                    );
+
+                  await noteRepo.save({
+                    title: `[Crove Desk Ticket] ${subject} (${status})`,
+                  });
+
+                  this.logger.log(
+                    `Recorded Desk Ticket note "${subject}" in workspace ${workspace.id}`,
+                  );
+                },
+                authContext,
+              );
+            } catch (error) {
+              this.logger.error(
+                `Failed to record ticket note in workspace ${workspace.id}: ${error}`,
               );
             }
           }
@@ -315,5 +795,38 @@ export class DosOrgSyncWebhookController {
     }
 
     return { received: true, status: 'processed' };
+  }
+}
+
+export async function sendEcosystemEvent(
+  twentyConfigService: TwentyConfigService,
+  event: string,
+  data: Record<string, unknown>,
+): Promise<boolean> {
+  const logger = new Logger('EcosystemEventSender');
+  const dosApiUrl =
+    twentyConfigService.get('AUTH_DOS_API_URL') || 'https://api.dos.me';
+  const apiKey = twentyConfigService.get('CROVE_DOS_WEBHOOK_SECRET');
+
+  try {
+    const response = await axios.post(
+      `${dosApiUrl}/internal/events/publish`,
+      {
+        event,
+        data,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          ...(apiKey ? { 'X-API-Key': apiKey } : {}),
+        },
+        timeout: 5000,
+      },
+    );
+
+    return response.status >= 200 && response.status < 300;
+  } catch (error) {
+    logger.warn(`Failed to dispatch ecosystem event "${event}": ${error}`);
+    return false;
   }
 }

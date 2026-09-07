@@ -47,6 +47,7 @@ export const SignInUpWorkspaceScopeFormEffect = () => {
     }
 
     const hasOnlySSOProvidersEnabled =
+      !workspaceAuthProviders.dosId &&
       !workspaceAuthProviders.google &&
       !workspaceAuthProviders.microsoft &&
       !workspaceAuthProviders.password;
@@ -83,6 +84,7 @@ export const SignInUpWorkspaceScopeFormEffect = () => {
 
     if (
       signInUpStep === SignInUpStep.Init &&
+      !workspaceAuthProviders.dosId &&
       !workspaceAuthProviders.google &&
       !workspaceAuthProviders.microsoft &&
       workspaceAuthProviders.sso.length === 0

@@ -8,6 +8,7 @@ Match the surrounding code — the adjacent files in the directory you are editi
 
 Where this repo differs from your defaults:
 
+- **Minimal fork modification**: Fork of Twenty CRM — strictly prioritize configuration (`.env`, build args) over modifying core code to avoid upstream drift and merge conflicts. Only modify core code when no configuration or extension point exists.
 - Short-form `//` comments, never JSDoc blocks; comment only WHY (a constraint the code cannot express, still true for a reader who never saw your change), never WHAT.
 - Types over interfaces (except when extending third-party interfaces); string literals over enums (except GraphQL enums); no `any`; descriptive generics (`TData`, not `T`).
 - Named exports only. Functional components only.

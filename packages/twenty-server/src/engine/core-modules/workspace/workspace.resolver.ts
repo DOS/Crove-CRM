@@ -389,6 +389,7 @@ export class WorkspaceResolver {
         magicLink: false,
         password: this.twentyConfigService.get('AUTH_PASSWORD_ENABLED'),
         microsoft: this.twentyConfigService.get('AUTH_MICROSOFT_ENABLED'),
+        dosId: this.twentyConfigService.get('AUTH_DOS_ID_ENABLED'),
         sso: [],
       };
 

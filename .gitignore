@@ -18,6 +18,7 @@
 
 .pnp.*
 .yarn/*
+**/.yarn/install-state.gz
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases

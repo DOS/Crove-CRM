@@ -171,12 +171,23 @@ export class AddTimelineActivityTypeSnapshotCommand extends ProvisionedWorkspace
     workspaceId: string;
     dataSource: NonNullable<RunOnWorkspaceArgs['dataSource']>;
   }): Promise<void> {
+    const schemaName = getWorkspaceSchemaName(workspaceId);
+
+    const hasNameColumn = await dataSource.query(
+      `SELECT 1 FROM information_schema.columns WHERE table_schema = $1 AND table_name = 'timelineActivity' AND column_name = 'name'`,
+      [schemaName],
+    );
+
+    if (!isDefined(hasNameColumn) || hasNameColumn.length === 0) {
+      return;
+    }
+
     const { flatTimelineActivityTypeMaps } =
       await this.workspaceCacheService.getOrRecompute(workspaceId, [
         'flatTimelineActivityTypeMaps',
       ]);
     const backfillQuery = buildTimelineActivityTypeBackfillQuery({
-      schemaName: getWorkspaceSchemaName(workspaceId),
+      schemaName,
       flatTimelineActivityTypeMaps,
       batchSize: BACKFILL_BATCH_SIZE,
     });

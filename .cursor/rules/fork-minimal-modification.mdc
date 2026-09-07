@@ -1,0 +1,15 @@
+---
+description: Rule to minimize upstream Twenty CRM fork divergence and avoid unnecessary core modifications
+globs: []
+alwaysApply: true
+---
+
+# Upstream Fork Minimization Guidelines
+
+Crove CRM is a fork of Twenty CRM. To ensure seamless upstream synchronization (`upstream/main`), easy maintenance, and minimal merge conflicts:
+
+## Core Principles
+1. **Configuration Over Code**: Always utilize existing configuration mechanisms (`.env`, runtime environment variables, Docker build arguments, external integrations) before considering code modifications.
+2. **Strictly Minimize Core Code Changes**: NEVER edit Twenty core codebase files (`packages/twenty-server`, `packages/twenty-front`, `packages/twenty-shared`, `packages/twenty-docker`, etc.) unless strictly necessary and when no configuration or extension point exists.
+3. **Preserve Upstream Behavior & Signatures**: Do not modify upstream constants, decorators, default fallbacks, or method signatures in source files if upstream expects them to be driven via environment variables or build systems.
+4. **Isolate Custom Logic**: When code changes are unavoidable (e.g., custom SSO provider `DOS.ID`, ecosystem webhooks), keep additions modular, self-contained, and cleanly separated to prevent future merge conflicts during upstream merges.

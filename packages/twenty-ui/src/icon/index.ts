@@ -16,6 +16,7 @@ export { IconBrandGroq } from './components/IconBrandGroq';
 export { IconBrandMistral } from './components/IconBrandMistral';
 export { IconBrandXai } from './components/IconBrandXai';
 export { IconChartBarHorizontal } from './components/IconChartBarHorizontal';
+export { IconDos } from './components/IconDos';
 export { IconGmail } from './components/IconGmail';
 export { IconGoogle } from './components/IconGoogle';
 export { IconGoogleCalendar } from './components/IconGoogleCalendar';

@@ -196,7 +196,14 @@ export class ApolloFactory implements ApolloManager {
 
       const errorLink = new ErrorLink(({ error, operation }) => {
         if (CombinedGraphQLErrors.is(error)) {
-          onErrorCb?.(error.errors);
+          const hasUnauthenticated = error.errors.some(
+            isUnauthenticatedGraphQLError,
+          );
+
+          if (!hasUnauthenticated) {
+            onErrorCb?.(error.errors);
+          }
+
           for (const graphQLError of error.errors) {
             if (isUnauthenticatedGraphQLError(graphQLError)) {
               onUnauthenticatedError?.();

@@ -3,6 +3,8 @@ name: twenty
 services:
   server:
     image: twentycrm/twenty:${TAG:-latest}
+    env_file:
+      - .env
     volumes:
       - server-local-data:/app/packages/twenty-server/.local-storage
     ports:
@@ -60,6 +62,8 @@ services:
 
   worker:
     image: twentycrm/twenty:${TAG:-latest}
+    env_file:
+      - .env
     volumes:
       - server-local-data:/app/packages/twenty-server/.local-storage
     command: ["yarn", "worker:prod"]

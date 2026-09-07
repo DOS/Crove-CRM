@@ -17,6 +17,7 @@ permissions: {}
 jobs:
   claude:
     if: |
+      github.repository == 'twentyhq/twenty' && (
       (
         github.event_name == 'issue_comment' &&
         contains(github.event.comment.body, '@claude') &&
@@ -40,6 +41,7 @@ jobs:
         github.event.action == 'opened' &&
         (contains(github.event.issue.body, '@claude') || contains(github.event.issue.title, '@claude')) &&
         contains(fromJson('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association)
+      )
       )
     # Job-level (not workflow-level) concurrency: skipped jobs never enter the
     # group, so PR chatter without @claude can't evict a queued Claude run.

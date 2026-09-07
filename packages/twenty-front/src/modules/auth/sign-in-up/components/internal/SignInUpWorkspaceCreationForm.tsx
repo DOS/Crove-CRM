@@ -5,6 +5,7 @@ import { ONBOARDING_CONTENT_BLOCK_WIDTH } from '@/onboarding/constants/Onboardin
 import { useWorkspaceSubdomainField } from '@/auth/sign-in-up/hooks/useWorkspaceSubdomainField';
 import { isCreatingWorkspaceState } from '@/auth/states/isCreatingWorkspaceState';
 import { isMultiWorkspaceEnabledState } from '@/client-config/states/isMultiWorkspaceEnabledState';
+import { isMultiWorkspaceSubdomainEnabledState } from '@/client-config/states/isMultiWorkspaceSubdomainEnabledState';
 import { domainConfigurationState } from '@/domain-manager/states/domainConfigurationState';
 import { TextInput } from '@/ui/input/components/TextInput';
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
@@ -142,6 +143,12 @@ export const SignInUpWorkspaceCreationForm = () => {
   const isMultiWorkspaceEnabled = useAtomStateValue(
     isMultiWorkspaceEnabledState,
   );
+  const isMultiWorkspaceSubdomainEnabled = useAtomStateValue(
+    isMultiWorkspaceSubdomainEnabledState,
+  );
+
+  const shouldPromptSubdomain =
+    isMultiWorkspaceEnabled && isMultiWorkspaceSubdomainEnabled;
 
   const isCreatingWorkspace = useAtomStateValue(isCreatingWorkspaceState);
   const setIsCreatingWorkspace = useSetAtomState(isCreatingWorkspaceState);
@@ -162,13 +169,13 @@ export const SignInUpWorkspaceCreationForm = () => {
     handleSubdomainChange,
     applySuggestionValue,
   } = useWorkspaceSubdomainField({
-    isSubdomainEnabled: isMultiWorkspaceEnabled,
+    isSubdomainEnabled: shouldPromptSubdomain,
   });
 
   const isContinueDisabled =
     workspaceName.trim() === '' ||
     isCreatingWorkspace ||
-    (isMultiWorkspaceEnabled && !isAvailable);
+    (shouldPromptSubdomain && !isAvailable);
 
   const openFilePicker = () => {
     hiddenFileInputRef.current?.click();
@@ -206,7 +213,7 @@ export const SignInUpWorkspaceCreationForm = () => {
 
     const isWorkspaceCreated = await createWorkspace({
       displayName: workspaceName.trim(),
-      ...(isMultiWorkspaceEnabled ? { subdomain } : {}),
+      ...(shouldPromptSubdomain ? { subdomain } : {}),
       logo,
     });
 
@@ -300,7 +307,7 @@ export const SignInUpWorkspaceCreationForm = () => {
             fullWidth
           />
         </OnboardingStepAnimatedItem>
-        {isMultiWorkspaceEnabled && (
+        {shouldPromptSubdomain && (
           <OnboardingStepAnimatedItem index={4}>
             <StyledSubdomainSection>
               <TextInput
@@ -343,7 +350,7 @@ export const SignInUpWorkspaceCreationForm = () => {
           </OnboardingStepAnimatedItem>
         )}
       </StyledFormSection>
-      <OnboardingStepAnimatedItem index={isMultiWorkspaceEnabled ? 5 : 4}>
+      <OnboardingStepAnimatedItem index={shouldPromptSubdomain ? 5 : 4}>
         <MainButton
           title={t`Create workspace`}
           onClick={handleSubmit}

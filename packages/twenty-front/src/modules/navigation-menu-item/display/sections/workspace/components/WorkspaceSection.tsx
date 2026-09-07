@@ -197,7 +197,7 @@ export const WorkspaceSection = () => {
 
   return (
     <WorkspaceSectionContainer
-      sectionTitle={t`Workspace`}
+      sectionTitle={t`Organization`}
       items={items}
       rightIcon={
         // Customising the menu is a desktop job, so mobile shows neither the

@@ -22,6 +22,7 @@ packages/
 ```
 
 ## Key Principles
+- **Minimal core modification**: Fork of Twenty CRM — always prioritize configuration (.env, build args) over modifying core code to keep upstream sync clean.
 - **Functional components only** (no classes)
 - **Named exports only** (no default exports)
 - **Types over interfaces** (except for extending third-party)

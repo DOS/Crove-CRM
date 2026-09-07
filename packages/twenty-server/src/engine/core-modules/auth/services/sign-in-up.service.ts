@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 
 import { msg } from '@lingui/core/macro';
+import axios from 'axios';
 import { TWENTY_ICONS_BASE_URL } from 'twenty-shared/constants';
 import { isDefined } from 'twenty-shared/utils';
 import { WorkspaceActivationStatus } from 'twenty-shared/workspace';
@@ -690,7 +691,12 @@ export class SignInUpService {
 
   async signUpOnNewWorkspace(
     userData: ExistingUserOrPartialUserWithPicture['userData'],
-    options?: { displayName?: string; subdomain?: string },
+    options?: {
+      displayName?: string;
+      subdomain?: string;
+      workspaceId?: string;
+      userAccessToken?: string;
+    },
   ) {
     const email =
       userData.type === 'newUserWithPicture'
@@ -733,7 +739,56 @@ export class SignInUpService {
 
     const isWorkEmailFound = isWorkEmail(email);
 
-    const workspaceId = v4();
+    let workspaceId = options?.workspaceId;
+
+    if (!workspaceId && this.twentyConfigService.get('AUTH_DOS_ID_ENABLED')) {
+      const dosApiUrl =
+        this.twentyConfigService.get('AUTH_DOS_API_URL') ||
+        'https://api.dos.me';
+
+      try {
+        const headers: Record<string, string> = {
+          'Content-Type': 'application/json',
+        };
+
+        if (isNonEmptyString(options?.userAccessToken)) {
+          headers['Authorization'] = `Bearer ${options.userAccessToken}`;
+        }
+
+        const response = await axios.post<{
+          id: string;
+          name: string;
+          slug?: string;
+        }>(
+          `${dosApiUrl}/organizations`,
+          {
+            name: displayName,
+            slug: requestedSubdomain,
+            billingEmail: email,
+          },
+          {
+            headers,
+            timeout: 5000,
+          },
+        );
+
+        if (response?.data?.id) {
+          workspaceId = response.data.id;
+          this.logger.log(
+            `Created organization on DOS.Me SSOT: ${workspaceId} (${displayName})`,
+          );
+        }
+      } catch (dosApiError) {
+        this.logger.warn(
+          `Could not create organization on DOS.Me API (${dosApiUrl}/organizations): ${dosApiError}. Falling back to generated UUID.`,
+        );
+      }
+    }
+
+    if (!workspaceId) {
+      workspaceId = v4();
+    }
+
     const workspaceCustomApplicationId = v4();
 
     try {
