@@ -1,8 +1,10 @@
 import { useAtomComponentStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateValue';
 import { useCreateDraftFromWorkflowVersion } from '@/workflow/hooks/useCreateDraftFromWorkflowVersion';
 import { useWorkflowWithCurrentVersion } from '@/workflow/hooks/useWorkflowWithCurrentVersion';
+import { flowComponentState } from '@/workflow/states/flowComponentState';
 import { workflowVisualizerWorkflowIdComponentState } from '@/workflow/states/workflowVisualizerWorkflowIdComponentState';
-import { isDefined } from 'twenty-shared/utils';
+import { workflowVisualizerWorkflowVersionIdComponentState } from '@/workflow/states/workflowVisualizerWorkflowVersionIdComponentState';
+import { isDefined, isNonEmptyString } from 'twenty-shared/utils';
 
 export const useGetUpdatableWorkflowVersionOrThrow = (instanceId?: string) => {
   const { createDraftFromWorkflowVersion } =
@@ -11,27 +13,40 @@ export const useGetUpdatableWorkflowVersionOrThrow = (instanceId?: string) => {
     workflowVisualizerWorkflowIdComponentState,
     instanceId,
   );
+  const workflowVisualizerWorkflowVersionId = useAtomComponentStateValue(
+    workflowVisualizerWorkflowVersionIdComponentState,
+    instanceId,
+  );
+  const flow = useAtomComponentStateValue(flowComponentState, instanceId);
   const workflow = useWorkflowWithCurrentVersion(workflowVisualizerWorkflowId);
 
   const getUpdatableWorkflowVersion = async (): Promise<string> => {
-    if (!isDefined(workflowVisualizerWorkflowId) || !isDefined(workflow)) {
-      throw new Error('Failed to get updatable workflow version');
+    if (isDefined(workflow)) {
+      if (workflow.currentVersion.status === 'DRAFT') {
+        return workflow.currentVersion.id;
+      }
+
+      if (isDefined(workflowVisualizerWorkflowId)) {
+        const draftVersionId = await createDraftFromWorkflowVersion({
+          workflowId: workflowVisualizerWorkflowId,
+          workflowVersionIdToCopy: workflow.currentVersion.id,
+        });
+
+        if (isDefined(draftVersionId)) {
+          return draftVersionId;
+        }
+      }
     }
 
-    if (workflow.currentVersion.status === 'DRAFT') {
-      return workflow.currentVersion.id;
+    if (isNonEmptyString(flow?.workflowVersionId)) {
+      return flow.workflowVersionId;
     }
 
-    const draftVersionId = await createDraftFromWorkflowVersion({
-      workflowId: workflowVisualizerWorkflowId,
-      workflowVersionIdToCopy: workflow.currentVersion.id,
-    });
-
-    if (!isDefined(draftVersionId)) {
-      throw new Error('Failed to create draft version');
+    if (isNonEmptyString(workflowVisualizerWorkflowVersionId)) {
+      return workflowVisualizerWorkflowVersionId;
     }
 
-    return draftVersionId;
+    throw new Error('Failed to get updatable workflow version');
   };
 
   return { getUpdatableWorkflowVersion };
