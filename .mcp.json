@@ -18,6 +18,14 @@
       "args": ["-y", "@upstash/context7-mcp"],
       "env": {}
     },
+    "github": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "replace_me_with_github_personal_access_token"
+      }
+    },
     "frill": {
       "url": "https://mcp.frill.co/mcp",
       "headers": {
