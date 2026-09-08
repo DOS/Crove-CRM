@@ -56,9 +56,16 @@ export function verifyEcosystemWebhook(
     const timestamp = timestampPart.split('=')[1];
     const signature = signaturePart.split('=')[1];
 
-    // Replay attack prevention (5 minutes)
+    const timestampMs = Number(timestamp);
+
+    // Replay attack prevention (5 minutes). A non-numeric t= parses to NaN and
+    // NaN > threshold is false, so the plain comparison would silently disable
+    // the entire window.
     const fiveMinutes = 5 * 60 * 1000;
-    if (Math.abs(Date.now() - Number(timestamp)) > fiveMinutes) {
+    if (
+      !Number.isFinite(timestampMs) ||
+      Math.abs(Date.now() - timestampMs) > fiveMinutes
+    ) {
       return false;
     }
 
@@ -465,6 +472,7 @@ export class DosOrgSyncWebhookController {
                     await this.workspaceOrmManager.getRepository(
                       'company',
                       { shouldBypassPermissionChecks: true },
+                      { shouldSkipEventEmission: true },
                     );
 
                   const existing = isNonEmptyString(companyId)
@@ -547,6 +555,7 @@ export class DosOrgSyncWebhookController {
                     await this.workspaceOrmManager.getRepository(
                       'company',
                       { shouldBypassPermissionChecks: true },
+                      { shouldSkipEventEmission: true },
                     );
 
                   await companyRepo.delete({ id: companyId });
@@ -597,6 +606,7 @@ export class DosOrgSyncWebhookController {
                     await this.workspaceOrmManager.getRepository(
                       'person',
                       { shouldBypassPermissionChecks: true },
+                      { shouldSkipEventEmission: true },
                     );
 
                   const nameParts = customerName?.split(' ') || [];
@@ -707,6 +717,7 @@ export class DosOrgSyncWebhookController {
                     await this.workspaceOrmManager.getRepository(
                       'person',
                       { shouldBypassPermissionChecks: true },
+                      { shouldSkipEventEmission: true },
                     );
 
                   if (isNonEmptyString(personId)) {
@@ -758,6 +769,7 @@ export class DosOrgSyncWebhookController {
                     await this.workspaceOrmManager.getRepository(
                       'note',
                       { shouldBypassPermissionChecks: true },
+                      { shouldSkipEventEmission: true },
                     );
 
                   await noteRepo.save({
