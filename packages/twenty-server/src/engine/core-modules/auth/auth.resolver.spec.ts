@@ -346,6 +346,7 @@ describe('AuthResolver', () => {
         await resolver.signUpInNewWorkspace(
           { id: user.id } as never,
           undefined as never,
+          { req: {} as never },
         );
       } catch (error) {
         caughtError = error;

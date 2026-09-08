@@ -62,10 +62,14 @@ export const createDosIdClient = async (
     twentyConfigService.get('AUTH_DOS_ID_CALLBACK_URL') ||
     new URL('/auth/dos-id/redirect', serverUrl).toString();
 
-  const idTokenSignedResponseAlg =
-    issuer.metadata.id_token_signing_alg_values_supported?.includes('ES256')
-      ? 'ES256'
-      : (issuer.metadata.id_token_signing_alg_values_supported?.[0] ?? 'RS256');
+  // openid-client types every discovery metadata value as {}; this one is a
+  // string array whenever the issuer advertises it at all.
+  const supportedSigningAlgorithms = issuer.metadata
+    .id_token_signing_alg_values_supported as string[] | undefined;
+
+  const idTokenSignedResponseAlg = supportedSigningAlgorithms?.includes('ES256')
+    ? 'ES256'
+    : (supportedSigningAlgorithms?.[0] ?? 'RS256');
 
   return new issuer.Client({
     client_id: twentyConfigService.get('AUTH_DOS_ID_CLIENT_ID') ?? '',

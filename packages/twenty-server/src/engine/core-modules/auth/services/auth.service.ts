@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import crypto, { randomUUID } from 'node:crypto';
@@ -80,6 +80,8 @@ import { isEmailInApprovedAccessDomains } from 'src/engine/core-modules/approved
 @Injectable()
 // oxlint-disable-next-line twenty/inject-workspace-repository
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(
     private readonly accessTokenService: AccessTokenService,
     private readonly ssoExchangeTokenService: SSOExchangeTokenService,
@@ -973,7 +975,16 @@ export class AuthService {
   }
 
   async signInUpWithSocialSSO(
-    {
+    ssoUser:
+      | MicrosoftRequest['user']
+      | GoogleRequest['user']
+      | DosIdRequest['user'],
+    authProvider:
+      | AuthProviderEnum.Google
+      | AuthProviderEnum.Microsoft
+      | AuthProviderEnum.DosId,
+  ): Promise<string> {
+    const {
       firstName,
       lastName,
       email: rawEmail,
@@ -983,15 +994,12 @@ export class AuthService {
       billingCheckoutSessionState,
       locale,
       returnToPath,
-      organizations,
-      teams,
-      activeOrgId,
-    }: MicrosoftRequest['user'] | GoogleRequest['user'] | DosIdRequest['user'],
-    authProvider:
-      | AuthProviderEnum.Google
-      | AuthProviderEnum.Microsoft
-      | AuthProviderEnum.DosId,
-  ): Promise<string> {
+    } = ssoUser;
+
+    // Only the DOS ID token carries these. The Google/Microsoft shapes in the
+    // union above do not declare them, so they cannot be destructured together.
+    const { organizations, teams } = ssoUser as DosIdRequest['user'];
+
     const email = rawEmail.toLowerCase();
 
     const existingUser =
@@ -1031,13 +1039,19 @@ export class AuthService {
             const orgId = org.id;
             const orgSlug = org.slug;
 
-            const workspace = await this.workspaceRepository.findOne({
-              where: [
-                ...(isNonEmptyString(orgId) ? [{ id: orgId }] : []),
-                ...(isNonEmptyString(orgSlug) ? [{ subdomain: orgSlug }] : []),
-                { displayName: orgName },
-              ],
-            });
+            // Unique identifiers only. orgName comes from a token claim, so
+            // matching on it would link this user to an arbitrary same-named tenant.
+            const workspace =
+              isNonEmptyString(orgId) || isNonEmptyString(orgSlug)
+                ? await this.workspaceRepository.findOne({
+                    where: [
+                      ...(isNonEmptyString(orgId) ? [{ id: orgId }] : []),
+                      ...(isNonEmptyString(orgSlug)
+                        ? [{ subdomain: orgSlug }]
+                        : []),
+                    ],
+                  })
+                : undefined;
 
             if (workspace) {
               await this.userWorkspaceService.addUserToWorkspaceIfUserNotInWorkspace(

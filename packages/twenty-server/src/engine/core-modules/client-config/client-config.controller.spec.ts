@@ -114,6 +114,7 @@ describe('ClientConfigController', () => {
         isClickHouseConfigured: false,
         isWorkspaceSchemaDDLLocked: false,
         isOnboardingAiChatEnabled: false,
+        isMultiWorkspaceSubdomainEnabled: true,
         enterpriseInstanceType: ENTERPRISE_INSTANCE_TYPE.PRODUCTION,
       };
 
