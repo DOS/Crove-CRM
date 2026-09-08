@@ -198,17 +198,25 @@ export class DosOrgSyncWebhookController {
     const rawBody = (req as Request & { rawBody?: Buffer }).rawBody;
     const secret = this.twentyConfigService.get('CROVE_DOS_WEBHOOK_SECRET');
 
-    if (isNonEmptyString(secret)) {
-      if (!isNonEmptyString(signature)) {
-        throw new UnauthorizedException('Missing X-DOS-Signature header');
-      }
+    if (!isNonEmptyString(secret)) {
+      // Fail closed: without a secret every handler below would run against an
+      // unauthenticated payload, on a workspace the payload itself picks.
+      this.logger.error(
+        'CROVE_DOS_WEBHOOK_SECRET is not set; rejecting all dos-org-sync traffic',
+      );
 
-      const bodyBuffer = rawBody ?? Buffer.from(JSON.stringify(req.body));
-      const isValid = verifyEcosystemWebhook(bodyBuffer, signature, secret);
+      throw new UnauthorizedException('Invalid X-DOS-Signature');
+    }
 
-      if (!isValid) {
-        throw new UnauthorizedException('Invalid X-DOS-Signature');
-      }
+    if (!isNonEmptyString(signature)) {
+      throw new UnauthorizedException('Missing X-DOS-Signature header');
+    }
+
+    const bodyBuffer = rawBody ?? Buffer.from(JSON.stringify(req.body));
+    const isValid = verifyEcosystemWebhook(bodyBuffer, signature, secret);
+
+    if (!isValid) {
+      throw new UnauthorizedException('Invalid X-DOS-Signature');
     }
 
     const payload = req.body as EcosystemWebhookPayload;
@@ -231,13 +239,19 @@ export class DosOrgSyncWebhookController {
         const orgSlug = payload.data.slug;
 
         if (isNonEmptyString(orgName) && isNonEmptyString(ownerEmail)) {
-          const existingWorkspace = await this.workspaceRepository.findOne({
-            where: [
-              ...(isNonEmptyString(orgId) ? [{ id: orgId }] : []),
-              ...(isNonEmptyString(orgSlug) ? [{ subdomain: orgSlug }] : []),
-              { displayName: orgName.trim() },
-            ],
-          });
+          // Match on unique identifiers only. displayName is attacker-supplied and
+          // not unique, so OR-ing it in would bind this event to an arbitrary tenant.
+          const existingWorkspace =
+            isNonEmptyString(orgId) || isNonEmptyString(orgSlug)
+              ? await this.workspaceRepository.findOne({
+                  where: [
+                    ...(isNonEmptyString(orgId) ? [{ id: orgId }] : []),
+                    ...(isNonEmptyString(orgSlug)
+                      ? [{ subdomain: orgSlug }]
+                      : []),
+                  ],
+                })
+              : undefined;
 
           let user = await this.userService.findUserByEmail(ownerEmail);
 
@@ -299,8 +313,10 @@ export class DosOrgSyncWebhookController {
           payload.data.global_org_id;
 
         if (isNonEmptyString(orgId) && isNonEmptyString(orgName)) {
+          // Never match on orgName here: it is the NEW name from the payload, so
+          // OR-ing it in lets a caller rename whichever tenant already bears it.
           const workspace = await this.workspaceRepository.findOne({
-            where: [{ id: orgId }, { displayName: orgName.trim() }],
+            where: { id: orgId },
           });
 
           if (isDefined(workspace)) {
@@ -321,12 +337,9 @@ export class DosOrgSyncWebhookController {
           payload.data.id ||
           payload.data.org_id ||
           payload.data.global_org_id;
-        const orgName = payload.data.name || payload.data.org_name;
 
         const workspace = isNonEmptyString(orgId)
-          ? await this.workspaceRepository.findOne({
-              where: [{ id: orgId }, ...(orgName ? [{ displayName: orgName }] : [])],
-            })
+          ? await this.workspaceRepository.findOne({ where: { id: orgId } })
           : null;
 
         if (isDefined(workspace)) {
@@ -334,6 +347,10 @@ export class DosOrgSyncWebhookController {
             activationStatus: WorkspaceActivationStatus.SUSPENDED,
           });
           this.logger.log(`Suspended workspace ${workspace.id} due to org deletion`);
+        } else {
+          this.logger.warn(
+            `Ignored org deletion event: no workspace matches orgId ${orgId ?? '(missing)'}`,
+          );
         }
         break;
       }
@@ -346,7 +363,6 @@ export class DosOrgSyncWebhookController {
           payload.data.id ||
           payload.data.org_id ||
           payload.data.global_org_id;
-        const orgName = payload.data.org_name || payload.data.name;
 
         if (isNonEmptyString(userEmail)) {
           let user = await this.userService.findUserByEmail(userEmail);
@@ -367,9 +383,7 @@ export class DosOrgSyncWebhookController {
           }
 
           const workspace = isNonEmptyString(orgId)
-            ? await this.workspaceRepository.findOne({
-                where: [{ id: orgId }, ...(orgName ? [{ displayName: orgName }] : [])],
-              })
+            ? await this.workspaceRepository.findOne({ where: { id: orgId } })
             : null;
 
           if (isDefined(user) && isDefined(workspace)) {
@@ -379,6 +393,10 @@ export class DosOrgSyncWebhookController {
             );
             this.logger.log(
               `Added user ${userEmail} to workspace ${workspace.id}`,
+            );
+          } else {
+            this.logger.warn(
+              `Ignored member addition: no workspace matches orgId ${orgId ?? '(missing)'}`,
             );
           }
         }
@@ -393,15 +411,12 @@ export class DosOrgSyncWebhookController {
           payload.data.id ||
           payload.data.org_id ||
           payload.data.global_org_id;
-        const orgName = payload.data.org_name || payload.data.name;
 
         if (isNonEmptyString(userEmail)) {
           const user = await this.userService.findUserByEmail(userEmail);
 
           const workspace = isNonEmptyString(orgId)
-            ? await this.workspaceRepository.findOne({
-                where: [{ id: orgId }, ...(orgName ? [{ displayName: orgName }] : [])],
-              })
+            ? await this.workspaceRepository.findOne({ where: { id: orgId } })
             : null;
 
           if (isDefined(user) && isDefined(workspace)) {

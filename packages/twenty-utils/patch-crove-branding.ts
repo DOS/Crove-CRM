@@ -40,13 +40,6 @@ function patchPoFile(filePath: string, isVietnamese = false) {
   const regex = /(msgid\s+("[\s\S]*?"))\n(msgstr\s+("[\s\S]*?"))(?=\n\n|\n#[.,~:\s]|\n*$)/g;
 
   const newContent = content.replace(regex, (fullMatch, msgidPrefix, msgidRaw, msgstrPrefix, msgstrRaw) => {
-    let msgidValue = '';
-    try {
-      msgidValue = JSON.parse(msgidRaw.replace(/\n"/g, '"'));
-    } catch {
-      msgidValue = msgidRaw;
-    }
-
     let msgstrValue = '';
     try {
       msgstrValue = JSON.parse(msgstrRaw.replace(/\n"/g, '"'));
@@ -54,10 +47,15 @@ function patchPoFile(filePath: string, isVietnamese = false) {
       msgstrValue = msgstrRaw;
     }
 
-    const sourceText = msgstrValue || msgidValue;
+    // An empty msgstr means "not translated yet". Filling it with the transformed
+    // msgid would mark the entry translated, so lingui extract never flags it again.
+    if (msgstrValue === '') {
+      return fullMatch;
+    }
+
     const transformedText = isVietnamese
-      ? transformVietnameseText(sourceText)
-      : transformEnglishText(sourceText);
+      ? transformVietnameseText(msgstrValue)
+      : transformEnglishText(msgstrValue);
 
     if (transformedText !== msgstrValue) {
       patchCount++;

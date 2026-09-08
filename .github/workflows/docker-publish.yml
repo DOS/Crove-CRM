@@ -11,8 +11,70 @@ on:
     types: [published]
   workflow_dispatch:
 
+concurrency:
+  group: docker-publish-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
+  # `dev` builds the deployable beta image and no other workflow runs on push to
+  # `dev`, so the gate has to live here rather than in ci-server/ci-front.
+  verify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Validate twenty-apps manifests
+        run: |
+          set -uo pipefail
+          failed=0
+          for manifest in packages/twenty-apps/*/*/package.json; do
+            [ -e "$manifest" ] || continue
+            if ! node -e "JSON.parse(require('fs').readFileSync(process.argv[1],'utf8'))" "$manifest"; then
+              echo "INVALID JSON: $manifest"
+              failed=1
+            fi
+          done
+          if [ "$failed" -ne 0 ]; then
+            echo "One or more app manifests are not valid JSON (unresolved merge markers?)"
+            exit 1
+          fi
+          echo "All twenty-apps manifests are valid JSON"
+
+      - name: Build twenty-shared
+        run: npx nx build twenty-shared
+
+      # Lint is deliberately not gated yet: `nx lint` also runs `oxfmt --check`,
+      # and the tree is not format-clean. Add `-t lint` once `nx fmt` has been run.
+      #
+      # Scoped to twenty-server because it typechecks clean as of 2026-09-08 (13
+      # fork-introduced type errors were fixed that day; verified with
+      # `nx build twenty-shared --skip-nx-cache` first, per the CLAUDE.md gotcha).
+      #
+      # TODO: add twenty-front once generated-metadata/graphql.ts is regenerated.
+      # That file is stale: its AuthBypassProviders type lacks the `dosId` field the
+      # server DTO exposes, which breaks SignInUpWorkspaceScopeForm.tsx:48,58.
+      # Regenerate via `nx run twenty-front:graphql:generate --configuration=metadata`
+      # (needs a reachable server plus packages/twenty-front/.env), then change the
+      # line below to `-p twenty-server twenty-front`.
+      - name: Typecheck server
+        run: npx nx run-many -t typecheck -p twenty-server
+
   build-and-push:
+    needs: verify
     runs-on: ubuntu-latest
     permissions:
       contents: read

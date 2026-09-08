@@ -72,3 +72,11 @@ screenshots/
 /.diag*.mjs
 /.compare*.mjs
 /.narrow*.mjs
+
+# Local QA screenshots (browser-automation scratch output, never commit)
+/tmp-*.png
+/tmp-*.jpg
+
+# Agent/tool local state
+/.qwen/
+/.claude/local/

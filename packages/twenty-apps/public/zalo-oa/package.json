@@ -30,15 +30,10 @@
     "@types/node": "^24.7.2",
     "@typescript/native-preview": "^7.0.0-dev.20260116.1",
     "oxlint": "^0.16.0",
-<<<<<<<< HEAD:packages/twenty-apps/public/zalo-oa/package.json
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "twenty-client-sdk": "^2.16.0",
     "twenty-sdk": "^2.16.0",
-========
-    "twenty-client-sdk": "2.35.0",
-    "twenty-sdk": "2.35.0",
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/package.json
     "typescript": "^5.9.3",
     "vite-tsconfig-paths": "^4.2.1",
     "vitest": "^4.0.0"

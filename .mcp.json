@@ -21,7 +21,7 @@
     "frill": {
       "url": "https://mcp.frill.co/mcp",
       "headers": {
-        "Authorization": "Bearer f335cd55-bccc-43e5-947f-87a3123efac5"
+        "Authorization": "Bearer replace_me_with_frill_api_token"
       }
     }
   }
