@@ -24,7 +24,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
 "@emnapi/runtime@npm:1.10.0":
   version: 1.10.0
   resolution: "@emnapi/runtime@npm:1.10.0"
@@ -55,11 +54,6 @@ __metadata:
 "@esbuild/aix-ppc64@npm:0.28.1":
   version: 0.28.1
   resolution: "@esbuild/aix-ppc64@npm:0.28.1"
-========
-"@esbuild/aix-ppc64@npm:0.28.2":
-  version: 0.28.2
-  resolution: "@esbuild/aix-ppc64@npm:0.28.2"
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   conditions: os=aix & cpu=ppc64
   languageName: node
   linkType: hard
@@ -761,7 +755,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
 "@napi-rs/wasm-runtime@npm:^1.1.4":
   version: 1.1.5
   resolution: "@napi-rs/wasm-runtime@npm:1.1.5"
@@ -778,12 +771,6 @@ __metadata:
   version: 0.133.0
   resolution: "@oxc-project/types@npm:0.133.0"
   checksum: 10c0/70c57ba58644f7ec217b670c301801f4d06995f4ccdba6b2bd106ea3e5ee49d616573e6ef8d55530b87571a960696543687f3850e87ad173d3f88965c30cdd63
-========
-"@oxc-project/types@npm:=0.146.0":
-  version: 0.146.0
-  resolution: "@oxc-project/types@npm:0.146.0"
-  checksum: 10c0/15e99d1d4d9233244262779b6e3bbaf7f11a4e62b57c21ef3755acbec469cb90cd468548103fec282af649096e9c6389fd5221c28b268579061352c49b29f4c8
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   languageName: node
   linkType: hard
 
@@ -969,7 +956,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
 "@twentyhq/commerce@workspace:.":
   version: 0.0.0-use.local
   resolution: "@twentyhq/commerce@workspace:."
@@ -991,11 +977,6 @@ __metadata:
 "@tybys/wasm-util@npm:^0.10.2":
   version: 0.10.2
   resolution: "@tybys/wasm-util@npm:0.10.2"
-========
-"@twentyhq/fathom@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@twentyhq/fathom@workspace:."
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   dependencies:
     "@types/node": "npm:^24.7.2"
     "@typescript/native-preview": "npm:^7.0.0-dev.20260116.1"
@@ -1033,24 +1014,15 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
   version: 25.7.0
   resolution: "@types/node@npm:25.7.0"
   dependencies:
     undici-types: "npm:~7.21.0"
   checksum: 10c0/47ec7eaca154c36ad6d1ac0270e6e254eedf20b9dc49afe3bc76e4f7eba29ceac705f8903b162aeaf40e3941101ffe76ffb374989359ea3ef8c8509d8b443f55
-========
-  version: 26.2.0
-  resolution: "@types/node@npm:26.2.0"
-  dependencies:
-    undici-types: "npm:~8.3.0"
-  checksum: 10c0/f8566d88162241eb55a46f7e4ea097188eab0aaafefea7a58e63adab8c4144eb98c08b7911452c846104c339a0f82282f5e1ed4b26b578d60709614fe2843f4d
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   languageName: node
   linkType: hard
 
 "@types/node@npm:^24.7.2":
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
   version: 24.12.4
   resolution: "@types/node@npm:24.12.4"
   dependencies:
@@ -1063,13 +1035,6 @@ __metadata:
   version: 15.7.15
   resolution: "@types/prop-types@npm:15.7.15"
   checksum: 10c0/b59aad1ad19bf1733cf524fd4e618196c6c7690f48ee70a327eb450a42aab8e8a063fbe59ca0a5701aebe2d92d582292c0fb845ea57474f6a15f6994b0e260b2
-========
-  version: 24.13.3
-  resolution: "@types/node@npm:24.13.3"
-  dependencies:
-    undici-types: "npm:~7.18.0"
-  checksum: 10c0/a5bc08f49b9581dcdca90e02cd77197a3c799840807664942e5cd5161a553d4d2ae8064f7e3294410d748d7d098b5c1848be7fa50c06f29c4193ab16be4e59eb
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   languageName: node
   linkType: hard
 
@@ -1077,7 +1042,6 @@ __metadata:
   version: 6.15.1
   resolution: "@types/qs@npm:6.15.1"
   checksum: 10c0/1dfdbcb4cf2a8f66d57f0b9a9fe6b1c7091cb816687b6698c1351eaf31f62e412cea9b7453a9637b570cd5fad8dced527e5a9e69b4fcc6e318daacd8b749f094
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
   languageName: node
   linkType: hard
 
@@ -1088,8 +1052,6 @@ __metadata:
     "@types/prop-types": "npm:*"
     csstype: "npm:^3.2.2"
   checksum: 10c0/44180549dd045f536ececd39e39aacdf828e76adc1c4a90b132f453e23cc370c4648d9102ae401172ebd8fd8b1977a901a39e214e53ec77171b27514b588c179
-========
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   languageName: node
   linkType: hard
 
@@ -1102,99 +1064,56 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
 "@typescript/native-preview-darwin-arm64@npm:7.0.0-dev.20260618.1":
   version: 7.0.0-dev.20260618.1
   resolution: "@typescript/native-preview-darwin-arm64@npm:7.0.0-dev.20260618.1"
-========
-"@typescript/native-preview-darwin-arm64@npm:7.0.0-dev.20260707.2":
-  version: 7.0.0-dev.20260707.2
-  resolution: "@typescript/native-preview-darwin-arm64@npm:7.0.0-dev.20260707.2"
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
 "@typescript/native-preview-darwin-x64@npm:7.0.0-dev.20260618.1":
   version: 7.0.0-dev.20260618.1
   resolution: "@typescript/native-preview-darwin-x64@npm:7.0.0-dev.20260618.1"
-========
-"@typescript/native-preview-darwin-x64@npm:7.0.0-dev.20260707.2":
-  version: 7.0.0-dev.20260707.2
-  resolution: "@typescript/native-preview-darwin-x64@npm:7.0.0-dev.20260707.2"
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
 "@typescript/native-preview-linux-arm64@npm:7.0.0-dev.20260618.1":
   version: 7.0.0-dev.20260618.1
   resolution: "@typescript/native-preview-linux-arm64@npm:7.0.0-dev.20260618.1"
-========
-"@typescript/native-preview-linux-arm64@npm:7.0.0-dev.20260707.2":
-  version: 7.0.0-dev.20260707.2
-  resolution: "@typescript/native-preview-linux-arm64@npm:7.0.0-dev.20260707.2"
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
 "@typescript/native-preview-linux-arm@npm:7.0.0-dev.20260618.1":
   version: 7.0.0-dev.20260618.1
   resolution: "@typescript/native-preview-linux-arm@npm:7.0.0-dev.20260618.1"
-========
-"@typescript/native-preview-linux-arm@npm:7.0.0-dev.20260707.2":
-  version: 7.0.0-dev.20260707.2
-  resolution: "@typescript/native-preview-linux-arm@npm:7.0.0-dev.20260707.2"
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
 "@typescript/native-preview-linux-x64@npm:7.0.0-dev.20260618.1":
   version: 7.0.0-dev.20260618.1
   resolution: "@typescript/native-preview-linux-x64@npm:7.0.0-dev.20260618.1"
-========
-"@typescript/native-preview-linux-x64@npm:7.0.0-dev.20260707.2":
-  version: 7.0.0-dev.20260707.2
-  resolution: "@typescript/native-preview-linux-x64@npm:7.0.0-dev.20260707.2"
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
 "@typescript/native-preview-win32-arm64@npm:7.0.0-dev.20260618.1":
   version: 7.0.0-dev.20260618.1
   resolution: "@typescript/native-preview-win32-arm64@npm:7.0.0-dev.20260618.1"
-========
-"@typescript/native-preview-win32-arm64@npm:7.0.0-dev.20260707.2":
-  version: 7.0.0-dev.20260707.2
-  resolution: "@typescript/native-preview-win32-arm64@npm:7.0.0-dev.20260707.2"
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
 "@typescript/native-preview-win32-x64@npm:7.0.0-dev.20260618.1":
   version: 7.0.0-dev.20260618.1
   resolution: "@typescript/native-preview-win32-x64@npm:7.0.0-dev.20260618.1"
-========
-"@typescript/native-preview-win32-x64@npm:7.0.0-dev.20260707.2":
-  version: 7.0.0-dev.20260707.2
-  resolution: "@typescript/native-preview-win32-x64@npm:7.0.0-dev.20260707.2"
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
 "@typescript/native-preview@npm:^7.0.0-dev.20260116.1":
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
   version: 7.0.0-dev.20260618.1
   resolution: "@typescript/native-preview@npm:7.0.0-dev.20260618.1"
   dependencies:
@@ -1205,18 +1124,6 @@ __metadata:
     "@typescript/native-preview-linux-x64": "npm:7.0.0-dev.20260618.1"
     "@typescript/native-preview-win32-arm64": "npm:7.0.0-dev.20260618.1"
     "@typescript/native-preview-win32-x64": "npm:7.0.0-dev.20260618.1"
-========
-  version: 7.0.0-dev.20260707.2
-  resolution: "@typescript/native-preview@npm:7.0.0-dev.20260707.2"
-  dependencies:
-    "@typescript/native-preview-darwin-arm64": "npm:7.0.0-dev.20260707.2"
-    "@typescript/native-preview-darwin-x64": "npm:7.0.0-dev.20260707.2"
-    "@typescript/native-preview-linux-arm": "npm:7.0.0-dev.20260707.2"
-    "@typescript/native-preview-linux-arm64": "npm:7.0.0-dev.20260707.2"
-    "@typescript/native-preview-linux-x64": "npm:7.0.0-dev.20260707.2"
-    "@typescript/native-preview-win32-arm64": "npm:7.0.0-dev.20260707.2"
-    "@typescript/native-preview-win32-x64": "npm:7.0.0-dev.20260707.2"
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   dependenciesMeta:
     "@typescript/native-preview-darwin-arm64":
       optional: true
@@ -1233,13 +1140,8 @@ __metadata:
     "@typescript/native-preview-win32-x64":
       optional: true
   bin:
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
     tsgo: bin/tsgo.js
   checksum: 10c0/7140523fbfe5248869d56aa8b8689ae675ffe921b764bc33396042656409d50a9ef76da667bd17951bd811483c3d19648f5009e1f652ff6f56672398ac20f9f4
-========
-    tsgo: bin/tsgo
-  checksum: 10c0/42c527da5c4d61884e50591dba0a37e6d98f992e355037213f2039d606dd9fddfbacee308d40b4f3b4cfa06f79b07b7e86b45b92a83a9e60741f65e07a031982
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   languageName: node
   linkType: hard
 
@@ -1544,7 +1446,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
 "csstype@npm:^3.2.2":
   version: 3.2.3
   resolution: "csstype@npm:3.2.3"
@@ -1552,8 +1453,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-========
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
 "debug@npm:4, debug@npm:^4.1.1":
   version: 4.4.3
   resolution: "debug@npm:4.4.3"
@@ -1655,25 +1554,14 @@ __metadata:
   linkType: hard
 
 "es-toolkit@npm:^1.39.10":
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
   version: 1.46.1
   resolution: "es-toolkit@npm:1.46.1"
-========
-  version: 1.51.0
-  resolution: "es-toolkit@npm:1.51.0"
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   dependenciesMeta:
     "@trivago/prettier-plugin-sort-imports@4.3.0":
       unplugged: true
     prettier-plugin-sort-re-exports@0.0.1:
       unplugged: true
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
   checksum: 10c0/6a4c3dd0ddc2138fa13d983d93ebaf8061759c52c2cf7c3101315139fc1fca826d253daa67fe85ad880c03cc4c092bd53a83a7cbf58b4721c251479122ba5303
-========
-    vitepress-plugin-sandpack@1.1.4:
-      unplugged: true
-  checksum: 10c0/ad519228a317a27b11144b582c1168c552143dd58ce4e62be50c185de48c69dea996f6ad6ebc518129ebd58c34da150c1a2134d4a3d7cdc75120c626e57ce7c4
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   languageName: node
   linkType: hard
 
@@ -1972,15 +1860,9 @@ __metadata:
   linkType: hard
 
 "graphql@npm:^16.8.1":
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
   version: 16.14.0
   resolution: "graphql@npm:16.14.0"
   checksum: 10c0/baaa368fcfeb7bf2cdf94b9f31bf916e97eaa9e7e82148a7046f31cbd49b760b38190f22393b024cbdd9ca0f4f46287515de0136b6a0cc164074b36ad7b50618
-========
-  version: 16.14.2
-  resolution: "graphql@npm:16.14.2"
-  checksum: 10c0/a95a96961eaff55cc9fe9d31fae6f33499ac988b972d07ea5085024cb1333f515b902f376e7393a5489aa82200a8aff3eb96580e4d1b69d702ed19b6eb1ce97a
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   languageName: node
   linkType: hard
 
@@ -2000,7 +1882,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
 "hasown@npm:^2.0.2":
   version: 2.0.3
   resolution: "hasown@npm:2.0.3"
@@ -2011,9 +1892,6 @@ __metadata:
   linkType: hard
 
 "hasown@npm:^2.0.4":
-========
-"hasown@npm:^2.0.2, hasown@npm:^2.0.4":
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   version: 2.0.4
   resolution: "hasown@npm:2.0.4"
   dependencies:
@@ -2105,11 +1983,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
   checksum: 10c0/31ec80b7d599dcb19568540d694865b1da116f701b75503a23ed38189d96fca70eb1fb6ccb1dbd994f6f79d407d51dc1a94d06dcef5370644ce736792414781b
-========
-  checksum: 10c0/171d1167327d96689a9284f86a755bef666921797a2427ad1ec46169c99cfb94616c135a18bd067645eed9f0eef2846c2c0ff6d324d29ee24fcfe56e147f06c3
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   languageName: node
   linkType: hard
 
@@ -2289,7 +2163,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
 "loose-envify@npm:^1.1.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
@@ -2301,8 +2174,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-========
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
 "magic-string@npm:^0.30.21":
   version: 0.30.21
   resolution: "magic-string@npm:0.30.21"
@@ -2377,11 +2248,7 @@ __metadata:
   resolution: "nanoid@npm:3.3.18"
   bin:
     nanoid: bin/nanoid.cjs
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
   checksum: 10c0/bbf2dcffe22d2b62d16de2711752070b539c0f644c7916f823ad6521986b2078cbe524f2d6240f58c46e9141ea0c7b87a029e100c0f7f175228cacaf30e41bba
-========
-  checksum: 10c0/b994b4e396730f8be2520923284e2040d61eaee55cc6d4935ef6d38d34bafdc46133eda4d3faea5073bda545aa6079d82b886caeac5c731cf9ac18bcc1301425
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   languageName: node
   linkType: hard
 
@@ -2400,18 +2267,12 @@ __metadata:
   linkType: hard
 
 "node-gyp@npm:latest":
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
   version: 12.3.0
   resolution: "node-gyp@npm:12.3.0"
-========
-  version: 13.0.1
-  resolution: "node-gyp@npm:13.0.1"
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   dependencies:
     env-paths: "npm:^2.2.0"
     exponential-backoff: "npm:^3.1.1"
     graceful-fs: "npm:^4.2.6"
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
     nopt: "npm:^9.0.0"
     proc-log: "npm:^6.0.0"
     semver: "npm:^7.3.5"
@@ -2422,18 +2283,6 @@ __metadata:
   bin:
     node-gyp: bin/node-gyp.js
   checksum: 10c0/9d9032b405cbe42f72a105259d9eb679376470c102df4a2dbaa51e07d59bf741dcffb85897087ea9d8318b9cabb824a8978af51508ae142f0239ae1e6a3c2329
-========
-    nopt: "npm:^10.0.0"
-    proc-log: "npm:^7.0.0"
-    semver: "npm:^7.3.5"
-    tar: "npm:^7.5.4"
-    tinyglobby: "npm:^0.2.12"
-    undici: "npm:^8.4.1"
-    which: "npm:^7.0.0"
-  bin:
-    node-gyp: bin/node-gyp.js
-  checksum: 10c0/424077bc9e9bbe953a8e86db473ba818cbc6a121714008c977fd589e21e5f0c811fbf22faac730dc7182450b5e52df301811d01ae3373898658d999b7710f4e6
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   languageName: node
   linkType: hard
 
@@ -2708,7 +2557,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
 "semver@npm:^7.3.5":
   version: 7.8.0
   resolution: "semver@npm:7.8.0"
@@ -2719,9 +2567,6 @@ __metadata:
   linkType: hard
 
 "semver@npm:^7.7.3":
-========
-"semver@npm:^7.3.5, semver@npm:^7.8.5":
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   version: 7.8.5
   resolution: "semver@npm:7.8.5"
   bin:
@@ -2893,21 +2738,12 @@ __metadata:
   linkType: hard
 
 "string-width@npm:^8.1.0, string-width@npm:^8.1.1, string-width@npm:^8.2.0":
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
   version: 8.2.1
   resolution: "string-width@npm:8.2.1"
   dependencies:
     get-east-asian-width: "npm:^1.5.0"
     strip-ansi: "npm:^7.1.2"
   checksum: 10c0/d467b4eaf4c40a01bb438a2620e77badd2456ffd5131c9973abe4f3acf7c802d5b21f3b6a00a5e33a7fc28ca8f9c103226e01bac61e9f259659c6f46d78e353a
-========
-  version: 8.2.2
-  resolution: "string-width@npm:8.2.2"
-  dependencies:
-    get-east-asian-width: "npm:^1.5.0"
-    strip-ansi: "npm:^7.1.2"
-  checksum: 10c0/895624534e4e2f229e880bbc30aa77bdeb758e1a0edce203e0a17b8b4f08b8d3c1156516efc50a35e3efd0052d938a73797692111250ac9f52ee384710a01714
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   languageName: node
   linkType: hard
 
@@ -3035,22 +2871,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
 "twenty-client-sdk@npm:2.16.0, twenty-client-sdk@npm:^2.16.0":
   version: 2.16.0
   resolution: "twenty-client-sdk@npm:2.16.0"
-========
-"twenty-client-sdk@npm:2.35.0":
-  version: 2.35.0
-  resolution: "twenty-client-sdk@npm:2.35.0"
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   dependencies:
     "@genql/runtime": "npm:^2.10.0"
     esbuild: "npm:^0.28.1"
     graphql: "npm:^16.8.1"
     lodash: "npm:^4.17.21"
     prettier: "npm:^3.8.3"
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
   checksum: 10c0/f990220bec103a04ca50dc8bb38c295e94a4e51b27a3188f4a0ae515c204b76bf87f5591739eb705b97e7aa5a9aa6a215d0d4da05297e50a0392801ea64a2234
   languageName: node
   linkType: hard
@@ -3058,15 +2887,6 @@ __metadata:
 "twenty-sdk@npm:^2.16.0":
   version: 2.16.0
   resolution: "twenty-sdk@npm:2.16.0"
-========
-  checksum: 10c0/2ce66e4647c6c6f4b4897896858f8abab3dd8aa6112b8c5c6387082ce484b6a2fb9b90060526601b13329c207ae530d25a6ba80197868a8653156505e0736f5d
-  languageName: node
-  linkType: hard
-
-"twenty-sdk@npm:2.35.0":
-  version: 2.35.0
-  resolution: "twenty-sdk@npm:2.35.0"
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   dependencies:
     "@sniptt/guards": "npm:^0.2.0"
     axios: "npm:^1.16.0"
@@ -3085,37 +2905,21 @@ __metadata:
     semver: "npm:7.6.3"
     sharp: "npm:^0.35.3"
     tinyglobby: "npm:^0.2.15"
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
     twenty-client-sdk: "npm:2.16.0"
-========
-    twenty-client-sdk: "npm:2.35.0"
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
     typescript: "npm:^5.9.3"
     uuid: "npm:^13.0.2"
   bin:
     twenty: dist/cli.cjs
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
   checksum: 10c0/528f275f8bda022061a52c3563af514d2257f291fc5a232be90ca6011c50ff18a250984b6c68fc8e4c690644c92e1ccb0b89c511b8a19d832455c8860f2751a8
-========
-  checksum: 10c0/4cb27d3b449b2fbe692516cc29b2689232e4f40de1181132ea3d9743a1fc1c9284204ddf50632fc737d06748ff9c6903630124c02382b4f61eec120beaa9f9d5
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   languageName: node
   linkType: hard
 
 "type-fest@npm:^5.4.1":
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
   version: 5.6.0
   resolution: "type-fest@npm:5.6.0"
   dependencies:
     tagged-tag: "npm:^1.0.0"
   checksum: 10c0/5468a8ffda7f3904e6f7bbd8069eb8b6dd4bd9156e206df7a01d09a73e28cd1afedf74ead9d0fc12841c8c90074194859feca240511c50800962fde1bd9ddcbc
-========
-  version: 5.8.0
-  resolution: "type-fest@npm:5.8.0"
-  dependencies:
-    tagged-tag: "npm:^1.0.0"
-  checksum: 10c0/c8aae118a763d550a9552a511dff6b71840a23dab4edf693cf1c4df22596942794e6f6723389bd9036a90182249d915158bacf0815a1ae87f05f901b1d5f574e
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   languageName: node
   linkType: hard
 
@@ -3146,7 +2950,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
 "undici-types@npm:~7.21.0":
   version: 7.21.0
   resolution: "undici-types@npm:7.21.0"
@@ -3158,19 +2961,6 @@ __metadata:
   version: 6.28.0
   resolution: "undici@npm:6.28.0"
   checksum: 10c0/3029a70df06b38b5b2f30732932a1e92544c753cd82c8abdf0d35afad48e0ba91612e79fe3a442dbbb9434d6a9eba2b714d5ea28984c903dda2b5d5444f38354
-========
-"undici-types@npm:~8.3.0":
-  version: 8.3.0
-  resolution: "undici-types@npm:8.3.0"
-  checksum: 10c0/c8aa7e2fbebfce519654dafadc0ece59be888d2ccaf180fb4495da875e7b536d2456345c384069c7e6f3e9c9ab7435f074957da306f142343eee86ff8048855a
-  languageName: node
-  linkType: hard
-
-"undici@npm:^8.4.1":
-  version: 8.10.0
-  resolution: "undici@npm:8.10.0"
-  checksum: 10c0/37ae2b1db8f65c3a003504e2040e96887b99f9db16ba07dcf49c37ed8b7f8c72f4452f2d46f52f7c9e49518fe8325e3b5e7e02ac3a2424886bd67d4b62a0ecab
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   languageName: node
   linkType: hard
 
@@ -3433,11 +3223,7 @@ __metadata:
       optional: true
     utf-8-validate:
       optional: true
-<<<<<<<< HEAD:packages/twenty-apps/public/commerce/yarn.lock
   checksum: 10c0/ef4a243476283fc49bc7550966c4af4aa0eef56273837211e700de3b664e08604a760cdddcb5ba43c049140e74ccfec5b0ee0bb439e08c2adf9138902fdde5f9
-========
-  checksum: 10c0/7b28dc2863ea0e2cece68d142a3eee90361021b73f750431e6d8076bb7dede5fdfdb75b3d29534b62f411261147b76b1bc80fb5cc63ab0aabd467280e85b22e0
->>>>>>>> origin/main:packages/twenty-apps/public/fathom/yarn.lock
   languageName: node
   linkType: hard
 

@@ -4,6 +4,8 @@ import {
   BadRequestException,
   Controller,
   Headers,
+  HttpCode,
+  HttpStatus,
   Logger,
   Post,
   Req,
@@ -197,6 +199,8 @@ export class DosOrgSyncWebhookController {
   ) {}
 
   @Post('dos-org-sync')
+  // Webhook receivers answer 200; Nest's default 201 Created misleads the caller.
+  @HttpCode(HttpStatus.OK)
   @UseGuards(PublicEndpointGuard, NoPermissionGuard)
   async handleDosOrgSync(
     @Headers('x-dos-signature') signature: string,
@@ -772,8 +776,19 @@ export class DosOrgSyncWebhookController {
                       { shouldSkipEventEmission: true },
                     );
 
+                  // ticketId is the only stable key the payload carries. Keeping it in
+                  // the title lets retries and status changes update one note instead of
+                  // appending a duplicate per delivery.
+                  const noteTitle = `[Crove Desk Ticket] ${ticketId}`;
+
+                  const existingNote = await noteRepo.findOne({
+                    where: { title: noteTitle },
+                  });
+
                   await noteRepo.save({
-                    title: `[Crove Desk Ticket] ${subject} (${status})`,
+                    ...(isDefined(existingNote) ? { id: existingNote.id } : {}),
+                    title: noteTitle,
+                    body: `Subject: ${subject}\nStatus: ${status}`,
                   });
 
                   this.logger.log(

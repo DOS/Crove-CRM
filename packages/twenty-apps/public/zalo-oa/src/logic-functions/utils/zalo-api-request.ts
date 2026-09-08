@@ -40,6 +40,9 @@ export const zaloApiRequest = async <TData = unknown>({
         ...(hasBody ? { 'Content-Type': 'application/json' } : {}),
       },
       ...(hasBody ? { body: JSON.stringify(body) } : {}),
+      // Without a signal a hung Zalo endpoint consumes the logic function's whole
+      // timeoutSeconds budget before this fetch rejects on its own.
+      signal: AbortSignal.timeout(10_000),
     });
 
     if (!response.ok) {
