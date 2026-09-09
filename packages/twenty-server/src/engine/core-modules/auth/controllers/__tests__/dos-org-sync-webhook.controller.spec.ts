@@ -10,6 +10,7 @@ describe('DosOrgSyncWebhookController', () => {
   let mockSignInUpService: any;
   let mockUserService: any;
   let mockWorkspaceOrmManager: any;
+  let mockWorkspaceService: any;
   let mockWorkspaceRepository: any;
   let mockUserRepository: any;
   let mockUserWorkspaceRepository: any;
@@ -63,6 +64,10 @@ describe('DosOrgSyncWebhookController', () => {
       }),
     };
 
+    mockWorkspaceService = {
+      activateWorkspace: jest.fn().mockResolvedValue(undefined),
+    };
+
     controller = new DosOrgSyncWebhookController(
       mockTwentyConfigService,
       mockUserWorkspaceService,
@@ -72,6 +77,7 @@ describe('DosOrgSyncWebhookController', () => {
       mockWorkspaceRepository,
       mockUserRepository,
       mockUserWorkspaceRepository,
+      mockWorkspaceService,
     );
   });
 

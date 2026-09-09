@@ -30,6 +30,7 @@ import { UserWorkspaceEntity } from 'src/engine/core-modules/user-workspace/user
 import { UserWorkspaceService } from 'src/engine/core-modules/user-workspace/user-workspace.service';
 import { UserService } from 'src/engine/core-modules/user/services/user.service';
 import { UserEntity } from 'src/engine/core-modules/user/user.entity';
+import { WorkspaceService } from 'src/engine/core-modules/workspace/services/workspace.service';
 import { AuthProviderEnum } from 'src/engine/core-modules/workspace/types/workspace.type';
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
 import { NoPermissionGuard } from 'src/engine/guards/no-permission.guard';
@@ -108,6 +109,25 @@ export function verifyEcosystemWebhook(
     return false;
   }
 }
+
+// Fork-only provisioning hands activateWorkspace a raw UserEntity whose date
+// columns are Date objects, while the resolver-facing AuthContextUser carries
+// ISO strings (the auth-context storage serializes dates). Rebuild the exact
+// declared shape instead of casting.
+const toFlatAuthContextUser = (user: UserEntity) => ({
+  id: user.id,
+  firstName: user.firstName,
+  lastName: user.lastName,
+  email: user.email,
+  isEmailVerified: user.isEmailVerified,
+  disabled: user.disabled,
+  canImpersonate: user.canImpersonate,
+  canAccessFullAdminPanel: user.canAccessFullAdminPanel,
+  createdAt: user.createdAt.toISOString(),
+  updatedAt: user.updatedAt.toISOString(),
+  deletedAt: user.deletedAt.toISOString(),
+  locale: user.locale,
+});
 
 export type EcosystemWebhookPayload = {
   id?: string;
@@ -196,6 +216,7 @@ export class DosOrgSyncWebhookController {
     private readonly userRepository: Repository<UserEntity>,
     @InjectRepository(UserWorkspaceEntity)
     private readonly userWorkspaceRepository: Repository<UserWorkspaceEntity>,
+    private readonly workspaceService: WorkspaceService,
   ) {}
 
   @Post('dos-org-sync')
@@ -293,7 +314,7 @@ export class DosOrgSyncWebhookController {
           }
 
           try {
-            await this.signInUpService.signUpOnNewWorkspace(
+            const provisioned = await this.signInUpService.signUpOnNewWorkspace(
               { type: 'existingUser', existingUser: user },
               {
                 displayName: orgName.trim(),
@@ -304,6 +325,27 @@ export class DosOrgSyncWebhookController {
             this.logger.log(
               `Successfully provisioned workspace "${orgName}" with ID ${orgId ?? 'generated'} for owner ${ownerEmail}`,
             );
+
+            // signUpOnNewWorkspace leaves the workspace in PENDING_CREATION and the
+            // schema does not exist yet; there is no human on an onboarding screen
+            // here, so the 7-day onboarding cron would soft-delete this tenant.
+            try {
+              await this.workspaceService.activateWorkspace(
+                toFlatAuthContextUser(provisioned.user),
+                provisioned.workspace,
+              );
+              this.logger.log(
+                `Activated workspace ${provisioned.workspace.id} for org "${orgName}"`,
+              );
+            } catch (activationError) {
+              this.logger.error(
+                `Failed to activate workspace ${provisioned.workspace.id} for org "${orgName}": ${
+                  activationError instanceof Error
+                    ? activationError.message
+                    : String(activationError)
+                }`,
+              );
+            }
           } catch (error) {
             this.logger.error(
               `Failed to provision workspace "${orgName}": ${
