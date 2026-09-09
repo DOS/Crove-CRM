@@ -20,9 +20,12 @@ export const useSnackBarOnQueryError = (
   useEffect(() => {
     if (!error) return;
 
+    // .every() rather than .some(): unlike the error link there is no sign-in
+    // redirect here, so a mixed response must still surface its real errors
+    // instead of being swallowed because one of them was an auth failure.
     if (
       CombinedGraphQLErrors.is(error) &&
-      error.errors.some(isUnauthenticatedGraphQLError)
+      error.errors.every(isUnauthenticatedGraphQLError)
     ) {
       return;
     }

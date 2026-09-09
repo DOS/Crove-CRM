@@ -196,6 +196,9 @@ export class ApolloFactory implements ApolloManager {
 
       const errorLink = new ErrorLink(({ error, operation }) => {
         if (CombinedGraphQLErrors.is(error)) {
+          // Stays .some() on purpose: an UNAUTHENTICATED error here triggers the
+          // sign-in redirect below, so surfacing the remaining errors of a mixed
+          // response would only flash snackbars the user cannot act on.
           const hasUnauthenticated = error.errors.some(
             isUnauthenticatedGraphQLError,
           );

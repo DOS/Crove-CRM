@@ -139,7 +139,10 @@ export const useSnackBar = () => {
       if (
         apolloError?.name === 'AbortError' ||
         (CombinedGraphQLErrors.is(apolloError) &&
-          apolloError.errors.some(isUnauthenticatedGraphQLError))
+          // .every() so a mixed response still surfaces its real errors; only a
+          // purely-unauthenticated failure is silent (the error link owns the
+          // sign-in redirect).
+          apolloError.errors.every(isUnauthenticatedGraphQLError))
       ) {
         return;
       }
