@@ -23,9 +23,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      # The merge tree can touch .github/workflows/*; without this GitHub rejects
-      # the sync-branch push ("GitHub App ... without `workflows` permission").
-      workflows: write
       pull-requests: write
       actions: write
 
@@ -35,6 +32,16 @@ jobs:
         with:
           ref: ${{ inputs.target_branch || 'dev' }}
           fetch-depth: 0
+          # GITHUB_TOKEN is a GitHub App token and GitHub hard-rejects App pushes
+          # that touch .github/workflows/* ("without workflows permission"); there
+          # is no job permission that lifts it, and `workflows` is not even a valid
+          # permissions key. Upstream release merges routinely touch those files,
+          # so the sync push needs a PAT stored as SYNC_PAT (repo + workflow scope).
+          token: ${{ secrets.SYNC_PAT || github.token }}
+
+      - name: Warn when SYNC_PAT is missing
+        if: ${{ secrets.SYNC_PAT == '' }}
+        run: echo "::warning::SYNC_PAT is not set - any push whose merge tree touches .github/workflows will be rejected. Create a PAT with repo+workflow scope and store it as the SYNC_PAT repository secret."
 
       - name: Determine Upstream Release Tag
         id: get_tag
