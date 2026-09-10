@@ -23,12 +23,15 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      # The merge tree can touch .github/workflows/*; without this GitHub rejects
+      # the sync-branch push ("GitHub App ... without `workflows` permission").
+      workflows: write
       pull-requests: write
       actions: write
 
     steps:
       - name: Checkout target branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{ inputs.target_branch || 'dev' }}
           fetch-depth: 0
@@ -99,16 +102,20 @@ jobs:
             
             echo "has_conflict=false" >> "$GITHUB_OUTPUT"
           else
-            echo "Merge conflict encountered. Creating sync branch and opening a Pull Request."
+            echo "Merge conflict encountered. Creating sync branch with real conflict markers for review."
             git merge --abort || true
-            
+
             SYNC_BRANCH="sync/${TAG//\//-}"
             git checkout -b "$SYNC_BRANCH"
-            
-            git merge -X ours --no-commit "$TAG" || true
+
+            # Keep genuine conflicts: -X ours would silently drop the upstream side of
+            # every conflicted file, producing a branch that looks merged while losing
+            # upstream changes. A human resolves the real conflicts in the PR.
+            git merge --no-commit "$TAG" || true
+            git add -A
             git commit -m "chore(sync): automated sync branch for upstream release $TAG (requires review)"
             git push -f origin "$SYNC_BRANCH"
-            
+
             echo "has_conflict=true" >> "$GITHUB_OUTPUT"
             echo "sync_branch=$SYNC_BRANCH" >> "$GITHUB_OUTPUT"
           fi
