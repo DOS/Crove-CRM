@@ -10,8 +10,8 @@ import {
   AuthException,
   AuthExceptionCode,
 } from 'src/engine/core-modules/auth/auth.exception';
-import { type SocialSSOSignInUpActionType } from 'src/engine/core-modules/auth/types/signInUp.type';
-import { type SocialSSOState } from 'src/engine/core-modules/auth/types/social-sso-state.type';
+import { type SocialSsoSignInUpActionType } from 'src/engine/core-modules/auth/types/signInUp.type';
+import { type SocialSsoState } from 'src/engine/core-modules/auth/types/social-sso-state.type';
 import { TwentyConfigService } from 'src/engine/core-modules/twenty-config/twenty-config.service';
 
 const logger = new Logger('DosIdStrategy');
@@ -27,7 +27,7 @@ export type DosIdRequest = Omit<
     picture: string | null;
     locale?: keyof typeof APP_LOCALES | null;
     workspaceInviteHash?: string;
-    action: SocialSSOSignInUpActionType;
+    action: SocialSsoSignInUpActionType;
     workspaceId?: string;
     activeOrgId?: string | null;
     billingCheckoutSessionState?: string;
@@ -121,7 +121,7 @@ export class DosIdStrategy extends PassportStrategy(Strategy, 'dos-id') {
     done: (err: any, user?: DosIdRequest['user']) => void,
   ): Promise<void> {
     try {
-      const state = parseJson<SocialSSOState>(request.query.state as string);
+      const state = parseJson<SocialSsoState>(request.query.state as string);
 
       let userinfo: any = {};
       try {

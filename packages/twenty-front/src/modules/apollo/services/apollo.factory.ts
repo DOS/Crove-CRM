@@ -12,6 +12,7 @@ import UploadHttpLink from 'apollo-upload-client/UploadHttpLink.mjs';
 
 import { type CurrentWorkspaceMember } from '@/auth/states/currentWorkspaceMemberState';
 import { type CurrentWorkspace } from '@/auth/states/currentWorkspaceState';
+import { getSessionGeneration } from '@/auth/utils/getSessionGeneration';
 import { logDebug } from '~/utils/logDebug';
 
 import { REST_API_BASE_URL } from '@/apollo/constant/rest-api-base-url';
@@ -99,6 +100,7 @@ export class ApolloFactory implements ApolloManager {
         const locale = this.currentWorkspaceMember?.locale ?? i18n.locale;
 
         return {
+          sessionGeneration: getSessionGeneration(),
           headers: {
             ...headers,
             ...optionHeaders,
@@ -195,6 +197,13 @@ export class ApolloFactory implements ApolloManager {
       };
 
       const errorLink = new ErrorLink(({ error, operation }) => {
+        const requestSessionGeneration =
+          operation.getContext().sessionGeneration;
+        // Missing context must keep sign-out behavior if the link chain changes.
+        const isResponseFromCurrentSession =
+          requestSessionGeneration === undefined ||
+          requestSessionGeneration === getSessionGeneration();
+
         if (CombinedGraphQLErrors.is(error)) {
           // Stays .some() on purpose: an UNAUTHENTICATED error here triggers the
           // sign-in redirect below, so surfacing the remaining errors of a mixed
@@ -209,7 +218,9 @@ export class ApolloFactory implements ApolloManager {
 
           for (const graphQLError of error.errors) {
             if (isUnauthenticatedGraphQLError(graphQLError)) {
-              onUnauthenticatedError?.();
+              if (isResponseFromCurrentSession) {
+                onUnauthenticatedError?.();
+              }
 
               return;
             }
@@ -250,7 +261,9 @@ export class ApolloFactory implements ApolloManager {
             this.isRestOperation(operation) &&
             this.isAuthenticationError(error)
           ) {
-            onUnauthenticatedError?.();
+            if (isResponseFromCurrentSession) {
+              onUnauthenticatedError?.();
+            }
 
             return;
           }

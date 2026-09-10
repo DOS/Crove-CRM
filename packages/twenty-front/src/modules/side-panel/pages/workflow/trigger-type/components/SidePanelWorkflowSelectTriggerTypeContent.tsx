@@ -66,12 +66,12 @@ export const SidePanelWorkflowSelectTriggerTypeContent = () => {
 
       setWorkflowSelectedNode(TRIGGER_STEP_ID);
 
-      openWorkflowEditStepInSidePanel(
+      openWorkflowEditStepInSidePanel({
         workflowId,
-        defaultLabel,
-        getIcon(icon),
-        TRIGGER_STEP_ID,
-      );
+        title: defaultLabel,
+        icon: getIcon(icon),
+        stepId: TRIGGER_STEP_ID,
+      });
     };
   };
 

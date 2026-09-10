@@ -47,7 +47,7 @@ export class DosIdAuthController {
   @UseFilters(AuthOAuthExceptionFilter)
   async dosIdAuthRedirect(@Req() req: DosIdRequest, @Res() res: Response) {
     return res.redirect(
-      await this.authService.signInUpWithSocialSSO(
+      await this.authService.signInUpWithSocialSso(
         req.user,
         AuthProviderEnum.DosId,
       ),

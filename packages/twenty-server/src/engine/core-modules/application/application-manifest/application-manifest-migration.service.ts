@@ -170,11 +170,13 @@ export class ApplicationManifestMigrationService {
     workspaceId,
     ownerFlatApplication,
     dryRun = false,
+    inferDeletionFromMissingEntities = true,
   }: {
     manifest: Manifest;
     workspaceId: string;
     ownerFlatApplication: FlatApplication;
     dryRun?: boolean;
+    inferDeletionFromMissingEntities?: boolean;
   }): Promise<{
     workspaceMigration: WorkspaceMigration;
     hasSchemaMetadataChanged: boolean;
@@ -222,7 +224,9 @@ export class ApplicationManifestMigrationService {
         toAllUniversalFlatEntityMaps,
         buildOptions: {
           isSystemBuild: false,
-          inferDeletionFromMissingEntities: true,
+          inferDeletionFromMissingEntities: inferDeletionFromMissingEntities
+            ? true
+            : undefined,
           applicationUniversalIdentifier:
             ownerFlatApplication.universalIdentifier,
         },
@@ -264,6 +268,7 @@ export class ApplicationManifestMigrationService {
         manifest,
         workspaceId,
         ownerFlatApplication,
+        inferDeletionFromMissingEntities,
       });
     }
 
@@ -277,10 +282,12 @@ export class ApplicationManifestMigrationService {
     manifest,
     workspaceId,
     ownerFlatApplication,
+    inferDeletionFromMissingEntities,
   }: {
     manifest: Manifest;
     workspaceId: string;
     ownerFlatApplication: FlatApplication;
+    inferDeletionFromMissingEntities: boolean;
   }) {
     const {
       flatRoleMaps: refreshedFlatRoleMaps,
@@ -341,8 +348,14 @@ export class ApplicationManifestMigrationService {
 
     await this.applicationService.update(ownerFlatApplication.id, {
       workspaceId,
-      settingsCustomTabFrontComponentId,
-      uninstallLogicFunctionId,
+      ...(isDefined(settingsCustomTabFrontComponentId) ||
+      inferDeletionFromMissingEntities
+        ? { settingsCustomTabFrontComponentId }
+        : {}),
+      ...(isDefined(uninstallLogicFunctionId) ||
+      inferDeletionFromMissingEntities
+        ? { uninstallLogicFunctionId }
+        : {}),
       ...(isDefined(defaultRoleId) ? { defaultRoleId } : {}),
     });
   }
