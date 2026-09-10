@@ -27,21 +27,34 @@ jobs:
       actions: write
 
     steps:
+      # GITHUB_TOKEN is a GitHub App installation token that GitHub hard-blocks
+      # from creating or updating .github/workflows/* - no job permission lifts
+      # it, and `workflows` is not even a valid permissions key. Upstream release
+      # merges routinely touch those files. A purpose-built GitHub App with
+      # Workflows: read+write is not subject to that block, which is the same
+      # pattern the inherited upstream workflows use (create-github-app-token).
+      # Skipped until both secrets exist; the fallbacks below then keep the
+      # previous behavior instead of failing the run outright.
+      - name: Mint sync app token
+        id: app_token
+        if: ${{ secrets.CROVE_SYNC_APP_ID != '' }}
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          app-id: ${{ secrets.CROVE_SYNC_APP_ID }}
+          private-key: ${{ secrets.CROVE_SYNC_APP_PRIVATE_KEY }}
+          owner: DOS
+          repositories: Crove-CRM
+
       - name: Checkout target branch
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{ inputs.target_branch || 'dev' }}
           fetch-depth: 0
-          # GITHUB_TOKEN is a GitHub App token and GitHub hard-rejects App pushes
-          # that touch .github/workflows/* ("without workflows permission"); there
-          # is no job permission that lifts it, and `workflows` is not even a valid
-          # permissions key. Upstream release merges routinely touch those files,
-          # so the sync push needs a PAT stored as SYNC_PAT (repo + workflow scope).
-          token: ${{ secrets.SYNC_PAT || github.token }}
+          token: ${{ steps.app_token.outputs.token || github.token }}
 
-      - name: Warn when SYNC_PAT is missing
-        if: ${{ secrets.SYNC_PAT == '' }}
-        run: echo "::warning::SYNC_PAT is not set - any push whose merge tree touches .github/workflows will be rejected. Create a PAT with repo+workflow scope and store it as the SYNC_PAT repository secret."
+      - name: Warn when the sync app is not configured
+        if: ${{ secrets.CROVE_SYNC_APP_ID == '' }}
+        run: echo "::warning::CROVE_SYNC_APP_ID / CROVE_SYNC_APP_PRIVATE_KEY are not set - falling back to GITHUB_TOKEN, which GitHub rejects for pushes touching .github/workflows. Create a GitHub App with Contents, Workflows and Pull requests write access on DOS/Crove-CRM, install it on this repo only, and store its app id and private key as those two repository secrets."
 
       - name: Determine Upstream Release Tag
         id: get_tag
@@ -130,7 +143,10 @@ jobs:
       - name: Create Pull Request on Conflict
         if: steps.check_merged.outputs.already_merged == 'false' && steps.merge.outputs.has_conflict == 'true'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # App token, not GITHUB_TOKEN: GitHub does not fire pull_request
+          # workflows for PRs opened by GITHUB_TOKEN, so the sync PR would run
+          # no CI at all and the conflicts would get reviewed unverified.
+          GH_TOKEN: ${{ steps.app_token.outputs.token || secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.get_tag.outputs.tag }}
           SYNC_BRANCH: ${{ steps.merge.outputs.sync_branch }}
           TARGET_BRANCH: ${{ inputs.target_branch || 'dev' }}
@@ -165,7 +181,9 @@ jobs:
       - name: Trigger Beta Build & Deploy Workflow
         if: steps.check_merged.outputs.already_merged == 'false' && steps.merge.outputs.has_conflict == 'false'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Same reason as the PR step: a workflow_dispatch sent by GITHUB_TOKEN
+          # cannot trigger further workflow runs.
+          GH_TOKEN: ${{ steps.app_token.outputs.token || secrets.GITHUB_TOKEN }}
         run: |
           echo "Triggering Docker build and publish for dev branch..."
           gh workflow run docker-publish.yml --ref dev || echo "Workflow trigger completed."
