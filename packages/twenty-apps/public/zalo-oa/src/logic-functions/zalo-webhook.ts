@@ -15,7 +15,8 @@ const zaloWebhookRouteHandler = async (
 ): Promise<ZaloWebhookResult> => {
   const credentials = getZaloCredentials();
 
-  // If secret key is configured, verify HMAC signature
+  // Fail closed while a secret is configured: skipping verification when the
+  // caller simply omits the header makes signature enforcement optional.
   if (credentials.success && isDefined(credentials.oaSecretKey)) {
     const rawBody = routePayload.rawBody;
     const signatureHeader =
@@ -25,22 +26,37 @@ const zaloWebhookRouteHandler = async (
       | string
       | undefined;
 
-    if (isDefined(rawBody) && isDefined(signatureHeader)) {
-      const check = verifyZaloWebhookSignature({
-        rawBody,
-        signatureHeader,
-        timestampHeader,
-        appId: credentials.appId,
-        secretKey: credentials.oaSecretKey,
-      });
+    if (!isDefined(rawBody)) {
+      return {
+        success: false,
+        message: 'Webhook signature verification failed',
+        error: 'Missing raw body; unable to verify the Zalo signature',
+      };
+    }
 
-      if (!check.valid) {
-        return {
-          success: false,
-          message: 'Webhook signature verification failed',
-          error: check.error,
-        };
-      }
+    if (!isDefined(signatureHeader)) {
+      return {
+        success: false,
+        message: 'Webhook signature verification failed',
+        error:
+          'Missing signature header (x-zes-signature or mac); verification is required while ZALO_OA_SECRET_KEY is configured',
+      };
+    }
+
+    const check = verifyZaloWebhookSignature({
+      rawBody,
+      signatureHeader,
+      timestampHeader,
+      appId: credentials.appId,
+      secretKey: credentials.oaSecretKey,
+    });
+
+    if (!check.valid) {
+      return {
+        success: false,
+        message: 'Webhook signature verification failed',
+        error: check.error,
+      };
     }
   }
 

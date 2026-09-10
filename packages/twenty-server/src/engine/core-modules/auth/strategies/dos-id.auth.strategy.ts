@@ -10,8 +10,8 @@ import {
   AuthException,
   AuthExceptionCode,
 } from 'src/engine/core-modules/auth/auth.exception';
-import { type SocialSSOSignInUpActionType } from 'src/engine/core-modules/auth/types/signInUp.type';
-import { type SocialSSOState } from 'src/engine/core-modules/auth/types/social-sso-state.type';
+import { type SocialSsoSignInUpActionType } from 'src/engine/core-modules/auth/types/signInUp.type';
+import { type SocialSsoState } from 'src/engine/core-modules/auth/types/social-sso-state.type';
 import { TwentyConfigService } from 'src/engine/core-modules/twenty-config/twenty-config.service';
 
 const logger = new Logger('DosIdStrategy');
@@ -27,7 +27,7 @@ export type DosIdRequest = Omit<
     picture: string | null;
     locale?: keyof typeof APP_LOCALES | null;
     workspaceInviteHash?: string;
-    action: SocialSSOSignInUpActionType;
+    action: SocialSsoSignInUpActionType;
     workspaceId?: string;
     activeOrgId?: string | null;
     billingCheckoutSessionState?: string;
@@ -62,10 +62,14 @@ export const createDosIdClient = async (
     twentyConfigService.get('AUTH_DOS_ID_CALLBACK_URL') ||
     new URL('/auth/dos-id/redirect', serverUrl).toString();
 
-  const idTokenSignedResponseAlg =
-    issuer.metadata.id_token_signing_alg_values_supported?.includes('ES256')
-      ? 'ES256'
-      : (issuer.metadata.id_token_signing_alg_values_supported?.[0] ?? 'RS256');
+  // openid-client types every discovery metadata value as {}; this one is a
+  // string array whenever the issuer advertises it at all.
+  const supportedSigningAlgorithms = issuer.metadata
+    .id_token_signing_alg_values_supported as string[] | undefined;
+
+  const idTokenSignedResponseAlg = supportedSigningAlgorithms?.includes('ES256')
+    ? 'ES256'
+    : (supportedSigningAlgorithms?.[0] ?? 'RS256');
 
   return new issuer.Client({
     client_id: twentyConfigService.get('AUTH_DOS_ID_CLIENT_ID') ?? '',
@@ -117,7 +121,7 @@ export class DosIdStrategy extends PassportStrategy(Strategy, 'dos-id') {
     done: (err: any, user?: DosIdRequest['user']) => void,
   ): Promise<void> {
     try {
-      const state = parseJson<SocialSSOState>(request.query.state as string);
+      const state = parseJson<SocialSsoState>(request.query.state as string);
 
       let userinfo: any = {};
       try {

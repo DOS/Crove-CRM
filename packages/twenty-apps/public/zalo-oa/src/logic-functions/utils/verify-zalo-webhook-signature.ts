@@ -41,12 +41,8 @@ export const verifyZaloWebhookSignature = ({
     createHmac('sha256', secretKey).update(rawBody, 'utf8').digest('hex'),
   );
 
-  // 3. Simple SHA256 of raw body + secretKey
-  candidates.push(
-    createHash('sha256')
-      .update(`${rawBody}${secretKey}`, 'utf8')
-      .digest('hex'),
-  );
+  // No third candidate: sha256(rawBody + secretKey) is a secret-suffix hash, not
+  // an HMAC, and accepting it widens what a caller must protect for no reason.
 
   for (const candidate of candidates) {
     if (candidate.length === cleanedSignature.length) {

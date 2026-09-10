@@ -11,8 +11,70 @@ on:
     types: [published]
   workflow_dispatch:
 
+concurrency:
+  group: docker-publish-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
+  # `dev` builds the deployable beta image and no other workflow runs on push to
+  # `dev`, so the gate has to live here rather than in ci-server/ci-front.
+  verify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Set up Node
+        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Validate twenty-apps manifests
+        run: |
+          set -uo pipefail
+          failed=0
+          for manifest in packages/twenty-apps/*/*/package.json; do
+            [ -e "$manifest" ] || continue
+            if ! node -e "JSON.parse(require('fs').readFileSync(process.argv[1],'utf8'))" "$manifest"; then
+              echo "INVALID JSON: $manifest"
+              failed=1
+            fi
+          done
+          if [ "$failed" -ne 0 ]; then
+            echo "One or more app manifests are not valid JSON (unresolved merge markers?)"
+            exit 1
+          fi
+          echo "All twenty-apps manifests are valid JSON"
+
+      - name: Build twenty-shared
+        run: npx nx build twenty-shared
+
+      # Lint is deliberately not gated yet: `nx lint` also runs `oxfmt --check`,
+      # and the tree is not format-clean. Add `-t lint` once `nx fmt` has been run.
+      #
+      # Scoped to twenty-server because it typechecks clean as of 2026-09-08 (13
+      # fork-introduced type errors were fixed that day; verified with
+      # `nx build twenty-shared --skip-nx-cache` first, per the CLAUDE.md gotcha).
+      #
+      # TODO: add twenty-front once generated-metadata/graphql.ts is regenerated.
+      # That file is stale: its AuthBypassProviders type lacks the `dosId` field the
+      # server DTO exposes, which breaks SignInUpWorkspaceScopeForm.tsx:48,58.
+      # Regenerate via `nx run twenty-front:graphql:generate --configuration=metadata`
+      # (needs a reachable server plus packages/twenty-front/.env), then change the
+      # line below to `-p twenty-server twenty-front`.
+      - name: Typecheck server
+        run: npx nx run-many -t typecheck -p twenty-server
+
   build-and-push:
+    needs: verify
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -20,13 +82,13 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
 
       - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@74a5d142397b4f367a81961eba4e8cd7edddf772 # v3.4.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -34,7 +96,7 @@ jobs:
 
       - name: Extract metadata (tags, labels)
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804 # v5.7.0
         with:
           images: ghcr.io/${{ github.repository }}
           tags: |
@@ -55,7 +117,7 @@ jobs:
           echo "app_version=${VER}" >> $GITHUB_OUTPUT
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@471d1dc4e07e5cdedd4c2171150001c434f0b7a4 # v6.15.0
         with:
           context: .
           file: ./packages/twenty-docker/twenty/Dockerfile

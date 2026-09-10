@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
 
 import { msg } from '@lingui/core/macro';
+import { isNonEmptyString } from '@sniptt/guards';
 import axios from 'axios';
 import { TWENTY_ICONS_BASE_URL } from 'twenty-shared/constants';
 import { isDefined } from 'twenty-shared/utils';
@@ -751,8 +752,10 @@ export class SignInUpService {
           'Content-Type': 'application/json',
         };
 
-        if (isNonEmptyString(options?.userAccessToken)) {
-          headers['Authorization'] = `Bearer ${options.userAccessToken}`;
+        const userAccessToken = options?.userAccessToken;
+
+        if (isNonEmptyString(userAccessToken)) {
+          headers['Authorization'] = `Bearer ${userAccessToken}`;
         }
 
         const response = await axios.post<{

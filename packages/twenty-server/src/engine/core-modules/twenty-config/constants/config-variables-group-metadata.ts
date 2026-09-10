@@ -43,6 +43,13 @@ export const CONFIG_VARIABLES_GROUP_METADATA: Record<
     isHiddenOnLoad: false,
     isHiddenInAdminPanel: false,
   },
+  [ConfigVariablesGroup.DOS_ID_AUTH]: {
+    position: 550,
+    description:
+      'Configure DOS ID single sign-on (OAuth 2.1) and the Crove OS ecosystem webhook sync.',
+    isHiddenOnLoad: false,
+    isHiddenInAdminPanel: false,
+  },
   [ConfigVariablesGroup.EMAIL_SETTINGS]: {
     position: 600,
     description:

@@ -4,6 +4,8 @@ import {
   BadRequestException,
   Controller,
   Headers,
+  HttpCode,
+  HttpStatus,
   Logger,
   Post,
   Req,
@@ -28,6 +30,7 @@ import { UserWorkspaceEntity } from 'src/engine/core-modules/user-workspace/user
 import { UserWorkspaceService } from 'src/engine/core-modules/user-workspace/user-workspace.service';
 import { UserService } from 'src/engine/core-modules/user/services/user.service';
 import { UserEntity } from 'src/engine/core-modules/user/user.entity';
+import { WorkspaceService } from 'src/engine/core-modules/workspace/services/workspace.service';
 import { AuthProviderEnum } from 'src/engine/core-modules/workspace/types/workspace.type';
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
 import { NoPermissionGuard } from 'src/engine/guards/no-permission.guard';
@@ -56,9 +59,16 @@ export function verifyEcosystemWebhook(
     const timestamp = timestampPart.split('=')[1];
     const signature = signaturePart.split('=')[1];
 
-    // Replay attack prevention (5 minutes)
+    const timestampMs = Number(timestamp);
+
+    // Replay attack prevention (5 minutes). A non-numeric t= parses to NaN and
+    // NaN > threshold is false, so the plain comparison would silently disable
+    // the entire window.
     const fiveMinutes = 5 * 60 * 1000;
-    if (Math.abs(Date.now() - Number(timestamp)) > fiveMinutes) {
+    if (
+      !Number.isFinite(timestampMs) ||
+      Math.abs(Date.now() - timestampMs) > fiveMinutes
+    ) {
       return false;
     }
 
@@ -99,6 +109,25 @@ export function verifyEcosystemWebhook(
     return false;
   }
 }
+
+// Fork-only provisioning hands activateWorkspace a raw UserEntity whose date
+// columns are Date objects, while the resolver-facing AuthContextUser carries
+// ISO strings (the auth-context storage serializes dates). Rebuild the exact
+// declared shape instead of casting.
+const toFlatAuthContextUser = (user: UserEntity) => ({
+  id: user.id,
+  firstName: user.firstName,
+  lastName: user.lastName,
+  email: user.email,
+  isEmailVerified: user.isEmailVerified,
+  disabled: user.disabled,
+  canImpersonate: user.canImpersonate,
+  canAccessFullAdminPanel: user.canAccessFullAdminPanel,
+  createdAt: user.createdAt.toISOString(),
+  updatedAt: user.updatedAt.toISOString(),
+  deletedAt: user.deletedAt.toISOString(),
+  locale: user.locale,
+});
 
 export type EcosystemWebhookPayload = {
   id?: string;
@@ -187,9 +216,12 @@ export class DosOrgSyncWebhookController {
     private readonly userRepository: Repository<UserEntity>,
     @InjectRepository(UserWorkspaceEntity)
     private readonly userWorkspaceRepository: Repository<UserWorkspaceEntity>,
+    private readonly workspaceService: WorkspaceService,
   ) {}
 
   @Post('dos-org-sync')
+  // Webhook receivers answer 200; Nest's default 201 Created misleads the caller.
+  @HttpCode(HttpStatus.OK)
   @UseGuards(PublicEndpointGuard, NoPermissionGuard)
   async handleDosOrgSync(
     @Headers('x-dos-signature') signature: string,
@@ -198,17 +230,25 @@ export class DosOrgSyncWebhookController {
     const rawBody = (req as Request & { rawBody?: Buffer }).rawBody;
     const secret = this.twentyConfigService.get('CROVE_DOS_WEBHOOK_SECRET');
 
-    if (isNonEmptyString(secret)) {
-      if (!isNonEmptyString(signature)) {
-        throw new UnauthorizedException('Missing X-DOS-Signature header');
-      }
+    if (!isNonEmptyString(secret)) {
+      // Fail closed: without a secret every handler below would run against an
+      // unauthenticated payload, on a workspace the payload itself picks.
+      this.logger.error(
+        'CROVE_DOS_WEBHOOK_SECRET is not set; rejecting all dos-org-sync traffic',
+      );
 
-      const bodyBuffer = rawBody ?? Buffer.from(JSON.stringify(req.body));
-      const isValid = verifyEcosystemWebhook(bodyBuffer, signature, secret);
+      throw new UnauthorizedException('Invalid X-DOS-Signature');
+    }
 
-      if (!isValid) {
-        throw new UnauthorizedException('Invalid X-DOS-Signature');
-      }
+    if (!isNonEmptyString(signature)) {
+      throw new UnauthorizedException('Missing X-DOS-Signature header');
+    }
+
+    const bodyBuffer = rawBody ?? Buffer.from(JSON.stringify(req.body));
+    const isValid = verifyEcosystemWebhook(bodyBuffer, signature, secret);
+
+    if (!isValid) {
+      throw new UnauthorizedException('Invalid X-DOS-Signature');
     }
 
     const payload = req.body as EcosystemWebhookPayload;
@@ -231,13 +271,19 @@ export class DosOrgSyncWebhookController {
         const orgSlug = payload.data.slug;
 
         if (isNonEmptyString(orgName) && isNonEmptyString(ownerEmail)) {
-          const existingWorkspace = await this.workspaceRepository.findOne({
-            where: [
-              ...(isNonEmptyString(orgId) ? [{ id: orgId }] : []),
-              ...(isNonEmptyString(orgSlug) ? [{ subdomain: orgSlug }] : []),
-              { displayName: orgName.trim() },
-            ],
-          });
+          // Match on unique identifiers only. displayName is attacker-supplied and
+          // not unique, so OR-ing it in would bind this event to an arbitrary tenant.
+          const existingWorkspace =
+            isNonEmptyString(orgId) || isNonEmptyString(orgSlug)
+              ? await this.workspaceRepository.findOne({
+                  where: [
+                    ...(isNonEmptyString(orgId) ? [{ id: orgId }] : []),
+                    ...(isNonEmptyString(orgSlug)
+                      ? [{ subdomain: orgSlug }]
+                      : []),
+                  ],
+                })
+              : undefined;
 
           let user = await this.userService.findUserByEmail(ownerEmail);
 
@@ -268,7 +314,7 @@ export class DosOrgSyncWebhookController {
           }
 
           try {
-            await this.signInUpService.signUpOnNewWorkspace(
+            const provisioned = await this.signInUpService.signUpOnNewWorkspace(
               { type: 'existingUser', existingUser: user },
               {
                 displayName: orgName.trim(),
@@ -279,6 +325,27 @@ export class DosOrgSyncWebhookController {
             this.logger.log(
               `Successfully provisioned workspace "${orgName}" with ID ${orgId ?? 'generated'} for owner ${ownerEmail}`,
             );
+
+            // signUpOnNewWorkspace leaves the workspace in PENDING_CREATION and the
+            // schema does not exist yet; there is no human on an onboarding screen
+            // here, so the 7-day onboarding cron would soft-delete this tenant.
+            try {
+              await this.workspaceService.activateWorkspace(
+                toFlatAuthContextUser(provisioned.user),
+                provisioned.workspace,
+              );
+              this.logger.log(
+                `Activated workspace ${provisioned.workspace.id} for org "${orgName}"`,
+              );
+            } catch (activationError) {
+              this.logger.error(
+                `Failed to activate workspace ${provisioned.workspace.id} for org "${orgName}": ${
+                  activationError instanceof Error
+                    ? activationError.message
+                    : String(activationError)
+                }`,
+              );
+            }
           } catch (error) {
             this.logger.error(
               `Failed to provision workspace "${orgName}": ${
@@ -299,8 +366,10 @@ export class DosOrgSyncWebhookController {
           payload.data.global_org_id;
 
         if (isNonEmptyString(orgId) && isNonEmptyString(orgName)) {
+          // Never match on orgName here: it is the NEW name from the payload, so
+          // OR-ing it in lets a caller rename whichever tenant already bears it.
           const workspace = await this.workspaceRepository.findOne({
-            where: [{ id: orgId }, { displayName: orgName.trim() }],
+            where: { id: orgId },
           });
 
           if (isDefined(workspace)) {
@@ -321,12 +390,9 @@ export class DosOrgSyncWebhookController {
           payload.data.id ||
           payload.data.org_id ||
           payload.data.global_org_id;
-        const orgName = payload.data.name || payload.data.org_name;
 
         const workspace = isNonEmptyString(orgId)
-          ? await this.workspaceRepository.findOne({
-              where: [{ id: orgId }, ...(orgName ? [{ displayName: orgName }] : [])],
-            })
+          ? await this.workspaceRepository.findOne({ where: { id: orgId } })
           : null;
 
         if (isDefined(workspace)) {
@@ -334,6 +400,10 @@ export class DosOrgSyncWebhookController {
             activationStatus: WorkspaceActivationStatus.SUSPENDED,
           });
           this.logger.log(`Suspended workspace ${workspace.id} due to org deletion`);
+        } else {
+          this.logger.warn(
+            `Ignored org deletion event: no workspace matches orgId ${orgId ?? '(missing)'}`,
+          );
         }
         break;
       }
@@ -346,7 +416,6 @@ export class DosOrgSyncWebhookController {
           payload.data.id ||
           payload.data.org_id ||
           payload.data.global_org_id;
-        const orgName = payload.data.org_name || payload.data.name;
 
         if (isNonEmptyString(userEmail)) {
           let user = await this.userService.findUserByEmail(userEmail);
@@ -367,9 +436,7 @@ export class DosOrgSyncWebhookController {
           }
 
           const workspace = isNonEmptyString(orgId)
-            ? await this.workspaceRepository.findOne({
-                where: [{ id: orgId }, ...(orgName ? [{ displayName: orgName }] : [])],
-              })
+            ? await this.workspaceRepository.findOne({ where: { id: orgId } })
             : null;
 
           if (isDefined(user) && isDefined(workspace)) {
@@ -379,6 +446,10 @@ export class DosOrgSyncWebhookController {
             );
             this.logger.log(
               `Added user ${userEmail} to workspace ${workspace.id}`,
+            );
+          } else {
+            this.logger.warn(
+              `Ignored member addition: no workspace matches orgId ${orgId ?? '(missing)'}`,
             );
           }
         }
@@ -393,15 +464,12 @@ export class DosOrgSyncWebhookController {
           payload.data.id ||
           payload.data.org_id ||
           payload.data.global_org_id;
-        const orgName = payload.data.org_name || payload.data.name;
 
         if (isNonEmptyString(userEmail)) {
           const user = await this.userService.findUserByEmail(userEmail);
 
           const workspace = isNonEmptyString(orgId)
-            ? await this.workspaceRepository.findOne({
-                where: [{ id: orgId }, ...(orgName ? [{ displayName: orgName }] : [])],
-              })
+            ? await this.workspaceRepository.findOne({ where: { id: orgId } })
             : null;
 
           if (isDefined(user) && isDefined(workspace)) {
@@ -450,6 +518,7 @@ export class DosOrgSyncWebhookController {
                     await this.workspaceOrmManager.getRepository(
                       'company',
                       { shouldBypassPermissionChecks: true },
+                      { shouldSkipEventEmission: true },
                     );
 
                   const existing = isNonEmptyString(companyId)
@@ -532,6 +601,7 @@ export class DosOrgSyncWebhookController {
                     await this.workspaceOrmManager.getRepository(
                       'company',
                       { shouldBypassPermissionChecks: true },
+                      { shouldSkipEventEmission: true },
                     );
 
                   await companyRepo.delete({ id: companyId });
@@ -582,6 +652,7 @@ export class DosOrgSyncWebhookController {
                     await this.workspaceOrmManager.getRepository(
                       'person',
                       { shouldBypassPermissionChecks: true },
+                      { shouldSkipEventEmission: true },
                     );
 
                   const nameParts = customerName?.split(' ') || [];
@@ -692,6 +763,7 @@ export class DosOrgSyncWebhookController {
                     await this.workspaceOrmManager.getRepository(
                       'person',
                       { shouldBypassPermissionChecks: true },
+                      { shouldSkipEventEmission: true },
                     );
 
                   if (isNonEmptyString(personId)) {
@@ -743,10 +815,22 @@ export class DosOrgSyncWebhookController {
                     await this.workspaceOrmManager.getRepository(
                       'note',
                       { shouldBypassPermissionChecks: true },
+                      { shouldSkipEventEmission: true },
                     );
 
+                  // ticketId is the only stable key the payload carries. Keeping it in
+                  // the title lets retries and status changes update one note instead of
+                  // appending a duplicate per delivery.
+                  const noteTitle = `[Crove Desk Ticket] ${ticketId}`;
+
+                  const existingNote = await noteRepo.findOne({
+                    where: { title: noteTitle },
+                  });
+
                   await noteRepo.save({
-                    title: `[Crove Desk Ticket] ${subject} (${status})`,
+                    ...(isDefined(existingNote) ? { id: existingNote.id } : {}),
+                    title: noteTitle,
+                    body: `Subject: ${subject}\nStatus: ${status}`,
                   });
 
                   this.logger.log(

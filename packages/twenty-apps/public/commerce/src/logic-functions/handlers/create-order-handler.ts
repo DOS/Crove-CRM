@@ -27,6 +27,14 @@ export type CreateOrderResult = {
   error?: string;
 };
 
+const ORDER_CURRENCY_CODE = 'VND';
+const MICROS_PER_UNIT = 1_000_000;
+
+// amountMicros is a GraphQL Int. Rounding has to happen here rather than in the
+// float arithmetic upstream of it, or a fractional price produces 300000.00000000006.
+const toAmountMicros = (amount: number): number =>
+  Math.round(amount * MICROS_PER_UNIT);
+
 export const createOrderHandler = async (
   input: CreateOrderInput,
   client?: CoreApiClient,
@@ -38,6 +46,24 @@ export const createOrderHandler = async (
       success: false,
       message: 'Failed to create order',
       error: 'At least one order item is required.',
+    };
+  }
+
+  // Reject before any write: recalculateOrderTotals clamps quantity to >= 1 and
+  // unitPrice to >= 0, which would silently bill a different order than the caller sent.
+  const invalidItem = items.find(
+    (item) =>
+      !Number.isFinite(item.quantity) ||
+      item.quantity <= 0 ||
+      !Number.isFinite(item.unitPrice) ||
+      item.unitPrice < 0,
+  );
+
+  if (isDefined(invalidItem)) {
+    return {
+      success: false,
+      message: 'Failed to create order',
+      error: `Invalid line item "${invalidItem.name}": quantity must be a positive finite number and unitPrice a non-negative finite number.`,
     };
   }
 
@@ -54,16 +80,16 @@ export const createOrderHandler = async (
   const orderData: Record<string, unknown> = {
     name: generatedCode,
     totalAmount: {
-      amountMicros: calculation.totalAmount * 1_000_000,
-      currencyCode: 'VND',
+      amountMicros: toAmountMicros(calculation.totalAmount),
+      currencyCode: ORDER_CURRENCY_CODE,
     },
     discountAmount: {
-      amountMicros: calculation.discountAmount * 1_000_000,
-      currencyCode: 'VND',
+      amountMicros: toAmountMicros(calculation.discountAmount),
+      currencyCode: ORDER_CURRENCY_CODE,
     },
     remainingAmount: {
-      amountMicros: calculation.remainingAmount * 1_000_000,
-      currencyCode: 'VND',
+      amountMicros: toAmountMicros(calculation.remainingAmount),
+      currencyCode: ORDER_CURRENCY_CODE,
     },
     orderSource: input.orderSource ?? 'WEBSITE',
     status: input.status ?? 'NEW',
@@ -78,6 +104,9 @@ export const createOrderHandler = async (
     orderData.assignedToId = input.assignedToId.trim();
   }
 
+  let createdOrderId: string | undefined;
+  let createdItemCount = 0;
+
   try {
     const createdOrder = (await coreClient.mutation({
       createOrder: {
@@ -88,9 +117,9 @@ export const createOrderHandler = async (
       },
     })) as { createOrder?: { id: string } };
 
-    const orderId = createdOrder.createOrder?.id;
+    createdOrderId = createdOrder.createOrder?.id;
 
-    if (!isDefined(orderId)) {
+    if (!isDefined(createdOrderId)) {
       return {
         success: false,
         message: 'Failed to create order',
@@ -98,18 +127,20 @@ export const createOrderHandler = async (
       };
     }
 
+    const orderId = createdOrderId;
+
     // Create line items linked to order
     for (const item of calculation.items) {
       const lineData: Record<string, unknown> = {
         name: item.name,
         quantity: item.quantity,
         unitPrice: {
-          amountMicros: item.unitPrice * 1_000_000,
-          currencyCode: 'VND',
+          amountMicros: toAmountMicros(item.unitPrice),
+          currencyCode: ORDER_CURRENCY_CODE,
         },
         amount: {
-          amountMicros: item.amount * 1_000_000,
-          currencyCode: 'VND',
+          amountMicros: toAmountMicros(item.amount),
+          currencyCode: ORDER_CURRENCY_CODE,
         },
         orderId,
       };
@@ -126,6 +157,8 @@ export const createOrderHandler = async (
           id: true,
         },
       });
+
+      createdItemCount++;
     }
 
     return {
@@ -137,10 +170,19 @@ export const createOrderHandler = async (
       remainingAmount: calculation.remainingAmount,
     };
   } catch (error) {
+    // The order row is written before its items, so a mid-loop failure leaves a
+    // persisted order whose totals assume line items that do not exist. There is
+    // no compensating delete yet, so report exactly what landed instead of hiding it.
+    const isPartial = isDefined(createdOrderId);
+
     return {
       success: false,
-      message: 'Failed to create order in CRM',
-      error: (error as Error).message,
+      message: isPartial
+        ? `Order ${generatedCode} was created but is INCONSISTENT: ${createdItemCount}/${calculation.items.length} line item(s) written. Review or delete order ${createdOrderId}.`
+        : 'Failed to create order in CRM',
+      error: error instanceof Error ? error.message : String(error),
+      orderId: createdOrderId,
+      orderCode: isPartial ? generatedCode : undefined,
     };
   }
 };

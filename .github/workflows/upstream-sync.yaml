@@ -28,10 +28,20 @@ jobs:
 
     steps:
       - name: Checkout target branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{ inputs.target_branch || 'dev' }}
           fetch-depth: 0
+          # GITHUB_TOKEN is a GitHub App token and GitHub hard-rejects App pushes
+          # that touch .github/workflows/* ("without workflows permission"); there
+          # is no job permission that lifts it, and `workflows` is not even a valid
+          # permissions key. Upstream release merges routinely touch those files,
+          # so the sync push needs a PAT stored as SYNC_PAT (repo + workflow scope).
+          token: ${{ secrets.SYNC_PAT || github.token }}
+
+      - name: Warn when SYNC_PAT is missing
+        if: ${{ secrets.SYNC_PAT == '' }}
+        run: echo "::warning::SYNC_PAT is not set - any push whose merge tree touches .github/workflows will be rejected. Create a PAT with repo+workflow scope and store it as the SYNC_PAT repository secret."
 
       - name: Determine Upstream Release Tag
         id: get_tag
@@ -99,16 +109,20 @@ jobs:
             
             echo "has_conflict=false" >> "$GITHUB_OUTPUT"
           else
-            echo "Merge conflict encountered. Creating sync branch and opening a Pull Request."
+            echo "Merge conflict encountered. Creating sync branch with real conflict markers for review."
             git merge --abort || true
-            
+
             SYNC_BRANCH="sync/${TAG//\//-}"
             git checkout -b "$SYNC_BRANCH"
-            
-            git merge -X ours --no-commit "$TAG" || true
+
+            # Keep genuine conflicts: -X ours would silently drop the upstream side of
+            # every conflicted file, producing a branch that looks merged while losing
+            # upstream changes. A human resolves the real conflicts in the PR.
+            git merge --no-commit "$TAG" || true
+            git add -A
             git commit -m "chore(sync): automated sync branch for upstream release $TAG (requires review)"
             git push -f origin "$SYNC_BRANCH"
-            
+
             echo "has_conflict=true" >> "$GITHUB_OUTPUT"
             echo "sync_branch=$SYNC_BRANCH" >> "$GITHUB_OUTPUT"
           fi

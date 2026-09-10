@@ -226,7 +226,6 @@ const SendZaloMessageForm = () => {
           message: result.error ?? 'Failed to send Zalo message',
           variant: 'error',
         });
-        setSending(false);
 
         return;
       }
@@ -242,6 +241,9 @@ const SendZaloMessageForm = () => {
           error instanceof Error ? error.message : 'Failed to send message',
         variant: 'error',
       });
+    } finally {
+      // Single reset point: a snackbar-helper rejection above would otherwise
+      // throw past the per-branch reset and leave the Send button stuck.
       setSending(false);
     }
   };
@@ -298,8 +300,11 @@ const SendZaloMessageForm = () => {
         <div style={STYLES.header}>Send Zalo Message (OA)</div>
 
         <div style={STYLES.inputSection}>
-          <label style={STYLES.label}>Recipient Zalo User ID</label>
+          <label htmlFor="zalo-recipient-id" style={STYLES.label}>
+            Recipient Zalo User ID
+          </label>
           <input
+            id="zalo-recipient-id"
             type="text"
             placeholder="e.g. 1234567890123456789"
             value={userId}
@@ -310,6 +315,8 @@ const SendZaloMessageForm = () => {
 
         <div style={STYLES.body}>
           <textarea
+            id="zalo-message"
+            aria-label="Message to send via Zalo"
             placeholder="Type your message to customer..."
             value={messageText}
             onChange={onValueChange(setMessageText)}

@@ -1,0 +1,2536 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Audit Crove-CRM — 2026-09-08</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #16181d; --muted: #5c6470; --line: #e3e6ea;
+    --card: #fafbfc; --code-bg: #f4f5f7; --accent: #2f5fd0;
+    --crit: #b3261e; --crit-bg: #fdecea;
+    --high: #b25e09; --high-bg: #fdf3e3;
+    --med: #1f6f8b; --med-bg: #e8f4f8;
+    --low: #4a5568; --low-bg: #f0f2f5;
+    --ok: #1e6b3a; --ok-bg: #e9f5ed;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14161a; --fg: #e6e8ec; --muted: #98a1ae; --line: #2a2e35;
+      --card: #1a1d22; --code-bg: #1f232a; --accent: #7ea2f0;
+      --crit: #ff8a80; --crit-bg: #2d1a19;
+      --high: #ffcc80; --high-bg: #2d2416;
+      --med: #8fd3e8; --med-bg: #16252b;
+      --low: #b6bcc6; --low-bg: #1e2229;
+      --ok: #8fd6a5; --ok-bg: #17251c;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 15px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .layout { display: flex; align-items: flex-start; max-width: 1400px; margin: 0 auto; }
+  nav {
+    position: sticky; top: 0; width: 250px; flex: 0 0 250px; max-height: 100vh;
+    overflow-y: auto; padding: 28px 16px 40px 24px; border-right: 1px solid var(--line);
+    font-size: 13px;
+  }
+  nav .navtitle { font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+    font-size: 11px; color: var(--muted); margin: 0 0 10px; }
+  nav a { display: block; color: var(--muted); text-decoration: none; padding: 4px 8px;
+    border-radius: 5px; margin-bottom: 1px; }
+  nav a:hover { background: var(--code-bg); color: var(--fg); }
+  nav a.sub { padding-left: 20px; font-size: 12.5px; }
+  nav .sep { height: 1px; background: var(--line); margin: 12px 0; }
+  main { flex: 1 1 auto; min-width: 0; padding: 28px 40px 90px; }
+  h1 { font-size: 27px; margin: 0 0 6px; letter-spacing: -.015em; }
+  h2 { font-size: 20px; margin: 46px 0 14px; padding-bottom: 8px;
+    border-bottom: 2px solid var(--line); letter-spacing: -.01em; scroll-margin-top: 20px; }
+  h3 { font-size: 15.5px; margin: 26px 0 8px; scroll-margin-top: 20px; }
+  p { margin: 0 0 12px; }
+  .sub { color: var(--muted); font-size: 13.5px; margin: 0 0 22px; }
+  code, pre { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; }
+  code { background: var(--code-bg); padding: 1.5px 5px; border-radius: 4px; font-size: 12.8px; }
+  pre { background: var(--code-bg); border: 1px solid var(--line); border-left: 3px solid var(--muted);
+    padding: 11px 14px; border-radius: 6px; overflow-x: auto; font-size: 12.6px;
+    line-height: 1.55; margin: 8px 0 12px; }
+  pre code { background: none; padding: 0; font-size: inherit; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 18px; font-size: 13.6px; }
+  th, td { text-align: left; padding: 8px 11px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--card); font-weight: 650; font-size: 12.5px;
+    text-transform: uppercase; letter-spacing: .035em; color: var(--muted); }
+  tbody tr:hover { background: var(--card); }
+  td.loc { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12.2px; white-space: nowrap; color: var(--muted); }
+  .badge { display: inline-block; font-size: 10.5px; font-weight: 750; letter-spacing: .06em;
+    text-transform: uppercase; padding: 2.5px 7px; border-radius: 4px; white-space: nowrap; }
+  .b-crit { color: var(--crit); background: var(--crit-bg); }
+  .b-high { color: var(--high); background: var(--high-bg); }
+  .b-med  { color: var(--med);  background: var(--med-bg); }
+  .b-low  { color: var(--low);  background: var(--low-bg); }
+  .b-ok   { color: var(--ok);   background: var(--ok-bg); }
+  .tag { display: inline-block; font-size: 10.5px; font-weight: 600; letter-spacing: .04em;
+    text-transform: uppercase; padding: 2.5px 6px; border-radius: 4px;
+    border: 1px solid var(--line); color: var(--muted); margin-right: 4px; }
+  .v { color: var(--ok); font-weight: 700; }
+  .finding { border: 1px solid var(--line); border-left-width: 4px; border-radius: 7px;
+    padding: 15px 18px; margin: 0 0 15px; background: var(--card); }
+  .f-crit { border-left-color: var(--crit); }
+  .f-high { border-left-color: var(--high); }
+  .f-med  { border-left-color: var(--med); }
+  .finding h3 { margin: 0 0 4px; font-size: 15.5px; }
+  .fid { font-family: ui-monospace, Menlo, Consolas, monospace; color: var(--muted);
+    font-size: 12.5px; font-weight: 600; margin-right: 7px; }
+  .meta { font-size: 12.4px; color: var(--muted); margin: 0 0 9px;
+    font-family: ui-monospace, Menlo, Consolas, monospace; word-break: break-all; }
+  .lbl { font-weight: 700; font-size: 11.5px; letter-spacing: .05em; text-transform: uppercase;
+    color: var(--muted); display: block; margin: 11px 0 3px; }
+  .finding p { margin: 0 0 4px; font-size: 14.2px; }
+  .callout { border: 1px solid var(--crit); background: var(--crit-bg); border-radius: 7px;
+    padding: 15px 18px; margin: 0 0 22px; }
+  .callout strong { color: var(--crit); }
+  .note { border: 1px solid var(--line); border-left: 3px solid var(--accent);
+    background: var(--card); border-radius: 6px; padding: 12px 15px; margin: 12px 0 18px;
+    font-size: 13.6px; }
+  ul, ol { margin: 0 0 12px; padding-left: 22px; }
+  li { margin-bottom: 5px; }
+  .redacted { background: var(--code-bg); border: 1px dashed var(--high); border-radius: 4px;
+    padding: 1px 6px; font-family: ui-monospace, Menlo, monospace; font-size: 12.4px;
+    color: var(--high); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 1000px) {
+    nav { display: none; }
+    main { padding: 22px 18px 60px; }
+    .grid2 { grid-template-columns: 1fr; }
+  }
+  @media print {
+    nav { display: none; }
+    main { padding: 0; }
+    body { font-size: 11.5px; }
+    .finding, pre, table { break-inside: avoid; }
+    h2 { break-after: avoid; }
+    a { color: inherit; text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+<nav>
+  <p class="navtitle">Mục lục</p>
+  <a href="#summary">Tóm tắt điều hành</a>
+  <a href="#snapshot">Health snapshot</a>
+  <a href="#matrix">Ma trận mức độ</a>
+  <div class="sep"></div>
+  <a href="#critical">Critical (10)</a>
+  <a class="sub" href="#C1">C1 · Secret đã commit</a>
+  <a class="sub" href="#C2">C2 · Verify fail-open</a>
+  <a class="sub" href="#C3">C3 · Xuyên tenant</a>
+  <a class="sub" href="#C4">C4 · Conflict markers</a>
+  <a class="sub" href="#C5">C5 · dev không test</a>
+  <a class="sub" href="#C6">C6 · Tiền tệ float</a>
+  <a class="sub" href="#C7">C7 · Logo 404</a>
+  <a class="sub" href="#C8">C8 · Mất bản dịch</a>
+  <a class="sub" href="#C9">C9 · Workspace bị xoá</a>
+  <div class="sep"></div>
+  <a href="#high">High (17)</a>
+  <a href="#medium">Medium (40)</a>
+  <a class="sub" href="#m-sec">Bảo mật &amp; cấu hình</a>
+  <a class="sub" href="#m-arch">Kiến trúc backend</a>
+  <a class="sub" href="#m-fe">Frontend &amp; apps</a>
+  <a class="sub" href="#m-repo">Repo / CI / build</a>
+  <a class="sub" href="#m-docs">Tài liệu</a>
+  <a href="#low">Low (7)</a>
+  <div class="sep"></div>
+  <a href="#addendum">Bổ sung vòng 2 (N1-N6)</a>
+  <a class="sub" href="#N5">N5 · Frill token public</a>
+  <a class="sub" href="#N2">N2 · Query auth gãy</a>
+  <a href="#clean">Điểm đạt</a>
+  <a href="#corrections">Điều chỉnh giả định</a>
+  <a href="#plan">Kế hoạch hành động</a>
+  <a href="#method">Phương pháp &amp; giới hạn</a>
+</nav>
+
+<main>
+
+<h1>Audit toàn diện Crove-CRM</h1>
+<p class="sub">
+  Ngày audit: <strong>08/09/2026</strong> · <strong>Cập nhật vòng 2: 08/09/2026</strong> ·
+  Nhánh: <code>dev</code> @ <code>f06f82a2c7</code> ·
+  Phạm vi: bảo mật, kiến trúc, hiệu năng, best practice, CI/build, tài liệu<br>
+  Nền tảng: fork của Twenty CRM v2.38.0 · Nx 22.7.8 + Yarn 4.13.0 · Node ^24.5.0 · 18 packages ·
+  Production tại <code>crm.crove.com</code> ·
+  <strong>Repo <code>DOS/Crove-CRM</code>: PUBLIC</strong> (đã xác minh bằng <code>gh repo view</code>)
+</p>
+
+<div class="callout">
+  <strong>Repo này PUBLIC — mọi finding về credential dưới đây là exposure đang diễn ra, không phải rủi ro có điều kiện.</strong>
+  Ba credential thật đang đọc được công khai bởi bất kỳ ai trên internet:
+  <ol style="margin:8px 0 8px">
+    <li><code>CROVE_DOS_WEBHOOK_SECRET</code> — khoá HMAC webhook production (<a href="#C1">C1</a>)</li>
+    <li>Frill Bearer token trong <code>.mcp.json</code>, file được git track (<a href="#N5">N5</a>)</li>
+    <li>URL webhook production kèm UUID token trong tài liệu handoff (<a href="#N6">N6</a>)</li>
+  </ol>
+  Chuỗi leo thang đầy đủ: đọc file public → ký payload hợp lệ → bỏ trống <code>orgId</code>, đưa
+  <code>displayName</code> của tenant bất kỳ → <code>organization.member.added</code> để tự thêm mình vào
+  tenant đó (<a href="#C1">C1</a> + <a href="#C2">C2</a> + <a href="#C3">C3</a>).
+  <br><br>
+  <strong>Secret này do portal <code>dev.dos.me</code> cấp, không tự sinh được</strong> — xem quy trình rotate
+  đã đính chính trong <a href="#C1">C1</a>. Rotate có cửa sổ downtime và <strong>không sửa được replay</strong>
+  (<a href="#H1">H1</a>).
+</div>
+
+<div class="note">
+  <strong>Vòng 2 đã thay đổi những gì so với bản đầu:</strong> thêm 6 finding mới
+  (<a href="#addendum">N1–N6</a>, gồm một query auth đang gãy trên production và hai credential công khai);
+  đính chính <strong>4 lỗi sự thật của chính báo cáo này</strong> (<a href="#corrections">mục Đính chính</a>);
+  hạ mức nghiêm trọng của 4 finding (C4, C6, C7, C8); đẩy <a href="#C9">C9</a> từ Đợt 3 lên Đợt 1;
+  sửa tổng số finding từ 57 → <strong>74</strong>. Việc dọn 12 file <code>tmp-*.png</code> đã thực hiện xong.
+</div>
+
+<h2 id="remediation">Trạng thái xử lý <span class="badge b-ok">cập nhật 09/09/2026</span></h2>
+<p class="sub">
+  Tài liệu này được track làm checklist sống. Trạng thái dưới đây phản ánh các commit fix trên
+  <code>dev</code> (chưa push) tính đến 09/09/2026 — mỗi nhóm đều đã qua verification
+  (tsgo, oxlint, jest/vitest) trước khi commit.
+</p>
+
+<table>
+  <thead><tr><th style="width:16%">Trạng thái</th><th style="width:38%">Finding</th><th>Ghi chú / commit</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><span class="badge b-ok">Đã sửa</span></td>
+      <td>C2, C3 (webhook + luồng JIT), C4, C7, C8, C9 (activate inline), N1, N2, N3,
+        M5 (skip event emission), M6 (ticket dedup), M11 (@HttpCode), M13 (.every),
+        M16 (label/textarea a11y), M19 (timeout), H1 (nửa NaN), H5 (Zalo fail-closed),
+        13 lỗi typecheck, commerce <code>yarn.lock</code> markers, CLAUDE.md guards, M21 (test rounding)</td>
+      <td><code>12abb231e3</code> · <code>8b0d50e6f0</code> · <code>d38406c1df</code> ·
+        <code>0ef909aadd</code> · <code>a16b4d73fd</code> · <code>57807b3275</code> ·
+        <code>564ef918de</code> · <code>6195d7665c</code></td>
+    </tr>
+    <tr>
+      <td><span class="badge b-high">Đã sửa một phần</span></td>
+      <td>C1, C5, C6, N5, H1, M17</td>
+      <td><strong>C1</strong>: placeholder đã thay trong <code>.env.example</code> — rotate thật chờ portal
+        <code>dev.dos.me</code>. <strong>C5</strong>: gate đã chạy cho twenty-server; twenty-front chờ
+        regenerate codegen. <strong>C6</strong>: làm tròn tại biên Int + validate trước ghi + báo cáo partial
+        đã xong; atomic hoàn toàn (b cash mutation batch) chưa có. <strong>N5</strong>: placeholder —
+        revoke Frill token chờ bạn. <strong>H1</strong>: NaN đã vá; Format 2 vẫn không có chống replay
+        (cần đổi contract với team DOS). <strong>M17</strong>: reset <code>sending</code> qua
+        <code>finally</code> đã xong; phản hồi quá giới hạn ký tự (<code>COLOR.error</code>) chưa nối.</td>
+    </tr>
+    <tr>
+      <td><span class="badge b-crit">Chờ bạn thực hiện</span></td>
+      <td>Rotate <code>CROVE_DOS_WEBHOOK_SECRET</code> · revoke Frill token · xác minh/rotate Slack webhook UUID (<a href="#N6">N6</a>)</td>
+      <td>Hướng dẫn từng bước đã gửi 09/09/2026. Đây là phần duy nhất còn khép lại exposure thật —
+        repo public nên mọi giá trị đã commit phải coi như đã chết bất kể purge history hay không.</td>
+    </tr>
+    <tr>
+      <td><span class="badge b-low">Chưa làm — cần thiết kế hoặc rẻ nhưng chưa tới</span></td>
+      <td><a href="#H7">H7</a> (outbox/retry), <a href="#H8">H8</a> (JIT trong redirect),
+        <a href="#H4">H4</a> (chỉ nhận org claim từ <code>app_metadata</code>),
+        M7 (observability), M8 (tách controller 833 dòng), M9 (SecureHttpClient), M10, M14, M15,
+        M23, M26, <a href="#H13">H13</a> (upstream-sync), <a href="#H14">H14</a> (SHA-pin),
+        <a href="#H15">H15</a> (infra docs), M27–M37</td>
+      <td>Đề xuất đợt tiếp: H7 + M8 làm cùng nhau (cùng đụng webhook controller, giải quyết mất-event
+        và ranh giới module một lượt), rồi H14 (SHA-pin 9 action, rẻ). H4 chờ kết quả kiểm tra
+        auth hook Supabase đã gửi trong hướng dẫn.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="summary">Tóm tắt điều hành</h2>
+
+<p>
+  Audit ghi nhận <strong>74 vấn đề</strong>: 10 Critical, 17 High, 40 Medium, 7 Low —
+  trong đó 6 finding (<a href="#addendum">N1–N6</a>) chỉ được phát hiện ở vòng review thứ hai.
+  Phần lớn <em>không</em> nằm ở chất lượng code cơ bản — code fork viết khá đúng convention upstream —
+  mà tập trung ở ba điểm yếu có tính hệ thống:
+</p>
+
+<ol>
+  <li>
+    <strong>Bề mặt tích hợp DOS không được thiết kế như một boundary bảo mật.</strong>
+    Webhook controller 833 dòng nhận payload không validate, tự chọn tenant bằng field không unique,
+    bỏ qua permission check ở 5 chỗ, và dùng chung một secret cho cả hai chiều.
+    Chữ ký HMAC được implement <em>đúng về mặt mật mã</em> (timingSafeEqual, raw body thật) nhưng
+    <em>sai về mặt logic điều khiển</em>: thiếu secret là bỏ qua toàn bộ.
+  </li>
+  <li>
+    <strong>Nhánh sản xuất không có cổng chất lượng nào.</strong>
+    <code>dev</code> là nhánh duy nhất build &amp; push image production, và cũng là nhánh duy nhất
+    không chạy lint/typecheck/test/e2e. Trong khi đó <code>upstream-sync.yaml</code> auto-push thẳng vào
+    <code>dev</code> — nên một merge upstream chưa ai review tự động thành artifact deploy được.
+  </li>
+  <li>
+    <strong>Cơ chế "sửa lỗi cục bộ" đã thay thế cơ chế sửa lỗi gốc.</strong>
+    Biểu hiện rõ nhất: các hook workflow trả về object rỗng thay vì throw (che lỗi), hai upgrade command
+    lịch sử bị sửa để probe <code>information_schema</code> rồi bỏ qua backfill, và 22 script SQL/JS ad-hoc
+    trong <code>scripts/</code> — trong đó có script ghi đè <code>createdAt</code> của migration ledger
+    bằng epoch bịa, làm hỏng con trỏ upgrade. Mỗi cái đều giải quyết một triệu chứng và tạo ra
+    một vấn đề lớn hơn, âm thầm hơn.
+  </li>
+</ol>
+
+<p>
+  Nguyên tắc kiến trúc của repo (<em>"Fork Minimal Modification"</em> trong <code>ROADMAP.md</code>,
+  <code>.cursor/rules/fork-minimal-modification.mdc</code>) được tuân thủ <strong>về khối lượng</strong>
+  nhưng <strong>không về sự cô lập</strong>: mọi tính năng fork đều đồng thời chạm vào file upstream,
+  đặc biệt là enum và config dùng chung. Điều đó khiến mỗi lần sync upstream đều rủi ro,
+  và hiện không có gate nào đo lường drift.
+</p>
+
+<h2 id="snapshot">Health snapshot</h2>
+
+<table>
+  <thead><tr><th style="width:20%">Hạng mục</th><th>Trạng thái đo được</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Fork drift</strong></td>
+      <td>191 files / <code>+2.823 −170</code> so với <code>upstream/main</code> trong server+front
+        (~130 là PNG branding do script sinh ra, ~60 file code thật).
+        Đã merge v2.38.0 (<code>cb43a5fa3f</code>). <strong>Không có gate kiểm soát drift.</strong></td>
+    </tr>
+    <tr>
+      <td><strong>Dependencies</strong></td>
+      <td><code>yarn npm audit --environment production --severity high</code> → <span class="v">0 advisory</span>.
+        22 resolutions; 4/4 mẫu kiểm tra vẫn còn cần thiết (load-bearing).
+        Tồn dư: <code>@types/react</code> ×2 (19.1.0 + 19.2.17), <code>sharp</code> ×3, <code>undici</code> ×3.</td>
+    </tr>
+    <tr>
+      <td><strong>Tests</strong></td>
+      <td>Code fork gần như không có test. Chưa có spec: <code>dos-id.auth.strategy.ts</code>,
+        <code>dos-id-auth.controller.ts</code>, cả 2 DOS guard, <code>ecosystem-outbound-event.listener.ts</code>,
+        <code>brevo.driver.ts</code>, ~20 file front. <strong>0 e2e</strong> cho DOS ID SSO và org-sync webhook.
+        Spec duy nhất của webhook thì stale và không thể pass (xem <a href="#m-repo">M20</a>).</td>
+    </tr>
+    <tr>
+      <td><strong>CI trên <code>main</code></strong></td>
+      <td><span class="v">Đầy đủ</span>: oxlint+oxfmt, tsgo, jest unit 4 shards, jest integration 16 shards
+        + Postgres 18 / Redis / ClickHouse service containers, pending-migration guard,
+        pending-GraphQL-codegen guard, upgrade-mutation-guard, Playwright e2e.</td>
+    </tr>
+    <tr>
+      <td><strong>CI trên <code>dev</code></strong></td>
+      <td><strong>Không có gì</strong> — trong khi đây là nhánh build image production (xem <a href="#C5">C5</a>).</td>
+    </tr>
+    <tr>
+      <td><strong>License</strong></td>
+      <td><span class="v">Đạt</span>: <code>LICENSE</code> giống hệt upstream (AGPLv3 + Application Exception
+        + Twenty.com Commercial License + TRADEMARK). Branding patch không xoá license header hay copyright.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="matrix">Ma trận mức độ theo lĩnh vực</h2>
+
+<div class="note">
+  <strong>Đã sửa ở vòng 2.</strong> Bản đầu khai "57 vấn đề, 26 Medium" nhưng các bảng bên dưới thực tế
+  chứa <strong>37</strong> mục Medium (M1–M37) — tức tiêu đề và ma trận đều không khớp với nội dung.
+  Ma trận này đã được đếm lại từ chính các ID trong tài liệu, mỗi finding gán đúng một lĩnh vực.
+</div>
+
+<table>
+  <thead>
+    <tr><th>Lĩnh vực</th><th>Critical</th><th>High</th><th>Medium</th><th>Low</th><th>Tổng</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Bảo mật</td><td>4</td><td>7</td><td>4</td><td>3</td><td><strong>18</strong></td></tr>
+    <tr><td>Kiến trúc &amp; dữ liệu backend</td><td>1</td><td>5</td><td>8</td><td>0</td><td><strong>14</strong></td></tr>
+    <tr><td>Frontend &amp; twenty-apps</td><td>3</td><td>2</td><td>15</td><td>3</td><td><strong>23</strong></td></tr>
+    <tr><td>CI / build / repo hygiene</td><td>2</td><td>2</td><td>13</td><td>1</td><td><strong>18</strong></td></tr>
+    <tr><td>Tài liệu</td><td>0</td><td>1</td><td>0</td><td>0</td><td><strong>1</strong></td></tr>
+    <tr><th>Tổng</th><th>10</th><th>17</th><th>40</th><th>7</th><th>74</th></tr>
+  </tbody>
+</table>
+<p class="sub">
+  Bảng <a href="#m-docs">Tài liệu mâu thuẫn với thực tế</a> có 9 dòng <em>không đánh số</em> — chúng là bằng chứng
+  chi tiết cho finding H15 và các mục M-docs, không được đếm riêng để tránh trùng lặp.
+</p>
+
+<p class="sub">
+  <span class="v">✓</span> = đã tự đọc code kiểm chứng trực tiếp (không chỉ dựa trên báo cáo tự động).
+  Các mục không đánh dấu ✓ đến từ phân tích có trích dẫn <code>file:line</code> nhưng chưa được kiểm chứng tay lần hai.
+</p>
+
+<!-- ==================== CRITICAL ==================== -->
+
+<h2 id="critical">Critical <span class="badge b-crit">10 vấn đề</span></h2>
+
+<div class="note">
+  <strong>Đính chính mức nghiêm trọng ở vòng 2.</strong> Bản đầu xếp 9 mục vào Critical.
+  Soi lại thì <strong>4 mục bị chấm quá tay</strong>, và chính việc lạm dụng Critical làm loãng
+  ba mục thực sự khẩn cấp (C1/C2/C3). Cụ thể:
+  <table style="margin:8px 0 0">
+    <thead><tr><th style="width:8%">ID</th><th style="width:22%">Mức cũ → nên là</th><th>Lý do hiệu chỉnh</th></tr></thead>
+    <tbody>
+      <tr><td><a href="#C4">C4</a></td><td>Critical → <span class="badge b-high">High</span></td>
+        <td>Đã kiểm tra lại: <code>packages/twenty-apps/*</code> <strong>không nằm trong</strong> danh sách
+          <code>workspaces</code> của <code>package.json</code> gốc — các app là package Yarn độc lập có
+          <code>yarn.lock</code> riêng, nên <code>yarn install</code> ở gốc không bị ảnh hưởng.
+          <code>docker-publish.yml</code> build server+front, không build apps.
+          Blast radius thật chỉ là CI của apps (mà CI đó chỉ chạy trên <code>main</code>) và bước publish.
+          <strong>Tác động production ≈ 0.</strong> Vẫn nên sửa ngay vì rẻ, nhưng không phải Critical.</td></tr>
+      <tr><td><a href="#C6">C6</a></td><td>Critical → <span class="badge b-crit">Critical</span> (nhưng đổi trọng tâm)</td>
+        <td>Bản đầu dẫn dắt bằng câu chuyện float (<code>3 × 0.1</code>). Nhưng trigger đó đòi hỏi
+          <em>đơn giá VND lẻ</em>, mà VND trên thực tế là tiền tệ nguyên đồng → xác suất xảy ra hẹp hơn
+          cách diễn đạt "fails for any fractional unit price" gợi ý. Nửa thực sự Critical là
+          <strong>tạo đơn không atomic</strong> (order ghi trước items, không rollback, không dọn orphan) —
+          bug toàn vẹn dữ liệu độc lập hoàn toàn với float, và đã bị chôn ở đoạn hai.</td></tr>
+      <tr><td><a href="#C7">C7</a></td><td>Critical → <span class="badge b-med">Medium</span></td>
+        <td>Ảnh vỡ. Không mất dữ liệu, không lỗ hổng bảo mật, không crash. User-visible nhưng thuần tuý thẩm mỹ.
+          Đặt nó cùng hàng với "secret production bị lộ công khai" là hiệu chỉnh sai.</td></tr>
+      <tr><td><a href="#C8">C8</a></td><td>Critical → <span class="badge b-high">High</span></td>
+        <td>Có thật, âm thầm, mất tín hiệu "cần dịch" của 136 entry — nhưng <strong>khôi phục được</strong>
+          từ catalog upstream/Crowdin. Không phải mất mát không thể đảo ngược như bản đầu ngụ ý.</td></tr>
+    </tbody>
+  </table>
+  <p style="margin:8px 0 0">Các mục Critical còn lại (<a href="#C1">C1</a>, <a href="#C2">C2</a>,
+    <a href="#C3">C3</a>, <a href="#C5">C5</a>, <a href="#C9">C9</a>) giữ nguyên mức, và
+    <a href="#N5">N5</a> (mới, vòng 2) được thêm vào nhóm Critical.</p>
+</div>
+
+<div class="finding f-crit" id="C1">
+  <h3><span class="fid">C1</span> <span class="v">✓</span> Secret HMAC của webhook production đã commit vào file được track</h3>
+  <p class="meta"><span class="tag">Bảo mật</span>packages/twenty-docker/.env.example:57</p>
+  <pre><code># [Client Secret &amp; Webhook Secret loaded from GCP Secret: AUTH_DOS_ID_CLIENT_SECRET &amp; CROVE_DOS_WEBHOOK_SECRET]
+...
+CROVE_DOS_WEBHOOK_SECRET=<span class="redacted">2a1444b1…REDACTED (48 ký tự hex)</span></code></pre>
+  <span class="lbl">Bằng chứng</span>
+  <p>
+    Giá trị 48 ký tự hex, entropy cao, <strong>không</strong> có prefix <code>replace_me_with_...</code> —
+    trong khi mọi secret khác cùng file (dòng 19, 20, 33, 46, 56, 70, 71) đều là placeholder.
+    Nghịch lý: ngay dòng 55 là comment khẳng định nó phải được nạp từ GCP Secret,
+    nhưng giá trị thật vẫn nằm ở dòng 57. File được git track (<code>git ls-files</code> sạch, không phải file local).
+  </p>
+  <span class="lbl">Cùng file còn lộ (giá trị đã che)</span>
+  <pre><code>:45  STORAGE_S3_ACCESS_KEY_ID=<span class="redacted">eba1fe01…REDACTED</span>
+:51  AUTH_DOS_ID_CLIENT_ID=<span class="redacted">18790ccb-…REDACTED</span>
+:52  AUTH_DOS_ID_ISSUER_URL=https://<span class="redacted">…REDACTED</span>.supabase.co/auth/v1
+:43  STORAGE_S3_ENDPOINT=https://<span class="redacted">…REDACTED</span>.r2.cloudflarestorage.com
+:33  PG_DATABASE_URL=…@aws-1-ap-southeast-1.pooler.supabase.com:5432   (password đã placeholder)</code></pre>
+  <span class="lbl">Tại sao nghiêm trọng</span>
+  <p>
+    <strong>Đã xác minh: <code>github.com/DOS/Crove-CRM</code> là PUBLIC</strong>
+    (<code>gh repo view DOS/Crove-CRM --json visibility</code> → <code>{"isPrivate":false}</code>).
+    Bản đầu của báo cáo để ngỏ câu hỏi này và chuyển nó thành việc cho người đọc — đó là một lỗi phương pháp:
+    đây là câu hỏi trả lời được bằng một lệnh read-only, và câu trả lời nâng finding từ "rủi ro có điều kiện"
+    lên "exposure đang diễn ra".
+  </p>
+  <p>
+    Bất kỳ ai trên internet đều ký được payload <code>POST /webhooks/dos-org-sync</code> hợp lệ, và do đó
+    thực thi được <em>mọi</em> handler: tạo/suspend workspace, tự thêm mình làm member của tenant bất kỳ,
+    xoá company và person. Không cần quyền truy cập nội bộ nào.
+  </p>
+  <span class="lbl">Hướng xử lý — ĐÃ ĐÍNH CHÍNH</span>
+  <p>
+    Bản đầu khuyên tự sinh giá trị mới bằng <code>crypto.randomBytes</code>. <strong>Sai.</strong>
+    <code>dev.dos.me</code> là developer portal nơi webhook được tạo, nên secret này do
+    <strong>nền tảng DOS cấp phát</strong> — CRM chỉ giữ một bản copy, không được quyền bịa ra giá trị
+    vì phía DOS ký bằng giá trị của họ. Quy trình đúng:
+  </p>
+  <ol>
+    <li>Vào <code>dev.dos.me</code> → tìm webhook registration trỏ tới Crove CRM → regenerate / reveal signing secret.</li>
+    <li>Copy giá trị mới vào GCP Secret Manager (<code>CROVE_DOS_WEBHOOK_SECRET</code>) —
+      đó là nơi <code>.env.example:55</code> nói nó được nạp từ.</li>
+    <li>Restart / redeploy CRM. Nếu secret inject qua env lúc boot thì <strong>bắt buộc</strong> restart —
+      đổi trong Secret Manager một mình không có tác dụng.</li>
+    <li>Thay giá trị trong <code>.env.example</code> bằng <code>replace_me_with_dos_webhook_secret</code>.</li>
+  </ol>
+  <div class="note" style="margin-top:8px">
+    <strong>Cửa sổ downtime thật:</strong> regenerate phía portal thường vô hiệu secret cũ
+    <em>ngay lập tức</em>. Giữa lúc đó và lúc CRM nhận giá trị mới, mọi inbound event sẽ fail verify → 401 —
+    và vì <a href="#H7">H7</a> (không retry, không outbox), những event trong khoảng đó
+    <strong>mất vĩnh viễn</strong>, không tự đồng bộ lại. Kiểm tra xem portal có dual secret / grace period không;
+    nếu không, chọn giờ thấp điểm và chuẩn bị bước re-sync thủ công.
+    <br><br>
+    <strong>Và rotate KHÔNG sửa được replay</strong> — xem <a href="#H1">H1</a>. Format mà DOS thực sự dùng
+    không có timestamp trong chữ ký, nên một event đã bắt được có thể phát lại mãi mãi kể cả sau khi rotate.
+  </div>
+  <p>
+    Việc purge khỏi git history là viết lại lịch sử — cần quyết định riêng vì ảnh hưởng mọi clone đang có.
+    <em>Ghi chú: tài liệu này cố tình không chép lại giá trị thật, để không tạo ra bản sao thứ hai của chỗ rò.</em>
+  </p>
+  <span class="lbl">Hai điều cần xác minh trước khi rotate</span>
+  <ul>
+    <li>Production <code>crm.crove.com</code> đang nói chuyện với <code>api.dos.me</code> hay
+      <code>dev.dos.me</code>? <code>AUTH_DOS_API_URL</code> default là <code>https://api.dos.me</code>.
+      Câu trả lời quyết định phải phối hợp với team nào.</li>
+    <li>Giá trị <em>deployed</em> có thể đã khác giá trị trong <code>.env.example</code>
+      (nếu đã rotate trong GCP sau khi commit). So sánh trước — nếu đã khác thì mức khẩn cấp giảm xuống.</li>
+  </ul>
+</div>
+
+<div class="finding f-crit" id="C2">
+  <h3><span class="fid">C2</span> <span class="v">✓</span> Kiểm tra chữ ký fail-OPEN khi secret chưa được set</h3>
+  <p class="meta"><span class="tag">Bảo mật</span>packages/twenty-server/src/engine/core-modules/auth/controllers/dos-org-sync-webhook.controller.ts:201-212</p>
+  <pre><code>const secret = this.twentyConfigService.get('CROVE_DOS_WEBHOOK_SECRET');
+
+if (isNonEmptyString(secret)) {
+  if (!isNonEmptyString(signature)) {
+    throw new UnauthorizedException('Missing X-DOS-Signature header');
+  }
+  const isValid = verifyEcosystemWebhook(bodyBuffer, signature, secret);
+  if (!isValid) { throw new UnauthorizedException('Invalid X-DOS-Signature'); }
+}</code></pre>
+  <span class="lbl">Tại sao nghiêm trọng</span>
+  <p>
+    <code>CROVE_DOS_WEBHOOK_SECRET</code> được khai báo <code>@IsOptional()</code>
+    (<code>config-variables.ts:358</code>). Nếu việc inject từ GCP Secret Manager thất bại trong im lặng,
+    <strong>toàn bộ khối verify bị bỏ qua</strong> và endpoint trở thành một API ghi đặc quyền
+    hoàn toàn không xác thực — không lỗi, không log, không metric.
+    <code>PublicEndpointGuard</code> chỉ mang tính tài liệu (<code>public-endpoint.guard.ts:16-19</code> luôn trả <code>true</code>).
+    Đây là dạng lỗi nguy hiểm nhất vì nó <em>trông như</em> đã được bảo vệ.
+  </p>
+  <span class="lbl">Hướng xử lý</span>
+  <p>Đảo thành fail-closed: throw ngay lúc module init nếu secret vắng mặt, và biến nó thành biến bắt buộc có điều kiện (<code>@ValidateIf(env =&gt; env.AUTH_DOS_ID_ENABLED)</code>).</p>
+</div>
+
+<div class="finding f-crit" id="C3">
+  <h3><span class="fid">C3</span> <span class="v">✓</span> Phân giải workspace xuyên tenant từ field do attacker kiểm soát</h3>
+  <p class="meta"><span class="tag">Bảo mật</span>dos-org-sync-webhook.controller.ts:232-240 · :303 · :328 · :371 · :403</p>
+  <pre><code>const existingWorkspace = await this.workspaceRepository.findOne({
+  where: [
+    ...(isNonEmptyString(orgId)   ? [{ id: orgId }]        : []),
+    ...(isNonEmptyString(orgSlug) ? [{ subdomain: orgSlug }] : []),
+    { displayName: orgName.trim() },          // ← không unique, luôn luôn có mặt
+  ],
+});</code></pre>
+  <span class="lbl">Tại sao nghiêm trọng</span>
+  <p>
+    TypeORM hiểu mảng <code>where</code> là phép <strong>OR</strong>. Khi payload bỏ trống <code>orgId</code> và <code>slug</code>,
+    tenant mục tiêu được chọn chỉ bằng <code>displayName</code> — một field không unique — và <code>findOne</code>
+    trả về một row bất kỳ khớp tên. Không có ràng buộc tenant nào với chữ ký, không có allowlist org id đã biết.
+    Kết hợp với <a href="#C1">C1</a> (hoặc <a href="#C2">C2</a>):
+  </p>
+  <ul>
+    <li><code>organization.member.added</code> (<code>:371</code>) → <code>addUserToWorkspaceIfUserNotInWorkspace</code>
+      thêm email từ payload làm <strong>member chính thức</strong> của tenant trùng tên
+      (<code>user-workspace.service.ts:218-245</code>; <code>roleId</code> không được truyền nên dùng role mặc định).</li>
+    <li><code>organization.deleted</code> (<code>:328-334</code>) → set <code>activationStatus: SUSPENDED</code>
+      → <strong>DoS toàn tenant bằng một request</strong>.</li>
+    <li><code>organization.member.removed</code> (<code>:403</code>) → xoá membership tuỳ ý.</li>
+  </ul>
+  <span class="lbl">Hướng xử lý</span>
+  <p>Bắt buộc <code>orgId</code> (UUID) cho mọi nhánh ghi; bỏ hẳn mệnh đề <code>displayName</code> khỏi <code>where</code>.</p>
+</div>
+
+<div class="finding f-crit" id="C4">
+  <h3><span class="fid">C4</span> <span class="v">✓</span> Merge conflict marker đã commit — file <code>package.json</code> không parse được</h3>
+  <p class="meta"><span class="tag">Build</span>packages/twenty-apps/public/zalo-oa/package.json:33, 38, 41</p>
+  <pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD:packages/twenty-apps/public/zalo-oa/package.json
+    "react": "^18.2.0",
+    "twenty-client-sdk": "^2.16.0",
+    "twenty-sdk": "^2.16.0",
+========
+    "twenty-client-sdk": "2.35.0",
+    "twenty-sdk": "2.35.0",
+&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; origin/main:packages/twenty-apps/public/fathom/package.json</code></pre>
+  <span class="lbl">Tại sao nghiêm trọng</span>
+  <p>
+    <code>git status</code> sạch — nó đã nằm trong commit <code>6a82a71489</code>.
+    <code>JSON.parse</code> throw tại dòng 33. Hệ quả dây chuyền: <code>yarn install</code> fail trong workspace này;
+    <code>discover-apps.yaml:96</code> throw → sập <code>ci-twenty-apps.yaml</code> và matrix
+    <code>server-apps-install-smoke</code> trong <code>ci-server.yaml:388</code>;
+    <code>publish-crove-apps.yaml:44</code> sẽ <code>npm publish</code> một manifest hỏng.
+    Điểm đáng chú ý: conflict được resolve nhầm với file của app <strong>fathom</strong> — dấu hiệu của một lần merge/rename sai.
+  </p>
+  <span class="lbl">Hướng xử lý</span>
+  <p>
+    Resolve về phía <code>^2.16.0</code> (khớp với app <code>commerce</code>), rồi thêm một guard CI
+    parse JSON cho mọi <code>packages/twenty-apps/*/package.json</code>.
+  </p>
+</div>
+
+<div class="finding f-crit" id="C5">
+  <h3><span class="fid">C5</span> <span class="v">✓</span> Nhánh <code>dev</code> build &amp; push image production mà không chạy bất kỳ test nào</h3>
+  <p class="meta"><span class="tag">CI</span>.github/workflows/docker-publish.yml:6-8</p>
+  <pre><code>on:
+  push:
+    branches:
+      - dev          # ← workflow duy nhất trong 50 workflow có nhánh này
+    tags: ['v*.*.*', 'v*']</code></pre>
+  <span class="lbl">Tại sao nghiêm trọng</span>
+  <p>
+    Workflow này push <code>ghcr.io/${{ github.repository }}:beta</code> (dòng 41) với
+    <code>permissions: packages: write</code>, trong khi <code>ci-server.yaml:3-5</code> chỉ trigger trên
+    <code>pull_request</code> + <code>merge_group</code>, và <code>ci-e2e-main.yaml:4-5</code> chỉ trên <code>push: main</code>.
+    Nghĩa là một push vào <code>dev</code> → build &amp; push image deploy được với
+    <strong>zero</strong> lint, typecheck, unit, integration hay e2e.
+    Tệ hơn: <code>upstream-sync.yaml:98</code> push thẳng vào <code>dev</code> rồi <code>:157</code> trigger build đó —
+    một merge upstream chưa ai review tự động thành artifact production.
+  </p>
+  <span class="lbl">Hướng xử lý</span>
+  <p>
+    Thêm <code>dev</code> vào trigger push của <code>ci-server</code>/<code>ci-front</code>/<code>ci-twenty-apps</code>,
+    hoặc cho <code>docker-publish.yml</code> phụ thuộc (<code>needs:</code>) một workflow test.
+  </p>
+</div>
+
+<div class="finding f-crit" id="C6">
+  <h3><span class="fid">C6</span> <span class="v">✓</span> Commerce tính tiền bằng float rồi ghi vào GraphQL <code>Int</code>; tạo đơn không atomic</h3>
+  <p class="meta"><span class="tag">Dữ liệu</span>packages/twenty-apps/public/commerce/src/logic-functions/handlers/create-order-handler.ts:57-68, 105-118<br>
+  packages/twenty-apps/public/commerce/src/utils/recalculate-order-totals.util.ts:33-36</p>
+  <pre><code>// recalculate-order-totals.util.ts — cộng dồn float, không làm tròn
+const qty   = Math.max(1, item.quantity || 1);
+const price = Math.max(0, item.unitPrice || 0);
+const lineAmount = qty * price;
+computedTotal += lineAmount;
+
+// create-order-handler.ts — amountMicros là GraphQL Int
+totalAmount: { amountMicros: calculation.totalAmount * 1_000_000, currencyCode: 'VND' },</code></pre>
+  <span class="lbl">Tại sao nghiêm trọng</span>
+  <p>
+    Không có <code>Math.round</code> ở bất kỳ đâu trong phép chuyển sang micros.
+    <code>3 × 0.1 = 0.30000000000000004</code> → <code>300000.00000000006</code> → Int coercion reject →
+    <strong>tạo đơn thất bại với mọi đơn giá lẻ</strong>. Test chỉ dùng số nguyên VND chẵn
+    (<code>recalculate-order-totals.util.test.ts</code>, <code>create-order-handler.test.ts</code>) nên không bắt được.
+  </p>
+  <p>
+    Cùng file, thứ tự ghi không atomic: order (kèm <code>totalAmount</code>/<code>remainingAmount</code>) được ghi
+    <em>trước</em>, line items ghi <em>sau</em> trong vòng lặp <code>await</code> tuần tự.
+    Nếu item thứ 3/5 throw, <code>catch</code> trả <code>success: false</code> nhưng order vẫn tồn tại với
+    total tính cho 5 item và chỉ 2 child — CRM hiển thị đơn hàng có tổng mâu thuẫn với chính các dòng của nó,
+    không rollback, không dọn orphan. Vòng lặp tuần tự cũng khiến độ trễ là O(số item) round-trip
+    trên một route có <code>timeoutSeconds: 30</code>.
+  </p>
+  <span class="lbl">Hướng xử lý</span>
+  <p>
+    Làm tròn một lần tại biên micros (<code>Math.round(x * 1_000_000)</code>), hoặc tốt hơn là
+    mang số nguyên micros xuyên suốt <code>recalculateOrderTotals</code> và không bao giờ tính bằng đơn vị float.
+    Tạo items trước (hoặc một mutation batch) rồi mới tạo order; nếu lỗi thì xoá order dở.
+  </p>
+</div>
+
+<div class="finding f-crit" id="C7">
+  <h3><span class="fid">C7</span> <span class="v">✓</span> Logo mặc định của workspace là link 404</h3>
+  <p class="meta"><span class="tag">Frontend</span>packages/twenty-front/src/modules/ui/navigation/navigation-drawer/constants/DefaultWorkspaceLogo.ts:1<br>
+  packages/twenty-shared/src/utils/image/getImageAbsoluteURI.ts:20-21</p>
+  <pre><code>// DefaultWorkspaceLogo.ts (upstream là URL tuyệt đối tới placeholder-images)
+export const DEFAULT_WORKSPACE_LOGO = '/images/integrations/twenty-logo.svg';
+
+// getImageAbsoluteURI.ts — thêm prefix /files cho mọi path bắt đầu bằng '/'
+if (imageUrl.startsWith('/')) {
+  return new URL(`/files${imageUrl}`, baseUrl).toString();
+}</code></pre>
+  <span class="lbl">Tại sao nghiêm trọng</span>
+  <p>
+    File SVG <em>có thật</em> tại <code>packages/twenty-front/public/images/integrations/twenty-logo.svg</code>
+    (tức được front serve tại <code>/images/...</code>), nhưng helper lại trỏ nó thành
+    <code>https://&lt;server&gt;/files/images/integrations/twenty-logo.svg</code> → 404.
+    Ảnh hưởng 8 chỗ tiêu dùng: workspace switcher
+    (<code>MultiWorkspaceDropdownDefaultComponents.tsx:113,184</code>, <code>AvailableWorkspaceItem.tsx:54</code>,
+    <code>MultiWorkspaceDropdownClickableComponent.tsx:39</code>), danh sách workspace ở màn sign-in
+    (<code>SignInUpGlobalScopeForm.tsx:208</code>) và cả ba trang admin panel.
+    Mọi workspace chưa đặt logo riêng đều hiện avatar vỡ.
+    <code>PageFavicon.tsx:20-21</code> dùng giá trị thô nên favicon vẫn chạy — sự bất nhất này vô hình cho tới khi nhìn kỹ.
+  </p>
+  <span class="lbl">Hướng xử lý</span>
+  <p>
+    Dùng giá trị tuyệt đối (<code>new URL(..., window.location.origin).href</code>) hoặc import SVG như một asset —
+    bất kỳ cách nào chạm được nhánh short-circuit <code>isAlreadyAbsoluteUri</code> ở dòng 16.
+  </p>
+</div>
+
+<div class="finding f-crit" id="C8">
+  <h3><span class="fid">C8</span> <span class="v">✓</span> Branding patcher điền tiếng Anh vào bản dịch rỗng, đánh dấu "đã dịch"</h3>
+  <p class="meta"><span class="tag">i18n</span>packages/twenty-utils/patch-crove-branding.ts:60-67</p>
+  <pre><code>const sourceText = msgstrValue || msgidValue;
+const transformedText = isVietnamese
+  ? transformVietnameseText(sourceText)
+  : transformEnglishText(sourceText);
+
+if (transformedText !== msgstrValue) {
+  patchCount++;
+  return `${msgidPrefix}\nmsgstr ${JSON.stringify(transformedText)}`;
+}</code></pre>
+  <span class="lbl">Tại sao nghiêm trọng</span>
+  <p>
+    <code>vi-VN.po</code> có <strong>136</strong> entry <code>msgstr ""</code>. Với mỗi entry,
+    <code>msgstrValue</code> là chuỗi rỗng → falsy → <code>sourceText</code> rơi về <code>msgid</code> tiếng Anh →
+    một chuỗi không rỗng được ghi vào <code>msgstr</code>.
+    Kết quả: entry chưa dịch tiếng Việt bị nhét tiếng Anh <em>như thể đã dịch</em>, và
+    <code>lingui extract</code> về sau coi nó là hoàn chỉnh nên <strong>không bao giờ flag lại để dịch nữa</strong>.
+    Đây là mất mát tín hiệu vĩnh viễn và không thể phát hiện bằng mắt.
+  </p>
+  <span class="lbl">Hướng xử lý</span>
+  <p>Thêm <code>if (msgstrValue === '') return fullMatch;</code> — chỉ vá những entry đã có bản dịch.</p>
+</div>
+
+<div class="finding f-crit" id="C9">
+  <h3><span class="fid">C9</span> <span class="v">✓</span> Workspace do JIT/webhook tạo ra không bao giờ được activate, và bị cron xoá sau 7 ngày</h3>
+  <p class="meta"><span class="tag">Kiến trúc</span>auth/services/auth.service.ts:1048 · auth/controllers/dos-org-sync-webhook.controller.ts:271<br>
+  engine/workspace-manager/workspace-cleaner/crons/clean-onboarding-workspaces.job.ts</p>
+  <pre><code>// Cả hai path fork đều dừng ở đây:
+await this.signInUpService.signUpOnNewWorkspace(
+  { type: 'existingUser', existingUser: user },
+  { displayName: orgName, subdomain: ..., workspaceId: ... },
+);
+// → sign-in-up.service.ts:809 set activationStatus: PENDING_CREATION
+
+// clean-onboarding-workspaces.job.ts — cron dọn dẹp:
+where: {
+  activationStatus: In([PENDING_CREATION, ONGOING_CREATION, CREATED]),
+  createdAt: LessThan(sevenDaysAgo),
+}</code></pre>
+  <span class="lbl">Bằng chứng đã kiểm chứng</span>
+  <p>
+    <code>workspaceService.activateWorkspace</code> — hàm <em>duy nhất</em> tạo Postgres schema
+    (<code>workspace.service.ts:351</code> → <code>workspaceManagerService.init(...)</code>) —
+    chỉ có <strong>đúng một caller</strong> trong toàn bộ <code>src</code>:
+    <code>workspace.resolver.ts:125</code> (GraphQL mutation). Không path fork nào gọi nó.
+  </p>
+  <span class="lbl">Tại sao nghiêm trọng</span>
+  <p>Hai hệ quả độc lập:</p>
+  <ol>
+    <li>Mọi org do DOS provision có row <code>core.workspace</code> với <code>databaseSchema = ''</code>,
+      không schema, không metadata, không standard object. Cron ở trên soft-delete nó sau 7 ngày
+      trừ khi có con người hoàn tất onboarding trên UI → <strong>tenant biến mất</strong>.</li>
+    <li>Trong thời gian chờ, mọi event <code>company.*</code>/<code>customer.*</code>/<code>ticket.*</code>
+      của org đó tìm thấy row, đi vào <code>executeInWorkspaceContext</code>, fail trong
+      <code>loadWorkspaceContext</code> (<code>workspace-orm.manager.ts:99-110</code>) và bị
+      <code>logger.error</code> nuốt — <strong>payload bị vứt bỏ, không retry</strong>.</li>
+  </ol>
+  <span class="lbl">Hướng xử lý</span>
+  <p>
+    Additive: sau <code>signUpOnNewWorkspace</code>, enqueue một job BullMQ (hoặc gọi
+    <code>WorkspaceService.activateWorkspace</code>) để việc tạo schema diễn ra ngoài request path;
+    đồng thời hoãn/bỏ qua event sync cho workspace chưa ở trạng thái <code>ACTIVE</code>.
+  </p>
+</div>
+
+<!-- ==================== HIGH ==================== -->
+
+<h2 id="high">High <span class="badge b-high">17 vấn đề</span></h2>
+<p class="sub">H1–H15 từ vòng 1. Hai mục mới của vòng 2 (<a href="#N2">N2</a>, <a href="#N6">N6</a>)
+  được trình bày trong <a href="#addendum">mục Bổ sung</a> và đã được tính vào ma trận.</p>
+
+<div class="finding f-high" id="H1">
+  <h3><span class="fid">H1</span> <span class="v">✓</span> Cửa sổ chống replay bị vô hiệu hoá; format đang dùng thật thì không có cửa sổ nào</h3>
+  <p class="meta"><span class="tag">Bảo mật</span>dos-org-sync-webhook.controller.ts:60-62 và :83-100</p>
+  <pre><code>const fiveMinutes = 5 * 60 * 1000;
+if (Math.abs(Date.now() - Number(timestamp)) &gt; fiveMinutes) {
+  return false;
+}</code></pre>
+  <p>
+    <code>Number('abc')</code> là <code>NaN</code>, và <code>NaN &gt; 300000</code> là <strong>false</strong> →
+    chỉ cần gửi <code>t=abc</code> là tắt cửa sổ 5 phút. Tệ hơn: Format 2 (<code>sha256=&lt;hex&gt;</code>, dòng 83-100)
+    <strong>không có timestamp nào cả</strong> — mà đó lại đúng là format mà client của chính fork dùng
+    (<code>packages/twenty-utils/test-dos-webhook.ts</code>: <code>sha256=</code> + HMAC trên raw body).
+    Không có nonce hay dedup theo <code>payload.id</code> ở cả hai nhánh.
+  </p>
+  <div class="note">
+    <strong>Xác nhận thêm ở vòng 2 — đây không phải rủi ro lý thuyết.</strong>
+    Đã đọc <code>test-dos-webhook.ts:216-222</code>, công cụ test chính thức của hệ thống:
+    <pre style="margin:6px 0"><code>const signature = `sha256=${crypto
+  .createHmac('sha256', opts.secret)
+  .update(Buffer.from(jsonBody))
+  .digest('hex')}`;
+headers['x-dos-signature'] = signature;</code></pre>
+    Đúng là Format 2 — nhánh <em>không có</em> timestamp trong chữ ký. Payload có field
+    <code>timestamp</code> (ISO string) nhưng nhánh Format 2 của controller không bao giờ đọc nó.
+    ⇒ <strong>Format đang thực sự dùng giữa DOS và CRM là format không có chống replay.</strong>
+    Hệ quả trực tiếp cho việc rotate ở <a href="#C1">C1</a>: rotate chỉ sửa được giả mạo chữ ký,
+    <strong>không</strong> sửa được replay — ai bắt được một event đã ký (qua log, proxy, hoặc trước khi rotate)
+    đều phát lại được mãi mãi. Sửa replay đòi hỏi đổi cả hai phía sang Format 1
+    (<code>t=&lt;epoch&gt;,v1=&lt;hmac&gt;</code>) và vá bug <code>NaN</code> ở dòng 60-62 —
+    đây là thay đổi contract với team DOS, không phải việc một phía.
+  </div>
+  <p><strong>Xử lý:</strong> reject timestamp không phải số hữu hạn; chỉ chấp nhận Format 1;
+    lưu <code>payload.id</code> đã tiêu thụ vào Redis trong đúng khoảng dung sai.</p>
+</div>
+
+<div class="finding f-high" id="H2">
+  <h3><span class="fid">H2</span> Payload không được validate + 5 chỗ bypass permission check</h3>
+  <p class="meta"><span class="tag">Bảo mật</span>dos-org-sync-webhook.controller.ts:214 · :452 · :534 · :584 · :694 · :745</p>
+  <pre><code>const payload = req.body as EcosystemWebhookPayload;   // chỉ là cast, không DTO
+
+await this.workspaceOrmManager.getRepository('company', {
+  shouldBypassPermissionChecks: true,
+});</code></pre>
+  <p>
+    Không DTO, không <code>class-validator</code>, không <code>ValidationPipe</code>.
+    <code>id</code>/<code>companyId</code>/<code>personId</code> do attacker đưa chảy thẳng vào
+    <code>companyRepo.save({ id: companyId, ... })</code>, <code>personRepo.save({ id: personId, ... })</code> và
+    <code>.delete({ id })</code>. Vì permission check bị bỏ qua, record bất kỳ trong workspace đều ghi đè hoặc xoá được.
+    Năm chỗ <code>shouldBypassPermissionChecks</code> ở trên là <em>toàn bộ</em> usage fork trong
+    <code>core-modules/auth</code> (<code>access-token.service.ts:88</code> là của upstream).
+  </p>
+  <p>
+    <em>Giảm nhẹ đã kiểm chứng:</em> các write đều pick field chứ không spread object, nên mass assignment
+    giới hạn ở <code>name</code>, <code>domainName</code>, <code>jobTitle</code>, <code>phones</code>,
+    <code>emails</code>, <code>companyId</code>. Không có SQL nội suy chuỗi nào trong file.
+  </p>
+  <p><strong>Xử lý:</strong> thêm <code>@Body()</code> DTO với <code>class-validator</code>; giới hạn repository
+    bypass về một allowlist field theo từng loại event.</p>
+</div>
+
+<div class="finding f-high" id="H3">
+  <h3><span class="fid">H3</span> Một secret dùng cho cả hai chiều: khoá HMAC inbound và <code>X-API-Key</code> outbound</h3>
+  <p class="meta"><span class="tag">Bảo mật</span>dos-org-sync-webhook.controller.ts:809 và :821</p>
+  <pre><code>const apiKey = twentyConfigService.get('CROVE_DOS_WEBHOOK_SECRET');
+...
+...(apiKey ? { 'X-API-Key': apiKey } : {}),   // → POST {AUTH_DOS_API_URL}/internal/events/publish</code></pre>
+  <p>
+    Khoá dùng để <em>xác minh</em> request đến cũng chính là credential dùng để <em>gọi</em> DOS.Me.
+    Rotate một bên là gãy bên kia; rò một bên là mất cả hai chiều.
+    Khuếch đại thêm: listener outbound (<code>ecosystem-outbound-event.listener.ts:31,57,91,107,141,175</code>)
+    bắn trên mọi thao tác CUD của company/person, mà controller inbound lại <em>ghi</em> company/person —
+    một tiếng vọng từ phía DOS tạo ra vòng lặp khuếch đại ghi/HTTP không giới hạn,
+    vì phía inbound không có idempotency key cũng không lọc <code>source</code>.
+  </p>
+  <p><strong>Xử lý:</strong> tách thành hai biến riêng (<code>..._INBOUND_HMAC_KEY</code> và <code>..._OUTBOUND_API_KEY</code>).</p>
+</div>
+
+<div class="finding f-high" id="H4">
+  <h3><span class="fid">H4</span> <span class="v">✓</span> JIT provisioning tin vào claim OIDC mà người dùng tự ghi được</h3>
+  <p class="meta"><span class="tag">Bảo mật</span>auth/strategies/dos-id.auth.strategy.ts:178-182 · auth/services/auth.service.ts:1023-1058</p>
+  <pre><code>const rawOrganizations =
+  userinfo.organizations ??
+  claims.organizations ??
+  appMetadata.organizations ??
+  userMetadata.organizations;      // ← client tự ghi được</code></pre>
+  <p>
+    Fallback cuối là <code>user_metadata</code> — trong Supabase GoTrue đây là field
+    <strong>client tự ghi được</strong> qua <code>auth.updateUser({ data: {...} })</code>.
+    Một user set <code>user_metadata.organizations = [{ name: "&lt;tên hiển thị workspace nạn nhân&gt;", role: "OWNER" }]</code>
+    sẽ được chèn vào workspace đó qua chính phép OR-match ở <code>auth.service.ts:1032-1039</code>,
+    hoặc tự provision một workspace mới với <code>workspaceId</code> tự chọn khi <code>role</code> là
+    <code>OWNER</code>/<code>ADMIN</code> (<code>:1044-1052</code>).
+    Đáng chú ý: nhánh webhook của fork <em>cố ý bỏ qua</em> <code>payload.data.role</code>, còn nhánh SSO thì không.
+  </p>
+  <p>
+    <strong>Chưa xác minh được:</strong> project Supabase <code class="redacted">…REDACTED</code> có auth hook nào
+    strip <code>user_metadata.organizations</code> hay không. Nếu có, finding này hạ xuống Medium.
+    <strong>Cần kiểm tra trong Supabase dashboard.</strong>
+  </p>
+  <p><strong>Xử lý:</strong> chỉ nhận <code>organizations</code>/<code>teams</code> từ <code>app_metadata</code>
+    (chỉ admin ghi được) và match theo <code>org.id</code>, không theo tên.</p>
+</div>
+
+<div class="finding f-high" id="H5">
+  <h3><span class="fid">H5</span> <span class="v">✓</span> Zalo webhook bỏ qua xác minh khi thiếu header chữ ký</h3>
+  <p class="meta"><span class="tag">Bảo mật</span>packages/twenty-apps/public/zalo-oa/src/logic-functions/zalo-webhook.ts:19-45, :70</p>
+  <pre><code>if (credentials.success &amp;&amp; isDefined(credentials.oaSecretKey)) {
+  if (isDefined(rawBody) &amp;&amp; isDefined(signatureHeader)) {
+    const check = verifyZaloWebhookSignature({ ... });
+    if (!check.valid) { return { success: false, ... }; }
+  }
+}
+...
+return zaloWebhookHandler(body);   // ← rơi thẳng xuống đây
+
+httpRouteTriggerSettings: { path: '/webhook/zalo', httpMethod: 'POST', isAuthRequired: false }</code></pre>
+  <p>
+    Ba đường skip độc lập: thiếu <code>ZALO_APP_ID</code>/<code>ZALO_APP_SECRET</code>, thiếu
+    <code>ZALO_OA_SECRET_KEY</code>, hoặc đơn giản nhất — <strong>attacker không gửi header
+    <code>x-zes-signature</code>/<code>mac</code></strong>. Cả ba đều rơi xuống
+    <code>zaloWebhookHandler</code>, hàm này gọi <code>createPerson</code> với <code>info.name</code> và
+    <code>info.phone</code> do attacker chọn (<code>handlers/zalo-webhook-handler.ts:57-118</code>).
+    Tạo lead không giới hạn, đầu độc dữ liệu CRM, spam trùng lặp (dedup chỉ theo exact phone match).
+    <code>x-zes-timestamp</code> được đưa vào hash nhưng <strong>không bao giờ được so với một cửa sổ thời gian</strong>.
+  </p>
+  <p>
+    Ngoài ra <code>logic-functions/utils/verify-zalo-webhook-signature.ts:44-49</code> chấp nhận ứng viên thứ ba
+    <code>sha256(rawBody + secretKey)</code> — cấu trúc secret-suffix yếu hơn HMAC và không cần thiết.
+  </p>
+  <p><strong>Xử lý:</strong> trả lỗi khi secret đã được cấu hình mà header vắng mặt; validate cửa sổ thời gian;
+    bỏ ứng viên 3.</p>
+</div>
+
+<div class="finding f-high" id="H6">
+  <h3><span class="fid">H6</span> Không có rate limiting trên bất kỳ endpoint auth/webhook nào</h3>
+  <p class="meta"><span class="tag">Bảo mật</span>toàn bộ engine/core-modules</p>
+  <p>
+    Không có decorator <code>@Throttle</code> nào trong toàn bộ <code>core-modules</code>;
+    <code>ThrottlerModule</code> chỉ là một token-bucket service được tiêu thụ ở
+    <code>auth.resolver.ts:1083</code> và trong workflow runs.
+  </p>
+  <p>
+    <em>Ghi chú công bằng:</em> chưa xác minh được upstream Twenty v2.38 có ship rate limiter hay không,
+    nên đây có thể là khoảng trống của upstream chứ không phải fork làm hỏng. Nêu ra để đủ bức tranh,
+    không tính là finding của fork.
+  </p>
+</div>
+
+<div class="finding f-high" id="H7">
+  <h3><span class="fid">H7</span> Không có outbox/retry/DLQ cho event outbound; fan-out theo từng record</h3>
+  <p class="meta"><span class="tag">Kiến trúc</span>dos-org-sync-webhook.controller.ts:801-833 · listeners/ecosystem-outbound-event.listener.ts:33,63,95,114,147,182</p>
+  <pre><code>} catch (error) {
+  logger.warn(`Failed to dispatch ecosystem event "${event}": ${error}`);
+  return false;                      // ← cả 6 caller đều bỏ qua giá trị này
+}
+
+for (const event of payload.events) {
+  await sendEcosystemEvent(...);     // ← N HTTP round-trip cho một batch
+}</code></pre>
+  <p>
+    <code>EventEmitterModule.forRoot({ wildcard: true })</code> không promisify
+    (<code>workspace-event-emitter.ts:69</code>, <code>core-engine.module.ts:159</code>) nên
+    <code>emit()</code> gọi listener đồng bộ và <strong>vứt bỏ promise trả về</strong> — chuỗi <code>await</code>
+    trong listener chạy tách rời khỏi request mutation, không có backpressure.
+    Khi DOS.Me outage, mỗi event tốn một lần timeout 5s rồi <strong>mất vĩnh viễn</strong>: không lưu, không replay,
+    không dead-letter. Restart pod mất mọi event đang bay. Một lần import 5.000 company
+    sẽ treo 5.000 socket timeout tuần tự trên process API.
+    <code>WorkspaceEventBatch</code> vốn đã giao cả batch, nhưng fork serialise nó thành N request.
+  </p>
+  <p>
+    Upstream có khoảng 40 job dạng này (<code>src/modules/**/jobs/*.job.ts</code>) — fork không dùng cái nào.
+  </p>
+  <p><strong>Xử lý:</strong> outbox table ghi cùng transaction với việc đổi record, drain bằng
+    <code>@Processor(MessageQueue.…)</code> với BullMQ backoff; gộp thành một POST mỗi batch.</p>
+</div>
+
+<div class="finding f-high" id="H8">
+  <h3><span class="fid">H8</span> JIT provisioning chạy ngay trong request OAuth redirect</h3>
+  <p class="meta"><span class="tag">Hiệu năng</span>auth/services/auth.service.ts:1020-1060</p>
+  <pre><code>for (const org of organizations) {
+  await this.workspaceRepository.findOne({ where: [{id}, {subdomain}, {displayName}] });
+  await this.signInUpService.signUpOnNewWorkspace(...);
+}   // catch { this.logger.warn(...) }  tại :1055</code></pre>
+  <p>
+    <code>/auth/dos-id/redirect</code> là một điều hướng trình duyệt, nhưng mỗi org trong claim phải chịu
+    1 lookup OR không index cộng với hoặc một lần link member, hoặc một lần tạo workspace đầy đủ —
+    lần tạo này bao gồm một <code>axios.post</code> đồng bộ timeout 5s tới DOS.Me
+    (<code>sign-in-up.service.ts:744-780</code>) và một transaction nhiều statement.
+    Một token liệt kê 10 org trong đó user sở hữu 3 org mới → redirect mất hàng phút → Cloudflare/proxy trả 524.
+    Lỗi từng org chỉ <code>warn</code>, nên provisioning kết thúc dở dang và không tất định.
+  </p>
+  <p><strong>Xử lý:</strong> enqueue một job cho mỗi org claim; giữ redirect chỉ làm lookup read-only.</p>
+</div>
+
+<div class="finding f-high" id="H9">
+  <h3><span class="fid">H9</span> Migration ledger bị ghi tay bằng epoch bịa → hỏng con trỏ upgrade</h3>
+  <p class="meta"><span class="tag">Kiến trúc</span>scripts/fix-migration-sequence.js:19-39 · packages/twenty-server/src/database/commands/fix-migration-timestamps.ts:17-27</p>
+  <pre><code>// scripts/fix-migration-sequence.js
+const baseEpoch = 1735689600;   // Each step is 1 hour apart
+await dataSource.query(
+  `UPDATE core."upgradeMigration" SET "createdAt" = $1 WHERE name = $2`, [timestamp, step.name]);
+// ... và:  DELETE FROM core."upgradeMigration" WHERE status = 'failed' ...
+
+// fix-migration-timestamps.ts
+const baseEpoch = 1700000000;   // epoch KHÁC, bước i * 60</code></pre>
+  <p>
+    Con trỏ upgrade của mỗi workspace được suy ra theo
+    <code>SELECT DISTINCT ON ("workspaceId") … ORDER BY "workspaceId", "createdAt" DESC</code>
+    (<code>upgrade-migration.service.ts:240-262</code>). Ghi đè <code>createdAt</code> của <em>mọi</em> step
+    bằng một dãy đơn điệu tổng hợp sẽ đẩy con trỏ của mọi workspace về <strong>step cuối cùng</strong>,
+    khiến <code>upgrade</code> tin rằng tất cả command đã apply và <strong>bỏ qua những command đang pending</strong>.
+    Hai script dùng hai epoch khác nhau nên kết quả phụ thuộc script nào chạy sau.
+  </p>
+  <p>
+    Chính <code>.github/actions/upgrade-mutation-guard/action.yaml:167-171</code> cảnh báo hành vi này
+    ("Fabricated future timestamps poison the sequence for every command added after them") —
+    nhưng guard không nhìn thấy vì hai script nằm <em>ngoài</em> thư mục <code>upgrade-version-command/</code>.
+    Cả hai không phải nx target, không tài liệu, không test.
+    Kèm theo là <code>scripts/drop-timeline-activity-type.sql:1</code> với
+    <code>DROP TABLE IF EXISTS "core"."timelineActivityType" CASCADE;</code> trên bảng core.
+  </p>
+  <p>
+    <strong>Xử lý:</strong> xoá cả ba script. Nếu thực sự cần một đường sửa chữa, hãy làm nó thành
+    <em>một</em> nx command idempotent, có review, nằm trong <code>2-38/</code> để được ghi nhận và replay được.
+    Lịch sử migration phải tái lập được từ đầu, chứ không phải chỉ từ một DB đã qua phẫu thuật.
+  </p>
+</div>
+
+<div class="finding f-high" id="H10">
+  <h3><span class="fid">H10</span> <span class="v">✓</span> Hai upgrade command lịch sử đã commit bị sửa — vi phạm CI guard và bỏ qua backfill trong im lặng</h3>
+  <p class="meta"><span class="tag">Kiến trúc</span>database/commands/upgrade-version-command/2-33/…replace-timeline-activity-name-with-type.command.ts:216<br>
+  database/commands/upgrade-version-command/2-34/…add-timeline-activity-type-snapshot.command.ts:177</p>
+  <pre><code>const hasNameColumn = await dataSource.query(
+  `SELECT 1 FROM information_schema.columns
+     WHERE table_schema = $1 AND table_name = 'timelineActivity' AND column_name = 'name'`,
+  [schemaName]);
+if (!isDefined(hasNameColumn) || hasNameColumn.length === 0) { … return; }</code></pre>
+  <p>
+    Đã xác nhận <code>TWENTY_CURRENT_VERSION = '2.38.0'</code>
+    (<code>engine/core-modules/upgrade/constants/twenty-current-version.constant.ts:10</code>),
+    nên step "Check upgrade version commands are in current version only" của
+    <code>.github/actions/upgrade-mutation-guard/action.yaml</code> sẽ <strong>fail merge queue</strong>
+    với các file <em>đã sửa</em> nằm ngoài <code>2-38/</code>, trừ khi PR gắn label
+    <code>ci:allow-previous-version-upgrade-mutation</code>.
+  </p>
+  <p>
+    Về ngữ nghĩa còn nghiêm trọng hơn: trên workspace mà cột <code>timelineActivity.name</code> đã bị drop bằng tay
+    (<code>scripts/drop-timeline-activity-type.sql</code>), command 2-33 vẫn tạo các row type và field
+    nhưng <strong>return trước khi backfill</strong> → <code>timelineActivityTypeId</code> NULL cho toàn bộ row cũ;
+    và <code>backfillMissingTimelineActivityTypeIds</code> của 2-34 cũng return sớm, nên snapshot được dựng từ NULL.
+    Hai command này không còn tương đương idempotent với bản mà các instance đã-applied từng chạy.
+  </p>
+  <p><strong>Xử lý:</strong> revert cả hai file; thêm một workspace command mới trong <code>2-38/</code>
+    để sửa <code>timelineActivityTypeId</code> NULL cho các workspace bị ảnh hưởng.</p>
+</div>
+
+<div class="finding f-high" id="H11">
+  <h3><span class="fid">H11</span> Early-return cho root domain bỏ đói 7 call site upstream</h3>
+  <p class="meta"><span class="tag">Kiến trúc</span>domain/domain-server-config/services/domain-server-config.service.ts:69-75</p>
+  <pre><code>if (originHostname === frontDomain) {
+  return { subdomain: undefined, domain: null, isPublicDomainOrigin: false };
+}</code></pre>
+  <p>
+    Với tổ hợp đang ship (<code>IS_MULTIWORKSPACE_ENABLED=true</code> +
+    <code>IS_MULTIWORKSPACE_SUBDOMAIN_ENABLED=false</code>),
+    <code>workspace-domains.service.ts:154-160</code> sau đó chạm
+    <code>if (!domain &amp;&amp; !subdomain) return { workspace: undefined }</code>.
+    Chỉ <code>auth.resolver.ts:809-828</code> được vá fallback. Những consumer còn lại nay nhận
+    <code>undefined</code> trên root domain:
+    <code>auth.resolver.ts:221, 322, 831</code> · <code>two-factor-authentication.resolver.ts:63</code> ·
+    <code>email-verification.resolver.ts:38</code> · <code>oauth-propagator.controller.ts:81</code> ·
+    <code>workspace.resolver.ts:410</code> · <code>route-trigger.service.ts:96</code>.
+    → <strong>2FA, xác minh email và OAuth callback propagation mất workspace context.</strong>
+  </p>
+  <p><strong>Xử lý:</strong> chuyển fallback vào <code>WorkspaceDomainsService.resolveWorkspaceAndPublicDomain</code>
+    (một nhánh additive trả về workspace mặc định/token khi subdomain routing tắt), thay vì vá từng resolver.</p>
+  <p class="sub">Ghi chú: caching <em>không</em> bị ảnh hưởng — resolution vốn đã đọc DB mỗi lần gọi ở upstream;
+    nhánh fork ở <code>auth.resolver.ts:812-816</code> chỉ thêm đúng một <code>findOne</code> theo khoá chính.</p>
+</div>
+
+<div class="finding f-high" id="H12">
+  <h3><span class="fid">H12</span> <span class="v">✓</span> Fallback trong workflow hook che lỗi và có thể ghi lên version đã publish</h3>
+  <p class="meta"><span class="tag">Frontend</span>modules/workflow/hooks/useFlowOrThrow.ts:3,8-14 · useGetUpdatableWorkflowVersionOrThrow.ts:40-46</p>
+  <pre><code>// useFlowOrThrow.ts — tên vẫn hứa "OrThrow", nhưng:
+import { isDefined } from 'twenty-shared/utils';   // ← dòng 3: nay không dùng → oxlint fail
+return (flow ?? { workflowVersionId: '', trigger: null, steps: [] });
+
+// useGetUpdatableWorkflowVersionOrThrow.ts — upstream throw 'Failed to create draft version'
+if (isNonEmptyString(flow?.workflowVersionId)) { return flow.workflowVersionId; }
+if (isNonEmptyString(workflowVisualizerWorkflowVersionId)) { return workflowVisualizerWorkflowVersionId; }</code></pre>
+  <span class="lbl">Hệ quả của stub trong useFlowOrThrow</span>
+  <p>
+    <code>useAvailableVariablesInWorkflowStep.ts:27,36</code> đưa <code>workflowVersionId: ''</code> vào
+    <code>stepsOutputSchemaFamilySelector</code>, whose family key là <code>`${workflowVersionId}-${stepId}`</code>
+    → key thành <code>-trigger</code> → <code>.filter(isDefined)</code> cho ra <code>[]</code>.
+    <strong>Dropdown biến trong action editor rỗng không, không một lỗi nào hiện ra</strong> —
+    người dùng kết luận workflow của mình không có biến. <code>useSearchVariable.ts:39-41</code>
+    cũng trả <code>variableLabel: undefined</code> cho mọi biến, nên chế độ xem read-only và run log
+    hiện các pill trắng.
+  </p>
+  <span class="lbl">Hệ quả của fallback trong useGetUpdatableWorkflowVersionOrThrow</span>
+  <p>
+    Hai tầng fallback mới chỉ đạt tới khi <code>workflow</code> undefined (cache chưa load)
+    <em>hoặc</em> việc tạo draft thất bại — và
+    <code>workflowVisualizerWorkflowVersionIdComponentState</code> giữ <em>version đang được xem</em>,
+    mà với workflow đã publish thì đó là bản <strong>ACTIVE</strong>.
+    <code>updateWorkflowVersionStep</code> / <code>updateTrigger</code> / <code>useTidyUp</code> /
+    <code>TidyUpWorkflowSingleRecordCommand</code> sau đó sẽ mutate một version đang chạy.
+    Nếu server reject, <code>useUpdateWorkflowVersionStep.ts:52-56</code> nuốt nó vào một snackbar
+    trong khi <code>setFlow</code> (dòng 62) <em>chưa</em> chạy; nếu server accept,
+    người dùng đã âm thầm sửa một automation đang live mà không có draft.
+    Dù cách nào thì hợp đồng "OrThrow" cũng đã mất.
+  </p>
+  <span class="lbl">Test có sẵn nay fail</span>
+  <p>
+    <code>__tests__/useGetUpdatableWorkflowVersion.test.ts:22-26</code> mock
+    <code>useAtomComponentStateValue: jest.fn(() =&gt; mockWorkflowId)</code> — trả <code>'123'</code> cho
+    <em>mọi</em> atom. Hook nay gọi nó ba lần, nên <code>workflowVisualizerWorkflowVersionId</code> nhận
+    <code>'123'</code>, <code>isNonEmptyString</code> pass và hook <strong>trả về</strong> thay vì reject
+    như assertion ở <code>:84-89</code> mong đợi. Commit <code>645eaa2d85</code> đổi hook mà không sửa spec.
+  </p>
+  <span class="lbl">Điểm sáng trong cùng commit</span>
+  <p>
+    Bốn side-panel component trong commit <code>1c761c6a26</code> lại làm <strong>đúng</strong>:
+    chuyển từ <code>useFlowOrThrow()</code> sang
+    <code>useAtomComponentStateValue(flowComponentState)</code> cộng guard tường minh
+    <code>!isDefined(flow)</code> → <code>return null</code>
+    (<code>SidePanelWorkflowEditStepContent.tsx:25</code>, <code>SidePanelWorkflowViewStepContent.tsx:20</code>).
+    Năm consumer còn lại của stub (<code>useAvailableVariablesInWorkflowStep</code>, <code>useSearchVariable</code>,
+    <code>WorkflowIteratorSubStepSwitcher.tsx:34</code>, <code>WorkflowRunStepLogsDetail.tsx:54</code>,
+    <code>SidePanelWorkflowRunViewStepContent.tsx:52</code>) có thể migrate y hệt, khiến stub xoá được.
+  </p>
+  <p><strong>Xử lý:</strong> khôi phục throw khi tạo draft thất bại; biến trường hợp "chưa load" thành
+    loading state (pattern upstream: <code>useWorkflowWithCurrentVersion</code> + editor disabled) thay vì đoán.</p>
+</div>
+
+<div class="finding f-high" id="H13">
+  <h3><span class="fid">H13</span> <code>upstream-sync.yaml</code> auto-merge, auto-push, và âm thầm vứt bỏ upstream khi conflict</h3>
+  <p class="meta"><span class="tag">CI</span>.github/workflows/upstream-sync.yaml:93-98, :108, :157</p>
+  <pre><code>if [ -f "packages/twenty-utils/patch-crove-branding.ts" ]; then
+  yarn tsx packages/twenty-utils/patch-crove-branding.ts || true    # ← fail vẫn đi tiếp
+git commit -m "chore(sync): auto-merge upstream release $TAG into $TARGET_BRANCH"
+git push origin "$TARGET_BRANCH"                                    # ← push thẳng, không PR
+
+# khi conflict:
+git merge -X ours --no-commit "$TAG" || true</code></pre>
+  <p>
+    Ba vấn đề chồng nhau: <strong>(a)</strong> <code>|| true</code> nghĩa là branding patch fail vẫn commit và push;
+    <strong>(b)</strong> <code>-X ours</code> tạo ra một nhánh sync <em>trông như</em> đã merge đủ trong khi
+    âm thầm bỏ mọi thay đổi upstream xung đột — người review approve PR đó sẽ tin rằng upstream đã được lấy;
+    <strong>(c)</strong> <code>patch-crove-branding.ts:171-186</code> ghi đè <code>msgstr</code> của file
+    <code>.po</code> được track rồi chạy <code>npx lingui compile --typescript</code>, commit đúng loại churn
+    mà <code>CLAUDE.md:47</code> cấm. Workflow không có <code>concurrency</code> group,
+    nên hai lần chạy cách nhau 6 giờ có thể đua nhau.
+  </p>
+  <p><strong>Xử lý:</strong> không bao giờ auto-push vào <code>dev</code> — luôn mở PR.
+    Thay <code>-X ours</code> bằng merge conflict thật để PR hiển thị xung đột.</p>
+</div>
+
+<div class="finding f-high" id="H14">
+  <h3><span class="fid">H14</span> <span class="v">✓</span> Vi phạm rule bảo mật GitHub Actions của chính repo</h3>
+  <p class="meta"><span class="tag">CI</span>docker-publish.yml:23,26,29,37,58 · upstream-sync.yaml:31 · publish-crove-apps.yaml:29,32 · ci-cross-version-upgrade.yaml:330</p>
+  <pre><code># .cursor/rules/github-actions-security.mdc:9
+"Always reference external actions ... by their full commit SHA, never by a mutable tag."
+
+# docker-publish.yml thực tế:
+- uses: actions/checkout@v4
+- uses: docker/setup-buildx-action@v3
+- uses: docker/login-action@v3
+- uses: docker/metadata-action@v5</code></pre>
+  <p>
+    Cả 9 pin dạng mutable tag trong <code>.github/</code> đều nằm ở file do fork thêm hoặc fork sửa;
+    các file upstream đều pin SHA đầy đủ kèm comment tag.
+    Nghiêm trọng nhất: workflow <em>duy nhất</em> push image lên <code>ghcr.io</code> với
+    <code>permissions: packages: write</code> (<code>docker-publish.yml:18-19</code>) lại resolve
+    action build/login của nó bằng tag mutable — một tag bị chiếm đoạt sẽ dẫn tới quyền push registry.
+    Workflow này đồng thời <strong>không có</strong> <code>concurrency</code> group và không có guard
+    <code>if: github.repository ==</code>.
+  </p>
+  <p><strong>Xử lý:</strong> SHA-pin 9 reference; thêm <code>concurrency</code> cho
+    <code>docker-publish.yml</code> và <code>publish-crove-apps.yaml</code>.</p>
+</div>
+
+<div class="finding f-high" id="H15">
+  <h3><span class="fid">H15</span> Định danh hạ tầng production bị commit trong tài liệu kiến trúc</h3>
+  <p class="meta"><span class="tag">Repo</span>docs/ARCHITECTURE.md:39, 49, 59, 61, 96-100</p>
+  <pre><code>IP: <span class="redacted">34.87.89.118</span>
+ghcr.io/dos/crm
+Supabase Production Database (Project: DOS | Ref: <span class="redacted">gulptwdu…REDACTED</span>)
+User: crm_app (Direct host: db.<span class="redacted">…REDACTED</span>.supabase.com:5432)
++ toàn bộ 5 OIDC endpoint của Supabase Auth</code></pre>
+  <p>
+    Trao cho attacker đúng host, port, DB role và endpoint IdP của database đang phục vụ
+    <code>crm.crove.com</code>. Nằm trong một fork của repo public.
+    <strong>Mức độ thật phụ thuộc <code>github.com/DOS/Crove-CRM</code> public hay private — chưa xác minh được.</strong>
+    Nếu public, mục này và <a href="#C1">C1</a> nâng lên mức khẩn cấp.
+  </p>
+  <p><strong>Xử lý:</strong> chuyển sang runbook private; trong repo chỉ giữ kiến trúc logic.</p>
+</div>
+
+<!-- ==================== MEDIUM ==================== -->
+
+<h2 id="medium">Medium <span class="badge b-med">26 vấn đề</span></h2>
+
+<h3 id="m-sec">Bảo mật &amp; cấu hình</h3>
+<table>
+  <thead><tr><th style="width:6%">ID</th><th style="width:30%">Vấn đề</th><th style="width:26%">Vị trí</th><th>Chi tiết &amp; hướng xử lý</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>M1</td>
+      <td>Chính sách mint login token bị nới từ <code>&amp;&amp;</code> thành <code>||</code></td>
+      <td class="loc">core-modules/user-workspace/<br>user-workspace.service.ts:681-690</td>
+      <td>Upstream là <code>canAutoLoginIntoWorkspaces &amp;&amp; isAuthEnabled(authProvider, workspace)</code>.
+        Fork thêm <code>effectiveProvider === DosId || === SSO ||</code>, và <code>authProvider</code>
+        undefined thì default về <code>DosId</code> — nhánh dễ dãi nhất. Toggle auth-provider theo từng
+        workspace trở thành "tham khảo": token vẫn được mint cho workspace mà admin đã <em>tắt</em> DOS-ID/SSO.
+        Tác động có giới hạn (caller đã xác thực, <code>availableWorkspacesForSignIn</code> đã lọc trước)
+        nhưng vô hiệu policy cấp workspace. Đây là rule fork nằm trong file upstream dùng chung —
+        loại delta tốn kém nhất khi rebase. Commit <code>d346f3e0f9</code>.
+        <br><em>Xử lý:</em> giữ biểu thức upstream; diễn đạt ngoại lệ DOS-ID trong wrapper của fork
+        hoặc qua <code>workspace.validate.ts</code> (nơi đã special-case <code>DosId</code>).</td>
+    </tr>
+    <tr>
+      <td>M2</td>
+      <td>Issuer Supabase của một tenant bị compile-in làm default</td>
+      <td class="loc">twenty-config/config-variables.ts:330<br>auth/strategies/dos-id.auth.strategy.ts:55-56</td>
+      <td><code>AUTH_DOS_ID_ISSUER_URL = 'https://<span class="redacted">…REDACTED</span>.supabase.co/auth/v1'</code>,
+        và bị lặp lại thành fallback hardcode trong strategy. Env var bỏ trống → âm thầm xác thực user
+        qua IdP của một tenant cụ thể. Ai kiểm soát Supabase project đó thì kiểm soát danh tính Crove CRM.
+        Cùng giá trị còn ở <code>docs/ARCHITECTURE.md:96-101</code> và
+        <code>docs/superpowers/plans/2026-08-22-dos-id-integration.md:78,214</code>.
+        Ngoài ra <code>|| 'https://api.dos.me'</code> lặp ở 2 file dù config đã có default —
+        triệt tiêu validation lúc boot và định nghĩa endpoint ở ba nơi.
+        <br><em>Xử lý:</em> bỏ fallback cấp code; biến thành required có điều kiện; chỉ đọc qua
+        <code>TwentyConfigService</code>.</td>
+    </tr>
+    <tr>
+      <td>M3</td>
+      <td>Cookie <code>secure</code> quyết định bằng phép so prefix chuỗi</td>
+      <td class="loc">session-storage/session-storage.module-factory.ts:31-58</td>
+      <td>Với config đang ship (<code>SERVER_URL=https://crm.crove.com</code>, <code>DEFAULT_SUBDOMAIN=app</code>)
+        domain ra <code>.crm.crove.com</code> — <span class="v">scope đúng</span>, không phải <code>.crove.com</code>.
+        <code>httpOnly: true</code> và <code>sameSite: 'lax'</code> được giữ.
+        <code>catch {}</code> ở <code>:45</code> để <code>cookieDomain</code> undefined = host-only
+        (<span class="v">fail-safe</span>, không phải fail-open).
+        Rủi ro thật: <code>secure</code> ở <code>:56</code> là phép test prefix chuỗi, nên
+        <code>SERVER_URL</code> lỡ là <code>http://</code> thì cờ <code>Secure</code> âm thầm biến mất;
+        và nếu bật <code>IS_MULTIWORKSPACE_SUBDOMAIN_ENABLED</code> với <code>SERVER_URL</code> ở apex
+        thì domain thành <code>.crove.com</code>.</td>
+    </tr>
+    <tr>
+      <td>M4</td>
+      <td>Brevo driver log người nhận (PII) và nuốt lỗi gửi mail</td>
+      <td class="loc">email/drivers/brevo.driver.ts:54-64</td>
+      <td>Log <code>JSON.stringify(toRecipients)</code> khi thành công và <code>sendMailOptions.to</code> khi thất bại
+        → PII trong log ở <code>LOG_LEVELS=error,warn,log</code>.
+        <code>catch</code> rồi <em>không rethrow</em>: nếu driver được chọn, mail reset mật khẩu / thư mời /
+        mail xác minh báo thành công cho caller trong khi không gửi gì.
+        <strong>Không phải dead code</strong> — đã register ở <code>email-driver.factory.ts:38-45, 56-71</code>,
+        enum ở <code>email-driver.enum.ts:4</code>, reachable qua <code>EMAIL_DRIVER=BREVO</code>;
+        production chỉ là không chọn nó (<code>EMAIL_DRIVER=smtp</code> + <code>smtp-relay.brevo.com</code>).
+        API key chỉ đi qua header (<code>:47</code>) và không bị log; URL hardcode <code>https://</code> nên TLS bắt buộc;
+        <code>BREVO_API_KEY</code> không bị commit (<code>.env.example:75</code> để trống).
+        Ngoài ra hardcode fallback <code>'crm@crove.com'</code>/<code>'Crove CRM'</code> ở <code>:110-113</code>.
+        <br><em>Xử lý:</em> rethrow khi non-2xx để retry/alerting upstream áp dụng, hoặc xoá driver và ở lại SMTP relay.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="m-arch">Kiến trúc &amp; dữ liệu backend</h3>
+<table>
+  <thead><tr><th style="width:6%">ID</th><th style="width:30%">Vấn đề</th><th style="width:26%">Vị trí</th><th>Chi tiết &amp; hướng xử lý</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>M5</td>
+      <td>Webhook inbound ghi dữ liệu rồi echo ngược ra DOS.Me</td>
+      <td class="loc">dos-org-sync-webhook.controller.ts<br>:450, :532, :582, :692, :743</td>
+      <td><span class="v">✓</span> Cả 5 chỗ <code>getRepository</code> chỉ truyền
+        <code>{ shouldBypassPermissionChecks: true }</code>. Đã grep: <strong>0 kết quả</strong>
+        <code>shouldSkipEventEmission</code> trong toàn bộ <code>core-modules/auth</code>, trong khi option này
+        tồn tại ở <code>workspace-orm.manager.ts:34,62-63</code> và upstream có dùng
+        (vd <code>message-campaign-materialization.service.ts:48</code>).
+        → <code>company.created</code> inbound sinh event <code>company.CREATED</code>
+        (<code>workspace-repository.ts:956</code>, mapping tại <code>:86-89</code>), listener outbound biến nó
+        thành POST tới DOS.Me. Handler inbound không kiểm tra <code>source</code> — field này thậm chí không có
+        trong type <code>EcosystemWebhookPayload['data']</code> (dòng 130-170). Nếu DOS.Me re-broadcast,
+        vòng lặp khép kín và tự duy trì.
+        <br><em>Xử lý:</em> truyền <code>{ shouldBypassPermissionChecks: true, shouldSkipEventEmission: true }</code>
+        (một dòng, upstream hỗ trợ sẵn) và reject payload inbound mang <code>source: 'crove_crm'</code>.</td>
+    </tr>
+    <tr>
+      <td>M6</td>
+      <td><code>ticket.*</code> tạo một note mới mỗi lần delivery và vứt bỏ ticket id</td>
+      <td class="loc">dos-org-sync-webhook.controller.ts:726, :748-750</td>
+      <td><code>await noteRepo.save({ title: `[Crove Desk Ticket] ${subject} (${status})` })</code> —
+        <code>ticketId</code> được validate ở <code>:726</code> nhưng <strong>không bao giờ được lưu</strong>,
+        nên dedup là bất khả thi kể cả hồi tố. Không có object Ticket; note không được liên kết.
+        DOS.Me có retry, và <code>ticket.updated</code> bắn mỗi lần đổi trạng thái →
+        một ticket đi qua 5 trạng thái sinh 5 note. Insert còn phát ra <code>note.CREATED</code>.
+        Ghi với <code>shouldBypassPermissionChecks: true</code>.
+        <br><em>Xử lý:</em> lưu <code>ticketId</code> lên note (hoặc một bảng mapping của fork) và upsert theo nó.</td>
+    </tr>
+    <tr>
+      <td>M7</td>
+      <td>Không có observability nào trên đường tích hợp</td>
+      <td class="loc">mọi file fork</td>
+      <td>Không file fork nào tham chiếu <code>MetricsService</code>, trong khi handler webhook inbound tương đương
+        của upstream có (<code>google-messaging-notification.handler.ts:52-55</code>
+        → <code>metricsService.incrementCounterBy(...)</code>). Operator không thấy được: lưu lượng webhook,
+        số lần reject chữ ký, lỗi theo từng loại event, lỗi dispatch outbound, độ trễ DOS.Me.
+        Lỗi chỉ hiện ra dưới dạng chuỗi <code>logger.warn</code>/<code>logger.error</code> trong deployment
+        <code>LOGGER_DRIVER=CONSOLE</code>, không alerting, không health check.
+        Kết hợp với <a href="#H7">H7</a> và M6 → sự lệch dữ liệu giữa CRM và DOS.Me là
+        <strong>không thể phát hiện</strong>.
+        <br><em>Xử lý:</em> inject <code>MetricsService</code>, thêm <code>MetricsKeys</code> của fork,
+        và một <code>GET /healthz/dos-sync</code> báo timestamp thành công gần nhất.</td>
+    </tr>
+    <tr>
+      <td>M8</td>
+      <td>Logic nghiệp vụ nằm trong controller 833 dòng; listener import từ file controller</td>
+      <td class="loc">dos-org-sync-webhook.controller.ts (toàn file)<br>ecosystem-outbound-event.listener.ts:13</td>
+      <td>12 nhánh event, truy cập ORM và một HTTP client outbound cùng nằm trong một controller;
+        <code>sendEcosystemEvent</code> là hàm export cấp module ở <code>:801-833</code> và listener
+        <em>import nó từ file controller</em> — nên đường outbound của auth module phụ thuộc module HTTP controller.
+        Upstream tách bạch: <code>connected-account-sync-webhooks.controller.ts</code> (4 handler mỏng)
+        + các service <code>*.handler.ts</code>.
+        <br><em>Xử lý:</em> module additive, ví dụ <code>src/modules/crove-ecosync/</code> với
+        <code>dos-org-sync.handler.ts</code> (mỗi event một hàm), <code>ecosystem-event-publisher.service.ts</code>,
+        <code>types/</code>, và controller ~40 dòng — không chạm file upstream nào.</td>
+    </tr>
+    <tr>
+      <td>M9</td>
+      <td>Dùng <code>axios</code> thô thay vì <code>SecureHttpClientService</code> có sẵn</td>
+      <td class="loc">dos-org-sync-webhook.controller.ts:18,810<br>sign-in-up.service.ts:5,757<br>brevo.driver.ts:3,28</td>
+      <td>Upstream ship <code>secure-http-client/secure-http-client.service.ts</code> (axios instance có
+        kiểm soát SSRF/redirect) và dùng nó cho call outbound. Ba call site của fork bỏ qua nó và
+        tự chế <code>timeout</code> mỗi lần, không có retry/agent/keep-alive dùng chung.
+        Đúng loại trùng lặp mà <code>CLAUDE.md</code> cảnh báo.</td>
+    </tr>
+    <tr>
+      <td>M10</td>
+      <td>Identifier của marketplace vetted-app bị đảo thứ tự, gán lại nhãn, và thêm UUID tổng hợp</td>
+      <td class="loc">application-marketplace/constants/<br>marketplace-vetted-applications.constant.ts:5-32<br>scripts/set-vetted-apps.sql:2-13</td>
+      <td>Bốn identifier upstream vẫn được giữ nhưng bị dời xuống vị trí 4-7 và
+        <em>gán nhãn app khác</em> (vd <code>8da4b8b5-…</code> từ vị trí 1 xuống 4, đổi comment thành
+        <code>// Call Recorder</code>); ba UUID tổng hợp chèn vào vị trí 1-3, trong đó
+        <code>a1b2c3d4-e5f6-4a1b-8c2d-3e4f5a6b7c8d</code> rõ ràng là gõ tay.
+        Trên instance đã đăng ký application theo universal identifier upstream, hằng số này nay
+        gắn những identifier đó với app khác → vetting/sắp xếp sai và sai trong im lặng.
+        <code>set-vetted-apps.sql:12</code> còn bồi thêm
+        <code>OR name ILIKE '%slack%' OR name ILIKE '%zalo%' OR name ILIKE '%commerce%'</code>
+        → vet mọi registration có tên chứa các chuỗi đó, kể cả listing bên thứ ba.
+        <br><em>Xử lý:</em> giữ identifier upstream nguyên vẹn; diễn đạt vetting của fork bằng một
+        constant/bảng additive khoá theo ID của fork; bỏ nhánh ILIKE.</td>
+    </tr>
+    <tr>
+      <td>M11</td>
+      <td>Lookup workspace mới không có index; webhook thiếu <code>@HttpCode</code></td>
+      <td class="loc">dos-org-sync-webhook.controller.ts:192, :229-236, :300-302, :325-328<br>auth.service.ts:1032-1038<br>workspace.entity.ts:82-83</td>
+      <td><code>where: [{ id }, { subdomain }, { displayName }]</code> — <code>displayName</code> là
+        <code>@Column({ nullable: true })</code> thường, <strong>không index</strong>; <code>subdomain</code> thì unique
+        (<code>:259-260</code>). Phép OR đẩy Postgres ra khỏi unique index của <code>subdomain</code>
+        và vào seq scan trên <code>core.workspace</code> ở <em>mỗi</em> org event và <em>mỗi</em> vòng lặp JIT
+        (nằm trong login path). Bảng hiện nhỏ nên chi phí thấp, nhưng tăng tuyến tính theo số tenant.
+        Riêng biệt: <code>@Post('dos-org-sync')</code> ở <code>:192</code> không có <code>@HttpCode</code>
+        nên Nest trả <code>201 Created</code>, trong khi mọi webhook controller upstream trả <code>200</code>
+        (<code>connected-account-sync-webhooks.controller.ts:44</code>, <code>messaging-webhooks.controller.ts:35</code>).
+        <br><em>Đã kiểm chứng:</em> không thay đổi fork nào thêm cột/entity/enum cần migration command —
+        <code>isMultiWorkspaceSubdomainEnabled</code> (<code>client-config.entity.ts:280-281</code>) là field DTO GraphQL,
+        <code>AuthProviderEnum.DosId</code> (<code>workspace.type.ts:7</code>) là enum chỉ tồn tại ở TS.</td>
+    </tr>
+    <tr>
+      <td>M12</td>
+      <td>DDL áp bằng tay lệch khỏi instance command đã đăng ký</td>
+      <td class="loc">scripts/fix-timeline-activity-type-columns.sql:2-8<br>scripts/fix-schema.sql:1-20<br>scripts/fix-db-schema.js:26-66</td>
+      <td>Script dùng <code>ADD COLUMN IF NOT EXISTS "targetRelationFieldUniversalIdentifier" uuid</code>,
+        còn command đã đăng ký
+        <code>2-34/2-34-instance-command-fast-1787471608313-add-timeline-activity-routing.ts:9-10</code>
+        dùng <code>ALTER TABLE … ADD "targetRelationFieldUniversalIdentifier" uuid</code> (không <code>IF NOT EXISTS</code>).
+        Chạy script trước → command đã ghi nhận fail vì "column already exists";
+        đánh dấu complete bằng tay → bản cài mới không bao giờ có cột đó.
+        <code>fix-schema.sql:6-20</code> và <code>fix-db-schema.js:44-66</code> tự viết DDL cho
+        <code>core.timelineActivityType</code>, sẽ lệch khỏi bản sinh ra ở mỗi lần bump upstream.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="m-fe">Frontend &amp; twenty-apps</h3>
+<table>
+  <thead><tr><th style="width:6%">ID</th><th style="width:30%">Vấn đề</th><th style="width:26%">Vị trí</th><th>Chi tiết &amp; hướng xử lý</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>M13</td>
+      <td>Ức chế lỗi "chưa xác thực" so khớp chuỗi message tiếng Anh và chặn cả mảng lỗi</td>
+      <td class="loc">modules/apollo/utils/isUnauthenticatedGraphQLError.ts:8-13<br>modules/apollo/services/apollo.factory.ts:198-206</td>
+      <td><pre style="margin:4px 0"><code>graphQLError.message === 'Token has expired.' ||
+graphQLError.message === 'Token invalid.' ||
+graphQLError.message === 'You must be authenticated…';
+
+const hasUnauthenticated = error.errors.some(isUnauthenticatedGraphQLError);
+if (!hasUnauthenticated) { onErrorCb?.(error.errors); }</code></pre>
+        (a) Upstream đổi câu chữ, hoặc message bị dịch phía server, là snackbar mà fix này định ức chế
+        sẽ bật lại trong im lặng; (b) <code>.some()</code> chặn <em>toàn bộ</em> mảng lỗi —
+        response chứa một lỗi UNAUTHENTICATED cộng một lỗi validation thật thì không hiện gì cả.
+        Cùng predicate bị nhân bản sang <code>useSnackBarOnQueryError.ts:23-29</code> và
+        <code>useSnackBar.ts:139-143</code> → ba nơi phải giữ đồng bộ.
+        <br><em>Xử lý:</em> chỉ match theo <code>extensions.code</code>; <code>filter</code> mảng thay vì
+        all-or-nothing; tập trung về một chỗ.</td>
+    </tr>
+    <tr>
+      <td>M14</td>
+      <td>Link workspace ở màn sign-in thành full-page redirect và chết modifier-click</td>
+      <td class="loc">auth/sign-in-up/components/SignInUpGlobalScopeForm.tsx:196-199<br>domain-manager/hooks/useRedirect.ts:8-12</td>
+      <td><code>onClick={(event) =&gt; { event.preventDefault(); handleSelectAvailableWorkspace(...) }}</code>
+        trong khi upstream render <code>UndecoratedLink to={getAvailableWorkspaceUrl(...)}</code> trơn.
+        <code>preventDefault()</code> vô điều kiện giết ctrl/⌘/middle-click "mở tab mới",
+        và thay SPA navigation bằng <code>window.location.assign</code> → reload toàn trang mỗi lần chọn workspace.
+        <code>redirectToWorkspaceDomain</code> còn early-return khi <code>!isMultiWorkspaceEnabled</code>
+        (<code>useRedirectToWorkspaceDomain.ts:23</code>) nên với config một workspace, cú click thành
+        no-op hoàn toàn — danh sách chết. (<code>.env</code> hiện đặt
+        <code>IS_MULTIWORKSPACE_ENABLED=true</code> nên đây là lỗi tiềm ẩn, chưa nổ.)
+        <br><em>Xử lý:</em> chỉ chặn trường hợp left-click thường
+        (<code>if (event.metaKey || event.ctrlKey || event.button !== 0) return;</code>) và fallback về
+        <code>navigate(pathname)</code> khi domain redirect là no-op.</td>
+    </tr>
+    <tr>
+      <td>M15</td>
+      <td><span class="v">✓</span> <code>create-order-route</code> không validate body; quantity 0 bị tính tiền như 1</td>
+      <td class="loc">commerce/src/logic-functions/create-order-route.ts:10-19<br>commerce/src/utils/recalculate-order-totals.util.ts:34-35</td>
+      <td><pre style="margin:4px 0"><code>const body = event.body as CreateOrderInput | null;   // "validation" duy nhất
+if (!body || !Array.isArray(body.items)) { ... }
+
+const qty   = Math.max(1, item.quantity || 1);
+const price = Math.max(0, item.unitPrice || 0);</code></pre>
+        Không kiểm tra items có phải object không, <code>quantity</code>/<code>unitPrice</code> có phải số hữu hạn không,
+        <code>status</code>/<code>orderSource</code> có phải enum hợp lệ không, và không giới hạn độ dài
+        <code>notes</code>/<code>name</code>. Rồi các phép clamp <em>che</em> input sai:
+        <code>{quantity: 0}</code> → tính tiền 1; <code>{unitPrice: -500}</code> → 0 không lỗi;
+        <code>{quantity: NaN}</code> → 1. Caller nhận <code>success: true</code> cho một đơn hàng
+        không phản ánh đúng những gì họ gửi.
+        Đối chiếu: app zalo-oa <em>có</em> schema (<code>schemas/zalo-send-message-input.schema.ts</code>) —
+        commerce thì không.
+        <br><em>Xử lý:</em> validate bằng schema trước handler; reject giá trị ngoài khoảng thay vì clamp.</td>
+    </tr>
+    <tr>
+      <td>M16</td>
+      <td>Form Zalo: label không gắn với control, textarea hoàn toàn không có nhãn</td>
+      <td class="loc">zalo-oa/src/components/<br>send-zalo-message-form.front-component.tsx:302, 313</td>
+      <td><code>&lt;label style={STYLES.label}&gt;Recipient Zalo User ID&lt;/label&gt;</code> là
+        <em>em gái</em> chứ không bọc input, và không có <code>htmlFor</code>/<code>id</code> →
+        input không có accessible name; <code>&lt;textarea&gt;</code> ở <code>:313</code> thì không có nhãn nào
+        (placeholder không phải label). Màn hình thành công (<code>✓</code> + "Message sent to Zalo user!")
+        không có <code>role="status"</code>/<code>aria-live</code>; bộ đếm ký tự không có <code>aria-live="polite"</code>.
+        App Discord mà nó được copy lại bọc <code>&lt;label&gt;</code> quanh <code>&lt;select&gt;</code> —
+        tức fork <em>thụt lùi</em> so với pattern nó sao chép.</td>
+    </tr>
+    <tr>
+      <td>M17</td>
+      <td>Form Zalo không phản hồi khi tin nhắn vượt giới hạn</td>
+      <td class="loc">send-zalo-message-form.front-component.tsx:287-292</td>
+      <td><code>canSubmit</code> bao gồm <code>messageText.length &lt;= ZALO_MESSAGE_MAX_LENGTH</code>,
+        nhưng bộ đếm ký tự không bao giờ chuyển đỏ và không có thông báo nào giải thích vì sao nút Send xám đi.
+        Bản Discord tương đương có <code>STYLES.charCountOverLimit</code> + <code>COLOR.error</code>.
+        Ở đây <code>COLOR.error</code> được khai báo và <strong>không bao giờ dùng</strong> (token chết).</td>
+    </tr>
+    <tr>
+      <td>M18</td>
+      <td>Hardcode tiền tệ và gói billing trong code fork</td>
+      <td class="loc">commerce/.../create-order-handler.ts:60,64,68,112,116<br>auth/sign-in-up/hooks/useSignInWithDosId.ts:15-20</td>
+      <td>Literal <code>'VND'</code> lặp 5 lần thay vì hằng số <code>SCREAMING_SNAKE_CASE</code> hay app config —
+        workspace không dùng VND sẽ tạo đơn với currency code sai.
+        <code>useSignInWithDosId.ts</code> nướng cứng <code>BillingPlanKey.PRO</code> /
+        <code>SubscriptionInterval.Month</code> / <code>requirePaymentMethod: true</code> vào luồng sign-in DOS ID.</td>
+    </tr>
+    <tr>
+      <td>M19</td>
+      <td><code>zaloApiRequest</code> không có timeout; cast không an toàn ở biên API</td>
+      <td class="loc">zalo-oa/src/logic-functions/utils/zalo-api-request.ts:35-44, :53<br>create-order-handler.ts:85, :139</td>
+      <td><code>fetch</code> trần, không <code>AbortSignal</code> → endpoint Zalo treo sẽ ăn hết ngân sách
+        <code>timeoutSeconds</code> của logic function và caller không phân biệt được "chậm" với "hỏng".
+        Cast: <code>as { createOrder?: { id: string } }</code> (<code>:85</code>),
+        <code>(error as Error).message</code> (<code>:139</code> — throw không phải Error sẽ cho
+        <code>error: undefined</code> trong response), <code>as BillingCheckoutSession</code>,
+        <code>(await response.json()) as ZaloApiResponse&lt;TData&gt;</code>;
+        front component nhận <code>response.json()</code> → <code>any</code> nên
+        <code>result.success</code>/<code>result.error</code> không có type.</td>
+    </tr>
+    <tr>
+      <td>M20</td>
+      <td>Spec backend duy nhất của fork stale và không thể pass</td>
+      <td class="loc">auth/controllers/__tests__/<br>dos-org-sync-webhook.controller.spec.ts:54-62</td>
+      <td>Spec dựng controller với <strong>7</strong> tham số; controller nhận <strong>8</strong>
+        (<code>workspaceOrmManager</code> là tham số thứ 5, <code>:178-190</code>).
+        Commit <code>0e285a148a</code> thêm tham số mà không cập nhật spec → mọi mock lệch một ô,
+        <code>mockWorkspaceRepository</code> rơi vào <code>workspaceOrmManager</code>,
+        <code>userWorkspaceRepository</code> thành <code>undefined</code>.
+        Các test như "should update workspace displayName" gọi <code>this.workspaceRepository.findOne</code>
+        trên một mock chỉ định nghĩa <code>update</code> → throw <code>TypeError</code>.
+        <code>jest.config.mjs</code> có <code>testRegex: '.*\.spec\.ts$'</code> nên file này được include —
+        nghĩa là hoặc suite đang đỏ, hoặc nó không được chạy.
+        <br><em>Cũng trong mục testing:</em> chưa có spec cho <code>ecosystem-outbound-event.listener.ts</code>,
+        <code>brevo.driver.ts</code>, <code>dos-id.auth.strategy.ts</code>, cả 2 DOS guard,
+        <code>dos-id-auth.controller.ts</code>, khối JIT trong <code>auth.service.ts</code>
+        và khối DOS.Me trong <code>sign-in-up.service.ts</code>.</td>
+    </tr>
+    <tr>
+      <td>M21</td>
+      <td>Test của commerce/zalo-oa assert implementation và không assert giá trị rủi ro</td>
+      <td class="loc">commerce/src/logic-functions/handlers/__tests__/<br>create-order-handler.test.ts:24-27, 54</td>
+      <td><code>as unknown as CoreApiClient</code> (double-cast) cộng
+        <code>expect(mockClient.mutation).toHaveBeenCalledTimes(2)</code> — đếm số lần gọi, không phải hành vi.
+        <strong>Không test nào assert payload <code>amountMicros</code></strong>, tức đúng chỗ
+        <a href="#C6">C6</a> nằm. <code>recalculate-order-totals.util.test.ts</code> chỉ dùng số nguyên chẵn,
+        không bao giờ thử <code>quantity: 0</code>, giá âm, hay giá lẻ.
+        Vi phạm rule "Test behavior, not implementation" của <code>CLAUDE.md</code>.
+        <br><em>Điểm đạt:</em> ngoài một trường hợp trên, test commerce có assert hành vi
+        (tổng trả về, field <code>success</code>/<code>error</code>) chứ không soi nội bộ.</td>
+    </tr>
+    <tr>
+      <td>M22</td>
+      <td><code>SettingsSubdomain</code> guard bằng redirect trong <code>useEffect</code></td>
+      <td class="loc">settings/domains/components/SettingsSubdomain.tsx:47-55<br>app/components/SettingsRoutes.tsx:795</td>
+      <td><pre style="margin:4px 0"><code>useEffect(() =&gt; {
+  if (!isMultiWorkspaceSubdomainEnabled) { navigate(SettingsPath.General); }
+}, [isMultiWorkspaceSubdomainEnabled, navigate]);
+if (!isMultiWorkspaceSubdomainEnabled) { return null; }</code></pre>
+        Vi phạm rule "prefer event handlers over <code>useEffect</code>", và vẽ một frame <code>null</code>
+        trước khi nảy đi. <code>SettingsRoutes.tsx:795</code> đăng ký route Subdomain vô điều kiện
+        dù cùng file đã có pattern route có điều kiện
+        (<code>createSettingsRouteElements({ isAdminPageEnabled })</code>).</td>
+    </tr>
+    <tr>
+      <td>M23</td>
+      <td>Branding patcher: phủ 2/34 locale, regex chết, viết lại URL, churn 120 file nhị phân</td>
+      <td class="loc">packages/twenty-utils/patch-crove-branding.ts</td>
+      <td><ul style="margin:4px 0">
+        <li><code>:169-175</code> chỉ vá <code>en.po</code> + <code>vi-VN.po</code>;
+          <code>packages/twenty-front/src/locales/</code> có <strong>34</strong> catalog
+          (fr-FR, ja-JP, zh-CN, he-IL, fi-FI, …) — tất cả vẫn nói "Twenty" và "Workspace".</li>
+        <li><code>:23-25</code> — <code>/không gian làm việc/gi</code> chạy trước với cờ <code>i</code>,
+          nên <code>/Không gian làm việc/g → 'Tổ chức'</code> ở dòng 24 là <strong>dead code</strong>,
+          và occurrence đầu câu bị hạ thành chữ thường → tiếng Việt sai ngữ pháp.</li>
+        <li><code>:11-12</code> — <code>\btwenty\b → crove</code> viết lại cả URL/email nhúng trong msgstr
+          (<code>twenty.com</code> → <code>crove.com</code>) → link chết trong text trợ giúp đã dịch.</li>
+        <li><code>:82-91</code> — HTML/manifest vá bằng regex trên nội dung chuỗi
+          (<code>/"name":\s*"Twenty"/g</code>); nếu upstream reformat JSON thì replace no-op trong im lặng
+          mà <code>main()</code> vẫn exit 0. Không dry-run, không assert rằng có replacement nào xảy ra.</li>
+        <li><code>:151-157</code> — <code>if (fs.existsSync(path.dirname(integrationLogoPath)))</code>
+          guard trên <em>thư mục</em> rồi ghi <em>file</em> → tạo lại orphan nếu upstream đổi tên.</li>
+        <li><code>:118-146</code> — re-encode ~120 PNG bằng <code>sharp</code> mỗi lần chạy →
+          đúng 120 entry nhị phân trong <code>git diff --stat</code>, tức bề mặt xung đột merge
+          bảo đảm ở mỗi kỳ sync upstream.</li>
+        <li><code>:186-193</code> — chạy <code>lingui compile --typescript</code>, tái sinh
+          <code>locales/generated/*</code> đã commit: đúng loại churn mà gotcha trong <code>CLAUDE.md</code> cảnh báo.</li>
+      </ul></td>
+    </tr>
+    <tr>
+      <td>M24</td>
+      <td><code>IconDos</code> dùng <code>interface</code> và vắng mặt trong icon dictionary</td>
+      <td class="loc">twenty-ui/src/icon/components/IconDos.tsx:4-6</td>
+      <td><code>interface IconDosProps { size?: number | string; }</code> trong khi file kế bên
+        <code>IconGoogle.tsx:5</code> viết <code>type IconGoogleProps = Pick&lt;IconComponentProps, 'size'&gt;;</code>.
+        Vi phạm cả "types over interfaces" lẫn "dùng helper có sẵn trước khi tự viết".
+        Icon được export đúng từ <code>twenty-ui/icon/index.ts:19</code> và import qua <code>twenty-ui/icon</code>
+        đúng convention, nhưng <strong>không có trong <code>packages/twenty-ui/src/icon/icon-dictionary.md</code></strong>
+        (không match <code>dos</code>) → không thể khám phá như một icon canonical.</td>
+    </tr>
+    <tr>
+      <td>M25</td>
+      <td><code>AppLogo</code> hardcode màu thương hiệu và không còn scale</td>
+      <td class="loc">auth/components/AppLogo.tsx:7, 9, 16-17</td>
+      <td><code>background-color: #0a0a0c;</code> và <code>box-shadow: 0px 2px 8px rgba(0,0,0,0.12)</code>
+        nằm cạnh <code>themeCssVariables.border.radius.md</code> trong cùng một block.
+        <code>const iconSize = size ? Math.round(size * 0.65) : 32;</code> — <code>Logo.tsx:84</code> render
+        <code>&lt;AppLogo /&gt;</code> không truyền <code>size</code>, nên ô nền là <code>100%×100%</code>
+        của link còn glyph bị ghim ở 32px. Upstream dùng PNG 192px với <code>background-size: cover</code> nên scale được.
+        Prop type viết inline <code>{ size?: number }</code> trong khi <code>Logo.tsx</code> kế bên dùng <code>type LogoProps</code>.</td>
+    </tr>
+    <tr>
+      <td>M26</td>
+      <td>Cả hai app fork tự viết lại <code>isDefined</code>; 4 file chưa chạy <code>oxfmt</code></td>
+      <td class="loc">commerce/src/utils/is-defined.ts:1<br>zalo-oa/src/utils/is-defined.ts:1</td>
+      <td><code>packages/twenty-sdk/src/sdk/utils/index.ts:2</code> là
+        <code>export { isDefined } from 'twenty-shared/utils';</code> và cả hai app đã import
+        <code>twenty-sdk/define</code> lẫn <code>twenty-client-sdk/core</code>.
+        <em>Giảm nhẹ:</em> app upstream <code>public/people-data-labs</code> cũng có <code>is-defined.ts</code> cục bộ,
+        trong khi <code>public/slack</code> import từ <code>twenty-sdk/utils</code> — cả hai convention cùng tồn tại
+        trong tree, nên đây là trùng lặp hơn là vi phạm cứng.<br>
+        Chưa format (<code>.oxfmtrc.jsonc</code> đặt <code>printWidth: 80</code>):
+        <code>SettingsRoutes.tsx:715</code> (83 ký tự), <code>SignInUpGlobalScopeForm.tsx:280-287</code> (lệch indent),
+        <code>isUnauthenticatedGraphQLError.ts:14</code> (dòng trống thừa), <code>Logo.tsx:9</code>
+        (chèn <code>@/auth/components/AppLogo</code> sau <code>~/config</code>, phá nhóm import).</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="m-repo">Repo / CI / build</h3>
+<table>
+  <thead><tr><th style="width:6%">ID</th><th style="width:30%">Vấn đề</th><th style="width:26%">Vị trí</th><th>Chi tiết &amp; hướng xử lý</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>M27</td>
+      <td><code>scripts/</code>: 22 file không tài liệu, không owner, một phần phá hoại</td>
+      <td class="loc">scripts/ (22 file, tất cả do fork thêm)</td>
+      <td>Không README (glob <code>scripts/*.md</code> → rỗng), không file nào được nối vào
+        <code>package.json</code> hay <code>packages/twenty-server/project.json</code> → chạy hoàn toàn bằng tay.
+        <ul style="margin:6px 0">
+          <li><strong>Phá hoại:</strong> <code>drop-timeline-activity-type.sql:1</code>
+            <code>DROP TABLE IF EXISTS "core"."timelineActivityType" CASCADE;</code>;
+            <code>fix-migration-sequence.js:35</code> <code>DELETE FROM core."upgradeMigration"</code>;
+            <code>fix-schema.sql:3</code> và <code>fix-db-schema.js:31</code>
+            UPDATE blanket <code>"core"."application" SET "state" = 'INSTALLED'</code>.</li>
+          <li><strong>TLS:</strong> <code>fix-db-schema.js:6</code> <code>ssl: { rejectUnauthorized: false }</code>
+            nối vào host Supabase production.</li>
+          <li><strong>PII:</strong> <code>test-smtp-relay.js:15,18</code> hardcode
+            <code>anh.legiang@gmail.com</code> làm cả user SMTP mặc định lẫn người nhận.</li>
+          <li><strong>Portability:</strong> <code>fix-migration-sequence.js:2</code> và
+            <code>debug-cursor.js:2-4</code> dùng <code>require('./dist/app.module')</code> tương đối với CWD,
+            nên chỉ chạy được từ <code>packages/twenty-server</code>, không phải từ <code>scripts/</code>.</li>
+          <li><span class="v">Đạt:</span> 12 file <code>scripts/check-*.sql</code> chỉ là SELECT read-only;
+            <code>debug-cursor.js</code> và <code>test-smtp-relay.js</code> không ghi gì.</li>
+        </ul>
+        Bất kỳ ai có quyền truy cập DB prod đều có thể chạy một lệnh <code>DROP … CASCADE</code>
+        copy từ repo mà không có ngữ cảnh nào.
+        <br><em>Xử lý:</em> xoá các SQL chẩn đoán một lần; nếu buộc phải giữ, chuyển vào
+        <code>packages/twenty-server/src/database/commands/</code> làm nx target có review kèm README.</td>
+    </tr>
+    <tr>
+      <td>M28</td>
+      <td><code>publish-crove-apps.yaml</code> publish package không có entry point</td>
+      <td class="loc">.github/workflows/publish-crove-apps.yaml:38-45</td>
+      <td>Job chạy <code>npm publish packages/twenty-apps/public/commerce --access public --provenance</code>
+        mà <strong>không có bước build</strong>. <code>commerce/package.json</code> không có
+        <code>main</code>, <code>module</code>, <code>exports</code>, <code>types</code>, <code>files</code>,
+        hay script <code>build</code>; <code>.gitignore:2</code> của nó ignore <code>dist</code>.
+        → tarball <code>@crove/commerce@0.1.0</code> chứa TS source thô, không entry point resolve được,
+        <code>twenty app:install</code> không cài được. Cộng hưởng với <a href="#C4">C4</a> cho zalo-oa.
+        <br><em>Xử lý:</em> thêm <code>build</code> + <code>main</code>/<code>exports</code>/<code>files</code>
+        cho cả hai app, và một bước build trước publish.</td>
+    </tr>
+    <tr>
+      <td>M29</td>
+      <td>Node được khai báo bốn kiểu khác nhau</td>
+      <td class="loc">.nvmrc:1 · package.json:22 · twenty-docker/twenty/Dockerfile:5,23,87,227 · ci-e2e-main.yaml:52 · publish-crove-apps.yaml:34</td>
+      <td><code>.nvmrc</code> = <code>24.16.0</code>; engines = <code>^24.5.0</code>;
+        Dockerfile = <code>node:24.19.0-alpine3.23@sha256:244cc2…</code>;
+        e2e CI = <code>lts/*</code> (tham chiếu mutable trong một workflow còn lại đều pin SHA);
+        publish apps = <code>24</code>.
+        Một regression chỉ xảy ra ở một phiên bản Node có thể pass e2e và fail ở prod (hoặc ngược lại).
+        <br><em>Xử lý:</em> dùng <code>node-version-file: .nvmrc</code> ở mọi nơi và bump
+        <code>.nvmrc</code> khớp Dockerfile.</td>
+    </tr>
+    <tr>
+      <td>M30</td>
+      <td>Không có gate đo lường fork drift</td>
+      <td class="loc">(sự vắng mặt) — không workflow nào diff với upstream/main</td>
+      <td>Tự động hoá duy nhất biết về upstream là <code>upstream-sync.yaml</code>, và nó <em>merge</em>
+        chứ không <em>đo</em>. Delta hiện tại: 191 files / <code>+2.823 −170</code> chỉ riêng
+        twenty-server + twenty-front. <code>.cursor/rules/fork-minimal-modification.mdc</code>
+        hoàn toàn không được thực thi. Code core thật (vd controller 833 dòng đặt <em>bên trong</em>
+        <code>engine/core-modules/auth/controllers/</code>) phình ra vô hình; mỗi release upstream
+        lại tăng chi phí merge.
+        <br><em>Xử lý:</em> thêm job định kỳ báo cáo
+        <code>git diff --stat $(git merge-base upstream/main HEAD) HEAD -- packages/twenty-{server,front}/src</code>
+        và fail/comment khi vượt ngân sách.</td>
+    </tr>
+    <tr>
+      <td>M31</td>
+      <td><code>nx.json</code> đặt <code>defaultBase: main</code> trong khi trunk là <code>dev</code></td>
+      <td class="loc">nx.json:277 · nx.json:59</td>
+      <td><code>git rev-list --count main..dev</code> = <strong>134</strong>;
+        <code>git rev-list --count dev..main</code> = 0. <code>main</code> cục bộ đi sau <code>dev</code> 134 commit;
+        <code>origin/main</code> là <code>dev</code> + 1 merge commit (<code>6419a2d4f3 Merge pull request #2 from DOS/dev</code>).
+        <code>lint:diff-with-main</code> chạy <code>git diff --name-only ... main</code> nên
+        <code>nx affected</code> và lint diff tính trên base cũ sẽ chọn thừa hoặc thiếu;
+        trên bản clone mới (<code>main</code> == <code>dev</code>+1) hành vi lại khác với checkout lâu ngày.
+        CI thì an toàn vì <code>changed-files.yaml:29</code> suy ra base từ PR event — dev cục bộ thì không.
+        <br><em>Xử lý:</em> đặt <code>defaultBase</code> thành <code>dev</code>, hoặc biến <code>dev</code>
+        thành nhánh mặc định trên GitHub và xoá sự phân kỳ.</td>
+    </tr>
+    <tr>
+      <td>M32</td>
+      <td><code>"//resolutions"</code> là một chuỗi JSON 16.951 ký tự / 2.322 từ</td>
+      <td class="loc">package.json:29</td>
+      <td>Đo được: 16.951 ký tự, 2.322 từ, 22 resolution, tất cả trong <em>một</em> dòng.
+        Không diff được (mọi sửa đổi viết lại cả dòng khổng lồ), không lint được, và mã hoá lịch sử từng CVE
+        ("the former <code>next/sharp ^0.35.3</code> entry was dropped once…") — thứ thuộc về commit message.
+        <br><em>Đã kiểm chứng 4/4 mẫu vẫn load-bearing:</em>
+        <code>zapier-platform-core/form-data 4.0.6</code> (<code>yarn.lock:53284</code> — parent pin
+        <code>4.0.5</code> exact) · <code>@react-email/ui/next 16.3.2</code> (<code>yarn.lock:15415</code> —
+        parent pin <code>16.2.6</code> exact, dưới bản vá 16.2.11) ·
+        <code>@remote-dom/react/@types/react ^19.2.0</code> (manifest mới nhất vẫn khai <code>^18.0.0</code>) ·
+        <code>@module-federation/dts-plugin/undici</code> (khớp <code>yarn.lock:10856</code>).
+        Tư thế dependency <em>hiệu quả</em>, nhưng hình thức tài liệu hoá bảo đảm nó sẽ mục:
+        không công cụ nào validate được một khẳng định dạng văn xuôi.
+        <br><em>Xử lý:</em> chuyển sang <code>docs/DEPENDENCY-RESOLUTIONS.md</code> dạng bảng
+        (resolution | CVE | parent đang chặn | điều kiện bỏ), để lại một dòng trỏ trong <code>package.json</code>.</td>
+    </tr>
+    <tr>
+      <td>M33</td>
+      <td><code>@types/react</code> trùng lặp sống sót qua resolution dedup</td>
+      <td class="loc">yarn.lock:21119-21136 · twenty-website (yarn.lock:50107)</td>
+      <td><code>"@types/react@npm:^19"</code> → <strong>19.1.0</strong> và
+        <code>"@types/react@npm:^19.2.0"</code> → <strong>19.2.17</strong>.
+        Descriptor <code>^19</code> do <code>twenty-website</code> khai.
+        Văn bản trong <code>//resolutions</code> khẳng định "every other package resolves @types/react 19
+        naturally from the workspace ^19.2.0 ranges" — <strong>sai</strong>.
+        Hai bản <code>@types/react</code> 19.x là đúng mối nguy type-identity mà resolution
+        <code>@remote-dom/react</code> được thêm vào để ngăn; hiện chỉ ảnh hưởng <code>twenty-website</code>,
+        nhưng mọi component chung được type ở đó sẽ phân kỳ.
+        <br><em>Trùng lặp khác đã định lượng:</em> <code>sharp</code> 3 bản (0.35.3, 0.35.2, 0.33.5 —
+        bản 0.33.5 dưới mức vá libvips 0.35.0 nhưng chỉ là build tooling của website/docs);
+        <code>undici</code> 3 bản (7.29.0, 6.28.0, 8.9.0 — đều đã vá);
+        <code>next</code> 1 bản (dedup hoàn toàn về 16.3.2 — resolution đã phát huy tác dụng).</td>
+    </tr>
+    <tr>
+      <td>M34</td>
+      <td><code>twenty-cli</code> đã deprecated vẫn là workspace; lockfile của app tự gọi sai tên</td>
+      <td class="loc">package.json:118 · packages/twenty-cli/package.json:4<br>commerce/yarn.lock:973 · zalo-oa/yarn.lock:946</td>
+      <td><code>twenty-cli/package.json</code> ghi <code>"description": "[DEPRECATED] Use twenty-sdk instead"</code>,
+        <code>"build": "echo 'use npx nx build'"</code>, không có <code>bin</code> — nhưng vẫn nằm trong
+        workspaces gốc và được cài ở mỗi lần <code>yarn install</code>.
+        CLI thật là bin <code>twenty</code> của <code>twenty-sdk</code> (<code>src/cli/cli.ts</code>).
+        Đồng thời <code>commerce/yarn.lock:973</code> vẫn đọc <code>"@twentyhq/commerce@workspace:."</code>
+        trong khi <code>commerce/package.json:2</code> là <code>@crove/commerce</code> (tương tự zalo-oa
+        ở <code>:946</code>/<code>:948</code>) → <code>yarn install --immutable</code> trong
+        <code>ci-twenty-apps.yaml:66</code> có thể fail vì lệch descriptor.
+        Cũng đã xác nhận: <code>packages/twenty-website/src/content/**/*.mdx</code> → không còn file nào,
+        tức việc dời MDX sang <code>twenty-docs</code> đã xảy ra, nhưng <code>twenty-website</code> vẫn tồn tại.</td>
+    </tr>
+    <tr>
+      <td>M35</td>
+      <td>Test của apps có nối vào CI, nhưng chỉ trên <code>main</code>; <code>qa-scout</code> là code chết</td>
+      <td class="loc">.github/workflows/ci-twenty-apps.yaml:5-6, :72-74<br>.claude/skills/qa-scout/SKILL.md:3</td>
+      <td><em>Đính chính cho giả định ban đầu:</em> runner vitest của apps <strong>có</strong> được nối —
+        <code>discover-apps.yaml:100</code> set <code>hasUnit: Boolean(scripts['test:unit'])</code> và cả
+        commerce lẫn zalo-oa đều định nghĩa <code>test:unit</code>, nên <code>ci-twenty-apps.yaml:74</code> chạy chúng.
+        Khoảng trống thật là trigger chỉ có <code>push: branches: [main]</code> + <code>pull_request</code> —
+        không có <code>dev</code>. Commerce có 2 file test, zalo-oa có 5; không cái nào chạy trên nhánh làm việc của fork.
+        Và kết hợp với <a href="#C4">C4</a>, bước discover hiện throw trước khi tới được chúng.<br>
+        Riêng <code>qa-scout</code>: skill tự nhận "Invoked by ci-e2e-main.yaml after the deterministic e2e suite",
+        nhưng grep toàn repo cho <code>qa-scout</code> → <strong>0 kết quả</strong> ngoài chính file skill.
+        <code>ci-e2e-main.yaml</code> kết thúc ở <code>npx nx test twenty-e2e-testing</code> + upload artifact.
+        Check "có người dùng nhận ra thứ gì đó vỡ" duy nhất của fork không bao giờ chạy;
+        và bản thân nó là quy trình điều khiển bằng LLM, không tất định, ngân sách 10 phút —
+        không thay thế được test tự động kể cả khi được nối.</td>
+    </tr>
+    <tr>
+      <td>M36</td>
+      <td><code>CLAUDE.md</code> khẳng định có các cổng CI không tồn tại</td>
+      <td class="loc">CLAUDE.md:47 · CLAUDE.md:48</td>
+      <td><span class="v">✓</span> "CI rejects commits containing <code>@anthropic.com</code> co-author trailers
+        or 'Generated with Claude Code' lines." — grep toàn repo cho <code>anthropic\.com</code> chỉ thấy
+        demo data của website và <code>subprocessors.json</code>;
+        <strong>không workflow, hook hay script nào kiểm tra commit message</strong>.
+        Attribution chỉ được <em>khuyên</em> trừ trước qua <code>.claude/settings.json:3-7</code>
+        (<code>"attribution": {"commit": ""}</code>) và một prompt SessionStart.<br>
+        Tương tự với catalog <code>.po</code>: <code>ci-server.yaml:83-92</code> có chạy
+        <code>lingui:extract</code>/<code>lingui:compile</code> nhưng <strong>không có
+        <code>git diff --quiet</code></strong> sau đó — khác với migration check ở <code>:186</code>
+        và GraphQL check ở <code>:203</code>. 33 file <code>.po</code> mỗi package × 4 package đang được track.
+        <br>Hệ quả: contributor và agent tin vào một cái gate không có; churn catalog rơi xuống
+        <code>dev</code> không ai review và thành bề mặt xung đột merge vĩnh viễn.
+        <br><em>Xử lý:</em> thêm hai check đó, hoặc gạch bỏ khẳng định khỏi <code>CLAUDE.md</code>.</td>
+    </tr>
+    <tr>
+      <td>M37</td>
+      <td>Khối <code>"prettier"</code> chết trong <code>package.json</code> gốc</td>
+      <td class="loc">package.json:141-145 · twenty-front/package.json:200</td>
+      <td>Còn giữ <code>singleQuote</code>/<code>trailingComma</code>/<code>endOfLine</code>
+        trong khi formatter là <code>oxfmt</code> (<code>.oxfmtrc.jsonc</code>, <code>nx.json:44,78</code>),
+        và <code>twenty-front</code> vẫn liệt kê <code>prettier: ^3.1.1</code> làm devDependency.
+        Config mâu thuẫn mời gọi một agent "sửa" format bằng sai công cụ.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="m-docs">Tài liệu mâu thuẫn với thực tế</h3>
+<div class="note">
+  Tất cả các mục dưới đã được kiểm chứng bằng cách đối chiếu với code/config thật.
+  Hai file đầu đặt <code>alwaysApply: true</code> nghĩa là chúng <strong>được tiêm vào mọi phiên agent</strong> —
+  một agent làm theo sẽ viết code styled-components + react-i18next vào một repo Linaria + Lingui.
+  Tài liệu sai là cách nhanh nhất để người đóng góp tiếp theo (hoặc AI) viết code sai.
+</div>
+<table>
+  <thead><tr><th style="width:30%">Tài liệu</th><th style="width:32%">Khẳng định</th><th>Thực tế (đã kiểm chứng)</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="loc">.cursor/rules/architecture.mdc:9-10<br><span class="badge b-crit">alwaysApply: true</span></td>
+      <td>"React 18, TypeScript, Jotai, <strong>Styled Components</strong>, Vite"</td>
+      <td><code>nx.json:249,258,265</code> đặt generator <code>"style": "@linaria/react"</code>;
+        <code>twenty-front/package.json:48-49</code> có <code>@linaria/core</code>/<code>@linaria/react</code>;
+        <strong>không có</strong> dependency <code>styled-components</code>. React: <code>@types/react ^19.2.0</code>
+        (<code>package.json:11</code>), không phải 18.</td>
+    </tr>
+    <tr>
+      <td class="loc">.cursor/rules/translations.mdc:17, 70</td>
+      <td>"Use <strong>react-i18next</strong>", catalog JSON tại <code>src/locales/en/*.json</code></td>
+      <td>Lingui: <code>@lingui/react ^5.9.5</code> (<code>twenty-front/package.json:52</code>),
+        macro <code>@lingui/react/macro</code> dùng khắp nơi; 33 file <code>.po</code> được track mỗi package.</td>
+    </tr>
+    <tr>
+      <td class="loc">.cursor/rules/code-style.mdc:9</td>
+      <td>"<strong>Prettier</strong>: 2-space indentation…"</td>
+      <td><code>nx.json:44</code> lint = <code>npx oxlint … &amp;&amp; npx oxfmt --check</code>;
+        <code>nx.json:78</code> target <code>fmt</code> = <code>oxfmt</code>.
+        <em>Phần còn lại của file này (printWidth 80, thứ tự import) thì khớp config thật.</em></td>
+    </tr>
+    <tr>
+      <td class="loc">.cursor/rules/structured-selection-choices.mdc:1,10<br><span class="badge b-crit">alwaysApply: true</span></td>
+      <td>Bắt buộc dùng popup <code>AskQuestion</code> của Cursor</td>
+      <td>Không thể thoả mãn trong bất kỳ agent nào không phải Cursor. File được thêm bởi <code>1835b6734f</code>.
+        Cùng loại: <code>feedback-incorporation.mdc</code> là meta-process của Cursor AI, không phải convention code.</td>
+    </tr>
+    <tr>
+      <td class="loc">.cursor/rules/changelog-process.mdc:96, 109, 124</td>
+      <td><code>cd /Users/thomascolasdesfrancs/code/twenty</code>; target
+        <code>packages/twenty-website/src/content/releases/</code></td>
+      <td>Đường dẫn tuyệt đối cá nhân. Glob
+        <code>packages/twenty-website/src/content/**/*.mdx</code> → <strong>không còn file nào</strong>.</td>
+    </tr>
+    <tr>
+      <td class="loc">packages/twenty-docs/MIGRATION.md:22, 44, 86</td>
+      <td>"Complete <strong>mint.json</strong> configuration"; "The legacy <code>packages/twenty-website</code>
+        package has been removed"</td>
+      <td>Chỉ có <code>packages/twenty-docs/docs.json</code> (không có <code>mint.json</code>);
+        <code>twenty-website</code> vẫn nằm trong workspaces của <code>package.json</code> gốc
+        và được <code>README.md</code> tham chiếu ~40 lần.</td>
+    </tr>
+    <tr>
+      <td class="loc">ROADMAP.md:79, 104, 146-148</td>
+      <td><code>@twentyhq/commerce</code>, <code>@twentyhq/zalo-oa</code></td>
+      <td><code>commerce/package.json:2</code> = <code>"@crove/commerce"</code>;
+        <code>zalo-oa/package.json:2</code> = <code>"@crove/zalo-oa"</code>.</td>
+    </tr>
+    <tr>
+      <td class="loc">.github/CONTRIBUTING.md · README.md</td>
+      <td>—</td>
+      <td><code>CONTRIBUTING.md</code> 100% là của upstream Twenty (fork-the-repo, <code>docs.twenty.com</code>).
+        <strong>Không có</strong> onboarding cho fork, không hướng dẫn sync upstream ở đâu ngoài
+        một dòng house rule trong <code>CLAUDE.md</code>. Người mới không có đường vào.</td>
+    </tr>
+    <tr>
+      <td class="loc">docs/PANCAKE_CRM_BENCHMARK_ANALYSIS.md:27,55,65,71,77,87</td>
+      <td>—</td>
+      <td>Nhúng 6 đường dẫn asset Cursor cục bộ
+        <code>C:/Users/JOY/.cursor/projects/d-Projects-Crove-CRM/assets/…png</code> →
+        ảnh vỡ với mọi người đọc khác. Nội dung là bản dump giá đối thủ, không rõ quyền sở hữu.</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- ==================== LOW ==================== -->
+
+<h2 id="low">Low <span class="badge b-low">7 vấn đề</span></h2>
+<table>
+  <thead><tr><th style="width:6%">ID</th><th style="width:34%">Vấn đề</th><th style="width:26%">Vị trí</th><th>Chi tiết</th></tr></thead>
+  <tbody>
+    <tr><td>L1</td><td>SQL phá hoại không guard ở gốc repo</td>
+      <td class="loc">scripts/drop-timeline-activity-type.sql:1<br>scripts/fix-migration-sequence.js:33-40<br>scripts/set-vetted-apps.sql:1-10</td>
+      <td><code>DROP TABLE … CASCADE</code> không guard, không transaction, chỉ cách một lệnh <code>psql -f</code>;
+        ghi đè <code>createdAt</code> của mọi migration và xoá row <code>failed</code> không xác nhận;
+        lật <code>isVetted = true</code> với mệnh đề <code>OR name ILIKE '%slack%'</code> rộng
+        bắt cả registration không liên quan.</td></tr>
+    <tr><td>L2</td><td>Email cá nhân + người nhận hardcode trong script đã commit</td>
+      <td class="loc">scripts/test-smtp-relay.js:15, 18</td>
+      <td><code>'anh.legiang@gmail.com'</code> dùng làm cả login SMTP Brevo mặc định lẫn <code>to</code> hardcode.
+        PII trong VCS, và giá trị login mặc định để lộ danh tính dùng cho mail relay production.</td></tr>
+    <tr><td>L3</td><td><code>rejectUnauthorized: false</code> trong script bảo trì DB</td>
+      <td class="loc">scripts/fix-db-schema.js:6</td>
+      <td>Nối vào <code>process.env.PG_DATABASE_URL</code> (pooler Supabase production theo
+        <code>.env.example:33</code>) với TLS certificate validation bị tắt, rồi <code>ALTER TABLE</code> /
+        <code>UPDATE</code> trên <code>core.application</code>. MITM được dễ dàng, và là script đổi schema
+        không có cờ dry-run.</td></tr>
+    <tr><td>L4</td><td>Frontend fork sửa msgid của upstream ngay trong source</td>
+      <td class="loc">pages/auth/SignInUp.tsx:104,108,120,126<br>WorkspaceSection.tsx:200<br>MultiWorkspaceDropdownDefaultComponents.tsx:135</td>
+      <td><code>t`Welcome to Crove`</code> (upstream: <code>t`Welcome to Twenty`</code>),
+        <code>sectionTitle={t`Organization`}</code> (upstream: <code>t`Workspace`</code>).
+        Đã xác nhận <code>vi-VN.po:21540-21541</code> vẫn giữ <code>msgid "Welcome to Twenty"</code> /
+        <code>msgstr "Chào mừng đến với Twenty"</code>, và <strong>không có</strong>
+        <code>msgid "Welcome to Crove"</code> trong bất kỳ catalog nào.
+        Bốn hệ quả: (a) khoá Lingui chính là msgid nên lookup runtime miss → mọi user không dùng tiếng Anh
+        nhận tiếng Anh; (b) lần <code>lingui extract</code> tới đánh dấu 6 entry cũ là obsolete và thêm entry mới
+        với msgstr <strong>rỗng</strong> → bản dịch bị vứt vĩnh viễn; (c) <code>vi-VN.po:14453</code> đã có
+        <code>msgid "Organization"</code> → <code>"Tổ chức"</code> từ <code>OrganizationAdornment.tsx</code>,
+        nên sửa đổi này gộp hai khái niệm UI không liên quan vào một khoá toàn cục không <code>msgctxt</code> —
+        không bao giờ dịch khác nhau được; (d) hoàn toàn thừa, vì <code>patch-crove-branding.ts</code>
+        đã viết lại <code>Workspace</code>→<code>Organization</code> trong msgstr lúc build.
+        <br><em>Xử lý:</em> revert cả 6 sửa đổi về msgid upstream và để patcher lo việc đổi thuật ngữ —
+        đó chính xác là rule "minimal fork modification".</td></tr>
+    <tr><td>L5</td><td>Vi phạm format/nhánh import trong các sửa đổi fork</td>
+      <td class="loc">SettingsRoutes.tsx:715 · SignInUpGlobalScopeForm.tsx:280-287 · isUnauthenticatedGraphQLError.ts:14 · Logo.tsx:9</td>
+      <td>Đều <code>nx fmt</code>-dirty. Chi tiết ở <a href="#m-fe">M26</a>.</td></tr>
+    <tr><td>L6</td><td>Component front-component của Zalo vượt giới hạn dòng và trộn trách nhiệm</td>
+      <td class="loc">zalo-oa/src/components/send-zalo-message-form.front-component.tsx (356 dòng)</td>
+      <td>Vượt ngưỡng ~300 dòng của <code>.cursor/rules/file-structure.mdc</code>; trộn API client +
+        design token + style + component trong một file. <em>Giảm nhẹ:</em> bản Discord upstream còn lớn hơn,
+        nên có tiền lệ trong tree.</td></tr>
+    <tr><td>L7</td><td>URL đích không nhất quán trong công cụ test webhook</td>
+      <td class="loc">packages/twenty-utils/test-dos-webhook.ts</td>
+      <td>Mặc định nhắm <code>https://crove.io/webhooks/dos-org-sync</code> trong khi production và tài liệu
+        dùng <code>crm.crove.com</code>. Công cụ chẩn đoán trỏ sai host sẽ cho kết quả gây hiểu nhầm.</td></tr>
+  </tbody>
+</table>
+
+<!-- ==================== ADDENDUM ==================== -->
+
+<h2 id="addendum">Bổ sung vòng 2 <span class="badge b-crit">6 finding mới</span></h2>
+
+<div class="note">
+  Sáu finding dưới đây <strong>không có trong bản audit đầu</strong>. Chúng chỉ lộ ra khi bản audit bị
+  chính nó soi lại. Nguyên nhân gốc của việc bỏ sót là một lỗ hổng phương pháp, được ghi rõ ở
+  <a href="#N4">N4</a>: audit dựng "bề mặt fork" bằng <code>git diff upstream/main...dev</code> và
+  <code>git ls-files</code> — <strong>cả hai chỉ nhìn thấy trạng thái đã commit</strong>, nên toàn bộ
+  working tree dirty và các file untracked nằm ngoài tầm nhìn một cách có cấu trúc.
+  Riêng <a href="#N5">N5</a> lọt lưới vì lý do khác: các lần quét secret chỉ tìm
+  <code>sk-…</code>, <code>AKIA…</code>, <code>-----BEGIN PRIVATE KEY-----</code> —
+  một Bearer token dạng UUID trong config MCP không khớp pattern nào.
+</div>
+
+<div class="finding f-crit" id="N5">
+  <h3><span class="fid">N5</span> <span class="v">✓</span> Frill Bearer token trong <code>.mcp.json</code> — file được track, trên repo PUBLIC</h3>
+  <p class="meta"><span class="tag">Bảo mật</span>.mcp.json (khối <code>frill</code>)</p>
+  <pre><code>"frill": {
+  "url": "https://mcp.frill.co/mcp",
+  "headers": { "Authorization": "Bearer <span class="redacted">f335cd55-…REDACTED (UUID 36 ký tự)</span>" }
+}</code></pre>
+  <span class="lbl">Bằng chứng đã kiểm chứng</span>
+  <ul>
+    <li><code>git ls-files --error-unmatch .mcp.json</code> → <strong>tracked</strong>.</li>
+    <li>Commit đưa nó vào: <code>3cd353234a feat(mcp): configure Frill MCP server for Crove OS workspace and document feedback portal</code>.</li>
+    <li><code>.gitignore</code> có dòng <code>mcp.json</code> nhưng <strong>KHÔNG có <code>.mcp.json</code></strong> —
+      lệch đúng một ký tự, nên file chứa token vẫn bị track. Rõ ràng đã có ý định ignore nó.</li>
+    <li>Repo <code>DOS/Crove-CRM</code> là PUBLIC → token đọc được công khai.</li>
+  </ul>
+  <span class="lbl">Vì sao cả hai vòng audit trượt</span>
+  <p>
+    Đây là lỗi <em>phương pháp phát hiện</em>, không chỉ là một lần bỏ sót. Quét secret theo pattern
+    (<code>sk-</code>, <code>AKIA</code>, PEM header) sẽ luôn trượt credential dạng UUID trong file cấu hình.
+    Cách quét đúng là liệt kê mọi file config được track rồi đọc chúng
+    (<code>.mcp.json</code>, <code>.env*</code>, <code>*.yaml</code> trong <code>.github/</code>,
+    <code>docker-compose*</code>, <code>*.tf</code>), thay vì chỉ grep theo hình dạng secret.
+  </p>
+  <span class="lbl">Hướng xử lý</span>
+  <p>
+    Revoke/rotate token Frill; sửa <code>.gitignore</code> thành <code>/.mcp.json</code>;
+    bỏ token khỏi file tracked (dùng tham chiếu env var nếu Frill MCP hỗ trợ).
+    Đồng thời xem lại việc <code>.mcp.json</code> có nên được track hay không — nó còn tham chiếu
+    <code>packages/twenty-server/.env</code>, một file không tồn tại trong repo (xem <a href="#N4">N4</a>).
+  </p>
+</div>
+
+<div class="finding f-high" id="N2">
+  <h3><span class="fid">N2</span> <span class="v">✓</span> Query auth trên production select một field server chưa bao giờ expose — và bản sửa thì đang nằm chưa commit</h3>
+  <p class="meta"><span class="tag">Frontend</span><span class="tag">Bảo mật</span>
+    packages/twenty-front/src/modules/auth/graphql/queries/getPublicWorkspaceDataByDomain.ts<br>
+    packages/twenty-front/src/generated-metadata/graphql.ts</p>
+  <span class="lbl">Chuỗi bằng chứng đã truy ngược đầy đủ</span>
+  <ol>
+    <li><code>dosIdButtonLabel</code> được thêm vào query + file generated bởi commit fork
+      <code>45926f2048 feat(auth): include dosId in getPublicWorkspaceDataByDomain query</code>.</li>
+    <li><code>git grep -n "dosIdButtonLabel" HEAD -- packages/twenty-server packages/twenty-shared</code>
+      → <strong>0 kết quả</strong>. Server <em>chưa bao giờ</em> expose field này trong schema.</li>
+    <li>⇒ Bản <strong>đã commit</strong> trên <code>dev</code> có một GraphQL query select field không tồn tại.
+      GraphQL reject unknown field ở bước validation → <strong>toàn bộ query
+      <code>GET_PUBLIC_WORKSPACE_DATA_BY_DOMAIN</code> lỗi</strong>, không phải chỉ field đó.</li>
+    <li>Query này phân giải public workspace data <strong>theo domain</strong> — đúng cái đường chạy khi
+      người ta vào <code>crm.crove.com</code>, và đúng khu vực <a href="#H11">H11</a> đang có vấn đề.</li>
+    <li>Và <code>dev</code> là nhánh <code>docker-publish.yml</code> build ra image production
+      <strong>không qua gate test nào</strong> (<a href="#C5">C5</a>).</li>
+  </ol>
+  <span class="lbl">Kết luận</span>
+  <p>
+    Thay đổi <em>chưa commit</em> trong working tree (xoá <code>dosIdButtonLabel</code> khỏi query)
+    là một <strong>hotfix cho bug thật có khả năng đã ship</strong> — không phải việc dọn dẹp, và
+    <strong>tuyệt đối không revert</strong>. Đây là ví dụ cụ thể nhất cho thấy vì sao
+    <a href="#C5">C5</a> (dev không có gate) nguy hiểm: một query gãy trên auth path đi qua
+    toàn bộ pipeline mà không một kiểm tra nào chặn lại.
+  </p>
+  <span class="lbl">Câu hỏi sản phẩm cần trả lời trước khi commit</span>
+  <p>
+    <code>dosIdButtonLabel</code> là tính năng <em>đáng lẽ phải có</em> (→ thêm server-side vào
+    <code>AuthProviders</code>/<code>AuthBypassProviders</code> rồi regenerate), hay là
+    <em>scope creep chưa bao giờ land</em> (→ bỏ, như working tree đang làm)?
+    Commit message chỉ nói "include dosId", nên cái label trông như phần thêm vào mà phía server không theo kịp.
+  </p>
+</div>
+
+<div class="finding f-high" id="N6">
+  <h3><span class="fid">N6</span> URL webhook production kèm UUID token trong tài liệu public</h3>
+  <p class="meta"><span class="tag">Bảo mật</span>docs/superpowers/handoffs/2026-09-04-slack-event-router-handoff.md (§3.1 và trong khối code tham khảo)</p>
+  <pre><code>CROVE_CRM_SLACK_WEBHOOK_URL:
+  https://crm.crove.com/webhooks/server/<span class="redacted">9ad6fa20-…REDACTED (UUID)</span></code></pre>
+  <p>
+    Trong Twenty, UUID trong URL server webhook là định danh/secret cho phép delivery — ai có nó thì
+    POST event vào webhook đó được. <strong>Chưa xác minh được ngữ nghĩa auth chính xác:</strong>
+    grep <code>webhooks/server</code>, <code>Controller('webhook'</code>, <code>server/:</code> trong
+    <code>twenty-server/src</code> đều không khớp, nên không tìm ra route handler.
+    Nêu ở mức "nhiều khả năng tương đương bearer token, cần verify", không khẳng định.
+  </p>
+  <p>
+    Dù vậy: URL endpoint tích hợp nội bộ của production đang được publish trong repo public.
+    Cùng loại với <a href="#H15">H15</a> — <code>docs/ARCHITECTURE.md:154</code> còn công khai
+    tên bucket R2 (<code>crove-crm</code>) và account endpoint.
+  </p>
+  <p><strong>Xử lý:</strong> xác minh route handler để biết UUID có phải token không; nếu có thì rotate
+    webhook đó; chuyển URL thật sang runbook private, trong tài liệu public chỉ để placeholder.</p>
+</div>
+
+<div class="finding f-med" id="N3">
+  <h3><span class="fid">N3</span> <span class="v">✓</span> File generated bị sửa tay, để lại dấu vết trailing comma</h3>
+  <p class="meta"><span class="tag">Frontend</span>packages/twenty-front/src/generated-metadata/graphql.ts</p>
+  <pre><code>// bản mới (working tree) — để ý dấu phẩy thừa trước ']'
+{"kind":"Field","name":{"kind":"Name","value":"dosId"}},]}</code></pre>
+  <p>
+    Codegen không bao giờ sinh ra <code>},]</code>. Đây là dấu vết người xoá entry kế bên
+    (<code>dosIdButtonLabel</code>) bằng tay thay vì chạy lại
+    <code>npx nx run twenty-front:graphql:generate</code>.
+    Nó là JS hợp lệ (trailing comma trong array literal) nên <strong>không gãy build</strong>, nhưng:
+  </p>
+  <ul>
+    <li>Bất kỳ CI codegen-diff guard nào cũng sẽ fail — regenerate ra file khác.</li>
+    <li>Người chạy codegen kế tiếp nhận một diff rác không giải thích được.</li>
+    <li>Nó che mất sự thật rằng file "generated" này không còn do máy sinh ra.</li>
+  </ul>
+  <p><strong>Xử lý:</strong> giữ sửa đổi ở query (<a href="#N2">N2</a>), nhưng <strong>regenerate</strong>
+    <code>graphql.ts</code> bằng lệnh codegen thay vì commit bản sửa tay. Hai file phải commit cùng nhau.</p>
+</div>
+
+<div class="finding f-med" id="N1">
+  <h3><span class="fid">N1</span> <span class="v">✓</span> 12 screenshot QA ở gốc repo, không được gitignore, trên repo PUBLIC — <span class="badge b-ok">ĐÃ XỬ LÝ</span></h3>
+  <p class="meta"><span class="tag">Repo</span>tmp-*.png (12 file, gốc repo)</p>
+  <pre><code>?? tmp-after-signin.png    ?? tmp-profile.png      ?? tmp-signin-form.png
+?? tmp-after-signup.png    ?? tmp-profile2.png     ?? tmp-signin-step2.png
+?? tmp-profile4/5/7/8.png  ?? tmp-signup.png       ?? tmp-signup2.png</code></pre>
+  <p>
+    <code>.gitignore</code> <strong>không có pattern nào</strong> khớp <code>tmp</code> hay <code>png</code>
+    (đã grep xác nhận), dù nó đã có sẵn các block cho artifact QA như <code>screenshots/</code>,
+    <code>.playwright-mcp/</code>, <code>output/playwright/</code> và "# Local scratch scripts".
+    Tên file cho thấy đây là capture của một phiên browser-automation trên <strong>form đăng nhập và
+    trang profile đã đăng nhập</strong> → có khả năng chứa email thật, dữ liệu phiên, PII.
+    Chúng cách việc bị commit vĩnh viễn vào repo public đúng một lệnh <code>git add -A</code>.
+  </p>
+  <p>
+    <strong>Đã thực hiện:</strong> <code>del /q tmp-*.png</code> (12 file đã xoá) và thêm vào
+    <code>.gitignore</code>, đặt cạnh block scratch sẵn có cho đúng convention:
+  </p>
+  <pre><code># Local QA screenshots (browser-automation scratch output, never commit)
+/tmp-*.png
+/tmp-*.jpg</code></pre>
+  <p>
+    Nội dung 12 file <strong>không được mở xem</strong> — tránh kéo PII vào transcript; việc đánh giá
+    có PII hay không nên do chủ sở hữu dữ liệu nhìn. Vì chúng chưa từng bị commit và repo thì public,
+    không có gì phải purge. Nếu trong phiên QA đó có gõ mật khẩu thật vào form
+    (<code>tmp-signin-form.png</code>, <code>tmp-signin-step2.png</code>), việc xoá local đã loại bỏ rủi ro.
+  </p>
+  <p class="sub">Trạng thái: <code>.gitignore</code> đã sửa nhưng <strong>chưa commit</strong>.</p>
+</div>
+
+<div class="finding f-med" id="N4">
+  <h3><span class="fid">N4</span> <span class="v">✓</span> Working tree dirty không ai sở hữu — và là lý do bản audit đầu bỏ sót N1-N3</h3>
+  <p class="meta"><span class="tag">Repo</span>git status --porcelain</p>
+  <pre><code> M .gitignore                                                   ← vòng 2 thêm
+ M packages/twenty-front/src/generated-metadata/graphql.ts      ← N3
+ M .../auth/graphql/queries/getPublicWorkspaceDataByDomain.ts   ← N2
+ M .../workflow/hooks/useGetUpdatableWorkflowVersionOrThrow.ts  ← xem bên dưới
+ M packages/twenty-sdk/project.json                             ← xem bên dưới</code></pre>
+  <span class="lbl">Đây là lỗi phương pháp của chính bản audit</span>
+  <p>
+    Bản audit đầu khẳng định <em>"Working tree vẫn sạch ở <code>f06f82a2c7</code>"</em> —
+    <strong>sai</strong>, và còn tự mâu thuẫn với chính câu trước đó ("không có thay đổi nào được thực hiện")
+    vì file audit vừa tạo ra nằm ngay trong danh sách <code>??</code>.
+    Hậu quả không chỉ là một câu sai: vì tin rằng tree sạch, audit đã dựng toàn bộ bề mặt fork từ
+    <code>git diff upstream/main...dev</code> (chỉ thấy trạng thái đã commit), nên
+    <a href="#N1">N1</a>, <a href="#N2">N2</a>, <a href="#N3">N3</a> đều nằm ngoài tầm nhìn.
+    Phần repo-hygiene thậm chí được giao nhiệm vụ tìm đúng loại file này
+    ("local dev leftovers committed by accident") và trượt cả 12 file.
+  </p>
+  <span class="lbl">Phân tích 2 file dirty còn lại</span>
+  <p>
+    <strong><code>useGetUpdatableWorkflowVersionOrThrow.ts</code></strong> — đổi
+    <code>isNonEmptyString</code> từ <code>twenty-shared/utils</code> sang <code>@sniptt/guards</code>.
+    Vòng review thứ hai đã nêu đây là "câu hỏi convention" — <strong>kiểm tra lại thì ngược hẳn</strong>:
+    <code>@sniptt/guards</code> là dependency khai báo chính thức (<code>twenty-front/package.json:64</code>,
+    <code>^0.2.0</code>) và được dùng ở <strong>372 chỗ</strong> trong twenty-front, kể cả
+    <code>vite.config.ts:2</code> và toàn bộ <code>src/utils/*</code>. Vậy thay đổi này
+    <em>đi theo convention áp đảo của chính thư mục đó</em>; rule <code>twenty-shared/utils</code> trong
+    <code>CLAUDE.md</code> thua rule "file kế bên thắng rule viết ra" — mà cũng chính <code>CLAUDE.md</code>
+    quy định như vậy.<br>
+    <em>Caveat cần typecheck trước khi commit:</em> hai bản implementation khác nhau về kiểu input —
+    comment tại <code>src/utils/__tests__/joinAddressFieldValues.test.ts:95</code> ghi rõ bản
+    <code>@sniptt/guards</code> "only accepts strings", trong khi bản <code>twenty-shared/utils</code>
+    narrow từ <code>unknown</code>. Hook gọi nó trên <code>flow?.workflowVersionId</code> (có thể
+    <code>undefined</code>) nên ngữ nghĩa narrowing có thể khác. Chạy
+    <code>npx tsgo -p tsconfig.json --noEmit</code> trong twenty-front.<br>
+    <em>Lưu ý:</em> thay đổi này <strong>không sửa <a href="#H12">H12</a></strong> — logic fallback giữ nguyên.
+  </p>
+  <p>
+    <strong><code>twenty-sdk/project.json</code></strong> — thêm <code>--glob</code> vào hai lệnh
+    <code>rimraf</code> có truyền glob pattern (<code>'dist/define/**/*.d.ts'</code>…).
+    Đã kiểm tra: <code>rimraf</code> <strong>không phải dependency khai báo</strong> ở twenty-sdk
+    (<code>package.json:15</code> chỉ có <code>npx rimraf dist</code>) → <code>npx</code> lấy rimraf hiện hành
+    (v5+), mà v5+ <strong>bắt buộc</strong> <code>--glob</code> mới expand pattern; không có nó thì bước
+    dọn dẹp im lặng không xoá gì và <code>.d.ts</code> cũ sống sót vào <code>dist</code>.
+    Đây là <strong>fix build hợp lệ</strong>, nên commit riêng.<br>
+    <em>Phát hiện phụ:</em> <code>npx rimraf</code> không pin version = build không tái lập được.
+    Đáng pin rimraf làm devDependency (việc nhỏ, tách riêng).
+  </p>
+  <span class="lbl">Thứ tự commit đề xuất — 4 thay đổi không liên quan nhau, đừng gộp</span>
+  <table style="margin:6px 0 0">
+    <thead><tr><th style="width:6%">#</th><th style="width:34%">File</th><th>Message gợi ý</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>query + <code>graphql.ts</code> (regenerate, không commit bản sửa tay)</td>
+        <td><code>fix(auth): drop dosIdButtonLabel from getPublicWorkspaceDataByDomain — server schema never exposed it</code></td></tr>
+      <tr><td>2</td><td><code>twenty-sdk/project.json</code></td>
+        <td><code>fix(sdk): pass --glob to rimraf so d.ts cleanup actually runs on rimraf v5+</code></td></tr>
+      <tr><td>3</td><td><code>useGetUpdatableWorkflowVersionOrThrow.ts</code></td>
+        <td><code>refactor(workflow): align isNonEmptyString import with twenty-front convention</code></td></tr>
+      <tr><td>4</td><td><code>.gitignore</code></td>
+        <td><code>chore: ignore local QA screenshot scratch files</code></td></tr>
+    </tbody>
+  </table>
+  <p class="sub" style="margin-top:8px">
+    <strong>Chưa commit gì.</strong> Quyết định commit/revert trên work đang dở của người khác cần được duyệt
+    cụ thể từng cái — đặc biệt commit 1, vì nó phụ thuộc câu hỏi sản phẩm ở <a href="#N2">N2</a>.
+  </p>
+</div>
+
+<!-- ==================== CLEAN ==================== -->
+
+<h2 id="clean">Những điểm ĐẠT <span class="badge b-ok">đã kiểm chứng</span></h2>
+
+<div class="grid2">
+<div>
+<h3>Bảo mật</h3>
+<ul>
+  <li><code>verifyEcosystemWebhook</code> dùng <code>crypto.timingSafeEqual</code> ở <strong>cả hai</strong> nhánh,
+    có length pre-check trước khi hex-decode, <code>try/catch → false</code>; không hề so sánh <code>===</code>.</li>
+  <li>HMAC tính trên raw body thật: <code>rawBody: true</code> được set ở <code>main.ts:38</code>
+    và controller đọc <code>req.rawBody</code> (<code>:198, :206</code>).
+    Fallback <code>rawBody ?? Buffer.from(JSON.stringify(req.body))</code> ở <code>:206</code> sẽ re-serialise
+    và làm hỏng verification, nhưng nó chỉ là fallback.</li>
+  <li>Không có SQL nội suy chuỗi trong webhook controller; mọi lời gọi TypeORM repository đều là object tham số hoá.</li>
+  <li>Không có private key, khoá <code>sk-*</code>, khoá AWS <code>AKIA*</code>, GitHub PAT hay Slack token nào
+    trong source được track (quét regex toàn repo). Chỉ có fixture <code>xoxb-test-token</code> trong
+    <code>twenty-apps/public/slack/src/__tests__/</code>.</li>
+  <li><code>packages/twenty-server/.env.example:27-33,75</code> được placeholder hoá đúng chuẩn
+    (<code>replace_me_with_...</code>) — chỗ rò chỉ giới hạn ở <code>packages/twenty-docker/.env.example</code>.</li>
+  <li>OIDC/PKCE đúng về cấu trúc: <code>usePKCE: true</code> + <code>code_challenge_method: 'S256'</code>
+    (<code>dos-id.auth.strategy.ts:85-87</code>), <code>response_types: ['code']</code>,
+    <code>redirect_uris</code> cố định về một callback duy nhất (<code>:69</code>),
+    chữ ký/<code>iss</code>/<code>aud</code>/<code>exp</code> của id_token do
+    <code>openid-client</code> validate trong <code>callback()</code>.</li>
+  <li>Không open redirect: <code>redirect</code> đi vào <code>authService.signInUpWithSocialSSO</code>
+    (<code>dos-id-auth.controller.ts:48-51</code>); <code>returnToPath</code> bị ràng buộc phía server
+    (<code>auth.service.ts:1078</code>) và được validate lại phía client bởi <code>isSafeInternalPath</code>,
+    hàm này reject <code>//</code>, <code>\</code> và ký tự điều khiển.</li>
+  <li><code>state</code> sinh theo từng request và vọng lại qua <code>req.query.state</code> —
+    khớp pattern Google/Microsoft của upstream, không fixable bởi attacker.</li>
+  <li>Không regression <code>helmet</code>, không thay đổi CORS do fork
+    (<code>apply-credentialed-cors.util.ts</code> là code upstream).</li>
+  <li><code>DosIdProviderEnabledGuard</code> short-circuit đúng khi <code>AUTH_DOS_ID_ENABLED === false</code>
+    trước khi dựng client.</li>
+  <li><code>AUTH_PASSWORD_ENABLED=false</code> trong template production → không còn bề mặt tấn công password-auth.</li>
+  <li>App Zalo không rò <code>ZALO_APP_SECRET</code>/<code>ZALO_OA_SECRET_KEY</code> qua response hay log:
+    <code>get-zalo-credentials.ts</code> chỉ trả boolean success + message tĩnh;
+    <code>zalo-api-request.ts</code> chỉ trả <code>error.message</code> từ exception của fetch.</li>
+  <li>Cookie domain với config đang ship ra <code>.crm.crove.com</code> — scope đúng;
+    <code>catch {}</code> dẫn tới host-only, là fail-safe chứ không fail-open.</li>
+</ul>
+</div>
+<div>
+<h3>Kiến trúc &amp; kỹ thuật</h3>
+<ul>
+  <li>Không có N+1 trong webhook: mỗi event thực hiện một lookup workspace cộng một thao tác ORM có scope;
+    repository scope đúng qua <code>executeInWorkspaceContext</code> + <code>buildSystemAuthContext</code>.</li>
+  <li>Các ghi cốt lõi của <code>signUpOnNewWorkspace</code> được bọc đúng trong
+    <code>this.dataSource.transaction</code> (<code>sign-in-up.service.ts:795-900</code>);
+    lời gọi HTTP tới DOS.Me được cố ý đặt ngoài transaction.</li>
+  <li>Caching multi-tenancy không bị fork làm xấu đi: <code>resolveWorkspaceAndPublicDomain</code>
+    vốn đã đọc DB mỗi lần gọi ở upstream, và nhánh fork ở <code>auth.resolver.ts:812-816</code>
+    chỉ thêm đúng một lookup theo khoá chính.</li>
+  <li><code>IS_MULTIWORKSPACE_SUBDOMAIN_ENABLED</code> mặc định <code>true</code> → giữ hành vi upstream
+    cho bất kỳ ai không set biến này.</li>
+  <li>Không thay đổi fork nào thêm cột DB, entity hay giá trị enum cần migration command được sinh ra.</li>
+  <li><code>dos-id-provider-enabled.guard.ts:34-36</code> (<code>Issuer.discover</code> +
+    <code>new DosIdStrategy(client)</code> mỗi request) mô phỏng chính xác
+    <code>oidc-auth.guard.ts:82-88</code> của upstream — theo pattern upstream, không phải regression của fork.</li>
+  <li>Fork không thêm file upgrade-command mới, nên rule timestamp append-only không bị vi phạm
+    (chỉ vi phạm rule thư mục phiên bản — xem <a href="#H10">H10</a>).</li>
+  <li>12 file <code>scripts/check-*.sql</code> chỉ là SELECT read-only.</li>
+  <li>Frontend: <code>isMultiWorkspaceSubdomainEnabledState.ts</code> dùng đúng factory
+    <code>createAtomState</code> kèm <code>key</code> — tuân thủ đầy đủ
+    <code>react-state-management.mdc</code>.</li>
+  <li>Logic domain <strong>không</strong> bị nhân bản: cờ mới đi xuyên qua các helper upstream sẵn có
+    (<code>useReadDefaultDomainFromConfiguration</code>, <code>useIsCurrentLocationOnAWorkspace</code>,
+    <code>WorkspaceProviderEffect</code>) thay vì fork chúng; mọi điều kiện mới cũng được thêm vào
+    dependency array tương ứng (<code>WorkspaceProviderEffect.tsx:62-68,87-93</code>) → không có rủi ro
+    stale-closure hay loop.</li>
+  <li>Không tìm thấy rủi ro redirect-loop: <code>DomainShell.tsx:39</code> short-circuit về
+    <code>&lt;WorkspaceApp /&gt;</code> trước khi bất kỳ effect redirect nào chạy, và
+    <code>isOnAWorkspace</code> trả <code>true</code> vô điều kiện khi cờ subdomain tắt.</li>
+  <li><code>SignInUpWithDosId.tsx</code> là bản copy trung thực của <code>SignInUpWithGoogle.tsx</code>
+    (kể cả prop type inline và thứ tự import relative-rồi-<code>twenty-ui</code>); chuỗi được bọc Lingui đúng
+    (<code>t`Continue with DOS ID`</code>); icon import từ <code>twenty-ui/icon</code>;
+    <code>AuthenticatedMethod.DOS_ID</code>, <code>authProvidersState</code>,
+    <code>useHasMultipleAuthMethods</code>, <code>SignInUpWorkspaceScopeFormEffect</code> đều được cập nhật nhất quán —
+    provider được đăng ký đúng cách Google và Microsoft đang làm.</li>
+  <li><code>useClientConfig.ts:190</code> default cờ optional bằng <code>?? true</code>,
+    khớp convention fail-open của upstream cho field client-config vắng mặt.</li>
+  <li>Validation handler của zalo-oa thực sự kỹ (<code>zalo-send-message-handler.ts:22,30</code>,
+    <code>zalo-send-zns-handler.ts:33,41,51</code> — kiểm tra non-empty trên mọi field bắt buộc),
+    tương phản rõ với <code>create-order-route</code>.</li>
+  <li>Không hardcode <code>crove.com</code>/<code>crove.io</code>/<code>crm.crove.com</code> ở bất kỳ đâu
+    trong <code>packages/twenty-front/src</code> (regex trên toàn bộ <code>.ts</code>/<code>.tsx</code>).</li>
+  <li>Không <code>useEffect</code> nào thiếu dependency array, không regression memo hoá nào trong
+    component list/table/board, trong số các file front mà fork chạm tới.</li>
+</ul>
+<h3>Repo / license / CI</h3>
+<ul>
+  <li><code>LICENSE</code> giống hệt upstream từng byte (<code>git diff --stat upstream/main...dev -- LICENSE</code> → rỗng);
+    AGPLv3 + Application Exception + Twenty.com Commercial License + tham chiếu
+    <code>.github/TRADEMARK.md</code> đều được giữ. Branding patch không tước license header
+    hay copyright notice khỏi bất kỳ file source nào (script chỉ ghi <code>.po</code>,
+    <code>index.html</code>, <code>manifest.json</code> và icon PNG/SVG).</li>
+  <li>Remote <code>upstream</code> cấu hình đúng (<code>https://github.com/twentyhq/twenty.git</code>);
+    <code>origin</code> = <code>DOS/Crove-CRM</code>.</li>
+  <li>Workflow do upstream viết đều pin SHA kèm comment tag; chỉ file fork thêm là vi phạm.</li>
+  <li><code>claude.yml:17</code> được guard đúng bằng <code>github.repository == 'twentyhq/twenty'</code>
+    (commit <code>cf0b28bab4</code>), cũng như <code>cd-deploy-main.yaml:19</code> và
+    <code>cd-deploy-tag.yaml:19</code> → không có ghi chép nào phía fork chạm hạ tầng của Twenty.</li>
+  <li>Không workflow <code>pull_request_target</code> nào checkout PR head:
+    <code>preview-env-dispatch.yaml:43</code> dùng Files API một cách tường minh;
+    <code>external-contributor-pr-auto-draft.yaml</code> và <code>pr-review-dispatch.yaml</code> chỉ mint app token.
+    Không có <code>peter-evans/repository-dispatch</code> ở đâu cả; mọi dispatch dùng
+    <code>gh api</code>/<code>gh workflow run</code> đúng house rule.</li>
+  <li>Không secret nào phơi ra cho PR từ fork: <code>ci-server.yaml:8</code> và
+    <code>ci-e2e-main.yaml:12</code> đặt <code>permissions: contents: read</code> ở cấp workflow;
+    <code>claude.yml:16</code> đặt <code>permissions: {}</code>.</li>
+  <li>Base image Docker production pin theo digest (<code>node:24.19.0-alpine3.23@sha256:244cc2b5…</code>).</li>
+  <li>Commit message trên <code>dev</code> theo conventional commits có scope
+    (<code>fix(workflow):</code>, <code>feat(auth):</code>, <code>chore(sync):</code>) và phần lớn nêu được "why"
+    (<code>…to prevent render crash</code>, <code>…against missing name column</code>).</li>
+  <li>Fork không commit build output; <code>packages/twenty-ui/dist/theme-{dark,light}.css</code> được track
+    nhưng kế thừa từ upstream (không nằm trong delta của fork).</li>
+  <li>Target lint/fmt/typecheck/test trong <code>nx.json</code> khớp chính xác <code>CLAUDE.md</code>
+    (oxlint+oxfmt, tsgo, <code>@nx/jest</code> với <code>jest.config.mjs</code> từng project, vitest cho storybook).</li>
+  <li>Package app khai báo đúng <code>"license": "MIT"</code>, khớp <code>LICENSE:7</code>
+    (app dưới <code>packages/twenty-apps</code> là MIT).</li>
+  <li><code>yarn npm audit --environment production --severity high</code> → rỗng, exit 0:
+    <strong>0 advisory bảo mật production đang mở</strong>.</li>
+</ul>
+</div>
+</div>
+
+<!-- ==================== CORRECTIONS ==================== -->
+
+<h2 id="corrections">Điều chỉnh lại các giả định ban đầu</h2>
+
+<div class="callout">
+  <strong>Mục này ở vòng 2 có thêm phần quan trọng hơn: những lỗi của CHÍNH báo cáo này.</strong>
+  Bản đầu chỉ đính chính sai sót của các luồng phân tích con. Khi bị soi lại, hoá ra bản tổng hợp
+  cũng có bốn lỗi sự thật — và một trong số đó ("working tree sạch") là nguyên nhân trực tiếp
+  làm lọt sáu finding ở <a href="#addendum">mục Bổ sung</a>.
+</div>
+
+<h3>A. Lỗi của chính báo cáo này (vòng 2 tự phát hiện)</h3>
+<table>
+  <thead><tr><th style="width:34%">Báo cáo khẳng định</th><th>Thực tế</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><em>"Working tree vẫn sạch ở <code>f06f82a2c7</code>. Không có thay đổi nào được thực hiện."</em></td>
+      <td><strong>Sai, và tự mâu thuẫn.</strong> <code>git status --porcelain</code> cho thấy 4 file tracked
+        đã sửa + 12 file untracked, và chính file audit vừa tạo ra nằm trong danh sách <code>??</code>.
+        Hậu quả nghiêm trọng hơn một câu sai: vì tin tree sạch, toàn bộ bề mặt fork được dựng từ
+        <code>git diff upstream/main...dev</code> (chỉ thấy trạng thái đã commit) →
+        <a href="#N1">N1</a>/<a href="#N2">N2</a>/<a href="#N3">N3</a> lọt lưới có hệ thống.
+        Chi tiết ở <a href="#N4">N4</a>.</td>
+    </tr>
+    <tr>
+      <td><em>"57 vấn đề: 9 Critical, 15 High, 26 Medium, 7 Low"</em> (lặp ở 4 chỗ)</td>
+      <td><strong>Sai.</strong> Đếm thật các ID trong tài liệu: <code>M=37, L=7</code> (xác minh bằng script),
+        cộng 9 C và 15 H = <strong>68</strong>, chưa kể 9 dòng bảng Tài liệu không đánh số.
+        Ma trận còn sai chi tiết: cột Medium khai Frontend 9 (thật 14) và CI 5 (thật 11).
+        Trớ trêu là ma trận <em>cộng đúng</em> — nó chỉ không khớp với nội dung nó tóm tắt.
+        Nay đã đếm lại: <strong>74</strong> (10/17/40/7) sau khi thêm N1–N6.</td>
+    </tr>
+    <tr>
+      <td><em>"Chưa xác minh được repo public hay private (không gọi mạng)"</em> — rồi đẩy thành việc #3 cho người đọc</td>
+      <td><strong>Lỗi phương pháp.</strong> Đây là câu hỏi trả lời được bằng một lệnh read-only
+        (<code>gh repo view DOS/Crove-CRM --json visibility</code>). Đã chạy: <strong>PUBLIC</strong>.
+        Một audit defer câu hỏi quyết định mức nghiêm trọng của finding số 1 cho người đọc
+        là audit chưa hoàn thành. Lưu ý: <code>gh repo view</code> không tham số sẽ resolve nhầm sang
+        <code>twentyhq/twenty</code> (repo upstream) — phải chỉ định rõ <code>DOS/Crove-CRM</code>.</td>
+    </tr>
+    <tr>
+      <td><em>"Rotate: tự sinh giá trị mới bằng <code>crypto.randomBytes</code>"</em></td>
+      <td><strong>Sai.</strong> <code>dev.dos.me</code> là developer portal nơi webhook được tạo, nên secret
+        do <strong>nền tảng DOS cấp phát</strong>; CRM chỉ giữ bản copy và không được bịa giá trị
+        (phía DOS ký bằng giá trị của họ). Quy trình đúng + cảnh báo downtime đã viết lại trong
+        <a href="#C1">C1</a>.</td>
+    </tr>
+    <tr>
+      <td><em>Review vòng 2 nêu <code>@sniptt/guards</code> là "câu hỏi convention"</em></td>
+      <td><strong>Ngược hẳn.</strong> <code>@sniptt/guards</code> là dependency chính thức
+        (<code>twenty-front/package.json:64</code>) dùng ở <strong>372 chỗ</strong> trong twenty-front.
+        Thay đổi đó <em>tuân theo</em> convention áp đảo của thư mục. Xem <a href="#N4">N4</a>.</td>
+    </tr>
+    <tr>
+      <td><em>Đánh dấu <span class="v">✓</span> không nhất quán</em></td>
+      <td>H3 (<code>X-API-Key</code> trùng khoá) chỉ đọc qua trích dẫn nhưng không đánh dấu, trong khi M5 thì có ✓.
+        Khi ✓ nghĩa là "đã kiểm chứng tay", việc dùng không đều làm mất giá trị toàn bộ hệ thống đánh dấu.
+        Chưa sửa hết — người đọc nên coi ✓ là tín hiệu chứ không phải bảo chứng.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>B. Giả định ban đầu hoá ra sai (đính chính từ vòng 1, vẫn giữ nguyên)</h3>
+<p>Những khẳng định dưới đây hoá ra <strong>sai</strong> hoặc thiếu chính xác. Ghi lại để tránh lan truyền:</p>
+<table>
+  <thead><tr><th style="width:44%">Giả định ban đầu</th><th>Thực tế đã xác minh</th></tr></thead>
+  <tbody>
+    <tr><td><code>brevo.driver.ts</code> là dead code</td>
+      <td><strong>Sai.</strong> Driver được register thật ở <code>email-driver.factory.ts:38-45</code>
+        (<code>buildConfigKey</code>) và <code>:56-71</code> (<code>createDriver</code>), enum value thêm ở
+        <code>email-driver.enum.ts:4</code>, reachable qua <code>EMAIL_DRIVER=BREVO</code>.
+        Production chỉ là không chọn nó (<code>EMAIL_DRIVER=smtp</code> + <code>smtp-relay.brevo.com</code>).
+        Chi phí giữ lại: một đường giao mail thứ hai không test, lệch ngữ nghĩa lỗi so với <code>SmtpDriver</code>.</td></tr>
+    <tr><td>Vitest của twenty-apps không được nối vào CI</td>
+      <td><strong>Sai.</strong> <code>ci-twenty-apps.yaml:72-74</code> chạy <code>yarn test:unit</code> cho mọi app
+        có định nghĩa script đó, và <code>discover-apps.yaml:100</code> phát hiện nó. Cả hai app fork đều đủ điều kiện.
+        Khoảng trống thật là trigger chỉ có <code>main</code>, không có <code>dev</code>.</td></tr>
+    <tr><td>Delta fork khoảng 37 file / 2.555 dòng chèn</td>
+      <td><strong>Thiếu.</strong> Con số thật là <strong>191 file / +2.823 −170</strong> cho server+front
+        (~130 là PNG branding, còn lại ~60 file code thật).</td></tr>
+    <tr><td><code>qa-scout</code> được <code>ci-e2e-main.yaml</code> gọi</td>
+      <td><strong>Sai.</strong> Không có tham chiếu nào tồn tại trong repo; khẳng định đó chỉ sống trong
+        chính phần mô tả của skill. <code>ci-e2e-main.yaml</code> kết thúc ở bước chạy Playwright + upload artifact.</td></tr>
+    <tr><td><code>sendEcosystemEvent</code> là fire-and-forget</td>
+      <td><strong>Đúng về hệ quả, sai về cơ chế.</strong> Hàm được <code>await</code> đầy đủ ở cả 6 handler.
+        Thứ biến nó thành fire-and-forget nằm một tầng trên: <code>EventEmitter2.emit</code> vứt bỏ promise
+        của listener (<code>workspace-event-emitter.ts:69</code>, <code>core-engine.module.ts:159</code>).</td></tr>
+    <tr><td><code>user-workspace.service.ts</code> nằm trong <code>auth/services/</code>, dòng 681-694</td>
+      <td><strong>Sai đường dẫn.</strong> File thật là
+        <code>engine/core-modules/user-workspace/user-workspace.service.ts</code>, phạm vi dòng <code>681-690</code>.</td></tr>
+    <tr><td><code>verify-zalo-webhook-signature.ts</code> và các util Zalo nằm trong <code>src/utils/</code></td>
+      <td><strong>Sai.</strong> Nằm ở <code>src/logic-functions/utils/</code>. Tương tự cho
+        <code>zalo-api-request.ts</code> và <code>get-zalo-credentials.ts</code>.</td></tr>
+    <tr><td><code>config-variables.ts:2018</code> là webhook secret</td>
+      <td><strong>Sai.</strong> <code>CROVE_DOS_WEBHOOK_SECRET</code> ở <code>:358</code>,
+        <code>AUTH_DOS_ID_ISSUER_URL</code> ở <code>:330</code>. Dòng <code>:2018</code> là
+        <code>IS_MULTIWORKSPACE_ENABLED</code>.</td></tr>
+    <tr><td><code>.env.example</code> lộ <code>REDIS_URL</code> và <code>BREVO_API_KEY</code></td>
+      <td><strong>Sai.</strong> <code>REDIS_URL=redis://redis:6379</code> (<code>:36</code>) là service name
+        Docker nội bộ không password; <code>BREVO_API_KEY</code> không xuất hiện trong file đó.
+        Password của <code>PG_DATABASE_URL</code> và secret key của R2 <strong>đã</strong> được placeholder hoá —
+        chỉ R2 access key id, DOS webhook secret và OIDC client id là giá trị thật.</td></tr>
+    <tr><td><code>DomainShell.tsx</code> ở <code>src/app/components/</code></td>
+      <td><strong>Sai.</strong> Đường dẫn thật là <code>src/modules/app/components/DomainShell.tsx</code>.</td></tr>
+    <tr><td>Bốn side-panel component dùng object fallback</td>
+      <td><strong>Sai — và đây là tin tốt.</strong> Commit <code>1c761c6a26</code> chuyển chúng đúng cách sang
+        <code>useAtomComponentStateValue(flowComponentState)</code> + guard tường minh <code>!isDefined(flow)</code>.
+        Nửa đó của commit là <em>pattern đúng</em>; chỉ có bản thân stub trong <code>useFlowOrThrow</code> là sai.
+        Nghĩa là stub có thể xoá được bằng cách migrate 5 consumer còn lại theo cùng cách.</td></tr>
+    <tr><td>Hai upgrade command bị sửa thiếu method <code>down</code></td>
+      <td><strong>Không áp dụng.</strong> Cả hai là <code>@RegisteredWorkspaceCommand</code> kế thừa
+        <code>ProvisionedWorkspaceCommandRunner</code> và chỉ implement <code>runOnWorkspace</code> —
+        không có <code>up</code>/<code>down</code>. Yêu cầu <code>up</code>+<code>down</code> trong
+        <code>docs/UPGRADE_COMMANDS.md</code> chỉ áp dụng cho <code>FastInstanceCommand</code>/<code>SlowInstanceCommand</code>.</td></tr>
+    <tr><td>"Never rewrite committed command logic" là rule trong tài liệu</td>
+      <td><strong>Không tìm thấy câu đó</strong> trong <code>packages/twenty-server/docs/UPGRADE_COMMANDS.md</code>.
+        Rule được thực thi nằm ở <code>.github/actions/upgrade-mutation-guard/action.yaml</code>:
+        (1) file command <em>thêm mới và đã sửa</em> phải nằm trong thư mục phiên bản hiện hành,
+        bypass được bằng label <code>ci:allow-previous-version-upgrade-mutation</code>;
+        (2) file <em>mới</em> phải mang timestamp epoch-ms thật nằm trong <code>[now−60d, now+2d]</code>
+        và lớn hơn nghiêm ngặt mọi command hiện có trong cùng thư mục, <strong>không có bypass</strong>.
+        Fork vướng rule 1, không phải rule 2.</td></tr>
+    <tr><td>Universal identifier của marketplace bị thay bằng UUID tổng hợp</td>
+      <td><strong>Chỉ đúng một phần.</strong> Cả bốn identifier upstream vẫn được giữ, nhưng bị dời xuống
+        vị trí 4-7 và gán lại nhãn app khác; ba identifier tổng hợp <em>thêm vào</em> chiếm vị trí 1-3.</td></tr>
+  </tbody>
+</table>
+
+<!-- ==================== PLAN ==================== -->
+
+<h2 id="plan">Kế hoạch hành động đề xuất</h2>
+
+<h3>Đợt 1 — Hôm nay <span class="badge b-crit">đã viết lại ở vòng 2</span></h3>
+<div class="note">
+  Ba thay đổi so với bản đầu: <strong>(a)</strong> việc "xác định repo public hay private" đã được
+  <em>trả lời</em> (PUBLIC) nên bị loại khỏi danh sách việc — nó là tiền đề, không phải việc cần làm;
+  <strong>(b)</strong> <a href="#C9">C9</a> được <strong>đẩy lên Đợt 1</strong> — bản đầu để nó ở Đợt 3
+  ("cần thiết kế") là sai ưu tiên, vì nếu đúng thì tenant đang bị xoá <em>bây giờ</em>, mỗi 7 ngày,
+  bởi một cron đang chạy; <strong>(c)</strong> thêm hai credential công khai mới
+  (<a href="#N5">N5</a>, <a href="#N6">N6</a>) và bước forensic cho C9.
+</div>
+<table>
+  <thead><tr><th style="width:5%">#</th><th style="width:45%">Việc</th><th>Lý do / ghi chú</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td><strong>Rotate <code>CROVE_DOS_WEBHOOK_SECRET</code> qua portal <code>dev.dos.me</code></strong>,
+      rồi cập nhật GCP Secret Manager + restart CRM</td>
+      <td><a href="#C1">C1</a>. Repo PUBLIC nên giả định secret đã bị lộ. <strong>Không tự sinh giá trị</strong> —
+        portal cấp. Đọc kỹ cảnh báo downtime và "rotate không sửa được replay" trong C1 trước khi làm.</td></tr>
+    <tr><td>2</td><td><strong>Revoke Frill Bearer token</strong> và bỏ nó khỏi <code>.mcp.json</code>;
+      sửa <code>.gitignore</code> thành <code>/.mcp.json</code></td>
+      <td><a href="#N5">N5</a>. Token đang đọc được công khai. Phần <code>.gitignore</code> + bỏ token
+        tôi làm được ngay trong repo; phần revoke thì phải bạn làm ở Frill.</td></tr>
+    <tr><td>3</td><td><strong>Query DB read-only về <a href="#C9">C9</a></strong> — có workspace nào đang kẹt ở
+      <code>PENDING_CREATION</code>, và có workspace nào <em>đã</em> bị cron xoá chưa</td>
+      <td>SQL sẵn ở <a href="#method">mục Giới hạn</a>. Nếu query (b) trả về row thì C9
+        <strong>đã gây mất tenant rồi</strong>, không còn là rủi ro — khi đó việc cấp bách là hoãn cron
+        <code>CleanOnboardingWorkspacesJob</code> trước khi sửa code.
+        <em>Audit không tự chạy được</em> (không có <code>.env</code>, MCP postgres không khả dụng).</td></tr>
+    <tr><td>4</td><td>Kiểm tra Supabase project có auth hook strip
+      <code>user_metadata.organizations</code> không</td>
+      <td><a href="#H4">H4</a>. Kết quả quyết định finding này là High hay Medium.</td></tr>
+    <tr><td>5</td><td>Xác minh route handler của <code>/webhooks/server/&lt;uuid&gt;</code> rồi rotate webhook đó
+      nếu UUID là token</td>
+      <td><a href="#N6">N6</a>. Audit không tìm ra handler nên chưa khẳng định được ngữ nghĩa auth.</td></tr>
+    <tr><td>6</td><td>Quyết định có purge git history hay không (cho cả C1 và N5)</td>
+      <td>Viết lại lịch sử ảnh hưởng mọi clone đang có — cần quyết định có chủ đích.
+        Lưu ý: purge <em>không</em> thay thế rotate; giá trị cũ phải coi như đã chết bất kể có purge hay không.</td></tr>
+    <tr><td>7</td><td>Quyết định số phận 4 file dirty theo bảng commit ở <a href="#N4">N4</a></td>
+      <td>Ưu tiên commit #1 (<a href="#N2">N2</a>) — nó là hotfix cho query auth có khả năng đang gãy
+        trên production. <strong>Không revert</strong> file đó.</td></tr>
+  </tbody>
+</table>
+<p class="sub"><span class="badge b-ok">Đã xong</span> Việc dọn 12 file <code>tmp-*.png</code> (<a href="#N1">N1</a>)
+  đã thực hiện: file đã xoá, pattern đã thêm vào <code>.gitignore</code> (chưa commit).</p>
+
+<h3>Đợt 2 — Tuần này: sửa nhỏ, khu trú, rủi ro thấp</h3>
+<table>
+  <thead><tr><th style="width:5%">#</th><th style="width:45%">Việc</th><th>Ước lượng &amp; phạm vi</th></tr></thead>
+  <tbody>
+    <tr><td>5</td><td>Fail-closed khi thiếu secret (<a href="#C2">C2</a>)</td>
+      <td>Vài dòng. Throw lúc module init.</td></tr>
+    <tr><td>6</td><td>Bỏ mệnh đề <code>displayName</code>, bắt buộc <code>orgId</code> (<a href="#C3">C3</a>)</td>
+      <td>Vài dòng. Cắt hoàn toàn đường cross-tenant.</td></tr>
+    <tr><td>7</td><td>Sửa merge marker trong <code>zalo-oa/package.json</code> (<a href="#C4">C4</a>)</td>
+      <td>1 phút. Đang chặn CI apps. Thêm guard JSON-parse cho mọi app manifest.</td></tr>
+    <tr><td>8</td><td>Reject timestamp không hữu hạn + chốt Format 1 (<a href="#H1">H1</a>)</td>
+      <td>Vài dòng trong <code>verifyEcosystemWebhook</code>.</td></tr>
+    <tr><td>9</td><td>Zalo: lỗi khi thiếu header + validate cửa sổ thời gian + bỏ ứng viên
+      <code>sha256(body+secret)</code> (<a href="#H5">H5</a>)</td>
+      <td>Khu trú trong 2 file của app.</td></tr>
+    <tr><td>10</td><td><code>Math.round</code> ở biên <code>amountMicros</code> + đổi thứ tự items/order
+      (<a href="#C6">C6</a>)</td>
+      <td>App commerce. Đang sai về tiền tệ — ưu tiên nghiệp vụ cao nhất.</td></tr>
+    <tr><td>11</td><td>Truyền <code>shouldSkipEventEmission: true</code> ở 5 chỗ
+      <code>getRepository</code> (<a href="#m-arch">M5</a>)</td>
+      <td>Một dòng mỗi chỗ, upstream hỗ trợ sẵn. Cắt vòng echo.</td></tr>
+    <tr><td>12</td><td>Sửa <code>DEFAULT_WORKSPACE_LOGO</code> (<a href="#C7">C7</a>) và
+      <code>sourceText</code> trong branding patcher (<a href="#C8">C8</a>)</td>
+      <td>Mỗi cái một dòng. Cả hai đang gây lỗi nhìn thấy được / mất dữ liệu im lặng.</td></tr>
+    <tr><td>13</td><td>Thêm <code>dev</code> vào trigger CI, hoặc <code>needs:</code> cho
+      <code>docker-publish.yml</code> (<a href="#C5">C5</a>)</td>
+      <td>Lỗ hổng quy trình lớn nhất. Chừng nào chưa sửa, mọi fix khác có thể lên production mà không qua gate nào.</td></tr>
+    <tr><td>14</td><td>SHA-pin 9 action reference + thêm <code>concurrency</code> (<a href="#H14">H14</a>)</td>
+      <td>Chỉ sửa file workflow do fork thêm.</td></tr>
+    <tr><td>15</td><td>Sửa spec webhook stale (<a href="#m-fe">M20</a>) và mock per-atom trong
+      <code>useGetUpdatableWorkflowVersion.test.ts</code> (<a href="#H12">H12</a>)</td>
+      <td>Hai test hiện không thể pass. Suite đỏ thì mọi tín hiệu test khác đều vô nghĩa.</td></tr>
+  </tbody>
+</table>
+
+<h3>Đợt 3 — Cần thiết kế, không nên vội</h3>
+<table>
+  <thead><tr><th style="width:5%">#</th><th style="width:45%">Việc</th><th>Ghi chú</th></tr></thead>
+  <tbody>
+    <tr><td>16</td><td>Chỉ nhận org claim từ <code>app_metadata</code> (<a href="#H4">H4</a>)</td>
+      <td>Phụ thuộc kết quả việc #2. Có thể cần phối hợp phía DOS.Me để đảm bảo claim nằm đúng chỗ.</td></tr>
+    <tr><td>17</td><td>Kích hoạt workspace sau JIT provisioning (<a href="#C9">C9</a>) —
+      <span class="badge b-crit">phần chẩn đoán đã lên Đợt 1 #3</span></td>
+      <td><strong>Đính chính ưu tiên:</strong> bản đầu xếp toàn bộ C9 vào Đợt 3 ("cần thiết kế") — sai.
+        Phần <em>fix lâu dài</em> (enqueue job gọi <code>activateWorkspace</code>) đúng là cần thiết kế,
+        nhưng phần <em>chẩn đoán + cầm máu</em> thì phải làm ngay ở Đợt 1: query DB xem tenant nào đang kẹt,
+        và hoãn cron <code>CleanOnboardingWorkspacesJob</code> nếu có tenant sắp tới hạn.
+        Nếu C9 đúng thì đây là mất dữ liệu đang diễn ra, không phải rủi ro tương lai.</td></tr>
+    <tr><td>18</td><td>Tách controller 833 dòng thành module additive
+      <code>src/modules/crove-ecosync/</code> + outbox + BullMQ job (<a href="#H7">H7</a>, <a href="#m-arch">M8</a>)</td>
+      <td>Giải quyết cùng lúc: mất event, không retry, fan-out theo record, thiếu backpressure,
+        và ranh giới module bị nhoà. Không chạm file upstream nào — đúng rule của repo.</td></tr>
+    <tr><td>19</td><td>Xoá <code>scripts/fix-migration-sequence.js</code> +
+      <code>fix-migration-timestamps.ts</code>; revert 2 command <code>2-33</code>/<code>2-34</code>;
+      thay bằng command mới trong <code>2-38/</code> (<a href="#H9">H9</a>, <a href="#H10">H10</a>)</td>
+      <td>Cần kiểm tra trạng thái DB thật trước khi revert (read-only Postgres MCP trong
+        <code>.mcp.json</code> dùng được việc này). Đây là nhóm rủi ro cao nhất khi thực thi —
+        làm sau cùng và có kế hoạch rollback.</td></tr>
+    <tr><td>20</td><td>Chuyển fallback multi-workspace vào
+      <code>WorkspaceDomainsService.resolveWorkspaceAndPublicDomain</code> (<a href="#H11">H11</a>)</td>
+      <td>Một nhánh additive thay vì vá 7 resolver. Sửa được 2FA / xác minh email / OAuth propagation.</td></tr>
+    <tr><td>21</td><td>Revert 6 sửa đổi msgid trong source, để patcher lo đổi thuật ngữ (<a href="#low">L4</a>)</td>
+      <td>Khôi phục bản dịch và loại một nguồn xung đột merge. Cần chạy
+        <code>lingui extract</code> sau đó để xác nhận không mất entry.</td></tr>
+    <tr><td>22</td><td>Khôi phục throw trong 2 workflow hook, migrate 5 consumer còn lại theo pattern
+      side-panel (<a href="#H12">H12</a>)</td>
+      <td>Bốn side-panel component đã làm đúng rồi — chỉ cần nhân bản pattern đó, rồi xoá stub.</td></tr>
+    <tr><td>23</td><td>Thêm observability: <code>MetricsService</code> + <code>GET /healthz/dos-sync</code>
+      (<a href="#m-arch">M7</a>)</td>
+      <td>Nên làm cùng đợt với #18 để khỏi đụng cùng file hai lần.</td></tr>
+    <tr><td>24</td><td>Dọn tài liệu</td>
+      <td>Xoá/viết lại 5 rule file stale (ưu tiên 2 file <code>alwaysApply: true</code>),
+        sửa <code>MIGRATION.md</code> + <code>ROADMAP.md</code>, và hoặc thêm hai CI check mà
+        <code>CLAUDE.md</code> khẳng định hoặc gạch bỏ khẳng định đó (<a href="#m-docs">M-docs</a>,
+        <a href="#m-repo">M36</a>).</td></tr>
+    <tr><td>25</td><td>Dời <code>docs/ARCHITECTURE.md</code> phần hạ tầng sang runbook private
+      (<a href="#H15">H15</a>); dọn <code>scripts/</code> (<a href="#m-repo">M27</a>)</td>
+      <td>Giữ lại 12 file <code>check-*.sql</code> read-only nếu còn hữu ích, kèm README.</td></tr>
+    <tr><td>26</td><td>Chuyển <code>//resolutions</code> sang <code>docs/DEPENDENCY-RESOLUTIONS.md</code>
+      dạng bảng (<a href="#m-repo">M32</a>); thêm gate drift (<a href="#m-repo">M30</a>)</td>
+      <td>Việc dọn dẹp, không khẩn. Gate drift nên thêm sau khi đợt 2 xong để có baseline sạch.</td></tr>
+  </tbody>
+</table>
+
+<div class="note">
+  <strong>Gợi ý bắt đầu:</strong> nhóm #5, #6, #7 là ba lỗ hổng khai thác được ngay, mỗi cái dưới 20 dòng,
+  khu trú trong một file, và không đụng kiến trúc. Làm ba cái đó trước sẽ hạ phần lớn rủi ro Critical
+  với chi phí thấp nhất.
+</div>
+
+<!-- ==================== METHOD ==================== -->
+
+<h2 id="method">Phương pháp &amp; giới hạn</h2>
+
+<h3>Cách thực hiện</h3>
+<ol>
+  <li>Đọc tài liệu gốc: <code>CLAUDE.md</code>, <code>AGENTS.md</code>, <code>README.md</code>,
+    <code>ROADMAP.md</code>, <code>package.json</code>, <code>nx.json</code>, <code>tsconfig.base.json</code>.</li>
+  <li>Bốn luồng phân tích song song trên phạm vi không chồng lấn: bảo mật server · kiến trúc &amp; hiệu năng
+    backend · chất lượng frontend &amp; apps · CI/build/dependency/tài liệu.</li>
+  <li>Xác minh bề mặt fork bằng <code>git diff --stat upstream/main...dev</code> và <code>git log</code>,
+    thay vì suy đoán từ tên file.</li>
+  <li>Kiểm chứng tay lần hai mọi finding Critical và phần lớn finding High bằng cách đọc trực tiếp
+    các dòng được trích dẫn — những mục đó đánh dấu <span class="v">✓</span>.</li>
+  <li>Đối chiếu mọi convention được trích dẫn với code thật, vì một số file rule đã lỗi thời
+    (xem <a href="#m-docs">mục Tài liệu</a>). Nguyên tắc áp dụng: <em>"các file kế bên trong thư mục
+    bạn đang sửa thắng mọi rule viết ra"</em> — đúng như <code>CLAUDE.md</code> quy định.</li>
+</ol>
+
+<h3>Giới hạn cần biết khi đọc báo cáo này</h3>
+<ul>
+  <li><strong>Không kết nối database — và vòng 2 xác nhận là KHÔNG THỂ từ môi trường này.</strong>
+    <code>.mcp.json</code> khai báo postgres MCP chạy bằng
+    <code>bash -c "source packages/twenty-server/.env &amp;&amp; npx @modelcontextprotocol/server-postgres \"$PG_DATABASE_URL\""</code>
+    — hai vấn đề: glob <code>**/.env</code> trả về <strong>0 file</strong> (không có credential nào trong repo),
+    và nó shell ra <code>bash</code> trên host win32. Không MCP tool postgres nào được đăng ký trong session.
+    <br>Hệ quả: mọi khẳng định về trạng thái dữ liệu (script nào đã thực sự chạy trên production,
+    giá trị con trỏ <code>core.upgradeMigration</code> hiện tại, workspace nào đang ở
+    <code>PENDING_CREATION</code>) đều <em>suy ra từ code và lịch sử commit</em>, không phải quan sát.
+    SQL read-only sẵn để tự chạy:
+    <pre style="margin:6px 0"><code>-- C9(a): workspace chưa được activate, còn bao lâu nữa thì tới hạn cron 7 ngày
+SELECT id, "displayName", subdomain, "activationStatus", "databaseSchema",
+       "createdAt", now() - "createdAt" AS age,
+       ("createdAt" + interval '7 days') - now() AS time_until_gc
+FROM core.workspace
+WHERE "activationStatus" IN ('PENDING_CREATION','ONGOING_CREATION','CREATED')
+ORDER BY "createdAt";
+
+-- C9(b) FORENSIC: workspace nào ĐÃ bị cron xoá (cron dùng withDeleted: true)
+SELECT id, "displayName", subdomain, "activationStatus", "databaseSchema",
+       "createdAt", "deletedAt"
+FROM core.workspace
+WHERE "deletedAt" IS NOT NULL
+  AND "activationStatus" IN ('PENDING_CREATION','ONGOING_CREATION','CREATED')
+ORDER BY "deletedAt" DESC;
+
+-- H9: con trỏ upgradeMigration có bị poison không
+SELECT DISTINCT ON ("workspaceId") "workspaceId", name, status, "createdAt"
+FROM core."upgradeMigration"
+ORDER BY "workspaceId", "createdAt" DESC;</code></pre>
+    Query (b) là cái cần biết nhất: nếu có row, <a href="#C9">C9</a> <em>đã</em> gây mất tenant,
+    không còn là rủi ro.</li>
+  <li><strong>Không chạy test suite.</strong> Kết luận "test này fail" (<a href="#H12">H12</a>,
+    <a href="#m-fe">M20</a>) suy ra từ việc đọc mock và assertion. Muốn xác nhận empirically:
+    <code>npx nx build twenty-shared --skip-nx-cache</code> trước, rồi
+    <code>npx jest &lt;path&gt; --config=packages/twenty-front/jest.config.mjs</code>
+    (<code>twenty-shared/dist</code> là trạng thái theo nhánh không được track, và Nx cache có thể phục vụ
+    một kết quả pass cũ — cả hai đều là gotcha ghi trong <code>CLAUDE.md</code>).</li>
+  <li><strong>Không chạy <code>yarn install</code> hay <code>yarn upgrade</code>.</strong> Chỉ audit read-only.
+    <code>yarn npm audit</code> mới chạy cho subset production/high; dependency dev và full-severity chưa quét.
+    Việc kiểm tra "parent đã ship bản vá chưa" dựa trên <code>yarn.lock</code> và một lần fetch manifest
+    từ registry, không phải <code>yarn npm info</code> (lệnh đó parse sai tham số).</li>
+  <li><strong>Không xác minh được độ tươi của <code>upstream/main</code>.</strong>
+    <code>git rev-list --count dev..upstream/main</code> → 0, nhưng không đọc được ngày commit của ref đó.
+    Số 0 có thể phản ánh một ref cục bộ cũ chứ không phải fork thực sự up-to-date;
+    cần <code>git fetch upstream</code> (một thao tác ghi) để xác nhận.</li>
+  <li><strong>ĐÃ XÁC MINH ở vòng 2: <code>github.com/DOS/Crove-CRM</code> là PUBLIC.</strong>
+    Bản đầu liệt kê đây là giới hạn chưa xác minh và đẩy thành việc cho người đọc — đó là lỗi phương pháp,
+    vì nó trả lời được bằng một lệnh read-only. Kết quả này nâng
+    <a href="#C1">C1</a>, <a href="#H15">H15</a>, <a href="#N5">N5</a>, <a href="#N6">N6</a>
+    từ "rủi ro có điều kiện" lên "exposure đang diễn ra".</li>
+  <li><strong>Chưa xác minh được auth hook của Supabase</strong> cho project đang dùng —
+    yếu tố quyết định <a href="#H4">H4</a> là High hay Medium.</li>
+  <li><strong>Rate limiting (<a href="#H6">H6</a>) chưa rõ là của fork hay của upstream.</strong>
+    Không khẳng định được Twenty v2.38 có ship rate limiter hay không, nên không tính là regression của fork.</li>
+  <li><code>git log -S</code> trên literal R2 access key bị timeout trước khi hoàn tất.
+    Đã xác nhận giá trị có mặt trong blob hiện tại được track (<code>git ls-files</code> +
+    <code>git status --porcelain</code> sạch) — đủ cho kết luận "secret đã commit",
+    nhưng chưa liệt kê đủ mọi commit từng chạm tới nó.</li>
+</ul>
+
+<div class="note">
+  <strong>Trạng thái repo sau vòng 2 (đã đính chính — bản đầu nói "working tree sạch" là sai):</strong>
+  <pre style="margin:6px 0"><code> M .gitignore                                                  ← audit thêm /tmp-*.png, /tmp-*.jpg
+?? docs/AUDIT-2026-09-08.html                                  ← chính tài liệu này
+ M packages/twenty-front/src/generated-metadata/graphql.ts     ← có TRƯỚC audit, xem N3
+ M .../auth/graphql/queries/getPublicWorkspaceDataByDomain.ts  ← có TRƯỚC audit, xem N2
+ M .../workflow/hooks/useGetUpdatableWorkflowVersionOrThrow.ts ← có TRƯỚC audit, xem N4
+ M packages/twenty-sdk/project.json                            ← có TRƯỚC audit, xem N4</code></pre>
+  Thay đổi do audit thực hiện: <strong>xoá 12 file <code>tmp-*.png</code> untracked</strong> (đã được duyệt)
+  và <strong>sửa <code>.gitignore</code></strong>. Bốn file dirty còn lại <em>có từ trước</em> và
+  <strong>chưa bị đụng tới</strong>. Không commit nào được tạo, không secret nào được rotate,
+  không lịch sử git nào bị viết lại, không gì được push, không endpoint production nào bị probe.
+</div>
+
+<p class="sub" style="margin-top:34px; border-top:1px solid var(--line); padding-top:14px;">
+  Vòng 1: 08/09/2026 · Vòng 2 (review + bổ sung): 08/09/2026 ·
+  <strong>74 finding</strong> (10 Critical / 17 High / 40 Medium / 7 Low), trong đó 6 finding mới ở vòng 2 ·
+  Các giá trị secret thật đã được che có chủ đích (<span class="redacted">REDACTED</span>)
+  để tài liệu này không trở thành bản sao thứ hai của chỗ rò — đặc biệt quan trọng vì repo này PUBLIC.
+</p>
+
+</main>
+</div>
+</body>
+</html>

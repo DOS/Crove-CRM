@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { APP_FILTER, HttpAdapterHost } from '@nestjs/core';
-import { EventEmitterModule } from '@nestjs/event-emitter';
+import { EventEmitter2, EventEmitterModule } from '@nestjs/event-emitter';
 
 import { WorkspaceQueryRunnerModule } from 'src/engine/api/graphql/workspace-query-runner/workspace-query-runner.module';
 import { ActorModule } from 'src/engine/core-modules/actor/actor.module';
@@ -58,7 +58,7 @@ import { PublicDomainModule } from 'src/engine/core-modules/public-domain/public
 import { RedisClientModule } from 'src/engine/core-modules/redis-client/redis-client.module';
 import { RedisClientService } from 'src/engine/core-modules/redis-client/redis-client.service';
 import { SearchModule } from 'src/engine/core-modules/search/search.module';
-import { WorkspaceSSOModule } from 'src/engine/core-modules/sso/sso.module';
+import { WorkspaceSsoModule } from 'src/engine/core-modules/sso/sso.module';
 import { WellKnownModule } from 'src/engine/core-modules/well-known/well-known.module';
 import { TelemetryModule } from 'src/engine/core-modules/telemetry/telemetry.module';
 import { TwentyConfigModule } from 'src/engine/core-modules/twenty-config/twenty-config.module';
@@ -117,7 +117,7 @@ import { FileModule } from './file/file.module';
     UserModule,
     WorkspaceModule,
     WorkspaceInvitationModule,
-    WorkspaceSSOModule,
+    WorkspaceSsoModule,
     ApprovedAccessDomainModule,
     EmailingDomainModule,
     EmailingModule,
@@ -148,7 +148,12 @@ import { FileModule } from './file/file.module';
     MetricsModule,
     MessageQueueModule.registerAsync({
       useFactory: messageQueueModuleFactory,
-      inject: [TwentyConfigService, RedisClientService, MetricsService],
+      inject: [
+        TwentyConfigService,
+        RedisClientService,
+        MetricsService,
+        EventEmitter2,
+      ],
     }),
     ExceptionHandlerModule.forRootAsync({
       useFactory: exceptionHandlerModuleFactory,
@@ -195,7 +200,7 @@ import { FileModule } from './file/file.module';
     UserModule,
     WorkspaceModule,
     WorkspaceInvitationModule,
-    WorkspaceSSOModule,
+    WorkspaceSsoModule,
     ImapSmtpCaldavModule,
   ],
 })
