@@ -148,6 +148,7 @@
   <a href="#addendum">Bổ sung vòng 2 (N1-N6)</a>
   <a class="sub" href="#N5">N5 · Frill token public</a>
   <a class="sub" href="#N2">N2 · Query auth gãy</a>
+  <a href="#update-2">Cập nhật 11/09 (vòng 3)</a>
   <a href="#clean">Điểm đạt</a>
   <a href="#corrections">Điều chỉnh giả định</a>
   <a href="#plan">Kế hoạch hành động</a>
@@ -230,17 +231,129 @@
     </tr>
     <tr>
       <td><span class="badge b-low">Chưa làm — cần thiết kế hoặc rẻ nhưng chưa tới</span></td>
-      <td><a href="#H7">H7</a> (outbox/retry), <a href="#H8">H8</a> (JIT trong redirect),
-        <a href="#H4">H4</a> (chỉ nhận org claim từ <code>app_metadata</code>),
-        M7 (observability), M8 (tách controller 833 dòng), M9 (SecureHttpClient), M10, M14, M15,
-        M23, M26, <a href="#H13">H13</a> (upstream-sync), <a href="#H14">H14</a> (SHA-pin),
-        <a href="#H15">H15</a> (infra docs), M27–M37</td>
-      <td>Đề xuất đợt tiếp: H7 + M8 làm cùng nhau (cùng đụng webhook controller, giải quyết mất-event
-        và ranh giới module một lượt), rồi H14 (SHA-pin 9 action, rẻ). H4 chờ kết quả kiểm tra
-        auth hook Supabase đã gửi trong hướng dẫn.</td>
+      <td><a href="#H8">H8</a> (JIT trong redirect), <a href="#H4">H4</a> (chỉ nhận org claim từ
+        <code>app_metadata</code>), M7 (observability), M9 (SecureHttpClient), M14, M15, M23, M26,
+        <a href="#H15">H15</a> (infra docs), M27, M28, M29, M30, M31, M33, M35, M37,
+        và phần còn lại của <a href="#H7">H7</a> (outbox bền vững) / M8 (tách nốt controller)</td>
+      <td>Xem <a href="#update-2">cập nhật 11/09</a> cho những gì đã làm tiếp: H7 một phần, M8 một phần,
+        M10, H13, H14. H4 vẫn chờ kết quả kiểm tra auth hook Supabase; M34 đang bị chặn ở
+        checksum mismatch (không tự xử lý được vì là quyết định supply-chain trust).</td>
     </tr>
   </tbody>
 </table>
+
+<h2 id="update-2">Cập nhật 11/09/2026 <span class="badge b-med">vòng 3</span></h2>
+
+<h3>Đã merge upstream <code>twenty/v2.39.0</code> vào <code>dev</code></h3>
+<p>
+  Merge làm tay tại local (không qua bot), 4 conflict được resolve có chủ đích, verify đầy đủ trước khi push
+  (<code>tsgo</code> server 0 lỗi · 4 spec 24/24 · commerce 8/8 · zalo-oa 19/19).
+  Commit <code>b7f3b84671</code>, sau đó <code>dev → main</code> ở <code>6a4f736b82</code>.
+</p>
+<p>
+  <strong>Bài học quan trọng nhất của đợt này:</strong> ngoài 4 conflict git báo, có <strong>3 chỗ upstream
+  rename rơi vào file fork-only mà git KHÔNG báo conflict</strong> — vì chỉ một phía thay đổi. Một trong ba
+  là bug chỉ nổ runtime:
+</p>
+<table>
+  <thead><tr><th style="width:38%">File fork</th><th style="width:30%">Upstream rename</th><th>Hậu quả nếu bỏ sót</th></tr></thead>
+  <tbody>
+    <tr><td class="loc">auth.resolver.ts:816 — <code>validateWorkspaceAccess</code></td>
+      <td>relation <code>workspaceSSOIdentityProviders</code> → <code>workspaceSsoIdentityProviders</code></td>
+      <td><strong>Runtime-only.</strong> Đây là <em>string</em> relation nên <code>tsgo</code> không bắt được;
+        TypeORM sẽ throw khi user đăng nhập, đúng trên chế độ single-root-domain production.</td></tr>
+    <tr><td class="loc">dos-id.auth.strategy.ts</td>
+      <td><code>SocialSSOSignInUpActionType</code>/<code>SocialSSOState</code> → <code>SocialSso*</code></td>
+      <td>Compile error (tsgo bắt được).</td></tr>
+    <tr><td class="loc">dos-id-auth.controller.ts</td>
+      <td><code>signInUpWithSocialSSO</code> → <code>signInUpWithSocialSso</code></td>
+      <td>Compile error (tsgo bắt được).</td></tr>
+  </tbody>
+</table>
+<p>
+  Đây là lý do <a href="#H13">H13</a> nguy hiểm hơn vẻ ngoài, và là lý do flow sync đã được đổi thành
+  <strong>luôn mở PR</strong> (commit <code>beb04ced75</code>): merge sạch về mặt text vẫn không có nghĩa
+  là đúng, và gate typecheck không bắt được loại string-relation kia.
+</p>
+
+<h3>Dependabot: 2 critical + 47 high — phần lớn là của upstream</h3>
+<p>
+  Sau khi <code>main</code> cập nhật, Dependabot báo <strong>109</strong> advisory (2 critical, 47 high,
+  54 moderate, 6 low). Đã truy nguyên từng alert theo <code>manifest_path</code>:
+</p>
+<table>
+  <thead><tr><th style="width:14%">Mức</th><th style="width:30%">Package</th><th style="width:22%">Thuộc về</th><th>Ghi chú</th></tr></thead>
+  <tbody>
+    <tr><td><span class="badge b-crit">Critical ×2</span></td>
+      <td><code>next</code> &ge;16.0.0 &lt;16.3.3 — RCE không cần xác thực
+        (<code>GHSA-2xp9-vwfh-vxw4</code> qua Image Optimization API/AVIF,
+        <code>GHSA-p293-qw3h-jr36</code> trên host Windows)</td>
+      <td><strong>Upstream</strong> — root <code>yarn.lock</code></td>
+      <td><code>next</code> chỉ được khai báo ở <code>packages/twenty-website</code> (site marketing),
+        <strong>không nằm trong image CRM production</strong>. Pin <code>@react-email/ui/next: 16.3.2</code>
+        là của upstream, không phải của fork → theo chính sách "upstream bump thì mình nhận", không làm gì.</td></tr>
+    <tr><td><span class="badge b-high">High ×3</span></td>
+      <td><code>sharp</code> &lt;0.35.4 (và &lt;0.35.0)</td>
+      <td><strong>FORK</strong> — <code>twenty-apps/public/commerce/yarn.lock</code>,
+        <code>twenty-apps/public/zalo-oa/yarn.lock</code></td>
+      <td>2 app fork tự scaffold, lockfile fork tự sinh. Đang <strong>bị chặn</strong> — xem bên dưới.</td></tr>
+    <tr><td><span class="badge b-high">High ×44</span></td>
+      <td><code>sharp</code> ×13 (lockfile của 13 app upstream), <code>@xmldom/xmldom</code> ×8,
+        <code>fast-uri</code> ×4, <code>multer</code> ×3, <code>js-yaml</code> ×2, <code>@tiptap/core</code> ×2,
+        <code>@faker-js/faker</code> ×2, <code>extract-zip</code> ×2, <code>nodemailer</code> ×2,
+        <code>smol-toml</code>, <code>svgo</code>, <code>browserslist</code></td>
+      <td><strong>Upstream</strong> — root <code>yarn.lock</code>, <code>seed-dependencies/yarn.lock</code>,
+        manifest của <code>twenty-front</code>/<code>twenty-server</code></td>
+      <td>Fork không thêm dependency nào vào các manifest này (diff root <code>package.json</code> so với
+        v2.39.0 chỉ có 2 dòng script).</td></tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <strong>Đính chính phương pháp — lần thứ ba của chính báo cáo này.</strong>
+  Mục <em>Health snapshot</em> ở trên khẳng định <em>"0 open high/critical production advisories"</em>
+  dựa trên <code>yarn npm audit --environment production --severity high</code>.
+  Đã chạy lại sau merge: <code>yarn npm audit --severity critical</code> vẫn trả về
+  <strong>0</strong>, trong khi Dependabot thấy <strong>2 critical RCE</strong>.
+  ⇒ Nguồn advisory của yarn <strong>thiếu</strong> so với GitHub Advisory Database.
+  Kết luận "dependency posture sạch" của bản audit là <strong>không đáng tin</strong>;
+  nguồn chuẩn phải là Dependabot/GHSA, không phải <code>yarn npm audit</code>.
+</div>
+
+<h3>M32 bị quy kết sai</h3>
+<p>
+  <a href="#m-repo">M32</a> phê phán khối <code>"//resolutions"</code> 16.951 ký tự là vấn đề
+  maintainability <em>của fork</em>. <strong>Sai attribution.</strong> Đã kiểm chứng:
+  <code>git show twenty/v2.39.0:package.json</code> chứa nguyên khối đó (kể cả
+  <code>@react-email/ui/next: 16.3.2</code>), và <code>git diff twenty/v2.39.0...dev -- package.json</code>
+  cho thấy fork chỉ thêm đúng 2 dòng script. Đây là file và là convention của upstream —
+  fork không sở hữu và không nên sửa.
+</p>
+
+<h3>Việc đang bị chặn: regenerate lockfile của 2 app fork</h3>
+<p>
+  Mục tiêu: dọn 3 alert <code>sharp</code> của fork + sửa <a href="#m-repo">M34</a>
+  (cả hai lockfile vẫn tự khai <code>@twentyhq/commerce</code> / <code>@twentyhq/zalo-oa</code>
+  trong khi <code>package.json</code> là <code>@crove/*</code>, khiến
+  <code>yarn install --immutable</code> trong CI có thể fail).
+</p>
+<pre><code>➤ YN0018: │ inquirer@npm:14.1.0: The remote archive doesn't match the expected checksum
+➤ YN0018: │ nanoid@npm:3.3.18:  The remote archive doesn't match the expected checksum
+➤ YN0018: │ ws@npm:8.21.3:      The remote archive doesn't match the expected checksum</code></pre>
+<p>
+  Đã xoá entry <code>nanoid</code> khỏi cache toàn cục và thử lại: vẫn mismatch, tức bytes đến từ
+  <strong>mạng</strong> chứ không phải cache cũ. Máy này có proxy lọc
+  (<code>github.com:443</code> bị chặn trong khi <code>api.github.com</code> thông),
+  nên nhiều khả năng registry/mirror đang phục vụ tarball khác với checksum đã ghi trong lockfile.
+</p>
+<p>
+  <strong>Không tự ý bật <code>checksumBehavior: update</code></strong> — làm vậy là bảo yarn tin
+  bất cứ thứ gì proxy trả về, và nếu proxy có can thiệp thì sẽ nướng checksum của package đã bị đổi
+  thẳng vào lockfile. Đây là quyết định supply-chain trust thuộc về chủ repo.
+  Ba hướng: (a) xác minh proxy/mirror nội bộ có re-pack tarball không; (b) chạy
+  <code>yarn install</code> từ mạng không qua proxy đó; (c) chấp nhận
+  <code>YARN_CHECKSUM_BEHAVIOR=update</code> một cách có chủ đích sau khi đã xác minh nguồn.
+</p>
 
 <h2 id="summary">Tóm tắt điều hành</h2>
 
