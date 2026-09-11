@@ -83,6 +83,7 @@ import { AuthResolver } from './auth.resolver';
 
 import { EcosystemOutboundEventListener } from './listeners/ecosystem-outbound-event.listener';
 import { AuthService } from './services/auth.service';
+import { EcosystemEventPublisherService } from './services/ecosystem-event-publisher.service';
 import { JwtAuthStrategy } from './strategies/jwt.auth.strategy';
 
 @Module({
@@ -177,6 +178,7 @@ import { JwtAuthStrategy } from './strategies/jwt.auth.strategy';
     TransientTokenService,
     AuthSsoService,
     EcosystemOutboundEventListener,
+    EcosystemEventPublisherService,
   ],
   exports: [
     AccessTokenService,

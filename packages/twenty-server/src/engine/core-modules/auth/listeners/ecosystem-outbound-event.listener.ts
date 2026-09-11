@@ -10,7 +10,7 @@ import { isDefined } from 'twenty-shared/utils';
 
 import { OnDatabaseBatchEvent } from 'src/engine/api/graphql/graphql-query-runner/decorators/on-database-batch-event.decorator';
 import { DatabaseEventAction } from 'src/engine/api/graphql/graphql-query-runner/enums/database-event-action';
-import { sendEcosystemEvent } from 'src/engine/core-modules/auth/controllers/dos-org-sync-webhook.controller';
+import { EcosystemEventPublisherService } from 'src/engine/core-modules/auth/services/ecosystem-event-publisher.service';
 import { TwentyConfigService } from 'src/engine/core-modules/twenty-config/twenty-config.service';
 import { WorkspaceEventBatch } from 'src/engine/workspace-event-emitter/types/workspace-event-batch.type';
 import { type CompanyWorkspaceEntity } from 'src/modules/company/standard-objects/company.workspace-entity';
@@ -20,7 +20,10 @@ import { type PersonWorkspaceEntity } from 'src/modules/person/standard-objects/
 export class EcosystemOutboundEventListener {
   private readonly logger = new Logger(EcosystemOutboundEventListener.name);
 
-  constructor(private readonly twentyConfigService: TwentyConfigService) {}
+  constructor(
+    private readonly twentyConfigService: TwentyConfigService,
+    private readonly ecosystemEventPublisher: EcosystemEventPublisherService,
+  ) {}
 
   @OnDatabaseBatchEvent('company', DatabaseEventAction.CREATED)
   async handleCompanyCreated(
@@ -36,7 +39,7 @@ export class EcosystemOutboundEventListener {
         company.domainName?.primaryLinkLabel ||
         company.domainName?.primaryLinkUrl?.replace(/^https?:\/\//, '');
 
-      await sendEcosystemEvent(this.twentyConfigService, 'company.created', {
+      await this.ecosystemEventPublisher.publish('company.created', {
         id: event.recordId,
         crm_company_id: event.recordId,
         org_id: payload.workspaceId,
@@ -66,7 +69,7 @@ export class EcosystemOutboundEventListener {
         company.domainName?.primaryLinkLabel ||
         company.domainName?.primaryLinkUrl?.replace(/^https?:\/\//, '');
 
-      await sendEcosystemEvent(this.twentyConfigService, 'company.updated', {
+      await this.ecosystemEventPublisher.publish('company.updated', {
         id: event.recordId,
         crm_company_id: event.recordId,
         org_id: payload.workspaceId,
@@ -93,7 +96,7 @@ export class EcosystemOutboundEventListener {
     if (!this.twentyConfigService.get('AUTH_DOS_ID_ENABLED')) return;
 
     for (const event of payload.events) {
-      await sendEcosystemEvent(this.twentyConfigService, 'company.deleted', {
+      await this.ecosystemEventPublisher.publish('company.deleted', {
         id: event.recordId,
         crm_company_id: event.recordId,
         org_id: payload.workspaceId,
@@ -119,7 +122,7 @@ export class EcosystemOutboundEventListener {
         .join(' ');
 
       if (isDefined(email)) {
-        await sendEcosystemEvent(this.twentyConfigService, 'customer.created', {
+        await this.ecosystemEventPublisher.publish('customer.created', {
           id: event.recordId,
           crm_person_id: event.recordId,
           org_id: payload.workspaceId,
@@ -152,7 +155,7 @@ export class EcosystemOutboundEventListener {
         .join(' ');
 
       if (isDefined(email)) {
-        await sendEcosystemEvent(this.twentyConfigService, 'customer.updated', {
+        await this.ecosystemEventPublisher.publish('customer.updated', {
           id: event.recordId,
           crm_person_id: event.recordId,
           org_id: payload.workspaceId,
@@ -180,7 +183,7 @@ export class EcosystemOutboundEventListener {
     if (!this.twentyConfigService.get('AUTH_DOS_ID_ENABLED')) return;
 
     for (const event of payload.events) {
-      await sendEcosystemEvent(this.twentyConfigService, 'customer.deleted', {
+      await this.ecosystemEventPublisher.publish('customer.deleted', {
         id: event.recordId,
         crm_person_id: event.recordId,
         org_id: payload.workspaceId,

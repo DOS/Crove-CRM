@@ -17,7 +17,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { type Request } from 'express';
 import { isNonEmptyString } from '@sniptt/guards';
-import axios from 'axios';
 import { ApiPath } from 'twenty-shared/types';
 import { isDefined } from 'twenty-shared/utils';
 import { WorkspaceActivationStatus } from 'twenty-shared/workspace';
@@ -155,6 +154,9 @@ export type EcosystemWebhookPayload = {
     | 'user.updated';
   timestamp: string;
   data: {
+    // Set to 'crove_crm' on events this CRM published itself, so an echo coming
+    // back through the router can be recognised and dropped.
+    source?: string;
     // Org data
     id?: string;
     org_id?: string;
@@ -255,6 +257,17 @@ export class DosOrgSyncWebhookController {
 
     if (!payload?.event) {
       throw new BadRequestException('Invalid payload: event is required');
+    }
+
+    // Defense in depth against an echo loop: writes made here are also emitted
+    // outbound tagged source 'crove_crm', so if the router ever rebroadcasts one
+    // back, applying it would rewrite the same record and re-emit the event.
+    if (payload.data?.source === 'crove_crm') {
+      this.logger.warn(
+        `Ignored echoed ecosystem event "${payload.event}" that originated from this CRM`,
+      );
+
+      return { received: true, status: 'ignored_echo' };
     }
 
     this.logger.log(`Received DOS ecosystem webhook event: ${payload.event}`);
@@ -882,35 +895,3 @@ export class DosOrgSyncWebhookController {
   }
 }
 
-export async function sendEcosystemEvent(
-  twentyConfigService: TwentyConfigService,
-  event: string,
-  data: Record<string, unknown>,
-): Promise<boolean> {
-  const logger = new Logger('EcosystemEventSender');
-  const dosApiUrl =
-    twentyConfigService.get('AUTH_DOS_API_URL') || 'https://api.dos.me';
-  const apiKey = twentyConfigService.get('CROVE_DOS_WEBHOOK_SECRET');
-
-  try {
-    const response = await axios.post(
-      `${dosApiUrl}/internal/events/publish`,
-      {
-        event,
-        data,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          ...(apiKey ? { 'X-API-Key': apiKey } : {}),
-        },
-        timeout: 5000,
-      },
-    );
-
-    return response.status >= 200 && response.status < 300;
-  } catch (error) {
-    logger.warn(`Failed to dispatch ecosystem event "${event}": ${error}`);
-    return false;
-  }
-}
