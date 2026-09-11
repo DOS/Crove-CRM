@@ -27,21 +27,34 @@ jobs:
       actions: write
 
     steps:
+      # GITHUB_TOKEN is a GitHub App installation token that GitHub hard-blocks
+      # from creating or updating .github/workflows/* - no job permission lifts
+      # it, and `workflows` is not even a valid permissions key. Upstream release
+      # merges routinely touch those files. A purpose-built GitHub App with
+      # Workflows: read+write is not subject to that block, which is the same
+      # pattern the inherited upstream workflows use (create-github-app-token).
+      # Skipped until both secrets exist; the fallbacks below then keep the
+      # previous behavior instead of failing the run outright.
+      - name: Mint sync app token
+        id: app_token
+        if: ${{ secrets.CROVE_SYNC_APP_ID != '' }}
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          app-id: ${{ secrets.CROVE_SYNC_APP_ID }}
+          private-key: ${{ secrets.CROVE_SYNC_APP_PRIVATE_KEY }}
+          owner: DOS
+          repositories: Crove-CRM
+
       - name: Checkout target branch
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: ${{ inputs.target_branch || 'dev' }}
           fetch-depth: 0
-          # GITHUB_TOKEN is a GitHub App token and GitHub hard-rejects App pushes
-          # that touch .github/workflows/* ("without workflows permission"); there
-          # is no job permission that lifts it, and `workflows` is not even a valid
-          # permissions key. Upstream release merges routinely touch those files,
-          # so the sync push needs a PAT stored as SYNC_PAT (repo + workflow scope).
-          token: ${{ secrets.SYNC_PAT || github.token }}
+          token: ${{ steps.app_token.outputs.token || github.token }}
 
-      - name: Warn when SYNC_PAT is missing
-        if: ${{ secrets.SYNC_PAT == '' }}
-        run: echo "::warning::SYNC_PAT is not set - any push whose merge tree touches .github/workflows will be rejected. Create a PAT with repo+workflow scope and store it as the SYNC_PAT repository secret."
+      - name: Warn when the sync app is not configured
+        if: ${{ secrets.CROVE_SYNC_APP_ID == '' }}
+        run: echo "::warning::CROVE_SYNC_APP_ID / CROVE_SYNC_APP_PRIVATE_KEY are not set - falling back to GITHUB_TOKEN, which GitHub rejects for pushes touching .github/workflows. Create a GitHub App with Contents, Workflows and Pull requests write access on DOS/Crove-CRM, install it on this repo only, and store its app id and private key as those two repository secrets."
 
       - name: Determine Upstream Release Tag
         id: get_tag
@@ -88,84 +101,86 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Attempt Automatic Merge
+      - name: Merge Upstream Tag Into A Review Branch
         if: steps.check_merged.outputs.already_merged == 'false'
         id: merge
         env:
           TAG: ${{ steps.get_tag.outputs.tag }}
           TARGET_BRANCH: ${{ inputs.target_branch || 'dev' }}
         run: |
-          echo "Attempting to merge $TAG into $TARGET_BRANCH..."
+          echo "Merging $TAG into a review branch for $TARGET_BRANCH..."
+
+          # Never push a merge straight to $TARGET_BRANCH. A clean textual merge
+          # still hides upstream renames that land inside fork-only files - git
+          # reports no conflict because only one side changed. The v2.39.0 sync
+          # had three of those, one being a TypeORM relation string that tsgo
+          # cannot check and that only throws at runtime.
+          SYNC_BRANCH="sync/${TAG//\//-}"
+          git checkout -b "$SYNC_BRANCH"
 
           if git merge --no-commit "$TAG"; then
-            echo "Clean merge succeeded."
-            
+            MERGE_KIND="clean"
+
             if [ -f "packages/twenty-utils/patch-crove-branding.ts" ]; then
               yarn tsx packages/twenty-utils/patch-crove-branding.ts || true
             fi
-            
-            git commit -m "chore(sync): auto-merge upstream release $TAG into $TARGET_BRANCH"
-            git push origin "$TARGET_BRANCH"
-            
-            echo "has_conflict=false" >> "$GITHUB_OUTPUT"
+
+            git commit -m "chore(sync): merge upstream release $TAG into $TARGET_BRANCH"
           else
-            echo "Merge conflict encountered. Creating sync branch with real conflict markers for review."
-            git merge --abort || true
+            MERGE_KIND="conflict"
 
-            SYNC_BRANCH="sync/${TAG//\//-}"
-            git checkout -b "$SYNC_BRANCH"
-
-            # Keep genuine conflicts: -X ours would silently drop the upstream side of
-            # every conflicted file, producing a branch that looks merged while losing
-            # upstream changes. A human resolves the real conflicts in the PR.
-            git merge --no-commit "$TAG" || true
+            # Keep genuine conflicts: -X ours would silently drop the upstream side
+            # of every conflicted file, producing a branch that looks merged while
+            # losing upstream changes. A human resolves the real conflicts in the PR.
             git add -A
             git commit -m "chore(sync): automated sync branch for upstream release $TAG (requires review)"
-            git push -f origin "$SYNC_BRANCH"
-
-            echo "has_conflict=true" >> "$GITHUB_OUTPUT"
-            echo "sync_branch=$SYNC_BRANCH" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Create Pull Request on Conflict
-        if: steps.check_merged.outputs.already_merged == 'false' && steps.merge.outputs.has_conflict == 'true'
+          git push -f origin "$SYNC_BRANCH"
+
+          echo "merge_kind=$MERGE_KIND" >> "$GITHUB_OUTPUT"
+          echo "sync_branch=$SYNC_BRANCH" >> "$GITHUB_OUTPUT"
+
+      - name: Create Pull Request
+        if: steps.check_merged.outputs.already_merged == 'false'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # App token, not GITHUB_TOKEN: GitHub does not fire pull_request
+          # workflows for PRs opened by GITHUB_TOKEN, so the sync PR would run
+          # no CI at all and the merge would get reviewed unverified.
+          GH_TOKEN: ${{ steps.app_token.outputs.token || secrets.GITHUB_TOKEN }}
           TAG: ${{ steps.get_tag.outputs.tag }}
           SYNC_BRANCH: ${{ steps.merge.outputs.sync_branch }}
           TARGET_BRANCH: ${{ inputs.target_branch || 'dev' }}
+          MERGE_KIND: ${{ steps.merge.outputs.merge_kind }}
         run: |
-          cat << 'EOF' > /tmp/pr-body.md
-          Automated sync from upstream repository **twentyhq/twenty** for release **$TAG**.
-
-          ### ⚠️ Conflict Resolution Required
-          An automatic merge into `$TARGET_BRANCH` had conflicts that require manual resolution.
-
-          **Steps to resolve:**
-          ```bash
-          git checkout $SYNC_BRANCH
-          git fetch upstream --tags
-          git merge $TAG
-          # Resolve conflicts in your editor
-          git commit -m "fix: resolve upstream sync conflicts for $TAG"
-          git push origin $SYNC_BRANCH
-          ```
-          EOF
-          sed -i "s|\$TAG|$TAG|g" /tmp/pr-body.md
-          sed -i "s|\$TARGET_BRANCH|$TARGET_BRANCH|g" /tmp/pr-body.md
-          sed -i "s|\$SYNC_BRANCH|$SYNC_BRANCH|g" /tmp/pr-body.md
+          {
+            echo "Automated sync from upstream **twentyhq/twenty** release **$TAG**."
+            echo ""
+            if [ "$MERGE_KIND" = "conflict" ]; then
+              echo "### Conflict resolution required"
+              echo ""
+              echo "The merge into $TARGET_BRANCH conflicted. This branch carries the real conflict markers - resolve them, do not force-push over them."
+            else
+              echo "### Clean textual merge - review still required"
+              echo ""
+              echo "Git merged this with no conflicts, which does not make it correct: an upstream rename landing inside a fork-only file produces no conflict at all. The v2.39.0 sync had three such cases, one of them a TypeORM relation string that tsgo cannot check and that only throws at runtime."
+            fi
+            echo ""
+            echo "**Check before merging:**"
+            echo ""
+            echo '```bash'
+            echo "git checkout $SYNC_BRANCH"
+            echo 'npx nx build twenty-shared --skip-nx-cache'
+            echo 'npx tsgo -p packages/twenty-server/tsconfig.json --noEmit'
+            echo 'git grep -n "signInUpWithSocialSSO\|SSOExchangeTokenService\|workspaceSSOIdentityProviders" -- packages'
+            echo '```'
+            echo ""
+            echo "Merging this PR is what pushes $TARGET_BRANCH, and therefore what triggers the docker-publish verify gate and the beta image build."
+          } > /tmp/pr-body.md
 
           gh pr create \
             --base "$TARGET_BRANCH" \
             --head "$SYNC_BRANCH" \
-            --title "[Upstream Sync] Merge $TAG into $TARGET_BRANCH" \
+            --title "[Upstream Sync] Merge $TAG into $TARGET_BRANCH ($MERGE_KIND merge)" \
             --body-file /tmp/pr-body.md \
             --label "upstream-sync" || echo "PR might already exist."
-
-      - name: Trigger Beta Build & Deploy Workflow
-        if: steps.check_merged.outputs.already_merged == 'false' && steps.merge.outputs.has_conflict == 'false'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "Triggering Docker build and publish for dev branch..."
-          gh workflow run docker-publish.yml --ref dev || echo "Workflow trigger completed."
