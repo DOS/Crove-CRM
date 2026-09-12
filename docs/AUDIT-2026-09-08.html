@@ -2212,6 +2212,38 @@ if (!isMultiWorkspaceSubdomainEnabled) { return null; }</code></pre>
   chạy workflow từ nhánh default; push main không trigger docker-publish (chỉ dev/tags/release).
 </p>
 
+<h3>Review PR #3: phát hiện bom nổ chậm DI mà mọi gate trước đó bỏ sót</h3>
+<p>
+  Review PR #3 trước khi merge phát hiện <code>server-setup</code> đỏ vì
+  <code>UnknownDependenciesException</code>: <code>DosOrgSyncWebhookController</code> inject
+  <code>WorkspaceService</code> nhưng <code>AuthModule</code> chưa từng import
+  <code>WorkspaceModule</code> — thêm từ commit <code>a6acc77dfe</code> (kích hoạt workspace do
+  webhook tạo, đợt fix audit). Server <strong>không boot nổi</strong> với trạng thái dev/main lúc
+  đó; image beta build sáng 12/09 cũng vậy. CI chưa từng bắt vì check boot
+  (<code>server-setup</code>) lần cuối chạy ở head <code>f06f82a2c7</code> — dev TRƯỚC đợt fix
+  audit (CI gate theo path, không chạy lại). <code>tsgo</code> và docker verify đều không boot
+  app nên mù hoàn toàn với lớp lỗi này.
+</p>
+<p>
+  Sửa trong nhánh sync (<code>c5f0d34f88</code>): thêm <code>WorkspaceModule</code> vào
+  <code>AuthModule</code> (cùng kiểu cycle Auth→Billing→AppBilling→Auth mà production vẫn boot
+  bình thường) + oxfmt 9 file fork mà lint gate flag. CI chạy lại: server-lint-typecheck ✓,
+  server-build ✓, server-test 3/4 ✓, 19/20 integration shards ✓, 9/11 app smoke ✓ — server boot
+  thật thành công. Bốn nhóm đỏ còn lại đều KHÔNG phải regression của v2.39.4:
+  (1) <code>server-validation</code> = drift codegen graphql/SDK, đúng mục <a href="#C5">C5</a> chờ
+  server sống; (2) server-test shard 2 = 2 suite đỏ từ trước (cũng đỏ ở PR #2 và local);
+  (3) smoke commerce + zalo-oa = <code>YN0028</code> lockfile app lệch package.json, đúng mục
+  M34 chờ quyết định supply-chain; (4) shard 16 = flake timeout hook 20s của
+  <code>setupTestObjectsWithAllFieldTypes()</code>.
+</p>
+<p>
+  <strong>Đã merge PR #3</strong> (<code>0a637f072f</code>, merge commit giữ nguyên lịch sử),
+  branding patch chạy lại local cho nội dung v2.39.4 (748 replacement + catalog lingui),
+  <code>dev → main</code> sync lại để cron 6 giờ và mọi thứ khác cùng trạng thái.
+  Bài học ghi vào quy trình review sync: <em>check boot thật (server-setup/integration) là gate
+  duy nhất thấy lỗi DI; phải đọc kết quả job thay vì tin badge cũ của check path-gated</em>.
+</p>
+
 <!-- ==================== CLEAN ==================== -->
 
 <h2 id="clean">Những điểm ĐẠT <span class="badge b-ok">đã kiểm chứng</span></h2>
