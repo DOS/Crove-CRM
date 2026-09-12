@@ -30,14 +30,14 @@ jobs:
       # GITHUB_TOKEN is a GitHub App installation token that GitHub hard-blocks
       # from creating or updating .github/workflows/* - no job permission lifts
       # it, and `workflows` is not even a valid permissions key. Upstream release
-      # merges routinely touch those files. A purpose-built GitHub App with
-      # Workflows: read+write is not subject to that block, which is the same
-      # pattern the inherited upstream workflows use (create-github-app-token).
-      # Skipped until both secrets exist; the fallbacks below then keep the
-      # previous behavior instead of failing the run outright.
+      # merges routinely touch those files. The DOS GitHub App (slug `dos`, id
+      # 4711427) holds Contents + Workflows + Pull requests write and is not
+      # subject to that block; this is the same pattern the inherited upstream
+      # workflows use. Unconditional on purpose: `secrets` is not a valid context
+      # in a step-level `if`, so guarding on it fails to parse, and a missing key
+      # should fail loudly here rather than later at the push.
       - name: Mint sync app token
         id: app_token
-        if: ${{ secrets.CROVE_SYNC_APP_ID != '' }}
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
           app-id: ${{ secrets.CROVE_SYNC_APP_ID }}
@@ -50,11 +50,7 @@ jobs:
         with:
           ref: ${{ inputs.target_branch || 'dev' }}
           fetch-depth: 0
-          token: ${{ steps.app_token.outputs.token || github.token }}
-
-      - name: Warn when the sync app is not configured
-        if: ${{ secrets.CROVE_SYNC_APP_ID == '' }}
-        run: echo "::warning::CROVE_SYNC_APP_ID / CROVE_SYNC_APP_PRIVATE_KEY are not set - falling back to GITHUB_TOKEN, which GitHub rejects for pushes touching .github/workflows. Create a GitHub App with Contents, Workflows and Pull requests write access on DOS/Crove-CRM, install it on this repo only, and store its app id and private key as those two repository secrets."
+          token: ${{ steps.app_token.outputs.token }}
 
       - name: Determine Upstream Release Tag
         id: get_tag
@@ -147,7 +143,7 @@ jobs:
           # App token, not GITHUB_TOKEN: GitHub does not fire pull_request
           # workflows for PRs opened by GITHUB_TOKEN, so the sync PR would run
           # no CI at all and the merge would get reviewed unverified.
-          GH_TOKEN: ${{ steps.app_token.outputs.token || secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ steps.app_token.outputs.token }}
           TAG: ${{ steps.get_tag.outputs.tag }}
           SYNC_BRANCH: ${{ steps.merge.outputs.sync_branch }}
           TARGET_BRANCH: ${{ inputs.target_branch || 'dev' }}
