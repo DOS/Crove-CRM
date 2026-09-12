@@ -118,7 +118,16 @@ jobs:
             MERGE_KIND="clean"
 
             if [ -f "packages/twenty-utils/patch-crove-branding.ts" ]; then
-              yarn tsx packages/twenty-utils/patch-crove-branding.ts || true
+              # The patch imports sharp and shells out to lingui, so it needs the
+              # workspace deps installed from the merged lockfile. Warn instead of
+              # dying: a branding problem must never block the sync branch.
+              corepack enable
+              if yarn install --immutable; then
+                yarn tsx packages/twenty-utils/patch-crove-branding.ts ||
+                  echo "::warning::patch-crove-branding failed; .po files left unpatched in this sync commit"
+              else
+                echo "::warning::yarn install failed on the merged lockfile; branding patch skipped"
+              fi
             fi
 
             git commit -m "chore(sync): merge upstream release $TAG into $TARGET_BRANCH"
@@ -144,6 +153,10 @@ jobs:
           # workflows for PRs opened by GITHUB_TOKEN, so the sync PR would run
           # no CI at all and the merge would get reviewed unverified.
           GH_TOKEN: ${{ steps.app_token.outputs.token }}
+          # Pin every gh call to the fork: the check_merged step adds an `upstream`
+          # remote, and gh otherwise resolves pr/label commands against
+          # twentyhq/twenty, where the app token has no access.
+          GH_REPO: ${{ github.repository }}
           TAG: ${{ steps.get_tag.outputs.tag }}
           SYNC_BRANCH: ${{ steps.merge.outputs.sync_branch }}
           TARGET_BRANCH: ${{ inputs.target_branch || 'dev' }}
@@ -174,9 +187,22 @@ jobs:
             echo "Merging this PR is what pushes $TARGET_BRANCH, and therefore what triggers the docker-publish verify gate and the beta image build."
           } > /tmp/pr-body.md
 
+          # Self-heal the label: when it was missing, `gh pr create` exited
+          # non-zero and the old `|| echo` fallback reported success without
+          # ever opening a PR.
+          gh label create "upstream-sync" \
+            --color 0366d6 \
+            --description "Automated upstream release sync" || true
+
+          EXISTING_PR=$(gh pr list --head "$SYNC_BRANCH" --state open --json number --jq '.[0].number // empty')
+          if [ -n "$EXISTING_PR" ]; then
+            echo "Open PR #$EXISTING_PR already carries $SYNC_BRANCH; not creating a duplicate."
+            exit 0
+          fi
+
           gh pr create \
             --base "$TARGET_BRANCH" \
             --head "$SYNC_BRANCH" \
             --title "[Upstream Sync] Merge $TAG into $TARGET_BRANCH ($MERGE_KIND merge)" \
             --body-file /tmp/pr-body.md \
-            --label "upstream-sync" || echo "PR might already exist."
+            --label "upstream-sync"

@@ -6,7 +6,7 @@ import {
   signInUpStepState,
 } from '@/auth/states/signInUpStepState';
 import { AuthenticatedMethod } from '@/auth/types/AuthenticatedMethod.enum';
-import { type SocialSSOSignInUpActionType } from '@/auth/types/socialSSOSignInUp.type';
+import { type SocialSsoSignInUpActionType } from '@/auth/types/socialSsoSignInUp.type';
 import { useLingui } from '@lingui/react/macro';
 import { memo, useContext } from 'react';
 import { IconDos } from 'twenty-ui/icon';
@@ -15,7 +15,7 @@ import { MainButton } from 'twenty-ui/input';
 import { useAtomState } from '@/ui/utilities/state/jotai/hooks/useAtomState';
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
 import { LastUsedPill } from './LastUsedPill';
-import { StyledSSOButtonContainer } from './SignInUpSSOButtonStyles';
+import { StyledSsoButtonContainer } from './SignInUpSsoButtonStyles';
 import { ThemeContext } from 'twenty-ui/theme-constants';
 
 const DosIdIcon = memo(() => {
@@ -27,7 +27,7 @@ export const SignInUpWithDosId = ({
   action,
   isGlobalScope,
 }: {
-  action: SocialSSOSignInUpActionType;
+  action: SocialSsoSignInUpActionType;
   isGlobalScope?: boolean;
 }) => {
   const { t } = useLingui();
@@ -47,7 +47,7 @@ export const SignInUpWithDosId = ({
 
   return (
     <>
-      <StyledSSOButtonContainer>
+      <StyledSsoButtonContainer>
         <MainButton
           Icon={DosIdIcon}
           title={t`Continue with DOS ID`}
@@ -58,7 +58,7 @@ export const SignInUpWithDosId = ({
         {isLastUsed && (isGlobalScope || hasMultipleAuthMethods) && (
           <LastUsedPill />
         )}
-      </StyledSSOButtonContainer>
+      </StyledSsoButtonContainer>
       <HorizontalSeparator visible={false} />
     </>
   );

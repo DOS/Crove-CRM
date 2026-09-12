@@ -2,7 +2,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 
 import { useAuth } from '@/auth/hooks/useAuth';
 import { type BillingCheckoutSession } from '@/auth/types/billingCheckoutSession.type';
-import { type SocialSSOSignInUpActionType } from '@/auth/types/socialSSOSignInUp.type';
+import { type SocialSsoSignInUpActionType } from '@/auth/types/socialSsoSignInUp.type';
 import {
   BillingPlanKey,
   SubscriptionInterval,
@@ -22,7 +22,7 @@ export const useSignInWithDosId = () => {
   const { signInWithDosId } = useAuth();
 
   return {
-    signInWithDosId: ({ action }: { action: SocialSSOSignInUpActionType }) =>
+    signInWithDosId: ({ action }: { action: SocialSsoSignInUpActionType }) =>
       signInWithDosId({
         workspaceInviteHash,
         workspacePersonalInviteToken,
