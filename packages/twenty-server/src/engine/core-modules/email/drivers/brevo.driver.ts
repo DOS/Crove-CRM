@@ -20,7 +20,9 @@ export class BrevoDriver implements EmailDriverInterface {
       const sender = this.parseSender(sendMailOptions.from);
 
       if (toRecipients.length === 0) {
-        this.logger.warn('No valid recipients provided for Brevo email dispatch.');
+        this.logger.warn(
+          'No valid recipients provided for Brevo email dispatch.',
+        );
         return;
       }
 
@@ -74,12 +76,18 @@ export class BrevoDriver implements EmailDriverInterface {
           if (typeof recipient === 'string') {
             return { email: recipient.trim() };
           }
-          if (recipient && typeof recipient === 'object' && 'address' in recipient) {
+          if (
+            recipient &&
+            typeof recipient === 'object' &&
+            'address' in recipient
+          ) {
             return { email: recipient.address, name: recipient.name };
           }
           return null;
         })
-        .filter((r): r is { email: string; name?: string } => Boolean(r && r.email));
+        .filter((r): r is { email: string; name?: string } =>
+          Boolean(r && r.email),
+        );
     }
 
     if (typeof to === 'string') {
@@ -96,9 +104,10 @@ export class BrevoDriver implements EmailDriverInterface {
     return [];
   }
 
-  private parseSender(
-    from: SendMailOptions['from'],
-  ): { email: string; name?: string } {
+  private parseSender(from: SendMailOptions['from']): {
+    email: string;
+    name?: string;
+  } {
     if (typeof from === 'string') {
       const match = from.match(/^(.*?)\s*<(.+@.+)>$/);
       if (match) {

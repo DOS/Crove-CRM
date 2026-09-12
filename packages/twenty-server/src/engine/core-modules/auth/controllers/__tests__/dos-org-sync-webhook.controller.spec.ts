@@ -26,12 +26,16 @@ describe('DosOrgSyncWebhookController', () => {
     };
 
     mockUserWorkspaceService = {
-      addUserToWorkspaceIfUserNotInWorkspace: jest.fn().mockResolvedValue(undefined),
+      addUserToWorkspaceIfUserNotInWorkspace: jest
+        .fn()
+        .mockResolvedValue(undefined),
       deleteUserWorkspace: jest.fn().mockResolvedValue(undefined),
     };
 
     mockSignInUpService = {
-      signUpWithoutWorkspace: jest.fn().mockResolvedValue({ id: 'user-1', email: 'owner@example.com' }),
+      signUpWithoutWorkspace: jest
+        .fn()
+        .mockResolvedValue({ id: 'user-1', email: 'owner@example.com' }),
       signUpOnNewWorkspace: jest.fn().mockResolvedValue({
         user: { id: 'user-1' },
         workspace: { id: 'org-123' },
@@ -99,16 +103,24 @@ describe('DosOrgSyncWebhookController', () => {
 
   describe('HMAC Signature Verification', () => {
     it('should throw UnauthorizedException when signature is missing', async () => {
-      const payload = { event: 'organization.created', timestamp: '', data: {} };
+      const payload = {
+        event: 'organization.created',
+        timestamp: '',
+        data: {},
+      };
       const { req } = createSignedRequest(payload);
 
-      await expect(
-        controller.handleDosOrgSync('', req),
-      ).rejects.toThrow(UnauthorizedException);
+      await expect(controller.handleDosOrgSync('', req)).rejects.toThrow(
+        UnauthorizedException,
+      );
     });
 
     it('should throw UnauthorizedException when signature is invalid', async () => {
-      const payload = { event: 'organization.created', timestamp: '', data: {} };
+      const payload = {
+        event: 'organization.created',
+        timestamp: '',
+        data: {},
+      };
       const { req } = createSignedRequest(payload);
 
       await expect(
@@ -120,9 +132,9 @@ describe('DosOrgSyncWebhookController', () => {
       const payload = { timestamp: '', data: {} } as any;
       const { req, signature } = createSignedRequest(payload);
 
-      await expect(
-        controller.handleDosOrgSync(signature, req),
-      ).rejects.toThrow(BadRequestException);
+      await expect(controller.handleDosOrgSync(signature, req)).rejects.toThrow(
+        BadRequestException,
+      );
     });
   });
 
@@ -159,9 +171,15 @@ describe('DosOrgSyncWebhookController', () => {
     });
 
     it('should link user if workspace already exists', async () => {
-      const existingWorkspace = { id: 'existing-ws-1', displayName: 'Crove Corporation' };
+      const existingWorkspace = {
+        id: 'existing-ws-1',
+        displayName: 'Crove Corporation',
+      };
       mockWorkspaceRepository.findOne.mockResolvedValue(existingWorkspace);
-      mockUserService.findUserByEmail.mockResolvedValue({ id: 'user-1', email: 'owner@crove.com' });
+      mockUserService.findUserByEmail.mockResolvedValue({
+        id: 'user-1',
+        email: 'owner@crove.com',
+      });
 
       const payload = {
         event: 'org.created' as const,
@@ -176,7 +194,9 @@ describe('DosOrgSyncWebhookController', () => {
 
       await controller.handleDosOrgSync(signature, req);
 
-      expect(mockUserWorkspaceService.addUserToWorkspaceIfUserNotInWorkspace).toHaveBeenCalledWith(
+      expect(
+        mockUserWorkspaceService.addUserToWorkspaceIfUserNotInWorkspace,
+      ).toHaveBeenCalledWith(
         expect.objectContaining({ id: 'user-1' }),
         existingWorkspace,
       );
@@ -248,10 +268,9 @@ describe('DosOrgSyncWebhookController', () => {
 
       await controller.handleDosOrgSync(signature, req);
 
-      expect(mockUserWorkspaceService.addUserToWorkspaceIfUserNotInWorkspace).toHaveBeenCalledWith(
-        user,
-        workspace,
-      );
+      expect(
+        mockUserWorkspaceService.addUserToWorkspaceIfUserNotInWorkspace,
+      ).toHaveBeenCalledWith(user, workspace);
     });
   });
 
@@ -259,7 +278,11 @@ describe('DosOrgSyncWebhookController', () => {
     it('should remove user from workspace', async () => {
       const user = { id: 'user-2', email: 'member@crove.com' };
       const workspace = { id: 'ws-123' };
-      const userWorkspace = { id: 'uw-1', userId: 'user-2', workspaceId: 'ws-123' };
+      const userWorkspace = {
+        id: 'uw-1',
+        userId: 'user-2',
+        workspaceId: 'ws-123',
+      };
 
       mockUserService.findUserByEmail.mockResolvedValue(user);
       mockWorkspaceRepository.findOne.mockResolvedValue(workspace);
@@ -277,16 +300,23 @@ describe('DosOrgSyncWebhookController', () => {
 
       await controller.handleDosOrgSync(signature, req);
 
-      expect(mockUserWorkspaceService.deleteUserWorkspace).toHaveBeenCalledWith({
-        userWorkspaceId: 'uw-1',
-        workspaceId: 'ws-123',
-      });
+      expect(mockUserWorkspaceService.deleteUserWorkspace).toHaveBeenCalledWith(
+        {
+          userWorkspaceId: 'uw-1',
+          workspaceId: 'ws-123',
+        },
+      );
     });
   });
 
   describe('Event: user.updated', () => {
     it('should update user name', async () => {
-      const user = { id: 'user-1', email: 'user@crove.com', firstName: 'Old', lastName: 'Name' };
+      const user = {
+        id: 'user-1',
+        email: 'user@crove.com',
+        firstName: 'Old',
+        lastName: 'Name',
+      };
       mockUserService.findUserByEmail.mockResolvedValue(user);
 
       const payload = {

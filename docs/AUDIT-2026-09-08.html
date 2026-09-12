@@ -149,6 +149,7 @@
   <a class="sub" href="#N5">N5 · Frill token public</a>
   <a class="sub" href="#N2">N2 · Query auth gãy</a>
   <a href="#update-2">Cập nhật 11/09 (vòng 3)</a>
+  <a href="#update-3">Cập nhật 12/09 (vòng 4)</a>
   <a href="#clean">Điểm đạt</a>
   <a href="#corrections">Điều chỉnh giả định</a>
   <a href="#plan">Kế hoạch hành động</a>
@@ -2148,6 +2149,100 @@ if (!isMultiWorkspaceSubdomainEnabled) { return null; }</code></pre>
     cụ thể từng cái — đặc biệt commit 1, vì nó phụ thuộc câu hỏi sản phẩm ở <a href="#N2">N2</a>.
   </p>
 </div>
+
+<!-- ==================== UPDATE 3 ==================== -->
+
+<h2 id="update-3">Cập nhật 12/09/2026 <span class="badge b-med">vòng 4</span></h2>
+
+<h3>Docker build dev hết đỏ: lỗi hoa/thường của import trong file fork</h3>
+<p>
+  Run <code>9241db6</code> chết ở bước <code>build-and-push</code> với
+  <code>[UNRESOLVED_IMPORT] Could not resolve './SignInUpSSOButtonStyles'</code>. Nguyên nhân:
+  Windows resolve import <strong>không phân biệt hoa/thường</strong> nên hai file fork-only
+  (<code>SignInUpWithDosId.tsx</code>, <code>useSignInWithDosId.ts</code>) compile mượt local,
+  còn rolldown/vite trong Docker Linux thì không: đường dẫn đúng trên git là
+  <code>SignInUpSsoButtonStyles.ts</code> và <code>socialSsoSignInUp.type.ts</code> (chữ
+  <code>Sso</code>, không phải <code>SSO</code>). Sửa 3 chỗ import + tên identifier
+  (<code>dce20881a9</code>), khớp cách viết của component Google/Microsoft.
+</p>
+<p>
+  Để chắc chắn không còn quả mìn cùng loại phía sau lỗi đầu tiên, đã quét case-sensitivity
+  <strong>toàn bộ 10.759 file nguồn</strong> của <code>twenty-front</code> / <code>twenty-ui</code> /
+  <code>twenty-shared</code> (import relative + alias <code>@/</code>, <code>~/</code>,
+  <code>@ui/</code>, <code>@assets/</code>, <code>@styles/</code>, bỏ suffix
+  <code>?react</code>/<code>?worker</code> của vite): <strong>0 mismatch, 0 unresolved</strong>.
+  Run kế tiếp xanh: verify 4m17s + build-and-push 15m28s (<code>34685505484</code>), image beta đã push.
+</p>
+<p>
+  <strong>Vì sao typecheck local không bắt được:</strong> gate CI chỉ typecheck
+  <code>twenty-server</code>; <code>nx typecheck twenty-front</code> chưa vào gate và bản thân
+  còn đỏ vì lỗi upstream có sẵn (typelib <code>react-grid-layout</code>,
+  <code>useFrontComponentExecutionContext</code>) cộng codegen graphql cũ thiếu
+  <code>dosId</code> — mục chờ regenerate codegen ở <a href="#C5">C5</a> vẫn còn nguyên.
+  Lỗi hoa/thường thuộc lớp <em>resolution</em>, chỉ scanner hoặc build Linux mới thấy.
+</p>
+
+<h3>Sync bot: vì sao báo ✓ mà không có PR, và PR #3 đã tồn tại</h3>
+<p>
+  Run <code>34682819637</code> báo thành công nhưng không hề mở PR. Log cho thấy
+  <code>gh pr create</code> chết vì <code>HTTP 403 ... /repos/twentyhq/twenty/labels</code>:
+  bước <em>Check if Tag Already Merged</em> thêm remote tên <code>upstream</code>, và
+  <code>gh</code> theo convention fork chọn <strong>upstream làm base repo</strong> cho
+  pr/label — token app chỉ có quyền trên fork nên 403; <code>|| echo "PR might already exist."</code>
+  nuốt lỗi thành bước xanh. Ba sửa trong <code>upstream-sync.yaml</code>
+  (<code>1789f24e15</code>, <code>8001c044bf</code>):
+</p>
+<ul>
+  <li><code>GH_REPO: ${{ github.repository }}</code> chốt mọi lệnh <code>gh</code> vào fork.</li>
+  <li>Bỏ <code>|| echo</code>: tự tạo label <code>upstream-sync</code> nếu thiếu, bỏ qua tạo PR
+    chỉ khi đã có PR mở cùng nhánh, còn lại để lỗi làm đỏ job.</li>
+  <li>Bước branding patch trước đây <code>yarn tsx ... || true</code> trong job không hề install
+    nên chết im lặng (<code>Cannot find module 'sharp'</code>); giờ merge step chạy
+    <code>yarn install --immutable</code> từ lockfile đã merge rồi mới patch, thất bại thì
+    <code>::warning::</code> chứ không chặn nhánh sync.</li>
+</ul>
+<p>
+  Kết quả: run <code>34685951578</code> xanh 4m9s và mở
+  <a href="https://github.com/DOS/Crove-CRM/pull/3">PR #3 — [Upstream Sync] Merge twenty/v2.39.4
+  into dev (clean merge)</a>, label <code>upstream-sync</code>. Lưu ý: upstream đã ra tới
+  <strong>v2.39.4</strong>, không chỉ v2.39.0. Branding patch bị skip trong run này vì
+  <code>yarn install --immutable</code> fail trên lockfile merge (đúng checksum mismatch đã ghi ở
+  M34) — patch sẽ chạy local sau khi merge PR, như đã làm với v2.39.0.
+  Workflow sửa cũng đã được merge <code>dev → main</code> (<code>f5eebdfb18</code>) vì cron 6 giờ
+  chạy workflow từ nhánh default; push main không trigger docker-publish (chỉ dev/tags/release).
+</p>
+
+<h3>Review PR #3: phát hiện bom nổ chậm DI mà mọi gate trước đó bỏ sót</h3>
+<p>
+  Review PR #3 trước khi merge phát hiện <code>server-setup</code> đỏ vì
+  <code>UnknownDependenciesException</code>: <code>DosOrgSyncWebhookController</code> inject
+  <code>WorkspaceService</code> nhưng <code>AuthModule</code> chưa từng import
+  <code>WorkspaceModule</code> — thêm từ commit <code>a6acc77dfe</code> (kích hoạt workspace do
+  webhook tạo, đợt fix audit). Server <strong>không boot nổi</strong> với trạng thái dev/main lúc
+  đó; image beta build sáng 12/09 cũng vậy. CI chưa từng bắt vì check boot
+  (<code>server-setup</code>) lần cuối chạy ở head <code>f06f82a2c7</code> — dev TRƯỚC đợt fix
+  audit (CI gate theo path, không chạy lại). <code>tsgo</code> và docker verify đều không boot
+  app nên mù hoàn toàn với lớp lỗi này.
+</p>
+<p>
+  Sửa trong nhánh sync (<code>c5f0d34f88</code>): thêm <code>WorkspaceModule</code> vào
+  <code>AuthModule</code> (cùng kiểu cycle Auth→Billing→AppBilling→Auth mà production vẫn boot
+  bình thường) + oxfmt 9 file fork mà lint gate flag. CI chạy lại: server-lint-typecheck ✓,
+  server-build ✓, server-test 3/4 ✓, 19/20 integration shards ✓, 9/11 app smoke ✓ — server boot
+  thật thành công. Bốn nhóm đỏ còn lại đều KHÔNG phải regression của v2.39.4:
+  (1) <code>server-validation</code> = drift codegen graphql/SDK, đúng mục <a href="#C5">C5</a> chờ
+  server sống; (2) server-test shard 2 = 2 suite đỏ từ trước (cũng đỏ ở PR #2 và local);
+  (3) smoke commerce + zalo-oa = <code>YN0028</code> lockfile app lệch package.json, đúng mục
+  M34 chờ quyết định supply-chain; (4) shard 16 = flake timeout hook 20s của
+  <code>setupTestObjectsWithAllFieldTypes()</code>.
+</p>
+<p>
+  <strong>Đã merge PR #3</strong> (<code>0a637f072f</code>, merge commit giữ nguyên lịch sử),
+  branding patch chạy lại local cho nội dung v2.39.4 (748 replacement + catalog lingui),
+  <code>dev → main</code> sync lại để cron 6 giờ và mọi thứ khác cùng trạng thái.
+  Bài học ghi vào quy trình review sync: <em>check boot thật (server-setup/integration) là gate
+  duy nhất thấy lỗi DI; phải đọc kết quả job thay vì tin badge cũ của check path-gated</em>.
+</p>
 
 <!-- ==================== CLEAN ==================== -->
 
