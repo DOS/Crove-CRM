@@ -1,22 +1,5 @@
 msgid ""
-msgstr ""
-"POT-Creation-Date: 2025-01-30 18:16+0100\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: @lingui/cli\n"
-"Language: vi\n"
-"Project-Id-Version: cf448e737e0d6d7b78742f963d761c61\n"
-"Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-01-01 00:00\n"
-"Last-Translator: \n"
-"Language-Team: Vietnamese\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Crowdin-Project: cf448e737e0d6d7b78742f963d761c61\n"
-"X-Crowdin-Project-ID: 1\n"
-"X-Crowdin-Language: vi\n"
-"X-Crowdin-File: /packages/twenty-front/src/locales/en.po\n"
-"X-Crowdin-File-ID: 29\n"
+msgstr "\"\"\n\"POT-Creation-Date: 2025-01-30 18:16+0100\\n\"\n\"MIME-Version: 1.0\\n\"\n\"Content-Type: text/plain; charset=UTF-8\\n\"\n\"Content-Transfer-Encoding: 8bit\\n\"\n\"X-Generator: @lingui/cli\\n\"\n\"Language: vi\\n\"\n\"Project-Id-Version: cf448e737e0d6d7b78742f963d761c61\\n\"\n\"Report-Msgid-Bugs-To: \\n\"\n\"PO-Revision-Date: 2025-01-01 00:00\\n\"\n\"Last-Translator: \\n\"\n\"Language-Team: Vietnamese\\n\"\n\"Plural-Forms: nplurals=1; plural=0;\\n\"\n\"X-Crowdin-Project: cf448e737e0d6d7b78742f963d761c61\\n\"\n\"X-Crowdin-Project-ID: 1\\n\"\n\"X-Crowdin-Language: vi\\n\"\n\"X-Crowdin-File: /packages/crove-front/src/locales/en.po\\n\"\n\"X-Crowdin-File-ID: 29\\n\""
 
 #. js-lingui-id: lndIq/
 #: src/modules/settings/billing/hooks/useBillingWording.ts
@@ -213,7 +196,7 @@ msgstr "{0, plural, other {# Đối tượng}}"
 #. placeholder {0}: failedCount + behindCount
 #: src/modules/settings/admin-panel/utils/getWorkspacesUpgradeHealthText.ts
 msgid "{0, plural, one {# workspace failed or behind} other {# workspaces failed or behind}}"
-msgstr "{0, plural, one {# không gian làm việc bị lỗi hoặc tụt lại} other {# không gian làm việc bị lỗi hoặc tụt lại}}"
+msgstr "{0, plural, one {# tổ chức bị lỗi hoặc tụt lại} other {# tổ chức bị lỗi hoặc tụt lại}}"
 
 #. js-lingui-id: V5p/Lu
 #. placeholder {0}: canceled.canceledMessageCount
@@ -361,7 +344,7 @@ msgstr ""
 #. placeholder {0}: selectedItemNames.length
 #: src/modules/object-record/record-field/ui/form-types/components/FormWorkspaceMemberFilterValueInput.tsx
 msgid "{0} workspace members"
-msgstr "{0} thành viên không gian làm việc"
+msgstr "{0} thành viên tổ chức"
 
 #. js-lingui-id: qdQhzv
 #: src/modules/views/advanced-filter-chip/components/AdvancedFilterChip.tsx
@@ -407,7 +390,7 @@ msgstr "{appName} muốn:"
 #: src/modules/settings/admin-panel/utils/getWorkspacesUpgradeHealthText.ts
 #: src/pages/settings/admin-panel/SettingsAdminWorkspacesStatus.tsx
 msgid "{behindCount, plural, one {# workspace behind} other {# workspaces behind}}"
-msgstr "{behindCount, plural, one {# không gian làm việc tụt lại} other {# không gian làm việc tụt lại}}"
+msgstr "{behindCount, plural, one {# tổ chức tụt lại} other {# tổ chức tụt lại}}"
 
 #. js-lingui-id: SWRSbi
 #: src/modules/settings/profile/devices/components/SettingsProfileDevicesSection.tsx
@@ -455,7 +438,7 @@ msgstr "{deletedCount, plural, other {Đã xóa thành công {deletedCount} côn
 #: src/modules/settings/admin-panel/utils/getWorkspacesUpgradeHealthText.ts
 #: src/pages/settings/admin-panel/SettingsAdminWorkspacesStatus.tsx
 msgid "{failedCount, plural, one {# workspace failed} other {# workspaces failed}}"
-msgstr "{failedCount, plural, one {# không gian làm việc bị lỗi} other {# không gian làm việc bị lỗi}}"
+msgstr "{failedCount, plural, one {# tổ chức bị lỗi} other {# tổ chức bị lỗi}}"
 
 #. js-lingui-id: POhzPf
 #: src/modules/ai/hooks/useAiChatFileUpload.ts
@@ -571,7 +554,7 @@ msgstr "{num, selectordinal, other {{num}}}"
 #. js-lingui-id: fTSz8d
 #: src/modules/object-record/object-filter-dropdown/components/ObjectFilterDropdownActorSelect.tsx
 msgid "{numberOfSelectedItems} workspace members"
-msgstr "{numberOfSelectedItems} thành viên không gian làm việc"
+msgstr "{numberOfSelectedItems} thành viên tổ chức"
 
 #. js-lingui-id: FaQB54
 #: src/modules/workflow/workflow-steps/workflow-actions/ai-agent-action/hooks/useWorkflowAiAgentPermissionActions.ts
@@ -941,7 +924,7 @@ msgstr "Một bản nháp đã tồn tại cho quy trình làm việc này. Bạ
 #. js-lingui-id: K3NJnJ
 #: src/modules/information-banner/components/billing/InformationBannerFailPaymentInfo.tsx
 msgid "A payment method is needed to keep your workspace active."
-msgstr "Cần có phương thức thanh toán để duy trì không gian làm việc của bạn hoạt động."
+msgstr "Cần có phương thức thanh toán để duy trì tổ chức của bạn hoạt động."
 
 #. js-lingui-id: oO3ZQX
 #: src/modules/page-layout/widgets/call-recording/utils/getCallRecordingStatusDisplayConfiguration.ts
@@ -1024,7 +1007,7 @@ msgstr "Về người dùng này"
 #. js-lingui-id: PtK3Kn
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceContent.tsx
 msgid "About this workspace"
-msgstr "Giới thiệu về không gian làm việc này"
+msgstr "Giới thiệu về tổ chức này"
 
 #. js-lingui-id: HfdWGA
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationGeneralInfo.tsx
@@ -1034,7 +1017,7 @@ msgstr "Thông tin về ứng dụng của bạn"
 #. js-lingui-id: nJJAYH
 #: src/pages/settings/legal/SettingsLegalDpa.tsx
 msgid "Accepted and signed DPAs for this workspace, with their template version and date."
-msgstr "Các DPA đã được chấp nhận và ký cho không gian làm việc này, kèm phiên bản và ngày của mẫu."
+msgstr "Các DPA đã được chấp nhận và ký cho tổ chức này, kèm phiên bản và ngày của mẫu."
 
 #. js-lingui-id: pNW+Rt
 #: src/pages/settings/admin-panel/SettingsAdminNewAiProvider.tsx
@@ -1044,12 +1027,12 @@ msgstr "ID khóa truy cập"
 #. js-lingui-id: CrjDqe
 #: src/pages/auth/Authorize.tsx
 msgid "Access your workspace data"
-msgstr "Truy cập dữ liệu không gian làm việc của bạn"
+msgstr "Truy cập dữ liệu tổ chức của bạn"
 
 #. js-lingui-id: IF4QNM
 #: src/modules/settings/mcp-and-apis/components/SettingsMcpSetup.tsx
 msgid "Access your workspace data from your favorite MCP client like Claude, Codex or Cursor."
-msgstr "Truy cập dữ liệu không gian làm việc của bạn từ ứng dụng khách MCP ưa thích như Claude, Codex hoặc Cursor."
+msgstr "Truy cập dữ liệu tổ chức của bạn từ ứng dụng khách MCP ưa thích như Claude, Codex hoặc Cursor."
 
 #. js-lingui-id: AeXO77
 #: src/modules/settings/accounts/components/SettingsConnectedAccountsTableHeader.tsx
@@ -1602,32 +1585,32 @@ msgstr ""
 #. js-lingui-id: FKGcEL
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty MCP server as a remote context server in Zed."
-msgstr "Thêm máy chủ Twenty MCP làm máy chủ ngữ cảnh từ xa trong Zed."
+msgstr "Thêm máy chủ Crove MCP làm máy chủ ngữ cảnh từ xa trong Zed."
 
 #. js-lingui-id: iA2nHX
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty MCP server from Augment Code settings."
-msgstr "Thêm máy chủ Twenty MCP trong phần cài đặt Augment Code."
+msgstr "Thêm máy chủ Crove MCP trong phần cài đặt Augment Code."
 
 #. js-lingui-id: l+NzAk
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty MCP server from Raycast's MCP commands or settings."
-msgstr "Thêm máy chủ Twenty MCP từ lệnh hoặc cài đặt MCP của Raycast."
+msgstr "Thêm máy chủ Crove MCP từ lệnh hoặc cài đặt MCP của Raycast."
 
 #. js-lingui-id: j6G/yI
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty MCP server in Gemini CLI settings."
-msgstr "Thêm máy chủ Twenty MCP trong phần cài đặt Gemini CLI."
+msgstr "Thêm máy chủ Crove MCP trong phần cài đặt Gemini CLI."
 
 #. js-lingui-id: /OyhlM
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty MCP server to your LibreChat configuration file."
-msgstr "Thêm máy chủ Twenty MCP vào tệp cấu hình LibreChat của bạn."
+msgstr "Thêm máy chủ Crove MCP vào tệp cấu hình LibreChat của bạn."
 
 #. js-lingui-id: K0DXoj
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add the Twenty remote server with LM Studio's install link."
-msgstr "Thêm máy chủ từ xa Twenty bằng đường dẫn cài đặt của LM Studio."
+msgstr "Thêm máy chủ từ xa Crove bằng đường dẫn cài đặt của LM Studio."
 
 #. js-lingui-id: 5+ttxv
 #: src/modules/settings/accounts/components/SettingsAccountsBlocklistInput.tsx
@@ -1647,7 +1630,7 @@ msgstr "Thêm chủ đề"
 #. js-lingui-id: 4D/zWv
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Add Twenty as a Streamable HTTP extension in Goose."
-msgstr "Thêm Twenty làm tiện ích mở rộng Streamable HTTP trong Goose."
+msgstr "Thêm Crove làm tiện ích mở rộng Streamable HTTP trong Goose."
 
 #. js-lingui-id: XnwceV
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationRedirectURIsInput.tsx
@@ -1733,7 +1716,7 @@ msgstr "Địa chỉ 2"
 #. js-lingui-id: 7wCciB
 #: src/modules/settings/workspace/components/SettingsWorkspaceEmailGroupSection.tsx
 msgid "Addresses your workspace uses to send and receive email from shared inboxes"
-msgstr "Các địa chỉ mà không gian làm việc của bạn sử dụng để gửi và nhận email từ các hộp thư chung"
+msgstr "Các địa chỉ mà tổ chức của bạn sử dụng để gửi và nhận email từ các hộp thư chung"
 
 #. js-lingui-id: U3pytU
 #: src/modules/settings/members/components/MemberInfosTab.tsx
@@ -1933,12 +1916,12 @@ msgstr "Trò chuyện AI"
 #. js-lingui-id: qiD/6r
 #: src/pages/settings/admin-panel/SettingsAdminWorkspaceDetail.tsx
 msgid "AI chat threads for this workspace"
-msgstr "Chuỗi trò chuyện AI cho không gian làm việc này"
+msgstr "Chuỗi trò chuyện AI cho tổ chức này"
 
 #. js-lingui-id: E/lGXl
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
 msgid "AI consumption across all workspaces."
-msgstr "Mức tiêu thụ AI trên tất cả các không gian làm việc."
+msgstr "Mức tiêu thụ AI trên tất cả các tổ chức."
 
 #. js-lingui-id: kkfXGh
 #: src/pages/settings/ai/components/SettingsAiUsageTab.tsx
@@ -1979,7 +1962,7 @@ msgstr "Mức sử dụng AI"
 #. js-lingui-id: Ad11E9
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
 msgid "AI usage analytics across workspaces is available with an Enterprise key."
-msgstr "Phân tích mức sử dụng AI trên các không gian làm việc có sẵn khi dùng khóa Enterprise."
+msgstr "Phân tích mức sử dụng AI trên các tổ chức có sẵn khi dùng khóa Enterprise."
 
 #. js-lingui-id: zkptxb
 #: src/pages/settings/ai/components/SettingsAiUsageTab.tsx
@@ -2016,7 +1999,7 @@ msgstr "Mức sử dụng AI theo người dùng"
 #. js-lingui-id: jyqPfh
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
 msgid "AI Usage by Workspace"
-msgstr "Mức sử dụng AI theo không gian làm việc"
+msgstr "Mức sử dụng AI theo tổ chức"
 
 #. js-lingui-id: KLyZ6L
 #: src/pages/settings/ai/SettingsAiUsageUserDetail.tsx
@@ -2177,12 +2160,12 @@ msgstr "Tất cả nhiệm vụ đã được xử lý. Hãy duy trì đà này.
 #. js-lingui-id: 45Gm/K
 #: src/pages/settings/applications/components/SettingsApplicationsTable.tsx
 msgid "All the applications currently installed on this workspace"
-msgstr "Tất cả các ứng dụng hiện được cài đặt trong không gian làm việc này"
+msgstr "Tất cả các ứng dụng hiện được cài đặt trong tổ chức này"
 
 #. js-lingui-id: xP6s/m
 #: src/pages/settings/layout/SettingsLayout.tsx
 msgid "All the layout items declared on your workspace"
-msgstr "Tất cả các mục bố cục được khai báo trong không gian làm việc của bạn"
+msgstr "Tất cả các mục bố cục được khai báo trong tổ chức của bạn"
 
 #. js-lingui-id: XuuWVF
 #: src/modules/settings/roles/role-permissions/object-level-permissions/components/SettingsRolePermissionsObjectLevelObjectPicker.tsx
@@ -2197,12 +2180,12 @@ msgstr "Tất cả chủ đề"
 #. js-lingui-id: XLzFVD
 #: src/modules/settings/roles/role-assignment/constants/RoleTargetConfig.ts
 msgid "All workspace members already have this role"
-msgstr "Tất cả thành viên trong không gian làm việc đã có vai trò này"
+msgstr "Tất cả thành viên trong tổ chức đã có vai trò này"
 
 #. js-lingui-id: MLmnB2
 #: src/pages/settings/admin-panel/SettingsAdminUserDetail.tsx
 msgid "All workspaces this user is a member of"
-msgstr "Tất cả không gian làm việc mà người dùng này là thành viên"
+msgstr "Tất cả tổ chức mà người dùng này là thành viên"
 
 #. js-lingui-id: pPTmfc
 #: src/modules/settings/roles/role-permissions/object-level-permissions/components/SettingsRolePermissionsObjectLevelObjectPicker.tsx
@@ -2444,7 +2427,7 @@ msgstr "Bất kỳ ai có tên miền email đã được phê duyệt đều c�
 #. js-lingui-id: xJR+Wq
 #: src/pages/settings/members/tabs/SettingsWorkspaceMembersInviteTab.tsx
 msgid "Anyone with an email address at these domains is allowed to sign up for this workspace."
-msgstr "Bất kỳ ai có địa chỉ email tại các miền này đều được phép đăng ký không gian làm việc này."
+msgstr "Bất kỳ ai có địa chỉ email tại các miền này đều được phép đăng ký tổ chức này."
 
 #. js-lingui-id: OZtEcz
 #: src/modules/settings/mcp-and-apis/components/PlaygroundSetupForm.tsx
@@ -3085,7 +3068,7 @@ msgstr "Tự động tạo bản ghi Người khi nhận hoặc gửi email"
 #. js-lingui-id: rHeTee
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationGeneralToggles.tsx
 msgid "Automatically install this app on every newly created workspace"
-msgstr "Tự động cài đặt ứng dụng này trên mọi không gian làm việc mới được tạo"
+msgstr "Tự động cài đặt ứng dụng này trên mọi tổ chức mới được tạo"
 
 #. js-lingui-id: XFGV21
 #: src/pages/settings/applications/tabs/SettingsApplicationGeneralSection.tsx
@@ -3288,7 +3271,7 @@ msgstr "Chu kỳ thanh toán"
 #. js-lingui-id: xF/NXI
 #: src/modules/settings/billing/hooks/useBillingPortalSession.ts
 msgid "Billing portal session error. Please retry or contact Twenty team"
-msgstr "Lỗi phiên cổng thanh toán. Vui lòng thử lại hoặc liên hệ nhóm Twenty"
+msgstr "Lỗi phiên cổng thanh toán. Vui lòng thử lại hoặc liên hệ nhóm Crove"
 
 #. js-lingui-id: 8kIU+G
 #: src/modules/advanced-text-editor/constants/AdvancedTextEditorBlockCatalog.ts
@@ -3330,7 +3313,7 @@ msgstr "Đầu vào phần thân"
 #. js-lingui-id: SkYx9p
 #: src/pages/onboarding/BookCall.tsx
 msgid "Book a 30-minute call and we'll help you get your workspace production-ready."
-msgstr "Đặt lịch cuộc gọi 30 phút và chúng tôi sẽ giúp bạn chuẩn bị không gian làm việc sẵn sàng đưa vào sử dụng."
+msgstr "Đặt lịch cuộc gọi 30 phút và chúng tôi sẽ giúp bạn chuẩn bị tổ chức sẵn sàng đưa vào sử dụng."
 
 #. js-lingui-id: 2yl5lQ
 #: src/pages/onboarding/UpgradeFreeTrial.tsx
@@ -3393,12 +3376,12 @@ msgstr "Nâu"
 #. js-lingui-id: 041SWy
 #: src/pages/settings/admin-panel/SettingsAdminChats.tsx
 msgid "Browse AI chat threads across all workspaces ({totalCount} matching)"
-msgstr "Duyệt các chuỗi hội thoại AI trên tất cả không gian làm việc (có {totalCount} kết quả khớp)"
+msgstr "Duyệt các chuỗi hội thoại AI trên tất cả tổ chức (có {totalCount} kết quả khớp)"
 
 #. js-lingui-id: IXoy1p
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
 msgid "Browse AI chat threads across all workspaces, including onboarding chats"
-msgstr "Duyệt các chuỗi hội thoại AI trên tất cả không gian làm việc, bao gồm cả các cuộc trò chuyện giới thiệu"
+msgstr "Duyệt các chuỗi hội thoại AI trên tất cả tổ chức, bao gồm cả các cuộc trò chuyện giới thiệu"
 
 #. js-lingui-id: hKAV/O
 #: src/pages/settings/community/SettingsCommunity.tsx
@@ -3479,7 +3462,7 @@ msgstr "bởi {author}"
 #. js-lingui-id: 8Pfllj
 #: src/modules/auth/sign-in-up/components/FooterNote.tsx
 msgid "By using Twenty, you agree to the"
-msgstr "Bằng việc sử dụng Twenty, bạn đồng ý với"
+msgstr "Bằng việc sử dụng Crove, bạn đồng ý với"
 
 #. js-lingui-id: Yx41df
 #: src/modules/auth/sign-in-up/components/FooterNote.tsx
@@ -3633,7 +3616,7 @@ msgstr "Ghi âm cuộc gọi"
 #. js-lingui-id: ahn0Ti
 #: src/modules/page-layout/widgets/call-recording/components/CallRecordingWidgetUnavailableDisplay.tsx
 msgid "Call recording is not available in this workspace."
-msgstr "Ghi âm cuộc gọi không khả dụng trong không gian làm việc này."
+msgstr "Ghi âm cuộc gọi không khả dụng trong tổ chức này."
 
 #. js-lingui-id: z9jSP/
 #: src/modules/page-layout/widgets/call-recording/components/CallRecordingWidgetUnavailableDisplay.tsx
@@ -3816,7 +3799,7 @@ msgstr "Thẻ"
 #: src/modules/settings/billing/components/AddPaymentMethodForm.tsx
 #: src/pages/onboarding/UpgradeFreeTrial.tsx
 msgid "Card payment is currently unavailable. Please verify your Stripe configuration or contact your workspace admin."
-msgstr "Thanh toán bằng thẻ hiện không khả dụng. Vui lòng kiểm tra cấu hình Stripe của bạn hoặc liên hệ quản trị viên không gian làm việc của bạn."
+msgstr "Thanh toán bằng thẻ hiện không khả dụng. Vui lòng kiểm tra cấu hình Stripe của bạn hoặc liên hệ quản trị viên tổ chức của bạn."
 
 #. js-lingui-id: M1RLfx
 #: src/localization/hooks/useLocaleOptions.ts
@@ -4015,7 +3998,7 @@ msgstr "Kiểm tra hộp thư đến để xác minh địa chỉ email mới c�
 #: src/modules/settings/billing/hooks/useHandleCheckoutSession.ts
 #: src/modules/settings/billing/hooks/useHandleCheckoutSession.ts
 msgid "Checkout session error. Please retry or contact Twenty team"
-msgstr "Lỗi phiên thanh toán. Vui lòng thử lại hoặc liên hệ nhóm Twenty"
+msgstr "Lỗi phiên thanh toán. Vui lòng thử lại hoặc liên hệ nhóm Crove"
 
 #. js-lingui-id: SviKkE
 #: src/localization/hooks/useLocaleOptions.ts
@@ -4035,7 +4018,7 @@ msgstr "Chọn gói tín dụng {intervalAdjective}"
 #. js-lingui-id: NFfUic
 #: src/pages/auth/SignInUp.tsx
 msgid "Choose a Workspace"
-msgstr "Chọn một không gian làm việc"
+msgstr "Chọn một tổ chức"
 
 #. js-lingui-id: Qz73jD
 #: src/modules/settings/security/components/sso/SettingsSsoIdentitiesProvidersForm.tsx
@@ -4085,7 +4068,7 @@ msgstr "Chọn điều gì sẽ xảy ra khi bạn nhấp vào một địa ch�
 #. js-lingui-id: kTDEu6
 #: src/pages/settings/profile/appearance/components/SettingsExperience.tsx
 msgid "Choose where records open by default. Some objects may use a workspace setting"
-msgstr "Chọn nơi bản ghi được mở theo mặc định. Một số đối tượng có thể sử dụng thiết lập không gian làm việc"
+msgstr "Chọn nơi bản ghi được mở theo mặc định. Một số đối tượng có thể sử dụng thiết lập tổ chức"
 
 #. js-lingui-id: EcjwmO
 #: src/pages/settings/applications/tabs/SettingsApplicationTimelineActivityTypeSettingsTab.tsx
@@ -4130,7 +4113,7 @@ msgstr "Yêu cầu quyền sở hữu với GitHub"
 #. js-lingui-id: ke+vxJ
 #: src/pages/settings/applications/tabs/SettingsApplicationRegistrationDistributionTab.tsx
 msgid "Claimed by this workspace"
-msgstr "Đã được không gian làm việc này yêu cầu quyền sở hữu"
+msgstr "Đã được tổ chức này yêu cầu quyền sở hữu"
 
 #. js-lingui-id: KqRGF3
 #: src/pages/settings/applications/utils/getClaimErrorContent.ts
@@ -4666,7 +4649,7 @@ msgstr "Cấu hình cài đặt SMTP để gửi email từ tài khoản của b
 #. js-lingui-id: TiCmQz
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
 msgid "Configure the default AI models for all workspaces"
-msgstr "Cấu hình các mô hình AI mặc định cho tất cả không gian làm việc"
+msgstr "Cấu hình các mô hình AI mặc định cho tất cả tổ chức"
 
 #. js-lingui-id: CcCy4C
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
@@ -4681,12 +4664,12 @@ msgstr "Cấu hình máy chủ từ xa trong phần cài đặt MCP của Amazon
 #. js-lingui-id: g1/8jH
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Configure the Twenty MCP server manually in Cascade."
-msgstr "Cấu hình thủ công máy chủ MCP của Twenty trong Cascade."
+msgstr "Cấu hình thủ công máy chủ MCP của Crove trong Cascade."
 
 #. js-lingui-id: XiyvRh
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Configure the Twenty MCP server manually in Cline."
-msgstr "Cấu hình thủ công máy chủ MCP của Twenty trong Cline."
+msgstr "Cấu hình thủ công máy chủ MCP của Crove trong Cline."
 
 #. js-lingui-id: qA9AGQ
 #: src/modules/settings/domains/components/SettingsDomainRecords.tsx
@@ -4788,7 +4771,7 @@ msgstr "Kết nối tài khoản lịch"
 #. js-lingui-id: D8ATlr
 #: src/modules/settings/accounts/components/SettingsNewAccountSection.tsx
 msgid "Connect a new account to your workspace"
-msgstr "Kết nối tài khoản mới với không gian làm việc của bạn"
+msgstr "Kết nối tài khoản mới với tổ chức của bạn"
 
 #. js-lingui-id: CMrq4R
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
@@ -4798,7 +4781,7 @@ msgstr "Kết nối thêm các máy khách MCP bằng liên kết cài đặt ho
 #. js-lingui-id: vPCRNy
 #: src/pages/settings/ai/components/SettingsAiOverviewTab.tsx
 msgid "Connect AI assistants like Claude or Cursor to your workspace via the Model Context Protocol"
-msgstr "Kết nối các trợ lý AI như Claude hoặc Cursor với không gian làm việc của bạn thông qua Model Context Protocol"
+msgstr "Kết nối các trợ lý AI như Claude hoặc Cursor với tổ chức của bạn thông qua Model Context Protocol"
 
 #. js-lingui-id: TA7R1S
 #: src/modules/activities/calendar/components/CalendarEventComposerFields.tsx
@@ -5291,7 +5274,7 @@ msgstr "Không thể sao chép vào bảng tạm"
 #. js-lingui-id: TU+LOV
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationInstalledWorkspaces.tsx
 msgid "Couldn't load installed workspaces"
-msgstr "Không thể tải các không gian làm việc đã cài đặt"
+msgstr "Không thể tải các tổ chức đã cài đặt"
 
 #. js-lingui-id: kjbTwZ
 #: src/modules/navigation-menu-item/edit/hooks/useNavigationMenuItemEditController.ts
@@ -5420,7 +5403,7 @@ msgstr "Tạo một quy trình làm việc và quay lại đây để xem các p
 #. js-lingui-id: Hn5erC
 #: src/modules/auth/sign-in-up/components/SignInUpGlobalScopeForm.tsx
 msgid "Create a workspace"
-msgstr "Tạo không gian làm việc"
+msgstr "Tạo tổ chức"
 
 #. js-lingui-id: dpwEnu
 #: src/modules/activities/calendar/components/CalendarEventComposerFields.tsx
@@ -5543,24 +5526,24 @@ msgstr "Tạo Webhook"
 #. js-lingui-id: FdtSNC
 #: src/modules/auth/sign-in-up/components/internal/SignInUpWorkspaceCreationForm.tsx
 msgid "Create workspace"
-msgstr "Tạo không gian làm việc"
+msgstr "Tạo tổ chức"
 
 #. js-lingui-id: kdLGki
 #: src/modules/ui/navigation/navigation-drawer/components/MultiWorkspaceDropdown/internal/MultiWorkspaceDropdownDefaultComponents.tsx
 #: src/utils/title-utils.ts
 msgid "Create Workspace"
-msgstr "Tạo không gian làm việc"
+msgstr "Tạo tổ chức"
 
 #. js-lingui-id: 9chYz/
 #: src/modules/auth/sign-in-up/components/internal/SignInUpWorkspaceCreationForm.tsx
 #: src/pages/auth/SignInUp.tsx
 msgid "Create your workspace"
-msgstr "Tạo không gian làm việc của bạn"
+msgstr "Tạo tổ chức của bạn"
 
 #. js-lingui-id: OHF273
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useActionRolePermissionFlagConfig.ts
 msgid "Create, edit, and delete workspace views"
-msgstr "Tạo, chỉnh sửa và xóa chế độ xem không gian làm việc"
+msgstr "Tạo, chỉnh sửa và xóa chế độ xem tổ chức"
 
 #. js-lingui-id: d+F6q9
 #: src/modules/settings/admin-panel/chats/components/SettingsAdminChatsTable.tsx
@@ -5609,7 +5592,7 @@ msgstr "Đang tạo <0>mô hình dữ liệu</0> của bạn..."
 #. js-lingui-id: m4ZE6a
 #: src/modules/auth/sign-in-up/constants/WorkspaceActivationMessages.tsx
 msgid "Creating your <0>workspace</0>..."
-msgstr "Đang tạo <0>không gian làm việc</0> của bạn..."
+msgstr "Đang tạo <0>tổ chức</0> của bạn..."
 
 #. js-lingui-id: HAzhV7
 #: src/pages/settings/admin-panel/SettingsAdminAiProviderDetail.tsx
@@ -5661,7 +5644,7 @@ msgstr "Gói tín dụng đã được nâng cấp."
 #: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
 #: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
 msgid "Credit usage breakdown for your workspace."
-msgstr "Phân tích chi tiết việc sử dụng tín dụng cho không gian làm việc của bạn."
+msgstr "Phân tích chi tiết việc sử dụng tín dụng cho tổ chức của bạn."
 
 #. js-lingui-id: UQ4Hjl
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceBillingContent.tsx
@@ -5824,7 +5807,7 @@ msgstr "Phiên bản hiện tại"
 #. js-lingui-id: 0b3reS
 #: src/modules/settings/profile/components/DeleteAccount.tsx
 msgid "Current workspace member not found."
-msgstr "Không tìm thấy thành viên hiện tại của không gian làm việc."
+msgstr "Không tìm thấy thành viên hiện tại của tổ chức."
 
 #. js-lingui-id: mO0Peh
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
@@ -5994,7 +5977,7 @@ msgstr "Tùy chỉnh giao diện trang bản ghi của bạn."
 #. js-lingui-id: 0lvH/K
 #: src/pages/settings/layout/SettingsLayout.tsx
 msgid "Customize how your workspace looks."
-msgstr "Tùy chỉnh giao diện không gian làm việc của bạn."
+msgstr "Tùy chỉnh giao diện tổ chức của bạn."
 
 #. js-lingui-id: zZksLX
 #: src/pages/settings/layout/SettingsLayout.tsx
@@ -6014,7 +5997,7 @@ msgstr "Tùy chỉnh trang bản ghi"
 #. js-lingui-id: JcqvfA
 #: src/modules/settings/data-model/object-details/components/tabs/ObjectLayout.tsx
 msgid "Customize the workspace record page"
-msgstr "Tùy chỉnh trang bản ghi của không gian làm việc"
+msgstr "Tùy chỉnh trang bản ghi của tổ chức"
 
 #. js-lingui-id: ZBgSzH
 #: src/modules/settings/members/components/MemberPermissionsTab.tsx
@@ -6024,7 +6007,7 @@ msgstr "Tùy chỉnh những gì người dùng này có thể xem và thực hi
 #. js-lingui-id: bCJa9l
 #: src/modules/settings/security/components/SettingsSecuritySettings.tsx
 msgid "Customize your workspace security"
-msgstr "Tùy chỉnh bảo mật không gian làm việc của bạn"
+msgstr "Tùy chỉnh bảo mật tổ chức của bạn"
 
 #. js-lingui-id: fFwMZv
 #: src/modules/settings/data-model/fields/forms/select/components/SettingsDataModelFieldSelectFormOptionRow.tsx
@@ -6415,7 +6398,7 @@ msgstr "Xác định chức năng của công cụ này"
 #: src/modules/settings/accounts/components/SettingsAccountsCalendarChannelDetails.tsx
 #: src/modules/settings/accounts/components/SettingsAccountsMessageChannelDetails.tsx
 msgid "Define what will be visible to other users in your workspace"
-msgstr "Định nghĩa những gì sẽ được hiển thị cho người dùng khác trong không gian làm việc của bạn"
+msgstr "Định nghĩa những gì sẽ được hiển thị cho người dùng khác trong tổ chức của bạn"
 
 #. js-lingui-id: EcAkBs
 #: src/modules/workflow/workflow-steps/workflow-actions/delay-actions/components/WorkflowEditActionDelay.tsx
@@ -6516,7 +6499,7 @@ msgstr "Xóa tài khoản và tất cả dữ liệu liên quan"
 #. js-lingui-id: kvHBHg
 #: src/modules/settings/profile/components/DeleteAccount.tsx
 msgid "Delete account and all the associated data or leave workspace"
-msgstr "Xóa tài khoản và tất cả dữ liệu liên quan hoặc rời khỏi không gian làm việc."
+msgstr "Xóa tài khoản và tất cả dữ liệu liên quan hoặc rời khỏi tổ chức."
 
 #. js-lingui-id: YMNj8z
 #: src/pages/settings/ai/components/SettingsAgentDeleteConfirmationModal.tsx
@@ -6671,12 +6654,12 @@ msgstr "Xóa tiện ích"
 #: src/modules/settings/profile/components/DeleteWorkspace.tsx
 #: src/modules/settings/profile/components/DeleteWorkspace.tsx
 msgid "Delete workspace"
-msgstr "Xóa không gian làm việc"
+msgstr "Xóa tổ chức"
 
 #. js-lingui-id: mk2Ygs
 #: src/modules/settings/profile/components/DeleteWorkspace.tsx
 msgid "Delete your whole workspace"
-msgstr "Xóa toàn bộ không gian làm việc của bạn"
+msgstr "Xóa toàn bộ tổ chức của bạn"
 
 #. js-lingui-id: vGjmyl
 #: src/modules/object-record/record-group/components/RecordGroupRelationChip.tsx
@@ -6797,7 +6780,7 @@ msgstr "Tách ra"
 #. js-lingui-id: crxufE
 #: src/pages/settings/admin-panel/SettingsAdminWorkspacesStatus.tsx
 msgid "Detail per workspace"
-msgstr "Chi tiết theo từng không gian làm việc"
+msgstr "Chi tiết theo từng tổ chức"
 
 #. js-lingui-id: URmyfc
 #: src/modules/ai/components/RoutingDebugDisplay.tsx
@@ -7244,12 +7227,12 @@ msgstr "ví dụ: My OpenAI Proxy"
 #. js-lingui-id: SwLZ5l
 #: src/pages/settings/applications/components/SettingsClaimApplicationSection.tsx
 msgid "e.g. my-twenty-app"
-msgstr "ví dụ: my-twenty-app"
+msgstr "ví dụ: my-crove-app"
 
 #. js-lingui-id: 88vQqv
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationDangerZone.tsx
 msgid "e.g. my-workspace"
-msgstr "ví dụ: my-workspace"
+msgstr "ví dụ: my-tổ chức"
 
 #. js-lingui-id: XnR4kd
 #: src/pages/settings/admin-panel/SettingsAdminNewAiProvider.tsx
@@ -7998,7 +7981,7 @@ msgstr "Nhập lời nhắc hệ thống xác định hành vi và khả năng c
 #. js-lingui-id: tEWpbi
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationDangerZone.tsx
 msgid "Enter the workspace subdomain to transfer this app to. You will lose access to manage it."
-msgstr "Nhập tên miền phụ của không gian làm việc mà bạn muốn chuyển ứng dụng này tới. Bạn sẽ mất quyền truy cập để quản lý nó."
+msgstr "Nhập tên miền phụ của tổ chức mà bạn muốn chuyển ứng dụng này tới. Bạn sẽ mất quyền truy cập để quản lý nó."
 
 #. js-lingui-id: pubQie
 #: src/modules/object-core/workflows/components/CoreWorkflowFilterValueInput.tsx
@@ -8238,7 +8221,7 @@ msgstr "Lỗi khi hủy chuyển đổi kế hoạch."
 #. js-lingui-id: QmR+2U
 #: src/modules/settings/billing/hooks/useEndSubscriptionTrialPeriod.ts
 msgid "Error while ending trial period. Please contact Twenty team."
-msgstr "Lỗi khi kết thúc giai đoạn dùng thử. Vui lòng liên hệ nhóm Twenty."
+msgstr "Lỗi khi kết thúc giai đoạn dùng thử. Vui lòng liên hệ nhóm Crove."
 
 #. js-lingui-id: 5g78zo
 #: src/pages/settings/members/SettingsWorkspaceMember.tsx
@@ -8851,7 +8834,7 @@ msgstr "Không thể lưu chiến dịch"
 #. js-lingui-id: 9ryUyP
 #: src/pages/settings/ai/components/SettingsAiOverviewTab.tsx
 msgid "Failed to save workspace instructions"
-msgstr "Không thể lưu hướng dẫn của không gian làm việc"
+msgstr "Không thể lưu hướng dẫn của tổ chức"
 
 #. js-lingui-id: GpNLad
 #: src/modules/activities/emails/hooks/useSendMessageCampaign.ts
@@ -9694,7 +9677,7 @@ msgstr "Khai thác tối đa CRM của bạn bằng cách cài đặt một số
 #. js-lingui-id: NXEW3h
 #: src/pages/onboarding/InviteTeam.tsx
 msgid "Get the most out of your workspace by inviting your team."
-msgstr "Tối ưu hóa không gian làm việc của bạn bằng cách mời team của bạn tham gia."
+msgstr "Tối ưu hóa tổ chức của bạn bằng cách mời team của bạn tham gia."
 
 #. js-lingui-id: XXtAx5
 #: src/modules/settings/data-model/indexes/forms/components/SettingsObjectIndexOptionsForm.tsx
@@ -9784,7 +9767,7 @@ msgstr "Cấp quyền truy cập"
 #. js-lingui-id: 6eo66Q
 #: src/modules/settings/workspace/components/ToggleImpersonate.tsx
 msgid "Grant access to your workspace so we can troubleshoot problems."
-msgstr "Cấp quyền truy cập vào không gian làm việc của bạn để chúng tôi có thể khắc phục sự cố."
+msgstr "Cấp quyền truy cập vào tổ chức của bạn để chúng tôi có thể khắc phục sự cố."
 
 #. js-lingui-id: 3xMv4O
 #: src/modules/settings/admin-panel/components/SettingsAdminServerAdminAccess.tsx
@@ -9805,7 +9788,7 @@ msgstr "Cấp quyền truy cập đầy đủ"
 #. js-lingui-id: Tbxf45
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceCreditGrantModal.tsx
 msgid "Granted {parsedAmount} credits to this workspace."
-msgstr "Đã cấp {parsedAmount} tín dụng cho workspace này."
+msgstr "Đã cấp {parsedAmount} tín dụng cho tổ chức này."
 
 #. js-lingui-id: fqtGOd
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceBillingContent.tsx
@@ -10099,7 +10082,7 @@ msgstr "Ẩn các chỉ mục hệ thống"
 #. js-lingui-id: 1ETc0T
 #: src/pages/settings/community/SettingsCommunity.tsx
 msgid "Hire a partner to help you implement and customize Twenty."
-msgstr "Thuê một đối tác để giúp bạn triển khai và tùy chỉnh Twenty."
+msgstr "Thuê một đối tác để giúp bạn triển khai và tùy chỉnh Crove."
 
 #. js-lingui-id: i0qMbr
 #: src/modules/navigation/hooks/useMobileNavigationBarItems.ts
@@ -10144,30 +10127,7 @@ msgid ""
 "```\n"
 "\n"
 "See the [Getting Started guide](https://twenty.com/developers/extend/apps/getting-started) for the full walkthrough, and [Building Apps](https://twenty.com/developers/extend/apps/building) for the `defineApplication` / `defineEntity` APIs."
-msgstr ""
-"Lưu trữ các tùy chỉnh và ghi đè của không gian làm việc của bạn.\n"
-"\n"
-"#### Bao gồm những gì\n"
-"Mọi tiện ích mở rộng bạn tạo trên nền ứng dụng tiêu chuẩn đều được nhóm dưới mục Custom. Nó giữ các thay đổi về schema, thay đổi giao diện và logic dành riêng cho không gian làm việc của bạn ở một nơi.\n"
-"\n"
-"- Đối tượng và trường tùy chỉnh cho mô hình dữ liệu riêng của bạn\n"
-"- Chế độ xem, mục điều hướng và bố cục bản ghi định hình cách đội ngũ của bạn làm việc\n"
-"- Hàm logic, các thành phần front-end và tác tử giúp tự động hóa hoặc mở rộng không gian làm việc\n"
-"\n"
-"#### Vì sao có ứng dụng này\n"
-"Hãy dùng ứng dụng này cho các tùy chỉnh dành riêng cho không gian làm việc nên chỉ lưu cục bộ trong không gian này.\n"
-"\n"
-"Nếu bạn đang định hình một không gian làm việc cho một doanh nghiệp, hãy giữ nó ở đây. Nếu bạn đang xây dựng một ứng dụng doanh nghiệp có thể tái sử dụng với mô hình dữ liệu, giao diện người dùng (UI) và tự động hóa riêng cần được quản lý phiên bản, chia sẻ hoặc cài đặt trên nhiều không gian làm việc, hãy tạo một ứng dụng riêng biệt.\n"
-"\n"
-"#### Tự xây dựng ứng dụng của bạn\n"
-"\n"
-"Tạo khung một ứng dụng mới chỉ với một lệnh:\n"
-"\n"
-"```bash\n"
-"npx create-twenty-app@latest my-twenty-app\n"
-"```\n"
-"\n"
-"Xem [Hướng dẫn Bắt đầu](https://twenty.com/developers/extend/apps/getting-started) để biết quy trình chi tiết, và [Xây dựng Ứng dụng](https://twenty.com/developers/extend/apps/building) cho các API `defineApplication` / `defineEntity`."
+msgstr "\"\"\n\"Lưu trữ các tùy chỉnh và ghi đè của tổ chức của bạn.\\n\"\n\"\\n\"\n\"#### Bao gồm những gì\\n\"\n\"Mọi tiện ích mở rộng bạn tạo trên nền ứng dụng tiêu chuẩn đều được nhóm dưới mục Custom. Nó giữ các thay đổi về schema, thay đổi giao diện và logic dành riêng cho tổ chức của bạn ở một nơi.\\n\"\n\"\\n\"\n\"- Đối tượng và trường tùy chỉnh cho mô hình dữ liệu riêng của bạn\\n\"\n\"- Chế độ xem, mục điều hướng và bố cục bản ghi định hình cách đội ngũ của bạn làm việc\\n\"\n\"- Hàm logic, các thành phần front-end và tác tử giúp tự động hóa hoặc mở rộng tổ chức\\n\"\n\"\\n\"\n\"#### Vì sao có ứng dụng này\\n\"\n\"Hãy dùng ứng dụng này cho các tùy chỉnh dành riêng cho tổ chức nên chỉ lưu cục bộ trong không gian này.\\n\"\n\"\\n\"\n\"Nếu bạn đang định hình một tổ chức cho một doanh nghiệp, hãy giữ nó ở đây. Nếu bạn đang xây dựng một ứng dụng doanh nghiệp có thể tái sử dụng với mô hình dữ liệu, giao diện người dùng (UI) và tự động hóa riêng cần được quản lý phiên bản, chia sẻ hoặc cài đặt trên nhiều tổ chức, hãy tạo một ứng dụng riêng biệt.\\n\"\n\"\\n\"\n\"#### Tự xây dựng ứng dụng của bạn\\n\"\n\"\\n\"\n\"Tạo khung một ứng dụng mới chỉ với một lệnh:\\n\"\n\"\\n\"\n\"```bash\\n\"\n\"npx create-crove-app@latest my-crove-app\\n\"\n\"```\\n\"\n\"\\n\"\n\"Xem [Hướng dẫn Bắt đầu](https://crove.com/developers/extend/apps/getting-started) để biết quy trình chi tiết, và [Xây dựng Ứng dụng](https://crove.com/developers/extend/apps/building) cho các API `defineApplication` / `defineEntity`.\""
 
 #. js-lingui-id: yY8wAv
 #: src/modules/workflow/workflow-steps/workflow-actions/delay-actions/components/WorkflowEditActionDelay.tsx
@@ -10451,7 +10411,7 @@ msgstr "Mạo danh người dùng"
 #. js-lingui-id: n3ohBy
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useSettingsRolePermissionFlagConfig.ts
 msgid "Impersonate workspace users"
-msgstr "Ngụy trang người dùng không gian làm việc"
+msgstr "Ngụy trang người dùng tổ chức"
 
 #. js-lingui-id: 1ZMDWV
 #: src/modules/settings/admin-panel/components/SettingsAdminServerAdminAccess.tsx
@@ -10468,7 +10428,7 @@ msgstr "Mạo danh"
 #. js-lingui-id: yImXof
 #: src/pages/settings/admin-panel/SettingsAdminUserDetail.tsx
 msgid "Impersonation is disabled for this workspace"
-msgstr "Việc mạo danh bị vô hiệu hoá cho không gian làm việc này"
+msgstr "Việc mạo danh bị vô hiệu hoá cho tổ chức này"
 
 #. js-lingui-id: yHueLx
 #: src/modules/settings/billing/constants/SettingsBillingPlanComparisonRows.ts
@@ -10713,7 +10673,7 @@ msgstr "Cài đặt"
 #. js-lingui-id: XOHdRf
 #: src/modules/marketplace/components/SettingsApplicationInstallPermissionValidationModal.tsx
 msgid "Install {appDisplayName} on your workspace"
-msgstr "Cài đặt {appDisplayName} vào không gian làm việc của bạn"
+msgstr "Cài đặt {appDisplayName} vào tổ chức của bạn"
 
 #. js-lingui-id: 4ZM8/a
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useSettingsRolePermissionFlagConfig.ts
@@ -11628,7 +11588,7 @@ msgstr "Để trống nếu bạn không cần gửi email."
 #: src/modules/settings/profile/components/DeleteAccount.tsx
 #: src/modules/settings/profile/components/DeleteAccount.tsx
 msgid "Leave workspace"
-msgstr "Rời khỏi không gian làm việc"
+msgstr "Rời khỏi tổ chức"
 
 #. js-lingui-id: Sn1jT8
 #: src/modules/settings/admin-panel/signing-keys/components/SettingsAdminSigningKeysTable.tsx
@@ -12134,7 +12094,7 @@ msgstr "Quản lý các kết nối mà ứng dụng này sử dụng để gọ
 #. js-lingui-id: Dt05oz
 #: src/pages/settings/admin-panel/SettingsAdminWorkspaceDetail.tsx
 msgid "Manage feature flags for this workspace"
-msgstr "Quản lý cờ đặc trưng cho không gian làm việc này"
+msgstr "Quản lý cờ đặc trưng cho tổ chức này"
 
 #. js-lingui-id: PxMD2N
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useSettingsRolePermissionFlagConfig.ts
@@ -12169,7 +12129,7 @@ msgstr "Quản lý danh mục ứng dụng marketplace"
 #. js-lingui-id: N7fMy9
 #: src/pages/settings/members/tabs/SettingsWorkspaceMembersTeamTab.tsx
 msgid "Manage the members of your workspace here"
-msgstr "Quản lý các thành viên của không gian làm việc của bạn ở đây"
+msgstr "Quản lý các thành viên của tổ chức của bạn ở đây"
 
 #. js-lingui-id: 5UjiOC
 #: src/pages/settings/applications/SettingsApplicationConnectionDetail.tsx
@@ -12870,7 +12830,7 @@ msgstr "Tên của khóa API của bạn"
 #. js-lingui-id: J7w8lI
 #: src/pages/settings/general/SettingsGeneral.tsx
 msgid "Name of your workspace"
-msgstr "Tên không gian làm việc của bạn"
+msgstr "Tên tổ chức của bạn"
 
 #. js-lingui-id: JxC/pi
 #: src/modules/workflow/workflow-trigger/components/WorkflowEditTriggerManual.tsx
@@ -12937,7 +12897,7 @@ msgstr "Không bao giờ hết hạn"
 #. js-lingui-id: ErO8dj
 #: src/modules/settings/security/components/SettingsSecurityAuthProvidersOptionsList.tsx
 msgid "Never shown at sign-in. Members use the workspace URL."
-msgstr "Không bao giờ được hiển thị khi đăng nhập. Thành viên sử dụng URL không gian làm việc."
+msgstr "Không bao giờ được hiển thị khi đăng nhập. Thành viên sử dụng URL tổ chức."
 
 #. js-lingui-id: isRobC
 #: src/modules/object-record/record-board/record-board-column/components/RecordBoardColumnNewRecordButton.tsx
@@ -13285,7 +13245,7 @@ msgstr "Không có ghi nhận mức tiêu thụ AI cho người dùng này."
 #: src/modules/ai/components/AiChatEditorSection.tsx
 #: src/modules/ai/hooks/useAgentChat.ts
 msgid "No AI models are enabled in this workspace."
-msgstr "Không có mô hình AI nào được bật trong không gian làm việc này."
+msgstr "Không có mô hình AI nào được bật trong tổ chức này."
 
 #. js-lingui-id: 42kV9p
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
@@ -13310,7 +13270,7 @@ msgstr "Không có khóa API nào nào phù hợp với tìm kiếm của bạn"
 #. js-lingui-id: OaNsaF
 #: src/pages/settings/applications/components/SettingsClaimApplicationSection.tsx
 msgid "No application found. If you just published it to npm with the \"twenty-app\" keyword, sync the catalog and try again."
-msgstr "Không tìm thấy ứng dụng nào. Nếu bạn vừa phát hành nó lên npm với từ khóa \"twenty-app\", hãy đồng bộ danh mục rồi thử lại."
+msgstr "Không tìm thấy ứng dụng nào. Nếu bạn vừa phát hành nó lên npm với từ khóa \"crove-app\", hãy đồng bộ danh mục rồi thử lại."
 
 #. js-lingui-id: rxBnh8
 #: src/pages/settings/applications/tabs/SettingsApplicationsAvailableTab.tsx
@@ -13340,7 +13300,7 @@ msgstr "Không có tab khả dụng"
 #. js-lingui-id: 8whThc
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceBillingContent.tsx
 msgid "No billing data is available for this workspace."
-msgstr "Không có dữ liệu thanh toán cho không gian làm việc này."
+msgstr "Không có dữ liệu thanh toán cho tổ chức này."
 
 #. js-lingui-id: V/RzSE
 #: src/modules/workflow/workflow-steps/workflow-actions/components/WorkflowRunStepLogsEmailDetail.tsx
@@ -13677,7 +13637,7 @@ msgstr "Không có micrô nào khả dụng. Hãy kết nối một micrô rồi
 #. js-lingui-id: UWZZdQ
 #: src/pages/settings/ai/components/SettingsAgentSettingsTab.tsx
 msgid "No models available. Please configure AI models in your workspace settings."
-msgstr "Không có mô hình nào có sẵn. Vui lòng cấu hình mô hình AI trong cài đặt không gian làm việc của bạn."
+msgstr "Không có mô hình nào có sẵn. Vui lòng cấu hình mô hình AI trong cài đặt tổ chức của bạn."
 
 #. js-lingui-id: 9VrTfZ
 #: src/modules/activities/notes/components/NotesCardContent.tsx
@@ -13924,7 +13884,7 @@ msgstr "Không có dữ liệu sử dụng"
 #. js-lingui-id: YrBAQE
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceBillingContent.tsx
 msgid "No usage data is available for this workspace."
-msgstr "Không có dữ liệu sử dụng nào cho không gian làm việc này."
+msgstr "Không có dữ liệu sử dụng nào cho tổ chức này."
 
 #. js-lingui-id: TayaS7
 #: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
@@ -13994,32 +13954,32 @@ msgstr "Chưa có phiên bản workflows nào"
 #. js-lingui-id: Q4dFjT
 #: src/pages/settings/admin-panel/SettingsAdminWorkspacesStatus.tsx
 msgid "No workspace behind"
-msgstr "Không có không gian làm việc nào bị chậm"
+msgstr "Không có tổ chức nào bị chậm"
 
 #. js-lingui-id: apOMfI
 #: src/pages/settings/admin-panel/SettingsAdminWorkspacesStatus.tsx
 msgid "No workspace failed"
-msgstr "Không có không gian làm việc nào bị lỗi"
+msgstr "Không có tổ chức nào bị lỗi"
 
 #. js-lingui-id: rPAZRd
 #: src/modules/settings/lab/hooks/useLabPublicFeatureFlags.ts
 msgid "No workspace selected"
-msgstr "Chưa chọn không gian làm việc"
+msgstr "Chưa chọn tổ chức"
 
 #. js-lingui-id: /XvL19
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationInstalledWorkspaces.tsx
 msgid "No workspaces found"
-msgstr "Không tìm thấy không gian làm việc nào"
+msgstr "Không tìm thấy tổ chức nào"
 
 #. js-lingui-id: TiRphK
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
 msgid "No workspaces found matching your search criteria."
-msgstr "Không tìm thấy không gian làm việc nào khớp với tiêu chí tìm kiếm của bạn."
+msgstr "Không tìm thấy tổ chức nào khớp với tiêu chí tìm kiếm của bạn."
 
 #. js-lingui-id: lYc235
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationInstalledWorkspaces.tsx
 msgid "No workspaces match this search"
-msgstr "Không có không gian làm việc nào khớp với tìm kiếm này"
+msgstr "Không có tổ chức nào khớp với tìm kiếm này"
 
 #. js-lingui-id: Ah7JCB
 #: src/modules/side-panel/pages/workflow/step/view-run/components/SidePanelWorkflowRunViewStepContent.tsx
@@ -14410,7 +14370,7 @@ msgstr "trên {0}"
 #. js-lingui-id: gzokj+
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationInstallStats.tsx
 msgid "On suspended workspaces"
-msgstr "Trên các không gian làm việc bị tạm ngưng"
+msgstr "Trên các tổ chức bị tạm ngưng"
 
 #. js-lingui-id: jcwJgk
 #: src/modules/workflow/workflow-trigger/utils/cron-to-human/descriptors/getDayOfMonthDescription.ts
@@ -14493,7 +14453,7 @@ msgstr "Một hoặc nhiều bộ lọc tham chiếu đến các trường đã 
 #. js-lingui-id: 2l4SGU
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx
 msgid "One subscription provides one enterprise key that powers one production instance and one potential staging or test instance. To run a staging or test environment, install Twenty on a second server, activate it with this same enterprise key, then register that server as a development instance. Development instances unlock enterprise features without extra billing and do not count toward your production seats."
-msgstr "Mỗi gói đăng ký cung cấp một khóa enterprise để vận hành một môi trường sản xuất và một môi trường dàn dựng (staging) hoặc thử nghiệm tiềm năng. Để chạy môi trường dàn dựng hoặc thử nghiệm, hãy cài đặt Twenty trên máy chủ thứ hai, kích hoạt bằng cùng khóa enterprise này, sau đó đăng ký máy chủ đó là một môi trường phát triển. Các môi trường phát triển mở khóa các tính năng enterprise mà không phát sinh thêm chi phí và không được tính vào số suất môi trường sản xuất của bạn."
+msgstr "Mỗi gói đăng ký cung cấp một khóa enterprise để vận hành một môi trường sản xuất và một môi trường dàn dựng (staging) hoặc thử nghiệm tiềm năng. Để chạy môi trường dàn dựng hoặc thử nghiệm, hãy cài đặt Crove trên máy chủ thứ hai, kích hoạt bằng cùng khóa enterprise này, sau đó đăng ký máy chủ đó là một môi trường phát triển. Các môi trường phát triển mở khóa các tính năng enterprise mà không phát sinh thêm chi phí và không được tính vào số suất môi trường sản xuất của bạn."
 
 #. js-lingui-id: oFTo3P
 #: src/modules/settings/event-logs/components/SettingsLogs.tsx
@@ -14589,12 +14549,12 @@ msgstr "Mở dưới dạng liên kết"
 #. js-lingui-id: n0vVgf
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Open Claude with the Twenty connector name and MCP URL prefilled."
-msgstr "Mở Claude với tên connector Twenty và MCP URL được điền sẵn."
+msgstr "Mở Claude với tên connector Crove và MCP URL được điền sẵn."
 
 #. js-lingui-id: +n2jpB
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Open Cursor's MCP installer with the Twenty remote server config."
-msgstr "Mở trình cài đặt MCP của Cursor với cấu hình máy chủ từ xa Twenty."
+msgstr "Mở trình cài đặt MCP của Cursor với cấu hình máy chủ từ xa Crove."
 
 #. js-lingui-id: pZZH4Q
 #: src/modules/auth/sign-in-up/components/EmailVerificationSent.tsx
@@ -14651,12 +14611,12 @@ msgstr "Mở bản ghi trên một trang riêng"
 #. js-lingui-id: q170S2
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Open Replit with the Twenty remote server config."
-msgstr "Mở Replit với cấu hình máy chủ từ xa Twenty."
+msgstr "Mở Replit với cấu hình máy chủ từ xa Crove."
 
 #. js-lingui-id: sBd/cl
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Open Twenty's official ChatGPT integration for your workspace."
-msgstr "Mở tích hợp ChatGPT chính thức của Twenty cho không gian làm việc của bạn."
+msgstr "Mở tích hợp ChatGPT chính thức của Crove cho tổ chức của bạn."
 
 #. js-lingui-id: OV5wZZ
 #: src/modules/navigation-menu-item/display/sections/components/NavigationDrawerOpenedSection.tsx
@@ -14808,7 +14768,7 @@ msgstr "Các cài đặt bảo mật khác"
 #: src/modules/ui/navigation/navigation-drawer/components/MultiWorkspaceDropdown/internal/MultiWorkspaceDropdownDefaultComponents.tsx
 #: src/modules/ui/navigation/navigation-drawer/components/MultiWorkspaceDropdown/internal/MultiWorkspaceDropdownWorkspacesListComponents.tsx
 msgid "Other workspaces"
-msgstr "Không gian làm việc khác"
+msgstr "tổ chức khác"
 
 #. js-lingui-id: NuKR0h
 #: src/modules/side-panel/pages/workflow/trigger-type/components/SidePanelWorkflowSelectTriggerTypeContent.tsx
@@ -14964,7 +14924,7 @@ msgstr "Tên trang"
 #. js-lingui-id: NRvxzv
 #: src/pages/not-found/NotFound.tsx
 msgid "Page Not Found | Twenty"
-msgstr "Không tìm thấy trang | Twenty"
+msgstr "Không tìm thấy trang | Crove"
 
 #. js-lingui-id: oIhFvf
 #: src/modules/side-panel/pages/email-block-settings/components/EmailPageStyleSection.tsx
@@ -15228,7 +15188,7 @@ msgstr "Chọn một chế độ xem"
 #. js-lingui-id: rV71K7
 #: src/modules/workflow/workflow-steps/workflow-actions/components/WorkflowEditActionEmailBase.tsx
 msgid "Pick an address to send from or set a workspace member as variable"
-msgstr "Chọn một địa chỉ để gửi từ đó hoặc đặt một thành viên không gian làm việc làm biến"
+msgstr "Chọn một địa chỉ để gửi từ đó hoặc đặt một thành viên tổ chức làm biến"
 
 #. js-lingui-id: Wlba2h
 #: src/modules/side-panel/utils/getSidePanelSubPageTitle.ts
@@ -15370,7 +15330,7 @@ msgstr "Vui lòng nhập \"{confirmationValue}\" để xác nhận bạn muốn 
 #. js-lingui-id: osUElx
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationDangerZone.tsx
 msgid "Please type \"{confirmationValue}\" to confirm you want to delete this app. All workspace installations linked to it will lose their OAuth credentials."
-msgstr "Vui lòng nhập \"{confirmationValue}\" để xác nhận bạn muốn xóa ứng dụng này. Tất cả các cài đặt không gian làm việc được liên kết với nó sẽ mất thông tin xác thực OAuth."
+msgstr "Vui lòng nhập \"{confirmationValue}\" để xác nhận bạn muốn xóa ứng dụng này. Tất cả các cài đặt tổ chức được liên kết với nó sẽ mất thông tin xác thực OAuth."
 
 #. js-lingui-id: L0SEpC
 #: src/pages/settings/applications/tabs/SettingsApplicationDetailAboutTab.tsx
@@ -15449,7 +15409,7 @@ msgstr "Trước cài đặt"
 #. js-lingui-id: iVFTRM
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationGeneralToggles.tsx
 msgid "Pre-install on new workspaces"
-msgstr "Cài đặt trước trên các không gian làm việc mới"
+msgstr "Cài đặt trước trên các tổ chức mới"
 
 #. js-lingui-id: q+Xhwx
 #: src/modules/settings/admin-panel/apps/components/SettingsAdminApps.tsx
@@ -15459,7 +15419,7 @@ msgstr "Chỉ ứng dụng cài sẵn"
 #. js-lingui-id: 0Lqxjs
 #: src/modules/auth/sign-in-up/constants/WorkspaceActivationMessages.tsx
 msgid "Prefilling your <0>workspace data</0>..."
-msgstr "Đang điền trước <0>dữ liệu không gian làm việc</0> của bạn..."
+msgstr "Đang điền trước <0>dữ liệu tổ chức</0> của bạn..."
 
 #. js-lingui-id: rNqTKZ
 #: src/modules/side-panel/pages/page-layout/constants/settings/ChartConfigurationSettingLabels.ts
@@ -16299,7 +16259,7 @@ msgstr "Xóa thành viên"
 #. js-lingui-id: FzY1pn
 #: src/pages/settings/members/SettingsWorkspaceMember.tsx
 msgid "Remove member from workspace"
-msgstr "Xóa thành viên khỏi không gian làm việc"
+msgstr "Xóa thành viên khỏi tổ chức"
 
 #. js-lingui-id: FeQ/sf
 #. placeholder {0}: modelToRemove?.label ?? ''
@@ -16963,7 +16923,7 @@ msgstr "Tên lược đồ"
 #. js-lingui-id: IYEdtc
 #: src/pages/settings/applications/tabs/SettingsApplicationDetailContentTab.tsx
 msgid "Schema this app contributes to your workspace"
-msgstr "Lược đồ mà ứng dụng này đóng góp cho không gian làm việc của bạn"
+msgstr "Lược đồ mà ứng dụng này đóng góp cho tổ chức của bạn"
 
 #. js-lingui-id: aBgwis
 #: src/modules/settings/unsubscribers/components/SettingsUnsubscribersList.tsx
@@ -17140,17 +17100,17 @@ msgstr "Tìm theo tên, email hoặc ID người dùng..."
 #. js-lingui-id: 6NCseM
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationInstalledWorkspaces.tsx
 msgid "Search by workspace name or version..."
-msgstr "Tìm theo tên không gian làm việc hoặc phiên bản..."
+msgstr "Tìm theo tên tổ chức hoặc phiên bản..."
 
 #. js-lingui-id: KI1xjO
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
 msgid "Search by workspace name, subdomain, or ID..."
-msgstr "Tìm theo tên không gian làm việc, tên miền phụ hoặc ID..."
+msgstr "Tìm theo tên tổ chức, tên miền phụ hoặc ID..."
 
 #. js-lingui-id: MS72xQ
 #: src/pages/settings/admin-panel/SettingsAdminChats.tsx
 msgid "Search by workspace, user email or thread id..."
-msgstr "Tìm kiếm theo không gian làm việc, email người dùng hoặc ID chuỗi hội thoại..."
+msgstr "Tìm kiếm theo tổ chức, email người dùng hoặc ID chuỗi hội thoại..."
 
 #. js-lingui-id: yI4D/V
 #: src/modules/side-panel/pages/page-layout/components/dropdown-content/ChartColorSelectionDropdownContent.tsx
@@ -17696,7 +17656,7 @@ msgstr "Chọn một giá trị"
 #. js-lingui-id: RKE3bT
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
 msgid "Select which models appear as recommended in the workspace model picker"
-msgstr "Chọn những mô hình sẽ hiển thị là được đề xuất trong bộ chọn mô hình của không gian làm việc"
+msgstr "Chọn những mô hình sẽ hiển thị là được đề xuất trong bộ chọn mô hình của tổ chức"
 
 #. js-lingui-id: 7c7atJ
 #: src/pages/settings/profile/appearance/components/SettingsExperience.tsx
@@ -17832,7 +17792,7 @@ msgstr "Biến máy chủ"
 #. js-lingui-id: exgCw+
 #: src/pages/settings/applications/tabs/SettingsApplicationRegistrationConfigTab.tsx
 msgid "Server variables are applied to all workspace installations."
-msgstr "Các biến máy chủ được áp dụng cho tất cả các lần cài đặt trong mọi không gian làm việc."
+msgstr "Các biến máy chủ được áp dụng cho tất cả các lần cài đặt trong mọi tổ chức."
 
 #. js-lingui-id: LUc0oL
 #: src/modules/settings/security/components/sso/SettingsSsoSamlForm.tsx
@@ -17847,7 +17807,7 @@ msgstr "Đặt {placeholderForEmptyCell}"
 #. js-lingui-id: QEVmIH
 #: src/modules/settings/roles/components/SettingsRolesDefaultRole.tsx
 msgid "Set a default for this workspace"
-msgstr "Đặt mặc định cho không gian làm việc này"
+msgstr "Đặt mặc định cho tổ chức này"
 
 #. js-lingui-id: PPcets
 #: src/modules/settings/data-model/fields/forms/select/components/SettingsDataModelFieldSelectFormOptionRow.tsx
@@ -17872,7 +17832,7 @@ msgstr "Đặt các trường sẽ được tạo trong tương lai thành \"hi�
 #. js-lingui-id: 6KA8xy
 #: src/modules/settings/roles/role-permissions/permission-flags/hooks/useSettingsRolePermissionFlagConfig.ts
 msgid "Set global workspace preferences"
-msgstr "Đặt sở thích không gian làm việc toàn cầu"
+msgstr "Đặt sở thích tổ chức toàn cầu"
 
 #. js-lingui-id: 2gHjVM
 #: src/modules/settings/profile/components/SetOrChangePassword.tsx
@@ -17980,17 +17940,17 @@ msgstr "Thứ bảy"
 #. js-lingui-id: Vy9kmk
 #: src/pages/settings/members/tabs/SettingsWorkspaceMembersInviteTab.tsx
 msgid "Share this link to invite users to join your workspace"
-msgstr "Chia sẻ liên kết này để mời người dùng tham gia không gian làm việc của bạn"
+msgstr "Chia sẻ liên kết này để mời người dùng tham gia tổ chức của bạn"
 
 #. js-lingui-id: bM7Rp3
 #: src/pages/settings/applications/SettingsApplicationConnectionDetail.tsx
 msgid "Share with workspace"
-msgstr "Chia sẻ với không gian làm việc"
+msgstr "Chia sẻ với tổ chức"
 
 #. js-lingui-id: gaJRur
 #: src/pages/settings/applications/tabs/SettingsApplicationRegistrationDistributionTab.tsx
 msgid "Share your app to other workspaces without pushing it on the marketplace"
-msgstr "Chia sẻ ứng dụng của bạn tới các không gian làm việc khác mà không cần đưa nó lên chợ ứng dụng"
+msgstr "Chia sẻ ứng dụng của bạn tới các tổ chức khác mà không cần đưa nó lên chợ ứng dụng"
 
 #. js-lingui-id: JTP6zD
 #: src/pages/settings/communications/SettingsWorkspaceCommunicationGroupChannelDetail.tsx
@@ -18347,7 +18307,7 @@ msgstr "Đã xảy ra lỗi khi liên hệ với dịch vụ thanh toán của c
 #. js-lingui-id: i34/fH
 #: src/pages/onboarding/WorkspaceActivation.tsx
 msgid "Something went wrong while creating your workspace. Please try again."
-msgstr "Đã xảy ra lỗi khi tạo không gian làm việc của bạn. Vui lòng thử lại."
+msgstr "Đã xảy ra lỗi khi tạo tổ chức của bạn. Vui lòng thử lại."
 
 #. js-lingui-id: teokEm
 #: src/modules/settings/event-logs/components/SettingsLogs.tsx
@@ -18663,7 +18623,7 @@ msgstr "Khách hàng Stripe"
 #. js-lingui-id: Zk8585
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceBillingContent.tsx
 msgid "Stripe customer linked to this workspace"
-msgstr "Khách hàng Stripe được liên kết với không gian làm việc này"
+msgstr "Khách hàng Stripe được liên kết với tổ chức này"
 
 #. js-lingui-id: Yiplcx
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceBillingContent.tsx
@@ -18697,7 +18657,7 @@ msgstr "Tên miền phụ"
 #. js-lingui-id: Sv4BSp
 #: src/modules/settings/billing/constants/SettingsBillingPlanComparisonRows.ts
 msgid "Subdomain (yourco.twenty.com)"
-msgstr "Tên miền phụ (yourco.twenty.com)"
+msgstr "Tên miền phụ (yourco.crove.com)"
 
 #. js-lingui-id: mGO3xy
 #: src/modules/auth/sign-in-up/components/internal/SignInUpWorkspaceCreationForm.tsx
@@ -18796,7 +18756,7 @@ msgstr "Đã kích hoạt đăng ký."
 #: src/modules/settings/billing/hooks/useSubmitSubscriptionPayment.ts
 #: src/modules/settings/billing/hooks/useSubmitSubscriptionPayment.ts
 msgid "Subscription error. Please retry or contact Twenty team"
-msgstr "Lỗi đăng ký. Vui lòng thử lại hoặc liên hệ nhóm Twenty"
+msgstr "Lỗi đăng ký. Vui lòng thử lại hoặc liên hệ nhóm Crove"
 
 #. js-lingui-id: FooJUj
 #. placeholder {0}: getTargetPlanLabel(targetPlanKey)
@@ -19105,7 +19065,7 @@ msgstr "Quan hệ đích trên đối tượng liên kết"
 #. js-lingui-id: qmwHSv
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationDangerZone.tsx
 msgid "Target workspace subdomain"
-msgstr "Tên miền phụ của không gian làm việc đích"
+msgstr "Tên miền phụ của tổ chức đích"
 
 #. js-lingui-id: R+s8S+
 #: src/modules/activities/tasks/components/TaskRow.tsx
@@ -19206,7 +19166,7 @@ msgstr "Trình chỉnh sửa văn bản"
 #. js-lingui-id: Z4WP0F
 #: src/modules/settings/accounts/components/SettingsAccountsNewEmailGroupChannel.tsx
 msgid "The address your workspace will send and receive email from (e.g. support@mycompany.com). Outbound sending requires the domain to be verified in Outbound Domains."
-msgstr "Địa chỉ mà workspace của bạn sẽ sử dụng để gửi và nhận email (ví dụ: support@mycompany.com). Việc gửi thư đi yêu cầu tên miền phải được xác minh trong Outbound Domains."
+msgstr "Địa chỉ mà tổ chức của bạn sẽ sử dụng để gửi và nhận email (ví dụ: support@mycompany.com). Việc gửi thư đi yêu cầu tên miền phải được xác minh trong Outbound Domains."
 
 #. js-lingui-id: oVH0Mt
 #: src/pages/settings/admin-panel/SettingsAdminNewAiProvider.tsx
@@ -19251,37 +19211,7 @@ msgid ""
 "```\n"
 "\n"
 "See the [Getting Started guide](https://twenty.com/developers/extend/apps/getting-started) for the full walkthrough, and [Building Apps](https://twenty.com/developers/extend/apps/building) for the `defineApplication` / `defineEntity` APIs."
-msgstr ""
-"Mô hình dữ liệu cơ sở làm nền cho mọi không gian làm việc Twenty.\n"
-"\n"
-"#### \\\"Nền tảng\\\" nghĩa là gì\n"
-"\n"
-"Mỗi không gian làm việc Twenty bắt đầu với tập hợp đối tượng này. Chúng xác định hình hài CRM của bạn, bao gồm mối quan hệ, hoạt động và báo cáo. Mọi thứ khác, bao gồm các ứng dụng marketplace, tác tử AI và đối tượng tùy chỉnh, đều tích hợp vào chúng.\n"
-"\n"
-"#### Các đối tượng đi kèm\n"
-"- **Người & Công ty**: bản ghi liên hệ và tài khoản\n"
-"- **Cơ hội**: pipeline bán hàng của bạn\n"
-"- **Ghi chú & Nhiệm vụ**: hoạt động và các bước theo dõi\n"
-"- **Quy trình công việc & Bảng điều khiển**: tự động hóa và báo cáo\n"
-"\n"
-"Gỡ ứng dụng này đi thì phần còn lại của Twenty sẽ không còn gì để dựa vào.\n"
-"\n"
-"#### Tự xây dựng ứng dụng của bạn\n"
-"\n"
-"Mở rộng Twenty với các đối tượng, trường, hàm logic hoặc kỹ năng AI của riêng bạn. Tạo khung một ứng dụng mới chỉ với một lệnh:\n"
-"\n"
-"```bash\n"
-"npx create-twenty-app@latest my-twenty-app\n"
-"```\n"
-"\n"
-"Sau đó, trong thư mục:\n"
-"\n"
-"```bash\n"
-"cd my-twenty-app\n"
-"yarn twenty dev\n"
-"```\n"
-"\n"
-"Xem [Hướng dẫn Bắt đầu](https://twenty.com/developers/extend/apps/getting-started) để biết quy trình chi tiết, và [Xây dựng Ứng dụng](https://twenty.com/developers/extend/apps/building) cho các API `defineApplication` / `defineEntity`."
+msgstr "\"\"\n\"Mô hình dữ liệu cơ sở làm nền cho mọi tổ chức Crove.\\n\"\n\"\\n\"\n\"#### \\\\\\\"Nền tảng\\\\\\\" nghĩa là gì\\n\"\n\"\\n\"\n\"Mỗi tổ chức Crove bắt đầu với tập hợp đối tượng này. Chúng xác định hình hài CRM của bạn, bao gồm mối quan hệ, hoạt động và báo cáo. Mọi thứ khác, bao gồm các ứng dụng marketplace, tác tử AI và đối tượng tùy chỉnh, đều tích hợp vào chúng.\\n\"\n\"\\n\"\n\"#### Các đối tượng đi kèm\\n\"\n\"- **Người & Công ty**: bản ghi liên hệ và tài khoản\\n\"\n\"- **Cơ hội**: pipeline bán hàng của bạn\\n\"\n\"- **Ghi chú & Nhiệm vụ**: hoạt động và các bước theo dõi\\n\"\n\"- **Quy trình công việc & Bảng điều khiển**: tự động hóa và báo cáo\\n\"\n\"\\n\"\n\"Gỡ ứng dụng này đi thì phần còn lại của Crove sẽ không còn gì để dựa vào.\\n\"\n\"\\n\"\n\"#### Tự xây dựng ứng dụng của bạn\\n\"\n\"\\n\"\n\"Mở rộng Crove với các đối tượng, trường, hàm logic hoặc kỹ năng AI của riêng bạn. Tạo khung một ứng dụng mới chỉ với một lệnh:\\n\"\n\"\\n\"\n\"```bash\\n\"\n\"npx create-crove-app@latest my-crove-app\\n\"\n\"```\\n\"\n\"\\n\"\n\"Sau đó, trong thư mục:\\n\"\n\"\\n\"\n\"```bash\\n\"\n\"cd my-crove-app\\n\"\n\"yarn crove dev\\n\"\n\"```\\n\"\n\"\\n\"\n\"Xem [Hướng dẫn Bắt đầu](https://crove.com/developers/extend/apps/getting-started) để biết quy trình chi tiết, và [Xây dựng Ứng dụng](https://crove.com/developers/extend/apps/building) cho các API `defineApplication` / `defineEntity`.\""
 
 #. js-lingui-id: VsxjzF
 #: src/modules/page-layout/widgets/call-recording/utils/getCallRecordingStatusDisplayConfiguration.ts
@@ -19393,7 +19323,7 @@ msgstr "Trang mà bạn đang tìm kiếm hoặc không còn tồn tại hoặc 
 #. js-lingui-id: Ya1wb4
 #: src/pages/settings/legal/SettingsLegalDpaNew.tsx
 msgid "The PDF is pre-signed by Twenty and executed with your legal entity and authorized signatory."
-msgstr "PDF được Twenty ký trước và được thực hiện với pháp nhân và người ký được ủy quyền của bạn."
+msgstr "PDF được Crove ký trước và được thực hiện với pháp nhân và người ký được ủy quyền của bạn."
 
 #. js-lingui-id: Ir4tSJ
 #: src/modules/page-layout/widgets/call-recording/utils/getCallRecordingStatusDisplayConfiguration.ts
@@ -19458,7 +19388,7 @@ msgstr "Toàn bộ chi tiết sự kiện sẽ được chia sẻ với nhóm c�
 #. js-lingui-id: bEXHAZ
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationClaims.tsx
 msgid "The workspace that claimed this app registration"
-msgstr "Không gian làm việc đã yêu cầu quyền sở hữu đăng ký ứng dụng này"
+msgstr "tổ chức đã yêu cầu quyền sở hữu đăng ký ứng dụng này"
 
 #. js-lingui-id: FEr96N
 #: src/modules/ui/navigation/navigation-drawer/components/MultiWorkspaceDropdown/internal/MultiWorkspaceDropdownDefaultComponents.tsx
@@ -19572,7 +19502,7 @@ msgstr "Hành động này không thể được hoàn tác. Điều này sẽ x
 #. js-lingui-id: gWGuHC
 #: src/modules/settings/profile/components/DeleteWorkspace.tsx
 msgid "This action cannot be undone. This will permanently delete your entire workspace. <0/> Please type in your email to confirm."
-msgstr "Hành động này không thể được hoàn tác. Điều này sẽ xóa vĩnh viễn toàn bộ không gian làm việc của bạn. <0/> Vui lòng nhập email của bạn để xác nhận."
+msgstr "Hành động này không thể được hoàn tác. Điều này sẽ xóa vĩnh viễn toàn bộ tổ chức của bạn. <0/> Vui lòng nhập email của bạn để xác nhận."
 
 #. js-lingui-id: o5vUsG
 #: src/modules/settings/two-factor-authentication/components/DeleteTwoFactorAuthenticationMethod.tsx
@@ -19582,7 +19512,7 @@ msgstr "Hành động này không thể hoàn tác. Điều này sẽ đặt l�
 #. js-lingui-id: kVRKMS
 #: src/modules/settings/profile/components/DeleteAccount.tsx
 msgid "This action cannot be undone. Your membership will be removed; synced emails and calendars stay with the workspace."
-msgstr "Hành động này không thể hoàn tác. Tư cách thành viên của bạn sẽ bị xóa; email và lịch đã đồng bộ sẽ vẫn thuộc về không gian làm việc."
+msgstr "Hành động này không thể hoàn tác. Tư cách thành viên của bạn sẽ bị xóa; email và lịch đã đồng bộ sẽ vẫn thuộc về tổ chức."
 
 #. js-lingui-id: muD0kr
 #. placeholder {0}: favoritesEdit.navigationMenuItemCount
@@ -19603,12 +19533,12 @@ msgstr "Địa chỉ này đã được sử dụng"
 #. js-lingui-id: 9rY+8P
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationDangerZone.tsx
 msgid "This app has no owner workspace. Claiming it will assign ownership to your current workspace, and you will be able to manage it."
-msgstr "Ứng dụng này chưa có không gian làm việc sở hữu. Yêu cầu sở hữu sẽ gán quyền sở hữu cho không gian làm việc hiện tại của bạn, và bạn sẽ có thể quản lý ứng dụng."
+msgstr "Ứng dụng này chưa có tổ chức sở hữu. Yêu cầu sở hữu sẽ gán quyền sở hữu cho tổ chức hiện tại của bạn, và bạn sẽ có thể quản lý ứng dụng."
 
 #. js-lingui-id: fVo75D
 #: src/pages/settings/applications/tabs/SettingsApplicationRegistrationGeneralTab.tsx
 msgid "This app is not fully configured. Users won't be able to install it until all required server variables are set, and — for apps exposing a server route — until the app is claimed and installed on its owner workspace."
-msgstr "Ứng dụng này chưa được cấu hình đầy đủ. Người dùng sẽ không thể cài đặt nó cho đến khi tất cả biến máy chủ bắt buộc được đặt, và — đối với các ứng dụng có route máy chủ — cho đến khi ứng dụng được yêu cầu và cài đặt trên không gian làm việc sở hữu của nó."
+msgstr "Ứng dụng này chưa được cấu hình đầy đủ. Người dùng sẽ không thể cài đặt nó cho đến khi tất cả biến máy chủ bắt buộc được đặt, và — đối với các ứng dụng có route máy chủ — cho đến khi ứng dụng được yêu cầu và cài đặt trên tổ chức sở hữu của nó."
 
 #. js-lingui-id: 6R2R80
 #: src/pages/settings/applications/tabs/SettingsApplicationFunctionDomainSection.tsx
@@ -19623,7 +19553,7 @@ msgstr "Không thể tìm thấy ứng dụng này. Có thể nó đã bị xóa
 #. js-lingui-id: dT2Ibb
 #: src/pages/settings/applications/utils/getClaimErrorContent.ts
 msgid "This application has already been claimed by a workspace."
-msgstr "Ứng dụng này đã được một không gian làm việc yêu cầu quyền sở hữu."
+msgstr "Ứng dụng này đã được một tổ chức yêu cầu quyền sở hữu."
 
 #. js-lingui-id: vZhnyV
 #: src/pages/settings/applications/components/SettingsClaimApplicationSection.tsx
@@ -19633,7 +19563,7 @@ msgstr "Ứng dụng này đã được yêu cầu quyền sở hữu."
 #. js-lingui-id: X7w5n6
 #: src/pages/settings/applications/tabs/SettingsApplicationRegistrationDistributionTab.tsx
 msgid "This application's registration is claimed by your workspace"
-msgstr "Đăng ký của ứng dụng này đã được không gian làm việc của bạn yêu cầu quyền sở hữu"
+msgstr "Đăng ký của ứng dụng này đã được tổ chức của bạn yêu cầu quyền sở hữu"
 
 #. js-lingui-id: XkzBBX
 #: src/modules/page-layout/widgets/call-recording/utils/getCallRecordingStatusDisplayConfiguration.ts
@@ -19799,7 +19729,7 @@ msgstr "Tên miền phụ này đã được dành riêng"
 #. placeholder {0}: formatCredits(grantPendingRevocation.amount)
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceCreditGrantsTable.tsx
 msgid "This takes {0} credits back off this workspace straight away. Revoking cannot be undone."
-msgstr "Thao tác này sẽ ngay lập tức thu hồi {0} tín dụng khỏi workspace này. Việc thu hồi không thể hoàn tác."
+msgstr "Thao tác này sẽ ngay lập tức thu hồi {0} tín dụng khỏi tổ chức này. Việc thu hồi không thể hoàn tác."
 
 #. js-lingui-id: MMGDfe
 #: src/modules/settings/admin-panel/config-variables/components/ConfigVariableHelpText.tsx
@@ -19884,7 +19814,7 @@ msgstr "Thao tác này sẽ xóa vĩnh viễn đối tượng và tất cả b�
 #. js-lingui-id: qEODFi
 #: src/modules/settings/two-factor-authentication/components/DeleteTwoFactorAuthenticationMethod.tsx
 msgid "This will permanently delete your two factor authentication method.<0/>Since 2FA is mandatory in your workspace, you will be logged out after deletion and will be asked to configure it again upon login. <1/>Please type in your email to confirm."
-msgstr "Thao tác này sẽ xóa vĩnh viễn phương thức xác thực hai yếu tố của bạn.<0/>Vì 2FA là bắt buộc trong không gian làm việc của bạn, bạn sẽ bị đăng xuất sau khi xóa và sẽ được yêu cầu cấu hình lại khi đăng nhập. <1/>Vui lòng nhập email của bạn để xác nhận."
+msgstr "Thao tác này sẽ xóa vĩnh viễn phương thức xác thực hai yếu tố của bạn.<0/>Vì 2FA là bắt buộc trong tổ chức của bạn, bạn sẽ bị đăng xuất sau khi xóa và sẽ được yêu cầu cấu hình lại khi đăng nhập. <1/>Vui lòng nhập email của bạn để xác nhận."
 
 #. js-lingui-id: Dg+3bR
 #. placeholder {0}: pendingChange?.description ?? ''
@@ -20129,12 +20059,12 @@ msgstr "Công cụ"
 #. js-lingui-id: nCq25C
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
 msgid "Top 10 workspaces by number of users"
-msgstr "Top 10 không gian làm việc theo số lượng người dùng"
+msgstr "Top 10 tổ chức theo số lượng người dùng"
 
 #. js-lingui-id: A4dnvW
 #: src/modules/settings/admin-panel/components/SettingsAdminGeneral.tsx
 msgid "Top Workspaces"
-msgstr "Không gian làm việc hàng đầu"
+msgstr "tổ chức hàng đầu"
 
 #. js-lingui-id: qJLttu
 #: src/modules/settings/unsubscribe-topics/components/SettingsWorkspaceUnsubscribeTopicSection.tsx
@@ -20175,7 +20105,7 @@ msgstr "Tổng thời gian"
 #: src/pages/settings/ai/components/SettingsAiUsageTab.tsx
 #: src/pages/settings/ai/components/SettingsAiUsageTab.tsx
 msgid "Track AI consumption across your workspace."
-msgstr "Theo dõi mức tiêu thụ AI trong không gian làm việc của bạn."
+msgstr "Theo dõi mức tiêu thụ AI trong tổ chức của bạn."
 
 #. js-lingui-id: DDziIo
 #: src/modules/page-layout/widgets/call-recording-transcript/components/CallRecordingTranscriptEntryList.tsx
@@ -20390,7 +20320,7 @@ msgstr "Ngọc lam"
 #. js-lingui-id: JnaRPe
 #: src/modules/spreadsheet-import/steps/components/MatchColumnsStep/components/ColumnGrid.tsx
 msgid "Twenty fields"
-msgstr "Các trường của Twenty"
+msgstr "Các trường của Crove"
 
 #. js-lingui-id: YIjS4q
 #: src/modules/ai/components/SettingsAgentModelCapabilities.tsx
@@ -20574,7 +20504,7 @@ msgstr ""
 #. js-lingui-id: 7S4EZE
 #: src/pages/settings/admin-panel/SettingsAdminApplicationRegistrationDangerZone.tsx
 msgid "Uninstall this app from all workspaces before deleting it"
-msgstr "Gỡ cài đặt ứng dụng này khỏi tất cả các không gian làm việc trước khi xóa"
+msgstr "Gỡ cài đặt ứng dụng này khỏi tất cả các tổ chức trước khi xóa"
 
 #. js-lingui-id: ItfvBz
 #: src/pages/settings/applications/tabs/SettingsApplicationDetailAboutTab.tsx
@@ -20672,7 +20602,7 @@ msgstr "Chủ đề không xác định"
 #. js-lingui-id: m/o1+r
 #: src/modules/settings/admin-panel/health-status/components/SettingsAdminWorkspacesByHealthAccordion.tsx
 msgid "Unknown workspace"
-msgstr "Không gian làm việc không xác định"
+msgstr "tổ chức không xác định"
 
 #. js-lingui-id: NIuIk1
 #: src/modules/settings/billing/constants/SettingsBillingPlanComparisonRows.ts
@@ -21000,12 +20930,12 @@ msgstr "Tình trạng nâng cấp"
 #. js-lingui-id: 88ZkNH
 #: src/pages/settings/admin-panel/SettingsAdminWorkspacesStatus.tsx
 msgid "Upgrade health across all workspaces"
-msgstr "Tình trạng nâng cấp trên tất cả các không gian làm việc"
+msgstr "Tình trạng nâng cấp trên tất cả các tổ chức"
 
 #. js-lingui-id: +awaFr
 #: src/modules/settings/admin-panel/health-status/components/SettingsAdminHealthStatus.tsx
 msgid "Upgrade health across instance and workspaces"
-msgstr "Tình trạng nâng cấp trên bản cài đặt và các không gian làm việc"
+msgstr "Tình trạng nâng cấp trên bản cài đặt và các tổ chức"
 
 #. js-lingui-id: 5UfQvA
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceContent.tsx
@@ -21187,7 +21117,7 @@ msgstr "Sử Dụng"
 #. js-lingui-id: iaIm91
 #: src/pages/settings/applications/components/SettingsApplicationRegistrationGeneralStats.tsx
 msgid "Usage across all non-deleted workspaces on this server"
-msgstr "Mức sử dụng trên tất cả không gian làm việc chưa bị xóa trên máy chủ này"
+msgstr "Mức sử dụng trên tất cả tổ chức chưa bị xóa trên máy chủ này"
 
 #. js-lingui-id: 21hsGI
 #: src/modules/settings/usage/components/SettingsUsageAnalyticsSection.tsx
@@ -21993,13 +21923,13 @@ msgstr "Trọng số"
 #. js-lingui-id: nTuObL
 #: src/pages/auth/SignInUp.tsx
 msgid "Welcome to Twenty"
-msgstr "Chào mừng đến với Twenty"
+msgstr "Chào mừng đến với Crove"
 
 #. js-lingui-id: t8ZvkC
 #: src/modules/onboarding/constants/WelcomeTitleMessage.ts
 #: src/pages/auth/SignInUp.tsx
 msgid "Welcome to your workspace"
-msgstr "Chào mừng đến với không gian làm việc của bạn"
+msgstr "Chào mừng đến với tổ chức của bạn"
 
 #. js-lingui-id: Vin3Dv
 #: src/pages/auth/SignInUp.tsx
@@ -22035,7 +21965,7 @@ msgstr "Những gì API này có thể làm: Chọn một vai trò người dùn
 #. js-lingui-id: drC+Tq
 #: src/pages/settings/ai/components/SettingsAiOverviewTab.tsx
 msgid "What's installed and being used in your workspace"
-msgstr "Những gì được cài đặt và đang được sử dụng trong không gian làm việc của bạn"
+msgstr "Những gì được cài đặt và đang được sử dụng trong tổ chức của bạn"
 
 #. js-lingui-id: RlSr4h
 #: src/pages/settings/communications/SettingsWorkspaceCommunications.tsx
@@ -22256,90 +22186,90 @@ msgstr "Quy Trình Làm Việc"
 #: src/pages/settings/security/SettingsSecurityApprovedAccessDomain.tsx
 #: src/pages/settings/security/SettingsSecuritySsoIdentifyProvider.tsx
 msgid "Workspace"
-msgstr "Workspace"
+msgstr "Tổ chức"
 
 #. js-lingui-id: fQ8teq
 #: src/modules/auth/sign-in-up/hooks/useSignUpInNewWorkspace.ts
 #: src/pages/onboarding/WorkspaceActivation.tsx
 msgid "Workspace creation failed"
-msgstr "Tạo không gian làm việc thất bại"
+msgstr "Tạo tổ chức thất bại"
 
 #. js-lingui-id: VicISP
 #: src/modules/settings/profile/components/DeleteWorkspace.tsx
 msgid "Workspace Deletion"
-msgstr "Xóa Workspace"
+msgstr "Xóa Tổ chức"
 
 #. js-lingui-id: Qx8HXb
 #: src/pages/settings/general/SettingsGeneral.tsx
 msgid "Workspace domain"
-msgstr "Tên miền không gian làm việc"
+msgstr "Tên miền tổ chức"
 
 #. js-lingui-id: J2q6WC
 #: src/modules/settings/event-logs/components/EventLogTableSelector.tsx
 msgid "Workspace Events"
-msgstr "Sự kiện không gian làm việc"
+msgstr "Sự kiện tổ chức"
 
 #. js-lingui-id: J22jAC
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceContent.tsx
 msgid "Workspace Info"
-msgstr "Thông tin không gian làm việc"
+msgstr "Thông tin tổ chức"
 
 #. js-lingui-id: BYrMT0
 #: src/pages/settings/ai/components/SettingsAiOverviewTab.tsx
 #: src/pages/settings/ai/components/SettingsAiOverviewTab.tsx
 msgid "Workspace Instructions"
-msgstr "Hướng dẫn của không gian làm việc"
+msgstr "Hướng dẫn của tổ chức"
 
 #. js-lingui-id: Ce7yfm
 #: src/pages/settings/admin-panel/SettingsAdminWorkspacesStatus.tsx
 msgid "Workspace lists by upgrade status"
-msgstr "Danh sách các không gian làm việc theo trạng thái nâng cấp"
+msgstr "Danh sách các tổ chức theo trạng thái nâng cấp"
 
 #. js-lingui-id: yz2+6L
 #: src/modules/auth/sign-in-up/hooks/useSignUpInNewWorkspace.ts
 msgid "Workspace logo upload failed"
-msgstr "Tải lên logo không gian làm việc thất bại"
+msgstr "Tải lên logo tổ chức thất bại"
 
 #. js-lingui-id: CbGxon
 #: src/modules/settings/billing/components/SettingsBillingSubscriptionInfo.tsx
 #: src/modules/settings/roles/components/SettingsRolesTableRow.tsx
 msgid "Workspace member"
-msgstr "Thành viên không gian làm việc"
+msgstr "Thành viên tổ chức"
 
 #. js-lingui-id: wtxjAY
 #: src/modules/settings/event-logs/components/EventLogFilters.tsx
 #: src/pages/settings/admin-panel/SettingsAdminWorkspaceDetail.tsx
 msgid "Workspace members"
-msgstr "Thành viên không gian làm việc"
+msgstr "Thành viên tổ chức"
 
 #. js-lingui-id: PHF7zj
 #: src/pages/settings/applications/SettingsApplicationConnectionDetail.tsx
 #: src/pages/settings/applications/tabs/SettingsApplicationConnectionsSection.tsx
 #: src/pages/settings/applications/tabs/SettingsApplicationConnectionsSection.tsx
 msgid "Workspace shared"
-msgstr "Dùng chung trong không gian làm việc"
+msgstr "Dùng chung trong tổ chức"
 
 #. js-lingui-id: Smg70n
 #: src/modules/settings/admin-panel/components/SettingsAdminWorkspaceContent.tsx
 msgid "Workspace upgrade health"
-msgstr "Tình trạng nâng cấp của không gian làm việc"
+msgstr "Tình trạng nâng cấp của tổ chức"
 
 #. js-lingui-id: QZi0YX
 #: src/modules/object-record/object-options-dropdown/components/ObjectOptionsDropdownVisibilityContent.tsx
 msgid "Workspace views require manage views permission"
-msgstr "Chế độ xem không gian làm việc yêu cầu quyền quản lý chế độ xem"
+msgstr "Chế độ xem tổ chức yêu cầu quyền quản lý chế độ xem"
 
 #. js-lingui-id: pmt7u4
 #: src/pages/settings/admin-panel/SettingsAdminUserDetail.tsx
 msgid "Workspaces"
-msgstr "Không gian làm việc"
+msgstr "tổ chức"
 
 #. js-lingui-id: 33fb3H
 #: src/modules/settings/admin-panel/health-status/components/SettingsAdminUpgradeStatusListCard.tsx
 #: src/pages/settings/admin-panel/SettingsAdminWorkspacesStatus.tsx
 #: src/pages/settings/admin-panel/SettingsAdminWorkspacesStatus.tsx
 msgid "Workspaces status"
-msgstr "Trạng thái các không gian làm việc"
+msgstr "Trạng thái các tổ chức"
 
 #. js-lingui-id: QPsQMb
 #: src/modules/object-record/record-group/components/RecordGroupReorderConfirmationModal.tsx
@@ -22461,12 +22391,12 @@ msgstr "Hôm qua"
 #. js-lingui-id: lWUeEt
 #: src/modules/auth/sign-in-up/hooks/useWorkspaceFromInviteHash.ts
 msgid "You already belong to the workspace {workspaceDisplayName}"
-msgstr "Bạn đã thuộc vào workspace {workspaceDisplayName}"
+msgstr "Bạn đã thuộc vào tổ chức {workspaceDisplayName}"
 
 #. js-lingui-id: Q1CQiy
 #: src/modules/auth/sign-in-up/hooks/useWorkspaceFromInviteHash.ts
 msgid "You already belong to this workspace"
-msgstr "Bạn đã thuộc vào workspace này"
+msgstr "Bạn đã thuộc vào tổ chức này"
 
 #. js-lingui-id: MuS9Gh
 #: src/modules/settings/data-model/object-details/components/SettingsUpdateDataModelObjectAboutForm.tsx
@@ -22501,7 +22431,7 @@ msgstr "Bạn có thể thiết lập bất kỳ sự kết hợp nào của IMA
 #. js-lingui-id: kv8vw3
 #: src/modules/settings/profile/components/EmailField.tsx
 msgid "You can't change your email because you belong to 2 or more workspaces."
-msgstr "Bạn không thể thay đổi email của mình vì bạn thuộc 2 không gian làm việc trở lên."
+msgstr "Bạn không thể thay đổi email của mình vì bạn thuộc 2 tổ chức trở lên."
 
 #. js-lingui-id: hiLxmN
 #: src/modules/settings/admin-panel/hooks/useHandleImpersonate.ts
@@ -22577,7 +22507,7 @@ msgstr "Bạn sẽ ngừng nhận những email này."
 #. js-lingui-id: Cl+hUj
 #: src/modules/settings/domains/components/SettingsSubdomain.tsx
 msgid "You're about to change your workspace subdomain. This action will log out all users."
-msgstr "Bạn sắp thay đổi tên miền phụ của không gian làm việc của mình. Thao tác này sẽ đăng xuất tất cả người dùng."
+msgstr "Bạn sắp thay đổi tên miền phụ của tổ chức của mình. Thao tác này sẽ đăng xuất tất cả người dùng."
 
 #. js-lingui-id: Z5uTAF
 #: src/modules/ai/components/AIChatNoMoreBillingCreditsBanner.tsx
@@ -22734,22 +22664,22 @@ msgstr "Trạng thái đăng ký của bạn là: {statusLabel}"
 #. js-lingui-id: oC6WBs
 #: src/modules/information-banner/components/billing/InformationBannerNoBillingSubscription.tsx
 msgid "Your workspace doesn't have an active subscription."
-msgstr "Không gian làm việc của bạn không có đăng ký hoạt động."
+msgstr "tổ chức của bạn không có đăng ký hoạt động."
 
 #. js-lingui-id: QBTEtW
 #: src/modules/information-banner/components/billing/InformationBannerNoBillingSubscription.tsx
 msgid "Your workspace doesn't have an active subscription. Please contact your admin."
-msgstr "Không gian làm việc của bạn không có đăng ký hoạt động. Vui lòng liên hệ quản trị viên của bạn."
+msgstr "tổ chức của bạn không có đăng ký hoạt động. Vui lòng liên hệ quản trị viên của bạn."
 
 #. js-lingui-id: fAVJ0D
 #: src/modules/ai/components/AIChatNoMoreBillingCreditsBanner.tsx
 msgid "Your workspace hit its AI usage limit. Ask an admin to upgrade the plan."
-msgstr "Không gian làm việc của bạn đã đạt đến giới hạn sử dụng AI. Hãy yêu cầu quản trị viên nâng cấp gói."
+msgstr "tổ chức của bạn đã đạt đến giới hạn sử dụng AI. Hãy yêu cầu quản trị viên nâng cấp gói."
 
 #. js-lingui-id: RhNbPE
 #: src/modules/settings/billing/components/SettingsBillingContent.tsx
 msgid "Your workspace will be disabled"
-msgstr "Không gian làm việc của bạn sẽ bị vô hiệu hóa"
+msgstr "tổ chức của bạn sẽ bị vô hiệu hóa"
 
 #. js-lingui-id: ZGbFnN
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
