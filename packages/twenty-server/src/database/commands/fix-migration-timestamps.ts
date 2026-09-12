@@ -26,7 +26,9 @@ async function fixMigrationTimestamps() {
     );
   }
 
-  console.log('Successfully aligned all upgradeMigration createdAt timestamps to canonical sequence order!');
+  console.log(
+    'Successfully aligned all upgradeMigration createdAt timestamps to canonical sequence order!',
+  );
   await app.close();
   process.exit(0);
 }

@@ -17,7 +17,10 @@ export class EcosystemEventPublisherService {
   // Retries are in-process only: they cover a transient DOS.Me outage, not a pod
   // restart. Durably closing that gap needs an outbox row written in the same
   // transaction as the record change and drained by a queue job.
-  async publish(event: string, data: Record<string, unknown>): Promise<boolean> {
+  async publish(
+    event: string,
+    data: Record<string, unknown>,
+  ): Promise<boolean> {
     const dosApiUrl = this.twentyConfigService.get('AUTH_DOS_API_URL');
     const apiKey = this.twentyConfigService.get('CROVE_DOS_WEBHOOK_SECRET');
 

@@ -136,7 +136,8 @@ export class DosIdStrategy extends PassportStrategy(Strategy, 'dos-id') {
 
       // oxlint-disable-next-line typescript/no-explicit-any
       const claims: any = tokenset.claims ? tokenset.claims() : {};
-      const userMetadata = claims?.user_metadata ?? userinfo?.user_metadata ?? {};
+      const userMetadata =
+        claims?.user_metadata ?? userinfo?.user_metadata ?? {};
       const appMetadata = claims?.app_metadata ?? userinfo?.app_metadata ?? {};
 
       const email =
