@@ -118,12 +118,16 @@ jobs:
             MERGE_KIND="clean"
 
             if [ -f "packages/twenty-utils/patch-crove-branding.ts" ]; then
-              # This job never runs yarn install, so `yarn tsx` cannot resolve and
-              # used to no-op silently behind `|| true`. Warn loudly instead of
-              # dying: rebranding the .po files is cosmetic and must not block
-              # the sync branch.
-              npx --yes tsx@4.21.0 packages/twenty-utils/patch-crove-branding.ts ||
-                echo "::warning::patch-crove-branding failed; .po files left unpatched in this sync commit"
+              # The patch imports sharp and shells out to lingui, so it needs the
+              # workspace deps installed from the merged lockfile. Warn instead of
+              # dying: a branding problem must never block the sync branch.
+              corepack enable
+              if yarn install --immutable; then
+                yarn tsx packages/twenty-utils/patch-crove-branding.ts ||
+                  echo "::warning::patch-crove-branding failed; .po files left unpatched in this sync commit"
+              else
+                echo "::warning::yarn install failed on the merged lockfile; branding patch skipped"
+              fi
             fi
 
             git commit -m "chore(sync): merge upstream release $TAG into $TARGET_BRANCH"
@@ -149,6 +153,10 @@ jobs:
           # workflows for PRs opened by GITHUB_TOKEN, so the sync PR would run
           # no CI at all and the merge would get reviewed unverified.
           GH_TOKEN: ${{ steps.app_token.outputs.token }}
+          # Pin every gh call to the fork: the check_merged step adds an `upstream`
+          # remote, and gh otherwise resolves pr/label commands against
+          # twentyhq/twenty, where the app token has no access.
+          GH_REPO: ${{ github.repository }}
           TAG: ${{ steps.get_tag.outputs.tag }}
           SYNC_BRANCH: ${{ steps.merge.outputs.sync_branch }}
           TARGET_BRANCH: ${{ inputs.target_branch || 'dev' }}
