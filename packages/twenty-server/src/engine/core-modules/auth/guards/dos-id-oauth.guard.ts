@@ -1,8 +1,4 @@
-import {
-  type ExecutionContext,
-  Injectable,
-  Logger,
-} from '@nestjs/common';
+import { type ExecutionContext, Injectable, Logger } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -54,7 +50,10 @@ export class DosIdOauthGuard extends AuthGuard('dos-id') {
 
       return (await super.canActivate(context)) as boolean;
     } catch (err) {
-      this.logger.error(`DOS ID OAuth guard error: ${err}`, (err as Error)?.stack);
+      this.logger.error(
+        `DOS ID OAuth guard error: ${err}`,
+        (err as Error)?.stack,
+      );
 
       this.guardRedirectService.dispatchErrorFromGuard(
         context,

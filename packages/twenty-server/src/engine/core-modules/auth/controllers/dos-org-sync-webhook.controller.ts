@@ -278,9 +278,7 @@ export class DosOrgSyncWebhookController {
         const orgName = payload.data.name || payload.data.org_name;
         const ownerEmail = payload.data.owner_email?.toLowerCase();
         const orgId =
-          payload.data.id ||
-          payload.data.org_id ||
-          payload.data.global_org_id;
+          payload.data.id || payload.data.org_id || payload.data.global_org_id;
         const orgSlug = payload.data.slug;
 
         if (isNonEmptyString(orgName) && isNonEmptyString(ownerEmail)) {
@@ -306,8 +304,7 @@ export class DosOrgSyncWebhookController {
                 email: ownerEmail,
                 firstName: payload.data.user_name?.split(' ')?.[0] || '',
                 lastName:
-                  payload.data.user_name?.split(' ')?.slice(1)?.join(' ') ||
-                  '',
+                  payload.data.user_name?.split(' ')?.slice(1)?.join(' ') || '',
                 picture: payload.data.avatar_url || null,
                 isEmailAlreadyVerified: true,
               },
@@ -374,9 +371,7 @@ export class DosOrgSyncWebhookController {
       case 'org.updated': {
         const orgName = payload.data.name || payload.data.org_name;
         const orgId =
-          payload.data.id ||
-          payload.data.org_id ||
-          payload.data.global_org_id;
+          payload.data.id || payload.data.org_id || payload.data.global_org_id;
 
         if (isNonEmptyString(orgId) && isNonEmptyString(orgName)) {
           // Never match on orgName here: it is the NEW name from the payload, so
@@ -400,9 +395,7 @@ export class DosOrgSyncWebhookController {
       case 'organization.deleted':
       case 'org.deleted': {
         const orgId =
-          payload.data.id ||
-          payload.data.org_id ||
-          payload.data.global_org_id;
+          payload.data.id || payload.data.org_id || payload.data.global_org_id;
 
         const workspace = isNonEmptyString(orgId)
           ? await this.workspaceRepository.findOne({ where: { id: orgId } })
@@ -412,7 +405,9 @@ export class DosOrgSyncWebhookController {
           await this.workspaceRepository.update(workspace.id, {
             activationStatus: WorkspaceActivationStatus.SUSPENDED,
           });
-          this.logger.log(`Suspended workspace ${workspace.id} due to org deletion`);
+          this.logger.log(
+            `Suspended workspace ${workspace.id} due to org deletion`,
+          );
         } else {
           this.logger.warn(
             `Ignored org deletion event: no workspace matches orgId ${orgId ?? '(missing)'}`,
@@ -426,9 +421,7 @@ export class DosOrgSyncWebhookController {
       case 'org.member_added': {
         const userEmail = payload.data.user_email?.toLowerCase();
         const orgId =
-          payload.data.id ||
-          payload.data.org_id ||
-          payload.data.global_org_id;
+          payload.data.id || payload.data.org_id || payload.data.global_org_id;
 
         if (isNonEmptyString(userEmail)) {
           let user = await this.userService.findUserByEmail(userEmail);
@@ -439,8 +432,7 @@ export class DosOrgSyncWebhookController {
                 email: userEmail,
                 firstName: payload.data.user_name?.split(' ')?.[0] || '',
                 lastName:
-                  payload.data.user_name?.split(' ')?.slice(1)?.join(' ') ||
-                  '',
+                  payload.data.user_name?.split(' ')?.slice(1)?.join(' ') || '',
                 picture: payload.data.avatar_url || null,
                 isEmailAlreadyVerified: true,
               },
@@ -474,9 +466,7 @@ export class DosOrgSyncWebhookController {
       case 'org.member_removed': {
         const userEmail = payload.data.user_email?.toLowerCase();
         const orgId =
-          payload.data.id ||
-          payload.data.org_id ||
-          payload.data.global_org_id;
+          payload.data.id || payload.data.org_id || payload.data.global_org_id;
 
         if (isNonEmptyString(userEmail)) {
           const user = await this.userService.findUserByEmail(userEmail);
@@ -507,9 +497,7 @@ export class DosOrgSyncWebhookController {
       case 'company.created':
       case 'company.updated': {
         const orgId =
-          payload.data.global_org_id ||
-          payload.data.org_id ||
-          payload.data.id;
+          payload.data.global_org_id || payload.data.org_id || payload.data.id;
         const companyName = payload.data.name || payload.data.company_name;
         const companyId =
           payload.data.crm_company_id ||
@@ -592,9 +580,7 @@ export class DosOrgSyncWebhookController {
 
       case 'company.deleted': {
         const orgId =
-          payload.data.global_org_id ||
-          payload.data.org_id ||
-          payload.data.id;
+          payload.data.global_org_id || payload.data.org_id || payload.data.id;
         const companyId =
           payload.data.crm_company_id ||
           payload.data.id ||
@@ -637,9 +623,7 @@ export class DosOrgSyncWebhookController {
       case 'customer.created':
       case 'customer.updated': {
         const orgId =
-          payload.data.global_org_id ||
-          payload.data.org_id ||
-          payload.data.id;
+          payload.data.global_org_id || payload.data.org_id || payload.data.id;
         const customerEmail = payload.data.email || payload.data.user_email;
         const customerName = payload.data.name || payload.data.user_name;
         const personId =
@@ -687,7 +671,8 @@ export class DosOrgSyncWebhookController {
                       { id: existing.id },
                       {
                         name: {
-                          firstName: firstName || existing.name?.firstName || '',
+                          firstName:
+                            firstName || existing.name?.firstName || '',
                           lastName: lastName || existing.name?.lastName || '',
                         },
                         ...(isNonEmptyString(jobTitle) ? { jobTitle } : {}),
@@ -750,9 +735,7 @@ export class DosOrgSyncWebhookController {
 
       case 'customer.deleted': {
         const orgId =
-          payload.data.global_org_id ||
-          payload.data.org_id ||
-          payload.data.id;
+          payload.data.global_org_id || payload.data.org_id || payload.data.id;
         const personId =
           payload.data.crm_person_id ||
           payload.data.id ||
@@ -807,9 +790,7 @@ export class DosOrgSyncWebhookController {
       case 'ticket.created':
       case 'ticket.updated': {
         const orgId =
-          payload.data.global_org_id ||
-          payload.data.org_id ||
-          payload.data.id;
+          payload.data.global_org_id || payload.data.org_id || payload.data.id;
         const ticketId = payload.data.ticket_id || payload.data.id;
         const subject = payload.data.subject || 'Desk Support Ticket';
         const status = payload.data.status || 'OPEN';
@@ -824,12 +805,11 @@ export class DosOrgSyncWebhookController {
               const authContext = buildSystemAuthContext(workspace.id);
               await this.workspaceOrmManager.executeInWorkspaceContext(
                 async () => {
-                  const noteRepo =
-                    await this.workspaceOrmManager.getRepository(
-                      'note',
-                      { shouldBypassPermissionChecks: true },
-                      { shouldSkipEventEmission: true },
-                    );
+                  const noteRepo = await this.workspaceOrmManager.getRepository(
+                    'note',
+                    { shouldBypassPermissionChecks: true },
+                    { shouldSkipEventEmission: true },
+                  );
 
                   // ticketId is the only stable key the payload carries. Keeping it in
                   // the title lets retries and status changes update one note instead of
@@ -866,8 +846,7 @@ export class DosOrgSyncWebhookController {
         const userEmail =
           payload.data.email?.toLowerCase() ||
           payload.data.user_email?.toLowerCase();
-        const displayName =
-          payload.data.display_name || payload.data.user_name;
+        const displayName = payload.data.display_name || payload.data.user_name;
 
         if (isNonEmptyString(userEmail)) {
           const user = await this.userService.findUserByEmail(userEmail);
@@ -894,4 +873,3 @@ export class DosOrgSyncWebhookController {
     return { received: true, status: 'processed' };
   }
 }
-

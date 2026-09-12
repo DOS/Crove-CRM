@@ -1035,7 +1035,9 @@ export class AuthService {
 
           try {
             const orgName = (org.name || org.slug || 'Organization').trim();
-            const roleUpper = org.role ? String(org.role).toUpperCase() : 'MEMBER';
+            const roleUpper = org.role
+              ? String(org.role).toUpperCase()
+              : 'MEMBER';
             const orgId = org.id;
             const orgSlug = org.slug;
 
