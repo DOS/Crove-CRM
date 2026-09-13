@@ -1,8 +1,11 @@
+import { TWENTY_PUBLIC_APP_UNIVERSAL_IDENTIFIERS } from 'src/engine/core-modules/application/application-marketplace/constants/twenty-public-app-universal-identifiers.constant';
+
 export const MARKETPLACE_VETTED_APPLICATIONS: {
   universalIdentifier: string;
   position?: number;
 }[] = [
   {
+<<<<<<< HEAD
     universalIdentifier: '8da4b8b5-5edf-4880-b51f-ab6e679ec617', // Call Recorder
     position: 1,
   },
@@ -20,6 +23,26 @@ export const MARKETPLACE_VETTED_APPLICATIONS: {
   },
   {
     universalIdentifier: 'a8c47f21-3b9e-4d2a-8f61-9c0e7d4a2b51', // Slack
+=======
+    universalIdentifier: TWENTY_PUBLIC_APP_UNIVERSAL_IDENTIFIERS.CALL_RECORDER,
+    position: 1,
+  },
+  {
+    universalIdentifier:
+      TWENTY_PUBLIC_APP_UNIVERSAL_IDENTIFIERS.PEOPLE_DATA_LABS,
+    position: 2,
+  },
+  {
+    universalIdentifier: TWENTY_PUBLIC_APP_UNIVERSAL_IDENTIFIERS.LAST_CONTACT,
+    position: 3,
+  },
+  {
+    universalIdentifier: TWENTY_PUBLIC_APP_UNIVERSAL_IDENTIFIERS.EXA,
+    position: 4,
+  },
+  {
+    universalIdentifier: TWENTY_PUBLIC_APP_UNIVERSAL_IDENTIFIERS.SLACK,
+>>>>>>> twenty/v2.40.0
     position: 5,
   },
   // Fork additions keep upstream ordering untouched and append after it, so a
