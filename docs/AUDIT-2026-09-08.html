@@ -225,10 +225,15 @@
         <code>finally</code> đã xong; phản hồi quá giới hạn ký tự (<code>COLOR.error</code>) chưa nối.</td>
     </tr>
     <tr>
-      <td><span class="badge b-crit">Chờ bạn thực hiện</span></td>
+      <td><span class="badge b-med">Tạm hoãn theo quyết định của bạn</span></td>
       <td>Rotate <code>CROVE_DOS_WEBHOOK_SECRET</code> · revoke Frill token · xác minh/rotate Slack webhook UUID (<a href="#N6">N6</a>)</td>
-      <td>Hướng dẫn từng bước đã gửi 09/09/2026. Đây là phần duy nhất còn khép lại exposure thật —
-        repo public nên mọi giá trị đã commit phải coi như đã chết bất kể purge history hay không.</td>
+      <td><strong>Quyết định 12/09/2026: hoãn vì sản phẩm đang dev, đưa vào todo</strong> — hướng dẫn
+        từng bước vẫn giữ ở <a href="#C1">C1</a> và <a href="#N5">N5</a>/<a href="#N6">N6</a> để dùng
+        khi cần. Rủi ro tồn tại chưa xử lý: repo public nên mọi giá trị đã commit coi như chết bất kể
+        purge history; webhook secret lộ vẫn ký được payload giả cho tới khi rotate.
+        <strong>Điều kiện bắt buộc revisit:</strong> trước khi mở production thật cho khách ngoài /
+        dữ liệu khách thật, cả ba phải rotate xong. Rotate cần đăng nhập owner (portal
+        <code>dev.dos.me</code>, admin Frill, admin Slack).</td>
     </tr>
     <tr>
       <td><span class="badge b-low">Chưa làm — cần thiết kế hoặc rẻ nhưng chưa tới</span></td>
