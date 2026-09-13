@@ -374,9 +374,6 @@ export class ApplicationInstallService {
           applicationRegistrationId: appRegistration.id,
           application,
           forceSdkClientGeneration: true,
-<<<<<<< HEAD
-        });
-=======
           persistVersion: false,
         });
 
@@ -391,7 +388,6 @@ export class ApplicationInstallService {
           workspaceId: params.workspaceId,
         });
       }
->>>>>>> twenty/v2.40.0
 
       await this.runPostInstallHook({
         manifest: resolvedPackage.manifest,

@@ -2807,7 +2807,7 @@ msgstr "Ask AI"
 #. js-lingui-id: HiVVqo
 #: src/modules/ai/components/AiChatEditorSection.tsx
 msgid "Ask your workspace admin to enable an AI model."
-msgstr "Ask your workspace admin to enable an AI model."
+msgstr "Ask your organization admin to enable an AI model."
 
 #. js-lingui-id: mc9nK2
 #: src/modules/ai/hooks/useAiChatEditor.ts
@@ -22703,14 +22703,6 @@ msgstr "Your organization doesn't have an active subscription."
 msgid "Your workspace doesn't have an active subscription. Please contact your admin."
 msgstr "Your organization doesn't have an active subscription. Please contact your admin."
 
-<<<<<<< HEAD
-#. js-lingui-id: fAVJ0D
-#: src/modules/ai/components/AIChatNoMoreBillingCreditsBanner.tsx
-msgid "Your workspace hit its AI usage limit. Ask an admin to upgrade the plan."
-msgstr "Your organization hit its AI usage limit. Ask an admin to upgrade the plan."
-
-=======
->>>>>>> twenty/v2.40.0
 #. js-lingui-id: RhNbPE
 #: src/modules/settings/billing/components/SettingsBillingContent.tsx
 msgid "Your workspace will be disabled"

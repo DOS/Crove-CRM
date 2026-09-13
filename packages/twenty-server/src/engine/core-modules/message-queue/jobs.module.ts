@@ -138,11 +138,8 @@ import { WorkflowModule } from 'src/modules/workflow/workflow.module';
     UpgradeApplicationsJob,
     InstallOnboardingAppsJob,
     InstallPreInstalledAppsJob,
-<<<<<<< HEAD
-=======
     TriggerInstallApplicationJob,
     TriggerUninstallApplicationJob,
->>>>>>> twenty/v2.40.0
     WarmUpApplicationLogicFunctionsJob,
   ],
 })

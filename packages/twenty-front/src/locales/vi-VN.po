@@ -22689,14 +22689,6 @@ msgstr "tổ chức của bạn không có đăng ký hoạt động."
 msgid "Your workspace doesn't have an active subscription. Please contact your admin."
 msgstr "tổ chức của bạn không có đăng ký hoạt động. Vui lòng liên hệ quản trị viên của bạn."
 
-<<<<<<< HEAD
-#. js-lingui-id: fAVJ0D
-#: src/modules/ai/components/AIChatNoMoreBillingCreditsBanner.tsx
-msgid "Your workspace hit its AI usage limit. Ask an admin to upgrade the plan."
-msgstr "tổ chức của bạn đã đạt đến giới hạn sử dụng AI. Hãy yêu cầu quản trị viên nâng cấp gói."
-
-=======
->>>>>>> twenty/v2.40.0
 #. js-lingui-id: RhNbPE
 #: src/modules/settings/billing/components/SettingsBillingContent.tsx
 msgid "Your workspace will be disabled"
