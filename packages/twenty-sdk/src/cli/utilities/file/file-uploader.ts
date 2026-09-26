@@ -174,7 +174,9 @@ export class FileUploader {
     await this.runWithConcurrency(batch, async ({ builtPath, fileFolder }) => {
       const result = await this.apiService.uploadFile({
         filePath: path.join(this.appPath, builtPath),
-        builtHandlerPath: relative(OUTPUT_DIR, builtPath).split(path.sep).join('/'),
+        builtHandlerPath: relative(OUTPUT_DIR, builtPath)
+          .split(path.sep)
+          .join('/'),
         fileFolder,
         applicationUniversalIdentifier: this.applicationUniversalIdentifier,
       });
