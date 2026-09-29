@@ -94,7 +94,7 @@ describe('useSettingsNavigationItems', () => {
     });
 
     const workspaceSection = result.current.find(
-      (section) => section.label === 'Workspace',
+      (section) => section.label === 'Organization',
     );
 
     expect(workspaceSection?.items.every((item) => item.isHidden)).toBe(true);
@@ -116,7 +116,7 @@ describe('useSettingsNavigationItems', () => {
     });
 
     const workspaceSection = result.current.find(
-      (section) => section.label === 'Workspace',
+      (section) => section.label === 'Organization',
     );
 
     expect(workspaceSection?.items.some((item) => !item.isHidden)).toBe(true);
@@ -138,7 +138,7 @@ describe('useSettingsNavigationItems', () => {
     });
 
     const workspaceSection = result.current.find(
-      (section) => section.label === 'Workspace',
+      (section) => section.label === 'Organization',
     );
     const billingItem = workspaceSection?.items.find(
       (item) => item.label === 'Billing',
@@ -166,7 +166,7 @@ describe('useSettingsNavigationItems', () => {
     });
 
     const workspaceSection = result.current.find(
-      (section) => section.label === 'Workspace',
+      (section) => section.label === 'Organization',
     );
     const billingItem = workspaceSection?.items.find(
       (item) => item.label === 'Billing',

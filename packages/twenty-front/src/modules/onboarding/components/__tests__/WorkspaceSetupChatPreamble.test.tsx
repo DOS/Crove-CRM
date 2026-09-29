@@ -41,6 +41,6 @@ describe('WorkspaceSetupChatPreamble', () => {
     );
 
     expect(handoffRun).toBeInTheDocument();
-    expect(handoffRun?.textContent).toContain('Welcome to your workspace');
+    expect(handoffRun?.textContent).toContain('Welcome to your organization');
   });
 });

@@ -101,7 +101,7 @@ describe('SettingsApplicationConnectionsSection', () => {
       '/settings/applications/app-1/connections/account-1',
     );
     expect(screen.getByText('Reconnect needed')).toBeVisible();
-    expect(screen.getByText('Workspace shared')).toBeVisible();
+    expect(screen.getByText('Organization shared')).toBeVisible();
     expect(
       screen.queryByRole('button', { name: 'Reconnect' }),
     ).not.toBeInTheDocument();

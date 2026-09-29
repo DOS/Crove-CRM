@@ -162,7 +162,7 @@ describe('SettingsApplicationConnectionDetail', () => {
 
     fireEvent.click(
       screen.getByRole('button', {
-        name: /Share with workspace/,
+        name: /Share with organization/,
       }),
     );
 
@@ -209,7 +209,7 @@ describe('SettingsApplicationConnectionDetail', () => {
 
     renderDetailPage();
 
-    expect(screen.getByText('Workspace shared')).toBeVisible();
+    expect(screen.getByText('Organization shared')).toBeVisible();
     expect(screen.getByText('Reconnect needed')).toBeVisible();
 
     fireEvent.click(screen.getByText('Reconnect'));
