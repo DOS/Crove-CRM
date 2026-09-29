@@ -4430,10 +4430,10 @@ msgstr "Valitse käyttö"
 msgid "Choose a usage first"
 msgstr "Valitse ensin käyttö"
 
-#. js-lingui-id: NFfUic
+#. js-lingui-id: s65YLe
 #: src/pages/auth/SignInUp.tsx
-msgid "Choose a Workspace"
-msgstr "Valitse työtila"
+msgid "Choose an Organization"
+msgstr ""
 
 #. js-lingui-id: KsP4Tg
 #: src/pages/settings/ai/components/SettingsAiModelsTab.tsx
@@ -5450,6 +5450,11 @@ msgstr "Jatka epäonnistuessa"
 msgid "Continue on iteration failure"
 msgstr "Jatka iteraation epäonnistuessa"
 
+#. js-lingui-id: 0TGwBd
+#: src/modules/auth/sign-in-up/components/internal/SignInUpWithDosId.tsx
+msgid "Continue with DOS ID"
+msgstr ""
+
 #. js-lingui-id: RvVi9c
 #: src/modules/auth/sign-in-up/components/internal/SignInUpWithCredentials.tsx
 msgid "Continue with Email"
@@ -6030,6 +6035,11 @@ msgstr "Luo uusi näkymä"
 msgid "Create note"
 msgstr "Luo muistiinpano"
 
+#. js-lingui-id: S5Tw3I
+#: src/modules/ui/navigation/navigation-drawer/components/MultiWorkspaceDropdown/internal/MultiWorkspaceDropdownDefaultComponents.tsx
+msgid "Create Organization"
+msgstr ""
+
 #. js-lingui-id: gSyzEV
 #: src/pages/onboarding/CreateProfile.tsx
 msgid "Create profile"
@@ -6095,14 +6105,17 @@ msgid "Create workspace"
 msgstr "Luo työtila"
 
 #. js-lingui-id: kdLGki
-#: src/modules/ui/navigation/navigation-drawer/components/MultiWorkspaceDropdown/internal/MultiWorkspaceDropdownDefaultComponents.tsx
 #: src/utils/title-utils.ts
 msgid "Create Workspace"
 msgstr "Luo työtila"
 
+#. js-lingui-id: LEFcb1
+#: src/pages/auth/SignInUp.tsx
+msgid "Create your organization"
+msgstr ""
+
 #. js-lingui-id: 9chYz/
 #: src/modules/auth/sign-in-up/components/internal/SignInUpWorkspaceCreationForm.tsx
-#: src/pages/auth/SignInUp.tsx
 msgid "Create your workspace"
 msgstr "Luo työtilasi"
 
@@ -16068,6 +16081,7 @@ msgid "Ordered List"
 msgstr ""
 
 #. js-lingui-id: ucgZ0o
+#: src/modules/navigation-menu-item/display/sections/workspace/components/WorkspaceSection.tsx
 #: src/modules/settings/admin-panel/hooks/useSettingsAdminTabs.ts
 #: src/modules/settings/billing/components/internal/PlansTags.tsx
 #: src/modules/settings/billing/components/internal/SettingsBillingPlanComparisonTable.tsx
@@ -19569,6 +19583,11 @@ msgstr "Palveluntarjoajan Tiedot"
 msgid "Set {placeholderForEmptyCell}"
 msgstr "Aseta {placeholderForEmptyCell}"
 
+#. js-lingui-id: TfuDlT
+#: src/pages/settings/general/SettingsGeneral.tsx
+msgid "Set a custom domain for your workspace."
+msgstr ""
+
 #. js-lingui-id: QEVmIH
 #: src/modules/settings/roles/components/SettingsRolesDefaultRole.tsx
 msgid "Set a default for this workspace"
@@ -19876,6 +19895,12 @@ msgstr "Kirjaudu sisään"
 #: src/utils/title-utils.ts
 msgid "Sign in or Create an account"
 msgstr "Kirjaudu sisään tai luo tili"
+
+#. js-lingui-id: oFb8n/
+#: src/modules/auth/sign-in-up/components/internal/SignInUpDosIdAutoRedirectEffect.tsx
+#: src/modules/auth/sign-in-up/components/internal/SignInUpDosIdAutoRedirectEffect.tsx
+msgid "Sign in with DOS ID"
+msgstr ""
 
 #. js-lingui-id: e+RpCP
 #: src/modules/auth/sign-in-up/components/internal/SignInUpWithCredentials.tsx
@@ -24131,14 +24156,18 @@ msgstr "Viikoittain"
 msgid "weeks"
 msgstr ""
 
-#. js-lingui-id: nTuObL
+#. js-lingui-id: G8RHQy
 #: src/pages/auth/SignInUp.tsx
-msgid "Welcome to Twenty"
-msgstr "Tervetuloa Twentyyn"
+msgid "Welcome to Crove"
+msgstr ""
+
+#. js-lingui-id: swlJpu
+#: src/pages/auth/SignInUp.tsx
+msgid "Welcome to your organization"
+msgstr ""
 
 #. js-lingui-id: t8ZvkC
 #: src/modules/onboarding/constants/WelcomeTitleMessage.ts
-#: src/pages/auth/SignInUp.tsx
 msgid "Welcome to your workspace"
 msgstr "Tervetuloa työtilaasi"
 
@@ -24392,7 +24421,6 @@ msgstr "Työnkulut"
 
 #. js-lingui-id: pmUArF
 #: src/modules/command-menu-item/display/components/SidePanelCommandMenuItemDisplayPage.tsx
-#: src/modules/navigation-menu-item/display/sections/workspace/components/WorkspaceSection.tsx
 #: src/modules/object-core/workflows/constants/CoreWorkflowVisibilityOptions.ts
 #: src/modules/object-record/object-options-dropdown/components/ObjectOptionsDropdownCustomView.tsx
 #: src/modules/object-record/object-options-dropdown/components/ObjectOptionsDropdownVisibilityContent.tsx
@@ -24779,6 +24807,11 @@ msgstr "Sinulla ei ole käyttöoikeutta tähän objektiin."
 msgid "You don't have access to this settings page."
 msgstr "Sinulla ei ole pääsyä tälle asetussivulle."
 
+#. js-lingui-id: l0jNRF
+#: src/modules/auth/sign-in-up/components/internal/SignInUpDosIdAutoRedirectEffect.tsx
+msgid "You have been signed out"
+msgstr ""
+
 #. js-lingui-id: tzk0bz
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx
 msgid "You have reached the maximum number of server transfers allowed in the last 30 days for this Organization key. Please try again later or contact support."
@@ -24953,6 +24986,11 @@ msgstr "Ajoitettu vaihtosi {upcomingIntervalAdjective}-laskutukseen päivänä {
 #: src/modules/settings/billing/hooks/useBillingSubscriptionChangeWording.ts
 msgid "Your scheduled switch to {upcomingPlanLabel} on {0} is kept."
 msgstr "Ajoitettu vaihtosi suunnitelmaan {upcomingPlanLabel} päivänä {0} säilyy."
+
+#. js-lingui-id: a+zFJg
+#: src/modules/auth/sign-in-up/components/internal/SignInUpDosIdAutoRedirectEffect.tsx
+msgid "Your session was closed on this device. Sign in again when you are ready."
+msgstr ""
 
 #. js-lingui-id: 319YPG
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx

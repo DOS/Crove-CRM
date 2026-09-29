@@ -181,9 +181,12 @@ export const MultiWorkspaceDropdownDefaultComponents = () => {
                       handleChange(availableWorkspace);
                     }}
                   >
-                    <MenuItemSelectAvatar
-                      text={availableWorkspace.displayName ?? t`(No name)`}
-                      avatar={
+                    <ListItem
+                      role="option"
+                      aria-selected={false}
+                      selected={false}
+                      indicator="check"
+                      startIcon={
                         <Avatar
                           name={availableWorkspace.displayName || ''}
                           src={getAbsoluteImageUrl(
@@ -191,8 +194,9 @@ export const MultiWorkspaceDropdownDefaultComponents = () => {
                           )}
                         />
                       }
-                      selected={false}
-                    />
+                    >
+                      {availableWorkspace.displayName ?? t`(No name)`}
+                    </ListItem>
                   </UndecoratedLink>
                 );
               })}

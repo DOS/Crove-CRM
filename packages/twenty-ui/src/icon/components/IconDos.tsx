@@ -1,5 +1,5 @@
 import IconDosRaw from '@assets/icons/dos.svg?react';
-import { useTheme } from '@ui/theme-constants';
+import { useTheme } from '@ui/theme';
 
 interface IconDosProps {
   size?: number | string;

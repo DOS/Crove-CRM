@@ -1,5 +1,15 @@
 msgid ""
-msgstr "\"\"\n\"POT-Creation-Date: 2025-01-30 18:16+0100\\n\"\n\"MIME-Version: 1.0\\n\"\n\"Content-Type: text/plain; charset=UTF-8\\n\"\n\"Content-Transfer-Encoding: 8bit\\n\"\n\"X-Generator: @lingui/cli\\n\"\n\"Language: vi\\n\"\n\"Project-Id-Version: cf448e737e0d6d7b78742f963d761c61\\n\"\n\"Report-Msgid-Bugs-To: \\n\"\n\"PO-Revision-Date: 2025-01-01 00:00\\n\"\n\"Last-Translator: \\n\"\n\"Language-Team: Vietnamese\\n\"\n\"Plural-Forms: nplurals=1; plural=0;\\n\"\n\"X-Crowdin-Project: cf448e737e0d6d7b78742f963d761c61\\n\"\n\"X-Crowdin-Project-ID: 1\\n\"\n\"X-Crowdin-Language: vi\\n\"\n\"X-Crowdin-File: /packages/crove-front/src/locales/en.po\\n\"\n\"X-Crowdin-File-ID: 29\\n\""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language: \n"
+"Language-Team: \n"
+"Content-Type: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
 #. js-lingui-id: /8h/VA
 #: src/modules/object-record/spreadsheet-import/utils/getSpreadSheetFieldValidationDefinitions.ts
@@ -2109,8 +2119,8 @@ msgstr "Mức sử dụng AI"
 
 #. js-lingui-id: jSHIk0
 #: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
-msgid "AI usage analytics across workspaces is available with an Enterprise key."
-msgstr "Phân tích mức sử dụng AI trên các tổ chức có sẵn khi dùng khóa Enterprise."
+msgid "AI usage analytics across workspaces is available with an Organization key."
+msgstr ""
 
 #. js-lingui-id: 55MeVT
 #: src/pages/settings/ai/components/SettingsAiUsageTab.tsx
@@ -4413,10 +4423,10 @@ msgstr "Chọn mức sử dụng"
 msgid "Choose a usage first"
 msgstr "Trước tiên hãy chọn mức sử dụng"
 
-#. js-lingui-id: NFfUic
+#. js-lingui-id: s65YLe
 #: src/pages/auth/SignInUp.tsx
-msgid "Choose a Workspace"
-msgstr "Chọn một tổ chức"
+msgid "Choose an Organization"
+msgstr ""
 
 #. js-lingui-id: KsP4Tg
 #: src/pages/settings/ai/components/SettingsAiModelsTab.tsx
@@ -5116,11 +5126,6 @@ msgstr "Cấu hình cài đặt IMAP để nhận và đồng bộ email của b
 msgid "Configure SMTP settings to send emails from your account."
 msgstr "Cấu hình cài đặt SMTP để gửi email từ tài khoản của bạn."
 
-#. js-lingui-id: TiCmQz
-#: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
-msgid "Configure the default AI models for all workspaces"
-msgstr "Cấu hình các mô hình AI mặc định cho tất cả tổ chức"
-
 #. js-lingui-id: CcCy4C
 #: src/modules/settings/mcp-and-apis/utils/buildMcpSetupCategories.tsx
 msgid "Configure the remote MCP server through Warp's agent settings."
@@ -5437,6 +5442,11 @@ msgstr "Tiếp tục khi thất bại"
 #: src/modules/workflow/workflow-steps/workflow-actions/iterator-action/components/WorkflowEditActionIterator.tsx
 msgid "Continue on iteration failure"
 msgstr "Tiếp tục khi lần lặp bị lỗi"
+
+#. js-lingui-id: 0TGwBd
+#: src/modules/auth/sign-in-up/components/internal/SignInUpWithDosId.tsx
+msgid "Continue with DOS ID"
+msgstr ""
 
 #. js-lingui-id: RvVi9c
 #: src/modules/auth/sign-in-up/components/internal/SignInUpWithCredentials.tsx
@@ -6018,6 +6028,11 @@ msgstr "Tạo chế độ xem mới"
 msgid "Create note"
 msgstr "Tạo ghi chú"
 
+#. js-lingui-id: S5Tw3I
+#: src/modules/ui/navigation/navigation-drawer/components/MultiWorkspaceDropdown/internal/MultiWorkspaceDropdownDefaultComponents.tsx
+msgid "Create Organization"
+msgstr ""
+
 #. js-lingui-id: gSyzEV
 #: src/pages/onboarding/CreateProfile.tsx
 msgid "Create profile"
@@ -6083,14 +6098,17 @@ msgid "Create workspace"
 msgstr "Tạo tổ chức"
 
 #. js-lingui-id: kdLGki
-#: src/modules/ui/navigation/navigation-drawer/components/MultiWorkspaceDropdown/internal/MultiWorkspaceDropdownDefaultComponents.tsx
 #: src/utils/title-utils.ts
 msgid "Create Workspace"
 msgstr "Tạo tổ chức"
 
+#. js-lingui-id: LEFcb1
+#: src/pages/auth/SignInUp.tsx
+msgid "Create your organization"
+msgstr ""
+
 #. js-lingui-id: 9chYz/
 #: src/modules/auth/sign-in-up/components/internal/SignInUpWorkspaceCreationForm.tsx
-#: src/pages/auth/SignInUp.tsx
 msgid "Create your workspace"
 msgstr "Tạo tổ chức của bạn"
 
@@ -11106,7 +11124,31 @@ msgid ""
 "```\n"
 "\n"
 "See the [Getting Started guide](https://twenty.com/developers/extend/apps/getting-started) for the full walkthrough, and [Building Apps](https://twenty.com/developers/extend/apps/building) for the `defineApplication` / `defineEntity` APIs."
-msgstr "\"\"\n\"Lưu trữ các tùy chỉnh và ghi đè của tổ chức của bạn.\\n\"\n\"\\n\"\n\"#### Bao gồm những gì\\n\"\n\"Mọi tiện ích mở rộng bạn tạo trên nền ứng dụng tiêu chuẩn đều được nhóm dưới mục Custom. Nó giữ các thay đổi về schema, thay đổi giao diện và logic dành riêng cho tổ chức của bạn ở một nơi.\\n\"\n\"\\n\"\n\"- Đối tượng và trường tùy chỉnh cho mô hình dữ liệu riêng của bạn\\n\"\n\"- Chế độ xem, mục điều hướng và bố cục bản ghi định hình cách đội ngũ của bạn làm việc\\n\"\n\"- Hàm logic, các thành phần front-end và tác tử giúp tự động hóa hoặc mở rộng tổ chức\\n\"\n\"\\n\"\n\"#### Vì sao có ứng dụng này\\n\"\n\"Hãy dùng ứng dụng này cho các tùy chỉnh dành riêng cho tổ chức nên chỉ lưu cục bộ trong không gian này.\\n\"\n\"\\n\"\n\"Nếu bạn đang định hình một tổ chức cho một doanh nghiệp, hãy giữ nó ở đây. Nếu bạn đang xây dựng một ứng dụng doanh nghiệp có thể tái sử dụng với mô hình dữ liệu, giao diện người dùng (UI) và tự động hóa riêng cần được quản lý phiên bản, chia sẻ hoặc cài đặt trên nhiều tổ chức, hãy tạo một ứng dụng riêng biệt.\\n\"\n\"\\n\"\n\"#### Tự xây dựng ứng dụng của bạn\\n\"\n\"\\n\"\n\"Tạo khung một ứng dụng mới chỉ với một lệnh:\\n\"\n\"\\n\"\n\"```bash\\n\"\n\"npx create-crove-app@latest my-crove-app\\n\"\n\"```\\n\"\n\"\\n\"\n\"Xem [Hướng dẫn Bắt đầu](https://crove.com/developers/extend/apps/getting-started) để biết quy trình chi tiết, và [Xây dựng Ứng dụng](https://crove.com/developers/extend/apps/building) cho các API `defineApplication` / `defineEntity`.\""
+msgstr ""
+"\"\"\n"
+"\"Lưu trữ các tùy chỉnh và ghi đè của tổ chức của bạn.\\n\"\n"
+"\"\\n\"\n"
+"\"#### Bao gồm những gì\\n\"\n"
+"\"Mọi tiện ích mở rộng bạn tạo trên nền ứng dụng tiêu chuẩn đều được nhóm dưới mục Custom. Nó giữ các thay đổi về schema, thay đổi giao diện và logic dành riêng cho tổ chức của bạn ở một nơi.\\n\"\n"
+"\"\\n\"\n"
+"\"- Đối tượng và trường tùy chỉnh cho mô hình dữ liệu riêng của bạn\\n\"\n"
+"\"- Chế độ xem, mục điều hướng và bố cục bản ghi định hình cách đội ngũ của bạn làm việc\\n\"\n"
+"\"- Hàm logic, các thành phần front-end và tác tử giúp tự động hóa hoặc mở rộng tổ chức\\n\"\n"
+"\"\\n\"\n"
+"\"#### Vì sao có ứng dụng này\\n\"\n"
+"\"Hãy dùng ứng dụng này cho các tùy chỉnh dành riêng cho tổ chức nên chỉ lưu cục bộ trong không gian này.\\n\"\n"
+"\"\\n\"\n"
+"\"Nếu bạn đang định hình một tổ chức cho một doanh nghiệp, hãy giữ nó ở đây. Nếu bạn đang xây dựng một ứng dụng doanh nghiệp có thể tái sử dụng với mô hình dữ liệu, giao diện người dùng (UI) và tự động hóa riêng cần được quản lý phiên bản, chia sẻ hoặc cài đặt trên nhiều tổ chức, hãy tạo một ứng dụng riêng biệt.\\n\"\n"
+"\"\\n\"\n"
+"\"#### Tự xây dựng ứng dụng của bạn\\n\"\n"
+"\"\\n\"\n"
+"\"Tạo khung một ứng dụng mới chỉ với một lệnh:\\n\"\n"
+"\"\\n\"\n"
+"\"```bash\\n\"\n"
+"\"npx create-crove-app@latest my-crove-app\\n\"\n"
+"\"```\\n\"\n"
+"\"\\n\"\n"
+"\"Xem [Hướng dẫn Bắt đầu](https://crove.com/developers/extend/apps/getting-started) để biết quy trình chi tiết, và [Xây dựng Ứng dụng](https://crove.com/developers/extend/apps/building) cho các API `defineApplication` / `defineEntity`.\""
 
 #. js-lingui-id: yY8wAv
 #: src/modules/workflow/workflow-steps/workflow-actions/delay-actions/components/WorkflowEditActionDelay.tsx
@@ -14492,12 +14534,7 @@ msgstr "Không có tác nhân nào nào phù hợp với tìm kiếm của bạn
 msgid "No AI consumption recorded for this user."
 msgstr "Không có ghi nhận mức tiêu thụ AI cho người dùng này."
 
-#. js-lingui-id: 1GMOHe
-#: src/modules/ai/hooks/useAgentChat.ts
-msgid "No AI models are enabled in this workspace."
-msgstr "Không có mô hình AI nào được bật trong tổ chức này."
-
-#. js-lingui-id: zcsNvp
+#. js-lingui-id: iH1iv+
 #: src/modules/ai/components/AiChatEditorSection.tsx
 #: src/modules/ai/hooks/useAgentChat.ts
 #: src/pages/settings/ai/components/SettingsAgentSettingsTab.tsx
@@ -14895,10 +14932,15 @@ msgstr "Không có dữ liệu chỉ số khả dụng"
 msgid "No microphone is available. Connect one and try again."
 msgstr "Không có micrô nào khả dụng. Hãy kết nối một micrô rồi thử lại."
 
-#. js-lingui-id: UWZZdQ
-#: src/pages/settings/ai/components/SettingsAgentSettingsTab.tsx
-msgid "No models available. Please configure AI models in your workspace settings."
-msgstr "Không có mô hình nào có sẵn. Vui lòng cấu hình mô hình AI trong cài đặt tổ chức của bạn."
+#. js-lingui-id: WGQJB3
+#: src/modules/settings/ai/utils/getAiModelModeDescription.ts
+msgid "No model available"
+msgstr ""
+
+#. js-lingui-id: xo340M
+#: src/pages/settings/ai/components/SettingsAiModelTiersPreview.tsx
+msgid "No model is available for this mode."
+msgstr ""
 
 #. js-lingui-id: 9VrTfZ
 #: src/modules/activities/notes/components/NotesCardContent.tsx
@@ -15742,8 +15784,8 @@ msgstr "Một hoặc nhiều bộ lọc tham chiếu đến các trường đã 
 
 #. js-lingui-id: 1WZTTl
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx
-msgid "One subscription provides one enterprise key that powers one production instance and one potential staging or test instance. To run a staging or test environment, install Twenty on a second server, activate it with this same enterprise key, then register that server as a development instance. Development instances unlock enterprise features without extra billing and do not count toward your production seats."
-msgstr "Mỗi gói đăng ký cung cấp một khóa enterprise để vận hành một môi trường sản xuất và một môi trường dàn dựng (staging) hoặc thử nghiệm tiềm năng. Để chạy môi trường dàn dựng hoặc thử nghiệm, hãy cài đặt Crove trên máy chủ thứ hai, kích hoạt bằng cùng khóa enterprise này, sau đó đăng ký máy chủ đó là một môi trường phát triển. Các môi trường phát triển mở khóa các tính năng enterprise mà không phát sinh thêm chi phí và không được tính vào số suất môi trường sản xuất của bạn."
+msgid "One subscription provides one Organization key that powers one production instance and one potential staging or test instance. To run a staging or test environment, install Twenty on a second server, activate it with this same Organization key, then register that server as a development instance. Development instances unlock premium features without extra billing and do not count toward your production seats."
+msgstr ""
 
 #. js-lingui-id: JEtonz
 #: src/modules/settings/event-logs/components/SettingsLogs.tsx
@@ -16033,6 +16075,7 @@ msgid "Ordered List"
 msgstr ""
 
 #. js-lingui-id: ucgZ0o
+#: src/modules/navigation-menu-item/display/sections/workspace/components/WorkspaceSection.tsx
 #: src/modules/settings/admin-panel/hooks/useSettingsAdminTabs.ts
 #: src/modules/settings/billing/components/internal/PlansTags.tsx
 #: src/modules/settings/billing/components/internal/SettingsBillingPlanComparisonTable.tsx
@@ -19342,11 +19385,6 @@ msgstr "Chọn loại"
 msgid "Select value"
 msgstr "Chọn một giá trị"
 
-#. js-lingui-id: RKE3bT
-#: src/modules/settings/admin-panel/ai/components/SettingsAdminAI.tsx
-msgid "Select which models appear as recommended in the workspace model picker"
-msgstr "Chọn những mô hình sẽ hiển thị là được đề xuất trong bộ chọn mô hình của tổ chức"
-
 #. js-lingui-id: 7c7atJ
 #: src/pages/settings/profile/appearance/components/SettingsExperience.tsx
 msgid "Select your language and adjust the size of the interface"
@@ -19538,6 +19576,11 @@ msgstr "Chi tiết Nhà Cung Cấp Dịch Vụ"
 #: src/modules/object-record/record-table/record-table-cell/components/RecordTableCellDisplayContainer.tsx
 msgid "Set {placeholderForEmptyCell}"
 msgstr "Đặt {placeholderForEmptyCell}"
+
+#. js-lingui-id: TfuDlT
+#: src/pages/settings/general/SettingsGeneral.tsx
+msgid "Set a custom domain for your workspace."
+msgstr ""
 
 #. js-lingui-id: QEVmIH
 #: src/modules/settings/roles/components/SettingsRolesDefaultRole.tsx
@@ -19846,6 +19889,12 @@ msgstr "Đăng nhập"
 #: src/utils/title-utils.ts
 msgid "Sign in or Create an account"
 msgstr "Đăng nhập hoặc Tạo tài khoản"
+
+#. js-lingui-id: oFb8n/
+#: src/modules/auth/sign-in-up/components/internal/SignInUpDosIdAutoRedirectEffect.tsx
+#: src/modules/auth/sign-in-up/components/internal/SignInUpDosIdAutoRedirectEffect.tsx
+msgid "Sign in with DOS ID"
+msgstr ""
 
 #. js-lingui-id: e+RpCP
 #: src/modules/auth/sign-in-up/components/internal/SignInUpWithCredentials.tsx
@@ -21070,7 +21119,38 @@ msgid ""
 "```\n"
 "\n"
 "See the [Getting Started guide](https://twenty.com/developers/extend/apps/getting-started) for the full walkthrough, and [Building Apps](https://twenty.com/developers/extend/apps/building) for the `defineApplication` / `defineEntity` APIs."
-msgstr "\"\"\n\"Mô hình dữ liệu cơ sở làm nền cho mọi tổ chức Crove.\\n\"\n\"\\n\"\n\"#### \\\\\\\"Nền tảng\\\\\\\" nghĩa là gì\\n\"\n\"\\n\"\n\"Mỗi tổ chức Crove bắt đầu với tập hợp đối tượng này. Chúng xác định hình hài CRM của bạn, bao gồm mối quan hệ, hoạt động và báo cáo. Mọi thứ khác, bao gồm các ứng dụng marketplace, tác tử AI và đối tượng tùy chỉnh, đều tích hợp vào chúng.\\n\"\n\"\\n\"\n\"#### Các đối tượng đi kèm\\n\"\n\"- **Người & Công ty**: bản ghi liên hệ và tài khoản\\n\"\n\"- **Cơ hội**: pipeline bán hàng của bạn\\n\"\n\"- **Ghi chú & Nhiệm vụ**: hoạt động và các bước theo dõi\\n\"\n\"- **Quy trình công việc & Bảng điều khiển**: tự động hóa và báo cáo\\n\"\n\"\\n\"\n\"Gỡ ứng dụng này đi thì phần còn lại của Crove sẽ không còn gì để dựa vào.\\n\"\n\"\\n\"\n\"#### Tự xây dựng ứng dụng của bạn\\n\"\n\"\\n\"\n\"Mở rộng Crove với các đối tượng, trường, hàm logic hoặc kỹ năng AI của riêng bạn. Tạo khung một ứng dụng mới chỉ với một lệnh:\\n\"\n\"\\n\"\n\"```bash\\n\"\n\"npx create-crove-app@latest my-crove-app\\n\"\n\"```\\n\"\n\"\\n\"\n\"Sau đó, trong thư mục:\\n\"\n\"\\n\"\n\"```bash\\n\"\n\"cd my-crove-app\\n\"\n\"yarn crove dev\\n\"\n\"```\\n\"\n\"\\n\"\n\"Xem [Hướng dẫn Bắt đầu](https://crove.com/developers/extend/apps/getting-started) để biết quy trình chi tiết, và [Xây dựng Ứng dụng](https://crove.com/developers/extend/apps/building) cho các API `defineApplication` / `defineEntity`.\""
+msgstr ""
+"\"\"\n"
+"\"Mô hình dữ liệu cơ sở làm nền cho mọi tổ chức Crove.\\n\"\n"
+"\"\\n\"\n"
+"\"#### \\\\\\\"Nền tảng\\\\\\\" nghĩa là gì\\n\"\n"
+"\"\\n\"\n"
+"\"Mỗi tổ chức Crove bắt đầu với tập hợp đối tượng này. Chúng xác định hình hài CRM của bạn, bao gồm mối quan hệ, hoạt động và báo cáo. Mọi thứ khác, bao gồm các ứng dụng marketplace, tác tử AI và đối tượng tùy chỉnh, đều tích hợp vào chúng.\\n\"\n"
+"\"\\n\"\n"
+"\"#### Các đối tượng đi kèm\\n\"\n"
+"\"- **Người & Công ty**: bản ghi liên hệ và tài khoản\\n\"\n"
+"\"- **Cơ hội**: pipeline bán hàng của bạn\\n\"\n"
+"\"- **Ghi chú & Nhiệm vụ**: hoạt động và các bước theo dõi\\n\"\n"
+"\"- **Quy trình công việc & Bảng điều khiển**: tự động hóa và báo cáo\\n\"\n"
+"\"\\n\"\n"
+"\"Gỡ ứng dụng này đi thì phần còn lại của Crove sẽ không còn gì để dựa vào.\\n\"\n"
+"\"\\n\"\n"
+"\"#### Tự xây dựng ứng dụng của bạn\\n\"\n"
+"\"\\n\"\n"
+"\"Mở rộng Crove với các đối tượng, trường, hàm logic hoặc kỹ năng AI của riêng bạn. Tạo khung một ứng dụng mới chỉ với một lệnh:\\n\"\n"
+"\"\\n\"\n"
+"\"```bash\\n\"\n"
+"\"npx create-crove-app@latest my-crove-app\\n\"\n"
+"\"```\\n\"\n"
+"\"\\n\"\n"
+"\"Sau đó, trong thư mục:\\n\"\n"
+"\"\\n\"\n"
+"\"```bash\\n\"\n"
+"\"cd my-crove-app\\n\"\n"
+"\"yarn crove dev\\n\"\n"
+"\"```\\n\"\n"
+"\"\\n\"\n"
+"\"Xem [Hướng dẫn Bắt đầu](https://crove.com/developers/extend/apps/getting-started) để biết quy trình chi tiết, và [Xây dựng Ứng dụng](https://crove.com/developers/extend/apps/building) cho các API `defineApplication` / `defineEntity`.\""
 
 #. js-lingui-id: VsxjzF
 #: src/modules/page-layout/widgets/call-recording/utils/getCallRecordingStatusDisplayConfiguration.ts
@@ -24071,14 +24151,18 @@ msgstr "Hàng tuần"
 msgid "weeks"
 msgstr ""
 
-#. js-lingui-id: nTuObL
+#. js-lingui-id: G8RHQy
 #: src/pages/auth/SignInUp.tsx
-msgid "Welcome to Twenty"
-msgstr "Chào mừng đến với Crove"
+msgid "Welcome to Crove"
+msgstr ""
+
+#. js-lingui-id: swlJpu
+#: src/pages/auth/SignInUp.tsx
+msgid "Welcome to your organization"
+msgstr ""
 
 #. js-lingui-id: t8ZvkC
 #: src/modules/onboarding/constants/WelcomeTitleMessage.ts
-#: src/pages/auth/SignInUp.tsx
 msgid "Welcome to your workspace"
 msgstr "Chào mừng đến với tổ chức của bạn"
 
@@ -24332,7 +24416,6 @@ msgstr "Quy Trình Làm Việc"
 
 #. js-lingui-id: pmUArF
 #: src/modules/command-menu-item/display/components/SidePanelCommandMenuItemDisplayPage.tsx
-#: src/modules/navigation-menu-item/display/sections/workspace/components/WorkspaceSection.tsx
 #: src/modules/object-core/workflows/constants/CoreWorkflowVisibilityOptions.ts
 #: src/modules/object-record/object-options-dropdown/components/ObjectOptionsDropdownCustomView.tsx
 #: src/modules/object-record/object-options-dropdown/components/ObjectOptionsDropdownVisibilityContent.tsx
@@ -24719,6 +24802,11 @@ msgstr "Bạn không có quyền truy cập vào đối tượng này."
 msgid "You don't have access to this settings page."
 msgstr "Bạn không có quyền truy cập vào trang cài đặt này."
 
+#. js-lingui-id: l0jNRF
+#: src/modules/auth/sign-in-up/components/internal/SignInUpDosIdAutoRedirectEffect.tsx
+msgid "You have been signed out"
+msgstr ""
+
 #. js-lingui-id: tzk0bz
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx
 msgid "You have reached the maximum number of server transfers allowed in the last 30 days for this Organization key. Please try again later or contact support."
@@ -24893,6 +24981,11 @@ msgstr "Việc chuyển theo lịch của bạn sang thanh toán {upcomingInterv
 #: src/modules/settings/billing/hooks/useBillingSubscriptionChangeWording.ts
 msgid "Your scheduled switch to {upcomingPlanLabel} on {0} is kept."
 msgstr "Việc chuyển theo lịch của bạn sang {upcomingPlanLabel} vào {0} được giữ nguyên."
+
+#. js-lingui-id: a+zFJg
+#: src/modules/auth/sign-in-up/components/internal/SignInUpDosIdAutoRedirectEffect.tsx
+msgid "Your session was closed on this device. Sign in again when you are ready."
+msgstr ""
 
 #. js-lingui-id: 319YPG
 #: src/pages/settings/enterprise/SettingsEnterprise.tsx

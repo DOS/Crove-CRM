@@ -311,6 +311,7 @@ export const useClientConfig = (): UseClientConfigResult => {
       setIsEmailVerificationRequired,
       setIsImapSmtpCaldavEnabled,
       setIsMultiWorkspaceEnabled,
+      setIsMultiWorkspaceSubdomainEnabled,
       setIsEmailingDomainInDemoMode,
       setIsClickHouseConfigured,
       setIsCloudflareIntegrationEnabled,
