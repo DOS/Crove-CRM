@@ -1,3 +1,5 @@
+import { i18n } from '@lingui/core';
+import { I18nProvider } from '@lingui/react';
 import { render } from '@testing-library/react';
 import { Provider as JotaiProvider } from 'jotai';
 import { MemoryRouter } from 'react-router-dom';
@@ -33,14 +35,16 @@ type EffectProps = {
 const renderEffect = (search = '', props: EffectProps = {}) =>
   render(
     <MemoryRouter initialEntries={[`/welcome${search}`]}>
-      <JotaiProvider store={jotaiStore}>
-        <SignInUpDosIdAutoRedirectEffect
-          hasWorkspaceSso={props.hasWorkspaceSso ?? false}
-          isWorkspacePublicDataLoading={
-            props.isWorkspacePublicDataLoading ?? false
-          }
-        />
-      </JotaiProvider>
+      <I18nProvider i18n={i18n}>
+        <JotaiProvider store={jotaiStore}>
+          <SignInUpDosIdAutoRedirectEffect
+            hasWorkspaceSso={props.hasWorkspaceSso ?? false}
+            isWorkspacePublicDataLoading={
+              props.isWorkspacePublicDataLoading ?? false
+            }
+          />
+        </JotaiProvider>
+      </I18nProvider>
     </MemoryRouter>,
   );
 
