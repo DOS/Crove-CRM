@@ -24,7 +24,7 @@ export const DomainShell = () => {
 
   if (!isLoadedOnce) {
     return (
-      <BrowserRouter>
+      <BrowserRouter useTransitions={false}>
         <SharedAppProviders>
           {isOnOnboardingTransitionPath(window.location.pathname) ? (
             <OnboardingPageLoader />
