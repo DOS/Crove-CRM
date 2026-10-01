@@ -11,9 +11,11 @@ export const getSettingsPath = <T extends SettingsPath>(
   queryParams?: Record<string, any>,
   hash?: string,
 ) => {
-  const cleanTo = (typeof to === 'string'
-    ? to.replace(/^\/?settings\/?/, '').replace(/^\//, '')
-    : to) as T;
+  const cleanTo = (
+    typeof to === 'string'
+      ? to.replace(/^\/?settings\/?/, '').replace(/^\//, '')
+      : to
+  ) as T;
 
   let path = `/${AppPath.Settings}/${cleanTo}`;
 

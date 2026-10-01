@@ -117,7 +117,7 @@ export const SignInUpDosIdAutoRedirectEffect = ({
   const [isSignedOutNoticeShown, setIsSignedOutNoticeShown] = useState(
     hasIntentionalSignOutFlag,
   );
-  const [lastAuthenticatedMethod, setLastAuthenticatedMethod] = useAtomState(
+  const [, setLastAuthenticatedMethod] = useAtomState(
     lastAuthenticatedMethodState,
   );
 
