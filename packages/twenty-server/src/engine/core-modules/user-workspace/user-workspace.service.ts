@@ -692,6 +692,7 @@ export class UserWorkspaceService {
 
               return {
                 ...(await this.castWorkspaceToAvailableWorkspace(workspace)),
+<<<<<<< HEAD
                 loginToken: shouldGenerateLoginToken
                   ? (
                       await this.loginTokenService.generateLoginToken(
@@ -701,6 +702,19 @@ export class UserWorkspaceService {
                       )
                     ).token
                   : undefined,
+=======
+                loginToken:
+                  canAutoLoginIntoWorkspaces &&
+                  workspaceValidator.isAuthEnabled(authProvider, workspace)
+                    ? (
+                        await this.loginTokenService.generateLoginToken(
+                          user.email,
+                          workspace.id,
+                          authProvider,
+                        )
+                      ).token
+                    : undefined,
+>>>>>>> twenty/v2.43.0
               };
             },
           ),

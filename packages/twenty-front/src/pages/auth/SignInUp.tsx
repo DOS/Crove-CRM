@@ -1,3 +1,4 @@
+import { StyledAuthContent } from '@/auth/components/StyledAuthContent';
 import { useSignInUp } from '@/auth/sign-in-up/hooks/useSignInUp';
 import { useSignInUpForm } from '@/auth/sign-in-up/hooks/useSignInUpForm';
 import { isCreatingWorkspaceState } from '@/auth/states/isCreatingWorkspaceState';
@@ -33,12 +34,11 @@ import { SignInUpTwoFactorAuthenticationProvision } from '@/auth/sign-in-up/comp
 import { SignInUpTOTPVerification } from '@/auth/sign-in-up/components/internal/SignInUpTwoFactorAuthenticationVerification';
 import { useWorkspaceFromInviteHash } from '@/auth/sign-in-up/hooks/useWorkspaceFromInviteHash';
 import { clientConfigApiStatusState } from '@/client-config/states/clientConfigApiStatusState';
-import { ModalContent } from 'twenty-ui/primitives/surfaces';
 import { useLingui } from '@lingui/react/macro';
 import { useSearchParams } from 'react-router-dom';
 import { isDefined } from 'twenty-shared/utils';
 import { Loader } from 'twenty-ui/primitives/feedback';
-import { themeCssVariables } from 'twenty-ui/theme-constants';
+import { themeCssVariables } from 'twenty-ui/theme';
 
 const StyledLoaderContainer = styled.div`
   align-items: center;
@@ -209,6 +209,7 @@ export const SignInUp = () => {
     workspacePublicData,
   ]);
 
+<<<<<<< HEAD
   return (
     <>
       <SignInUpDosIdAutoRedirectEffect
@@ -225,6 +226,20 @@ export const SignInUp = () => {
         >
           <StyledOnboardingStepPage>{signInUpForm}</StyledOnboardingStepPage>
         </OnboardingLayout>
+=======
+  return signInUpStep === SignInUpStep.WorkspaceCreation ? (
+    <OnboardingLayout
+      onBack={!isCreatingWorkspace ? onBackFromWorkspaceCreation : undefined}
+    >
+      <StyledOnboardingStepPage>{signInUpForm}</StyledOnboardingStepPage>
+    </OnboardingLayout>
+  ) : (
+    <StyledBackground>
+      {signInUpStep === SignInUpStep.EmailVerification ? (
+        <StyledAuthContent>
+          <EmailVerificationSent email={searchParams.get('email')} />
+        </StyledAuthContent>
+>>>>>>> twenty/v2.43.0
       ) : (
         <StyledBackground>
           {signInUpStep === SignInUpStep.EmailVerification ? (

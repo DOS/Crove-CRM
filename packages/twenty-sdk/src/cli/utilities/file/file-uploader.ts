@@ -22,19 +22,6 @@ export type FileUploadFailure = {
 
 const DIRECT_UPLOAD_CONCURRENCY = 10;
 
-const isMissingDirectUploadMutationError = (error: unknown): boolean => {
-  const message = serializeError(error);
-
-  return (
-    (message.includes('createApplicationFileUploads') ||
-      message.includes('ApplicationFileUploadRequestInput') ||
-      message.includes('CreateApplicationFileUploads')) &&
-    (message.includes('Cannot query field') ||
-      message.includes('Unknown type') ||
-      message.includes('Unknown field'))
-  );
-};
-
 export class FileUploader {
   private apiService = new ApiService();
   private applicationUniversalIdentifier: string;
@@ -92,14 +79,6 @@ export class FileUploader {
     });
 
     if (!createResult.success) {
-      if (
-        isMissingDirectUploadMutationError(
-          createResult.error ?? createResult.message,
-        )
-      ) {
-        return this.uploadBatchWithMultipartMutation(batch);
-      }
-
       return this.failWholeBatch(batch, serializeError(createResult.error));
     }
 
@@ -166,6 +145,7 @@ export class FileUploader {
     return failures;
   }
 
+<<<<<<< HEAD
   private async uploadBatchWithMultipartMutation(
     batch: FileToUpload[],
   ): Promise<FileUploadFailure[]> {
@@ -192,6 +172,8 @@ export class FileUploader {
     return failures;
   }
 
+=======
+>>>>>>> twenty/v2.43.0
   private failWholeBatch(
     batch: FileToUpload[],
     error: string,

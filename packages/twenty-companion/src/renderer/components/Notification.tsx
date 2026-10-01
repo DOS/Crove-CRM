@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { IconInfoCircle, IconX } from '@ui/icon';
-import { IconButton } from '@ui/primitives/input/IconButton/IconButton';
+import { IconButton } from '@ui/components/input/IconButton/IconButton';
 import { ProgressBar } from '@ui/primitives/feedback/ProgressBar/ProgressBar';
-import { useTheme } from '@ui/theme-constants';
+import { useTheme } from '@ui/theme';
 import styles from './Notification.module.scss';
 
 type NotificationProps = {
@@ -45,12 +45,13 @@ export const Notification = ({
         />
         <span className={styles.message}>{message}</span>
         <IconButton
-          Icon={IconX}
-          ariaLabel={closeLabel}
+          aria-label={closeLabel}
           onClick={onClose}
-          variant="tertiary"
-          size="medium"
-        />
+          variant="ghost"
+          size="md"
+        >
+          <IconX />
+        </IconButton>
       </div>
     </div>
   );

@@ -1,12 +1,13 @@
 import { useResetObjectPermission } from '@/settings/roles/role-permissions/object-level-permissions/hooks/useResetObjectPermission';
 import { Dropdown } from '@/ui/layout/dropdown/components/Dropdown';
-import { DropdownContent } from '@/ui/layout/dropdown/components/DropdownContent';
+import { LegacyDropdownContent } from '@/ui/layout/dropdown/components/LegacyDropdownContent';
 import { DropdownMenuItemsContainer } from '@/ui/layout/dropdown/components/DropdownMenuItemsContainer';
 import { useCloseDropdown } from '@/ui/layout/dropdown/hooks/useCloseDropdown';
+import { UndecoratedLink } from '@/ui/navigation/link/components/UndecoratedLink/UndecoratedLink';
 import { t } from '@lingui/core/macro';
+import { IconButton } from 'twenty-ui/components';
 import { IconDotsVertical, IconPencil, IconTrash } from 'twenty-ui/icon';
-import { IconButton } from 'twenty-ui/primitives/input';
-import { MenuItem, UndecoratedLink } from 'twenty-ui/primitives/navigation';
+import { ListItem } from 'twenty-ui/primitives/navigation';
 
 type SettingsRolePermissionsObjectLevelTableRowOptionsDropdownProps = {
   roleId: string;
@@ -38,13 +39,14 @@ export const SettingsRolePermissionsObjectLevelTableRowOptionsDropdown = ({
       clickableComponent={
         <IconButton
           aria-label={t`Object permission options`}
-          variant="tertiary"
-          size="small"
-          Icon={IconDotsVertical}
-        />
+          variant="ghost"
+          size="sm"
+        >
+          <IconDotsVertical />
+        </IconButton>
       }
       dropdownComponents={
-        <DropdownContent>
+        <LegacyDropdownContent>
           {isEditable && (
             <DropdownMenuItemsContainer>
               <UndecoratedLink
@@ -52,19 +54,18 @@ export const SettingsRolePermissionsObjectLevelTableRowOptionsDropdown = ({
                 to={objectPermissionDetailUrl}
                 onClick={() => closeDropdown(dropdownId)}
               >
-                <MenuItem text={t`Edit`} LeftIcon={IconPencil} />
+                <ListItem startIcon={<IconPencil />}>{t`Edit`}</ListItem>
               </UndecoratedLink>
             </DropdownMenuItemsContainer>
           )}
           <DropdownMenuItemsContainer>
-            <MenuItem
-              text={t`Remove rule`}
+            <ListItem
               onClick={handleRemove}
-              LeftIcon={IconTrash}
-              accent="danger"
-            />
+              startIcon={<IconTrash />}
+              color="danger"
+            >{t`Remove rule`}</ListItem>
           </DropdownMenuItemsContainer>
-        </DropdownContent>
+        </LegacyDropdownContent>
       }
       dropdownPlacement="bottom-end"
     />
