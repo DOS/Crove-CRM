@@ -1,11 +1,15 @@
 import { Injectable, Logger } from '@nestjs/common';
+<<<<<<< HEAD
 
 import { MEMBER_ROLE_LABEL } from 'src/engine/metadata-modules/permissions/constants/member-role-label.constants';
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
+=======
+import { InjectDataSource } from '@nestjs/typeorm';
+>>>>>>> twenty/v2.43.0
 
 import { PermissionFlagType } from 'twenty-shared/constants';
 import { WorkspaceActivationStatus } from 'twenty-shared/workspace';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource } from 'typeorm';
 
 import { FlatApplication } from 'src/engine/core-modules/application/types/flat-application.type';
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
@@ -40,8 +44,8 @@ export class DevSeederPermissionsService {
     private readonly roleService: RoleService,
     private readonly userRoleService: UserRoleService,
     private readonly objectPermissionService: ObjectPermissionService,
-    @InjectRepository(ObjectMetadataEntity)
-    private readonly objectMetadataRepository: Repository<ObjectMetadataEntity>,
+    @InjectWorkspaceScopedRepository(ObjectMetadataEntity)
+    private readonly objectMetadataRepository: WorkspaceScopedRepository<ObjectMetadataEntity>,
     @InjectWorkspaceScopedRepository(RoleEntity)
     private readonly roleRepository: WorkspaceScopedRepository<RoleEntity>,
     private readonly fieldPermissionService: FieldPermissionService,
@@ -273,39 +277,26 @@ export class DevSeederPermissionsService {
     });
 
     const petObjectMetadata = await this.objectMetadataRepository.findOneOrFail(
-      {
-        where: {
-          nameSingular: 'pet',
-          workspaceId,
-        },
-      },
+      workspaceId,
+      { where: { nameSingular: 'pet' } },
     );
 
     const rocketObjectMetadata =
-      await this.objectMetadataRepository.findOneOrFail({
-        where: {
-          nameSingular: 'rocket',
-          workspaceId,
-        },
+      await this.objectMetadataRepository.findOneOrFail(workspaceId, {
+        where: { nameSingular: 'rocket' },
       });
 
     const personObjectMetadata =
-      await this.objectMetadataRepository.findOneOrFail({
-        where: {
-          nameSingular: 'person',
-          workspaceId,
-        },
+      await this.objectMetadataRepository.findOneOrFail(workspaceId, {
+        where: { nameSingular: 'person' },
         relations: {
           fields: true,
         },
       });
 
     const companyObjectMetadata =
-      await this.objectMetadataRepository.findOneOrFail({
-        where: {
-          nameSingular: 'company',
-          workspaceId,
-        },
+      await this.objectMetadataRepository.findOneOrFail(workspaceId, {
+        where: { nameSingular: 'company' },
         relations: {
           fields: true,
         },

@@ -18,10 +18,14 @@ export const getSettingsPath = <T extends SettingsPath>(
   let path = `/${AppPath.Settings}/${cleanTo}`;
 
   if (isDefined(params)) {
+<<<<<<< HEAD
     path = generatePath<`/${AppPath.Settings}/${T}`>(
       `/${AppPath.Settings}/${cleanTo}`,
       params,
     );
+=======
+    path = generatePath(path, params);
+>>>>>>> twenty/v2.43.0
   }
 
   if (isDefined(queryParams)) {

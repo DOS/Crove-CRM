@@ -15,9 +15,8 @@ import { SettingsSecuritySettings } from '@/settings/security/components/Setting
 import { NameField } from '@/settings/workspace/components/NameField';
 import { WorkspaceLogoUploader } from '@/settings/workspace/components/WorkspaceLogoUploader';
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
+import { Section } from 'twenty-ui/components';
 import { IconHistory, IconKey, IconSettings2 } from 'twenty-ui/icon';
-import { H2Title } from 'twenty-ui/primitives/typography';
-import { Section } from 'twenty-ui/primitives/layout';
 import { PermissionFlagType } from '~/generated-metadata/graphql';
 
 const SETTINGS_GENERAL_TABS_INSTANCE_ID = 'settings-general-tabs';
@@ -69,13 +68,17 @@ export const SettingsGeneral = () => {
 
     return (
       <>
-        <Section>
-          <H2Title title={t`Picture`} />
+        <Section.Root>
+          <Section.Header title={t`Picture`} />
           <WorkspaceLogoUploader />
-        </Section>
-        <Section>
-          <H2Title title={t`Name`} description={t`Name of your workspace`} />
+        </Section.Root>
+        <Section.Root>
+          <Section.Header
+            title={t`Name`}
+            description={t`Name of your workspace`}
+          />
           <NameField />
+<<<<<<< HEAD
         </Section>
         {isMultiWorkspaceEnabled &&
           (isMultiWorkspaceSubdomainEnabled ||
@@ -93,8 +96,21 @@ export const SettingsGeneral = () => {
             </Section>
           )}
         <Section>
+=======
+        </Section.Root>
+        {isMultiWorkspaceEnabled && (
+          <Section.Root>
+            <Section.Header
+              title={t`Workspace domain`}
+              description={t`Edit your subdomain name or set a custom domain.`}
+            />
+            <SettingsWorkspaceDomainCard />
+          </Section.Root>
+        )}
+        <Section.Root>
+>>>>>>> twenty/v2.43.0
           <DeleteWorkspace />
-        </Section>
+        </Section.Root>
       </>
     );
   };
@@ -105,6 +121,7 @@ export const SettingsGeneral = () => {
       secondaryBar={
         hasSecurityPermission ? (
           <SettingsTabBar
+            aria-label={t`General settings`}
             tabs={tabs}
             componentInstanceId={SETTINGS_GENERAL_TABS_INSTANCE_ID}
           />

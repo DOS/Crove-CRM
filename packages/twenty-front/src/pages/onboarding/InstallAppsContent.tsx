@@ -11,12 +11,14 @@ import { type OnboardingInstallableApp } from '@/onboarding/types/OnboardingInst
 import { styled } from '@linaria/react';
 import { useLingui } from '@lingui/react/macro';
 import { isDefined, isNonEmptyArray } from 'twenty-shared/utils';
-import { MainButton } from 'twenty-ui/components';
-import { Avatar } from 'twenty-ui/primitives/data-display';
+import {
+  AnimatedIconCrossfade,
+  IconButton,
+  MainButton,
+} from 'twenty-ui/components';
 import { IconCheck, IconPlus } from 'twenty-ui/icon';
-import { IconButton } from 'twenty-ui/primitives/input';
-import { AnimatedIconCrossfade } from 'twenty-ui/primitives/layout';
-import { themeCssVariables, useTheme } from 'twenty-ui/theme-constants';
+import { Avatar } from 'twenty-ui/primitives/data-display';
+import { themeCssVariables, useTheme } from 'twenty-ui/theme';
 import { getAbsoluteImageUrl } from '~/utils/image/getAbsoluteImageUrl';
 
 const StyledTitleRow = styled.div`
@@ -174,10 +176,10 @@ export const InstallAppsContent = ({
                     </StyledAppDescription>
                   </StyledAppText>
                   <IconButton
-                    size="small"
-                    variant="secondary"
-                    accent={isSelected ? 'blue' : 'default'}
-                    ariaLabel={
+                    size="sm"
+                    variant="outline"
+                    color={isSelected ? 'accent' : 'neutral'}
+                    aria-label={
                       isSelected
                         ? t`Deselect ${labelText}`
                         : t`Select ${labelText}`
