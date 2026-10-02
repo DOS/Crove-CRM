@@ -20,7 +20,7 @@ import { useLingui } from '@lingui/react/macro';
 import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { MainButton } from 'twenty-ui/components';
-import { themeCssVariables } from 'twenty-ui/theme-constants';
+import { themeCssVariables } from 'twenty-ui/theme';
 import { styled } from '@linaria/react';
 
 const REDIRECT_ATTEMPT_STORAGE_KEY = 'dos-id-auto-redirect-attempted-at';
@@ -67,35 +67,35 @@ type SignInUpDosIdAutoRedirectEffectProps = {
 };
 
 const StyledSignedOutNotice = styled.div`
-  position: fixed;
-  inset: 0;
-  display: flex;
   align-items: center;
-  justify-content: center;
   background: ${themeCssVariables.background.primary};
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  position: fixed;
   z-index: 1;
 `;
 
 const StyledSignedOutCard = styled.div`
+  align-items: center;
   display: flex;
   flex-direction: column;
   gap: ${themeCssVariables.spacing[4]};
-  align-items: center;
   text-align: center;
   width: 320px;
 `;
 
 const StyledTitle = styled.h1`
+  color: ${themeCssVariables.font.color.primary};
   font-size: ${themeCssVariables.font.size.xl};
   font-weight: ${themeCssVariables.font.weight.semiBold};
   margin: 0;
-  color: ${themeCssVariables.font.color.primary};
 `;
 
 const StyledSubtitle = styled.p`
+  color: ${themeCssVariables.font.color.tertiary};
   font-size: ${themeCssVariables.font.size.md};
   margin: 0;
-  color: ${themeCssVariables.font.color.tertiary};
 `;
 
 export const SignInUpDosIdAutoRedirectEffect = ({
@@ -117,7 +117,7 @@ export const SignInUpDosIdAutoRedirectEffect = ({
   const [isSignedOutNoticeShown, setIsSignedOutNoticeShown] = useState(
     hasIntentionalSignOutFlag,
   );
-  const [lastAuthenticatedMethod, setLastAuthenticatedMethod] = useAtomState(
+  const [, setLastAuthenticatedMethod] = useAtomState(
     lastAuthenticatedMethodState,
   );
 

@@ -43,14 +43,14 @@ jest.mock('~/hooks/useNavigateSettings', () => ({
   useNavigateSettings: jest.fn(() => jest.fn()),
 }));
 
-jest.mock('@/ui/layout/modal/hooks/useModal', () => ({
-  useModal: jest.fn(() => ({
-    openModal: mockOpenModal,
+jest.mock('@/ui/layout/dialog/hooks/useDialog', () => ({
+  useDialog: jest.fn(() => ({
+    openDialog: mockOpenModal,
   })),
 }));
 
-jest.mock('@/ui/layout/modal/components/ConfirmationModal', () => ({
-  ConfirmationModal: ({
+jest.mock('@/ui/layout/dialog/components/ConfirmationDialog', () => ({
+  ConfirmationDialog: ({
     confirmButtonText,
     onConfirmClick,
   }: {
@@ -162,7 +162,7 @@ describe('SettingsApplicationConnectionDetail', () => {
 
     fireEvent.click(
       screen.getByRole('button', {
-        name: /Share with workspace/,
+        name: /Share with organization/,
       }),
     );
 
@@ -209,7 +209,7 @@ describe('SettingsApplicationConnectionDetail', () => {
 
     renderDetailPage();
 
-    expect(screen.getByText('Workspace shared')).toBeVisible();
+    expect(screen.getByText('Organization shared')).toBeVisible();
     expect(screen.getByText('Reconnect needed')).toBeVisible();
 
     fireEvent.click(screen.getByText('Reconnect'));

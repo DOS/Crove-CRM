@@ -10,7 +10,13 @@ import {
   AuthException,
   AuthExceptionCode,
 } from 'src/engine/core-modules/auth/auth.exception';
-import { type SocialSsoSignInUpActionType } from 'src/engine/core-modules/auth/types/signInUp.type';
+// Upstream moved SocialSsoSignInUpActionType to twenty-front in v2.43; the
+// DOS ID strategy keeps its own copy of the union.
+type SocialSsoSignInUpActionType =
+  | 'create-new-workspace'
+  | 'list-available-workspace'
+  | 'list-available-workspaces'
+  | 'join-workspace';
 import { type SocialSsoState } from 'src/engine/core-modules/auth/types/social-sso-state.type';
 import { TwentyConfigService } from 'src/engine/core-modules/twenty-config/twenty-config.service';
 

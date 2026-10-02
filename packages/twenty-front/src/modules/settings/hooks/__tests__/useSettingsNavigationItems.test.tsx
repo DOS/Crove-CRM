@@ -13,7 +13,6 @@ import {
 import { currentUserState } from '@/auth/states/currentUserState';
 import { billingState } from '@/client-config/states/billingState';
 import { usePermissionFlagMap } from '@/settings/roles/hooks/usePermissionFlagMap';
-import { ToastProvider } from 'twenty-ui/primitives/feedback';
 import {
   jotaiStore,
   resetJotaiStore,
@@ -22,6 +21,7 @@ import { i18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';
 import { Provider as JotaiProvider } from 'jotai';
 import { SOURCE_LOCALE } from 'twenty-shared/translations';
+import { ToastProvider } from 'twenty-ui/components';
 import { messages } from '~/locales/generated/en';
 
 i18n.load({
@@ -94,7 +94,7 @@ describe('useSettingsNavigationItems', () => {
     });
 
     const workspaceSection = result.current.find(
-      (section) => section.label === 'Workspace',
+      (section) => section.label === 'Organization',
     );
 
     expect(workspaceSection?.items.every((item) => item.isHidden)).toBe(true);
@@ -116,7 +116,7 @@ describe('useSettingsNavigationItems', () => {
     });
 
     const workspaceSection = result.current.find(
-      (section) => section.label === 'Workspace',
+      (section) => section.label === 'Organization',
     );
 
     expect(workspaceSection?.items.some((item) => !item.isHidden)).toBe(true);
@@ -138,7 +138,7 @@ describe('useSettingsNavigationItems', () => {
     });
 
     const workspaceSection = result.current.find(
-      (section) => section.label === 'Workspace',
+      (section) => section.label === 'Organization',
     );
     const billingItem = workspaceSection?.items.find(
       (item) => item.label === 'Billing',
@@ -166,7 +166,7 @@ describe('useSettingsNavigationItems', () => {
     });
 
     const workspaceSection = result.current.find(
-      (section) => section.label === 'Workspace',
+      (section) => section.label === 'Organization',
     );
     const billingItem = workspaceSection?.items.find(
       (item) => item.label === 'Billing',

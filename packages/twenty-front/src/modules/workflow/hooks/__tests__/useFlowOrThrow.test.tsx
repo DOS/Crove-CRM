@@ -69,14 +69,20 @@ describe('useFlowOrThrow', () => {
     expect(reader.current).toEqual(flow);
   });
 
-  it('throws when the flow has not been written', () => {
-    expect(() =>
-      renderHook(() => useFlowOrThrow(), {
-        wrapper: buildWrapper({
-          store: createStore(),
-          surfaceType: 'side-panel',
-        }),
+  it('falls back to an empty flow shell when the flow has not been written', () => {
+    // The fork replaced the throw with a safe fallback so a missing write no
+    // longer crashes the side panel on render.
+    const { result } = renderHook(() => useFlowOrThrow(), {
+      wrapper: buildWrapper({
+        store: createStore(),
+        surfaceType: 'side-panel',
       }),
-    ).toThrow('Expected the flow to be defined');
+    });
+
+    expect(result.current).toEqual({
+      workflowVersionId: '',
+      trigger: null,
+      steps: [],
+    });
   });
 });

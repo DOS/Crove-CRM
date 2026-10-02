@@ -169,7 +169,10 @@ describe('ApolloFactory', () => {
     } catch (error) {
       expect(error).toBeInstanceOf(CombinedGraphQLErrors);
       expect((error as CombinedGraphQLErrors).message).toBe('Unauthorized');
-      expect(mockOnError).toHaveBeenCalledWith(errors);
+      // The fork suppresses onError for UNAUTHENTICATED-family errors: the
+      // factory triggers the sign-in redirect instead of flashing snackbars
+      // the user cannot act on.
+      expect(mockOnError).not.toHaveBeenCalled();
     }
   }, 10000);
 
@@ -197,7 +200,8 @@ describe('ApolloFactory', () => {
       expect((error as CombinedGraphQLErrors).message).toBe(
         'Error message not found.',
       );
-      expect(mockOnError).toHaveBeenCalledWith(errors);
+      // Same suppression contract as the Unauthorized case above.
+      expect(mockOnError).not.toHaveBeenCalled();
     }
   }, 10000);
 

@@ -47,7 +47,7 @@ describe('WelcomeOverlay', () => {
     render(<WelcomeOverlay />, { wrapper: Wrapper });
 
     expect(screen.getByText('Welcome')).toBeInTheDocument();
-    expect(screen.getByText('workspace')).toBeInTheDocument();
+    expect(screen.getByText('organization')).toBeInTheDocument();
     expect(screen.getAllByText('Marie Curie').length).toBeGreaterThan(0);
   });
 });

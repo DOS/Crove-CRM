@@ -1,6 +1,6 @@
 import { styled } from '@linaria/react';
 import { IconDos } from 'twenty-ui/icon';
-import { themeCssVariables } from 'twenty-ui/theme-constants';
+import { themeCssVariables } from 'twenty-ui/theme';
 
 const StyledAppLogoContainer = styled.div<{ size?: number }>`
   align-items: center;

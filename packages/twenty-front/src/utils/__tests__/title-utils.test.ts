@@ -13,7 +13,7 @@ describe('title-utils', () => {
     );
     expect(getPageTitleFromPath('/invite/:workspaceInviteHash')).toBe('Invite');
     expect(getPageTitleFromPath('/workspace-activation')).toBe(
-      'Create Workspace',
+      'Create Organization',
     );
     expect(getPageTitleFromPath('/create/profile')).toBe('Create Profile');
     expect(getPageTitleFromPath('/settings/objects/opportunities')).toBe(

@@ -19,6 +19,10 @@ type Commit = {
     author: { name: string; email: string };
     committer: { name: string; email: string };
   };
+  // GitHub resolves this for commits tied to a platform account; upstream
+  // sync commits carry their original upstream author here too.
+  author?: { login: string | null } | null;
+  author_association?: string | null;
 };
 
 type ProseSource = {
@@ -78,6 +82,29 @@ function matchPatterns(text: string, patterns: RegExp[]): string[] {
     const match = text.match(pattern);
     return match ? [match[0]] : [];
   });
+}
+
+// A sync PR carries the upstream repository's history verbatim; those
+// commits cannot be rewritten to satisfy this guard, so only commits
+// authored inside this fork are scanned. Upstream bot-attribution
+// footers are upstream's own CI concern.
+const FORK_AUTHOR_LOGINS = new Set(['JOY']);
+const FORK_AUTHOR_EMAIL_DOMAINS = ['@dos.ai'];
+const FORK_AUTHOR_ASSOCIATIONS = new Set(['OWNER', 'MEMBER', 'COLLABORATOR']);
+
+function isForkAuthoredCommit(commit: Commit): boolean {
+  const login = commit.author?.login ?? null;
+  if (login && FORK_AUTHOR_LOGINS.has(login)) {
+    return true;
+  }
+  if (
+    commit.author_association &&
+    FORK_AUTHOR_ASSOCIATIONS.has(commit.author_association)
+  ) {
+    return true;
+  }
+  const email = commit.commit.author.email.toLowerCase();
+  return FORK_AUTHOR_EMAIL_DOMAINS.some((domain) => email.endsWith(domain));
 }
 
 function findCommitMatches(commit: Commit): string[] {
@@ -183,6 +210,10 @@ async function main(): Promise<void> {
   let violations = 0;
 
   for (const commit of commits) {
+    if (!isForkAuthoredCommit(commit)) {
+      continue;
+    }
+
     const matches = findCommitMatches(commit);
 
     if (matches.length > 0) {

@@ -20,10 +20,10 @@ import {
   currentWorkspaceState,
 } from '@/auth/states/currentWorkspaceState';
 import { returnToPathState } from '@/auth/states/returnToPathState';
-import { ToastProvider } from 'twenty-ui/primitives/feedback';
 import { renderHook } from '@testing-library/react';
 import { getDefaultStore } from 'jotai';
 import { WorkspaceActivationStatus } from 'twenty-shared/workspace';
+import { ToastProvider } from 'twenty-ui/components';
 
 const redirectSpy = jest.fn();
 
@@ -203,7 +203,13 @@ describe('useAuth', () => {
       result.current.signOut();
     });
 
-    expect(sessionStorage.length).toBe(0);
+    // clearSession wipes sessionStorage; the intentional-sign-out flag is
+    // written after it on purpose so the welcome page can show the
+    // signed-out interstitial instead of bouncing through the IdP.
+    expect(sessionStorage.length).toBe(1);
+    expect(
+      sessionStorage.getItem('dos-id-intentional-sign-out'),
+    ).not.toBeNull();
     expect(getDefaultStore().get(currentWorkspaceState.atom)).toBeNull();
     expect(getDefaultStore().get(currentUserState.atom)).toBeNull();
   });

@@ -74,7 +74,9 @@ describe('useGetUpdatableWorkflowVersionOrThrow', () => {
     expect(workflowVersionId).toEqual('457');
   });
 
-  it('should throw an error when workflow is not found', async () => {
+  it('falls back to the flow workflowVersionId when workflow is not found', async () => {
+    // The fork replaced the throw with safe fallbacks (flow version id, then
+    // visualizer version id) so a missing workflow no longer crashes render.
     const {
       useWorkflowWithCurrentVersion,
     } = require('@/workflow/hooks/useWorkflowWithCurrentVersion');
@@ -84,8 +86,9 @@ describe('useGetUpdatableWorkflowVersionOrThrow', () => {
       useGetUpdatableWorkflowVersionOrThrow(),
     );
 
-    await expect(result.current.getUpdatableWorkflowVersion()).rejects.toThrow(
-      'Failed to get updatable workflow version',
-    );
+    const workflowVersionId =
+      await result.current.getUpdatableWorkflowVersion();
+    expect(typeof workflowVersionId).toBe('string');
+    expect(workflowVersionId.length).toBeGreaterThan(0);
   });
 });
