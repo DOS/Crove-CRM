@@ -731,14 +731,12 @@ describe('call recorder app lifecycle (integration)', () => {
       throw new Error('Call recorder is not installed');
     }
 
-    const { generateApplicationToken } = await metadataClient.mutation({
-      generateApplicationToken: {
-        __args: { applicationId: application.id },
-        applicationAccessToken: { token: true },
-      },
-    });
-    applicationAccessToken =
-      generateApplicationToken.applicationAccessToken.token;
+    // v2.43 removed the generateApplicationToken mutation (breaking change
+    // #26439: the server computes the application-scoped core schema
+    // server-side). The workspace API key carries the same workspaceId claim
+    // the app token had, and beforeEach already relies on that equivalence
+    // for logic-function execution.
+    applicationAccessToken = process.env[WORKSPACE_API_KEY_ENV] ?? '';
   });
 
   beforeEach(() => {
