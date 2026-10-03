@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 
-import { msg } from '@lingui/core/macro';
 import { type ActorMetadata } from 'twenty-shared/types';
 import { isDefined } from 'twenty-shared/utils';
 import { StepStatus } from 'twenty-shared/workflow';
@@ -8,14 +7,13 @@ import { StepStatus } from 'twenty-shared/workflow';
 import { InjectMessageQueue } from 'src/engine/core-modules/message-queue/decorators/message-queue.decorator';
 import { MessageQueue } from 'src/engine/core-modules/message-queue/message-queue.constants';
 import { MessageQueueService } from 'src/engine/core-modules/message-queue/services/message-queue.service';
-import {
-  WorkflowVersionStepException,
-  WorkflowVersionStepExceptionCode,
-} from 'src/modules/workflow/common/exceptions/workflow-version-step.exception';
 import { WorkflowRunStatus } from 'src/modules/workflow/common/standard-objects/workflow-run.workspace-entity';
-import { setAllIteratorsStepInfosAsStopped } from 'src/modules/workflow/common/utils/set-all-iterators-step-infos-as-stopped.util';
 import { workflowHasRunningSteps } from 'src/modules/workflow/common/utils/workflow-has-running-steps.util';
 import { WorkflowVersionStepOperationsWorkspaceService } from 'src/modules/workflow/workflow-builder/workflow-version-step/workflow-version-step-operations.workspace-service';
+import {
+  type WorkflowFormAction,
+  type WorkflowAction,
+} from 'src/modules/workflow/workflow-executor/workflow-actions/types/workflow-action.type';
 import { isWorkflowFormAction } from 'src/modules/workflow/workflow-executor/workflow-actions/form/guards/is-workflow-form-action.guard';
 import {
   WorkflowRunException,
@@ -98,44 +96,66 @@ export class WorkflowRunnerWorkspaceService {
     );
   }
 
-  async submitFormStep({
+  // Called once every call a step's conversation waits on is answered: a
+  // form step completes with its answer, while an agent step stays PENDING
+  // until the resume job claims it and continues its conversation.
+  async resumeAnsweredStep({
     workspaceId,
-    stepId,
     workflowRunId,
+    step,
+    threadId,
     response,
   }: {
     workspaceId: string;
-    stepId: string;
     workflowRunId: string;
-    response: object;
-  }) {
-    const workflowRun =
-      await this.workflowRunWorkspaceService.getWorkflowRunOrFail({
-        workflowRunId,
-        workspaceId,
-      });
-
-    const step = workflowRun.state?.flow?.steps?.find(
-      (step) => step.id === stepId,
-    );
-
-    if (!isDefined(step)) {
-      throw new WorkflowVersionStepException(
-        'Step not found',
-        WorkflowVersionStepExceptionCode.NOT_FOUND,
-      );
-    }
-
+    step: WorkflowAction;
+    threadId: string;
+    response: Record<string, unknown>;
+  }): Promise<void> {
     if (!isWorkflowFormAction(step)) {
-      throw new WorkflowVersionStepException(
-        'Step is not a form',
-        WorkflowVersionStepExceptionCode.INVALID_REQUEST,
+      await this.messageQueueService.add<RunWorkflowJobData>(
+        RunWorkflowJob.name,
         {
-          userFriendlyMessage: msg`Step is not a form`,
+          workspaceId,
+          workflowRunId,
+          stepToResume: { stepId: step.id, threadId },
         },
+        buildRunWorkflowJobOptions(workflowRunId),
       );
+
+      return;
     }
 
+    const hasCompletedStep = await this.completeFormStep({
+      workspaceId,
+      workflowRunId,
+      step,
+      expectedThreadId: threadId,
+      response,
+    });
+
+    if (hasCompletedStep) {
+      await this.resume({
+        workspaceId,
+        workflowRunId,
+        lastExecutedStepId: step.id,
+      });
+    }
+  }
+
+  async completeFormStep({
+    workspaceId,
+    workflowRunId,
+    step,
+    expectedThreadId,
+    response,
+  }: {
+    workspaceId: string;
+    workflowRunId: string;
+    step: WorkflowFormAction;
+    expectedThreadId: string | null;
+    response: Record<string, unknown>;
+  }): Promise<boolean> {
     const enrichedResponse =
       await this.workflowVersionStepOperationsWorkspaceService.enrichFormStepResponse(
         {
@@ -145,20 +165,15 @@ export class WorkflowRunnerWorkspaceService {
         },
       );
 
-    await this.workflowRunWorkspaceService.updateWorkflowRunStepInfo({
-      stepId,
+    return this.workflowRunWorkspaceService.updateStepInfoIfPending({
+      stepId: step.id,
       stepInfo: {
         status: StepStatus.SUCCESS,
         result: enrichedResponse,
       },
+      expectedThreadId,
       workspaceId,
       workflowRunId,
-    });
-
-    await this.resume({
-      workspaceId,
-      workflowRunId,
-      lastExecutedStepId: stepId,
     });
   }
 
@@ -198,28 +213,24 @@ export class WorkflowRunnerWorkspaceService {
       const steps = workflowRun.state.flow.steps;
 
       if (workflowHasRunningSteps({ stepInfos, steps })) {
-        const stoppedIteratorStepInfos = setAllIteratorsStepInfosAsStopped({
-          stepInfos,
-          steps,
-        });
+        const isStopping =
+          await this.workflowRunWorkspaceService.markWorkflowRunAsStopping({
+            workflowRunId,
+            workspaceId,
+          });
 
-        const mergedStepInfos = {
-          ...stepInfos,
-          ...stoppedIteratorStepInfos,
-        };
+        if (isStopping) {
+          newStatus = WorkflowRunStatus.STOPPING;
+        } else {
+          // The run changed before the lock was taken, so report what it is now.
+          const currentWorkflowRun =
+            await this.workflowRunWorkspaceService.getWorkflowRunOrFail({
+              workflowRunId,
+              workspaceId,
+            });
 
-        await this.workflowRunWorkspaceService.updateWorkflowRun({
-          workflowRunId,
-          workspaceId,
-          partialUpdate: {
-            status: WorkflowRunStatus.STOPPING,
-            state: {
-              ...workflowRun.state,
-              stepInfos: mergedStepInfos,
-            },
-          },
-        });
-        newStatus = WorkflowRunStatus.STOPPING;
+          newStatus = currentWorkflowRun.status;
+        }
       } else {
         await this.workflowRunWorkspaceService.endWorkflowRun({
           workflowRunId,
