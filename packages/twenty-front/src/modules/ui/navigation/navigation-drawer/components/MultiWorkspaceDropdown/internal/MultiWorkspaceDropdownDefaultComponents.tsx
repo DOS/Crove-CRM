@@ -27,6 +27,7 @@ import { multiWorkspaceDropdownState } from '@/ui/navigation/navigation-drawer/s
 import { useColorScheme } from '@/ui/theme/hooks/useColorScheme';
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
 import { useSetAtomState } from '@/ui/utilities/state/jotai/hooks/useSetAtomState';
+import { getWorkspaceAvatarColorSeed } from '@/workspace/utils/getWorkspaceAvatarColorSeed';
 import { useLingui } from '@lingui/react/macro';
 import { isNonEmptyString } from '@sniptt/guards';
 import { AppPath, SettingsPath } from 'twenty-shared/types';
@@ -115,6 +116,9 @@ export const MultiWorkspaceDropdownDefaultComponents = () => {
             Avatar={
               <Avatar
                 name={currentWorkspace?.displayName || ''}
+                colorSeed={getWorkspaceAvatarColorSeed(
+                  currentWorkspace?.displayName,
+                )}
                 src={getAbsoluteImageUrl(
                   currentWorkspace?.logo ?? DEFAULT_WORKSPACE_LOGO,
                 )}
@@ -164,6 +168,7 @@ export const MultiWorkspaceDropdownDefaultComponents = () => {
             ]
               .filter(({ id }) => id !== currentWorkspace?.id)
               .slice(0, 3)
+<<<<<<< HEAD
               .map((availableWorkspace) => {
                 const { pathname, searchParams } =
                   getAvailableWorkspacePathAndSearchParams(availableWorkspace);
@@ -180,6 +185,35 @@ export const MultiWorkspaceDropdownDefaultComponents = () => {
                       event?.preventDefault();
                       handleChange(availableWorkspace);
                     }}
+=======
+              .map((availableWorkspace) => (
+                <UndecoratedLink
+                  key={availableWorkspace.id}
+                  to={buildWorkspaceUrl(
+                    getWorkspaceUrl(availableWorkspace.workspaceUrls),
+                  )}
+                  onClick={(event) => {
+                    event?.preventDefault();
+                    handleChange(availableWorkspace);
+                  }}
+                >
+                  <ListItem
+                    role="option"
+                    aria-selected={false}
+                    selected={false}
+                    indicator="check"
+                    startIcon={
+                      <Avatar
+                        name={availableWorkspace.displayName || ''}
+                        colorSeed={getWorkspaceAvatarColorSeed(
+                          availableWorkspace.displayName,
+                        )}
+                        src={getAbsoluteImageUrl(
+                          availableWorkspace.logo ?? DEFAULT_WORKSPACE_LOGO,
+                        )}
+                      />
+                    }
+>>>>>>> twenty/v2.45.0
                   >
                     <ListItem
                       role="option"
