@@ -348,6 +348,7 @@ export {
   IconMessage,
   IconMessageCirclePlus,
   IconMicrophone,
+  IconMinimize,
   IconMinus,
   IconMoneybag,
   IconMoodSmile,
