@@ -31,6 +31,7 @@ import { UserSessionService } from 'src/engine/core-modules/user-session/service
 import { SsoService } from 'src/engine/core-modules/sso/services/sso.service';
 import { TwentyConfigService } from 'src/engine/core-modules/twenty-config/twenty-config.service';
 import { TwoFactorAuthenticationService } from 'src/engine/core-modules/two-factor-authentication/two-factor-authentication.service';
+import { TwoFactorAuthenticationRecoveryService } from 'src/engine/core-modules/two-factor-authentication/services/two-factor-authentication-recovery.service';
 import { UserWorkspaceEntity } from 'src/engine/core-modules/user-workspace/user-workspace.entity';
 import { WorkspaceEntity } from 'src/engine/core-modules/workspace/workspace.entity';
 import { UserWorkspaceService } from 'src/engine/core-modules/user-workspace/user-workspace.service';
@@ -242,6 +243,10 @@ describe('AuthResolver', () => {
         },
         {
           provide: TwoFactorAuthenticationService,
+          useValue: {},
+        },
+        {
+          provide: TwoFactorAuthenticationRecoveryService,
           useValue: {},
         },
         {

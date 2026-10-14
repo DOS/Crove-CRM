@@ -1,4 +1,5 @@
 import { UndecoratedLink } from '@/ui/navigation/link/components/UndecoratedLink/UndecoratedLink';
+import { getWorkspaceAvatarColorSeed } from '@/workspace/utils/getWorkspaceAvatarColorSeed';
 import { styled } from '@linaria/react';
 import { isNonEmptyString } from '@sniptt/guards';
 import { AppPath } from 'twenty-shared/types';
@@ -6,8 +7,12 @@ import { getImageAbsoluteURI, isDefined } from 'twenty-shared/utils';
 import { Avatar } from 'twenty-ui/primitives/data-display';
 import { themeCssVariables } from 'twenty-ui/theme';
 import { REACT_APP_SERVER_BASE_URL } from '~/config';
+<<<<<<< HEAD
 import { AppLogo } from '@/auth/components/AppLogo';
 import { useRedirectToDefaultDomain } from '~/modules/domain-manager/hooks/useRedirectToDefaultDomain';
+=======
+import { useRedirectToDefaultDomain } from '@/domain-manager/hooks/useRedirectToDefaultDomain';
+>>>>>>> twenty/v2.46.0
 
 type LogoProps = {
   primaryLogo?: string | null;
@@ -100,7 +105,7 @@ export const Logo = ({
               size="lg"
               name={placeholder}
               shape="square"
-              colorSeed={placeholder}
+              colorSeed={getWorkspaceAvatarColorSeed(placeholder)}
             />
           </StyledSecondaryLogoContainer>
         )

@@ -1,12 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
-import { isDefined } from 'twenty-shared/utils';
-
 import { buildUrlWithPathnameAndSearchParams } from 'src/engine/core-modules/domain/domain-server-config/utils/build-url-with-pathname-and-search-params.util';
-import {
-  getHostnameFromUrlOrUndefined,
-  isHostUnderPublicFunctionDomain,
-} from 'src/engine/core-modules/domain/domain-server-config/utils/public-function-domain.util';
+import { getSubdomainAndCustomDomainFromHostname } from 'src/engine/core-modules/domain/domain-server-config/utils/get-subdomain-and-custom-domain-from-hostname.util';
+import { getHostnameFromUrlOrUndefined } from 'src/engine/core-modules/domain/domain-server-config/utils/public-function-domain.util';
 import { TwentyConfigService } from 'src/engine/core-modules/twenty-config/twenty-config.service';
 
 @Injectable()
@@ -61,6 +57,7 @@ export class DomainServerConfigService {
     });
   }
 
+<<<<<<< HEAD
   getSubdomainAndDomainFromUrl = (url: string) => {
     const { hostname: originHostname } = new URL(url);
 
@@ -114,4 +111,13 @@ export class DomainServerConfigService {
   isDefaultSubdomain(subdomain: string) {
     return subdomain === this.twentyConfigService.get('DEFAULT_SUBDOMAIN');
   }
+=======
+  getSubdomainAndCustomDomainFromUrl = (url: string) =>
+    getSubdomainAndCustomDomainFromHostname({
+      hostname: new URL(url).hostname,
+      frontDomain: this.getFrontUrl().hostname,
+      publicBaseDomain: this.getPublicBaseHostnameOrUndefined(),
+      defaultSubdomain: this.twentyConfigService.get('DEFAULT_SUBDOMAIN'),
+    });
+>>>>>>> twenty/v2.46.0
 }

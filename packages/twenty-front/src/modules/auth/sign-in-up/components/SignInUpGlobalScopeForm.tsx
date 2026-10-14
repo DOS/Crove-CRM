@@ -7,7 +7,7 @@ import { useQuery } from '@apollo/client/react';
 import { styled } from '@linaria/react';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { FormProvider } from 'react-hook-form';
-import { ClickToActionLink } from 'twenty-ui/primitives/navigation';
+import { Button } from 'twenty-ui/primitives/input';
 
 import { StyledOnboardingContentContainer } from '@/auth/components/StyledOnboardingContentContainer';
 import { SignInUpWithCredentials } from '@/auth/sign-in-up/components/internal/SignInUpWithCredentials';
@@ -27,10 +27,11 @@ import { OnboardingStepAnimatedItem } from '@/onboarding/components/OnboardingSt
 import { DEFAULT_WORKSPACE_LOGO } from '@/ui/navigation/navigation-drawer/constants/DefaultWorkspaceLogo';
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
 import { useSetAtomState } from '@/ui/utilities/state/jotai/hooks/useSetAtomState';
+import { getWorkspaceAvatarColorSeed } from '@/workspace/utils/getWorkspaceAvatarColorSeed';
 import { isNonEmptyString } from '@sniptt/guards';
 import { IconChevronRight, IconPlus } from 'twenty-ui/icon';
 import { Avatar } from 'twenty-ui/primitives/data-display';
-import { HorizontalSeparator } from 'twenty-ui/primitives/layout';
+import { Separator } from 'twenty-ui/primitives/layout';
 import { useTheme, themeCssVariables } from 'twenty-ui/theme';
 import {
   type AvailableWorkspace,
@@ -204,6 +205,9 @@ export const SignInUpGlobalScopeForm = () => {
                     <StyledWorkspaceContent>
                       <Avatar
                         name={availableWorkspace.displayName || ''}
+                        colorSeed={getWorkspaceAvatarColorSeed(
+                          availableWorkspace.displayName,
+                        )}
                         src={getAbsoluteImageUrl(
                           availableWorkspace.logo ?? DEFAULT_WORKSPACE_LOGO,
                         )}
@@ -276,6 +280,7 @@ export const SignInUpGlobalScopeForm = () => {
               isGlobalScope
             />
           )}
+<<<<<<< HEAD
           {(authProviders.dosId ||
             authProviders.google ||
             authProviders.microsoft) &&
@@ -289,14 +294,24 @@ export const SignInUpGlobalScopeForm = () => {
             <FormProvider {...form}>
               <SignInUpWithCredentials isGlobalScope />
             </FormProvider>
+=======
+          {(authProviders.google || authProviders.microsoft) && (
+            <Separator
+              style={{
+                backgroundColor: themeCssVariables.background.transparent.light,
+                marginBlock: themeCssVariables.spacing[3],
+              }}
+            />
+>>>>>>> twenty/v2.46.0
           )}
           {authProviders.password && signInUpStep === SignInUpStep.Password && (
             <StyledForgotPasswordLinkContainer>
-              <ClickToActionLink
+              <Button
+                variant="link"
                 onClick={handleResetPassword(form.getValues('email'))}
               >
                 <Trans>Forgot your password?</Trans>
-              </ClickToActionLink>
+              </Button>
             </StyledForgotPasswordLinkContainer>
           )}
         </StyledOnboardingContentContainer>
